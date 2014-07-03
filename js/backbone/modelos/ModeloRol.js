@@ -2,5 +2,5 @@ var app = app || {};
 
 
 app.ModeloRol = Backbone.Model.extend({
-	urlRoot	:'http://qualium.mx/sites/crmqualium/api_roles'
+	urlRoot	:'http://crmqualium.com/api_roles'
 });

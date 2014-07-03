@@ -1,11 +1,11 @@
 var app = app || {};
 app.ModeloServicioContrato	= Backbone.Model.extend({
-	urlRoot	: 'http://qualium.mx/sites/crmqualium/api_serviciosContrato'
+	urlRoot	: 'http://crmqualium.com/api_serviciosContrato'
 });
 var ColeccionServiciosContrato = Backbone.Collection.extend({
 	model	: app.ModeloServicioContrato,
 <<<<<<< HEAD
-	url		: 'http://qualium.mx/sites/crmqualium/api_serviciosContrato'
+	url		: 'http://crmqualium.com/api_serviciosContrato'
 =======
 	url		: 'http://crmqualium.com/api_serviciosContrato'
 });

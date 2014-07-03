@@ -4,7 +4,7 @@ var ColeccionServiciosProyecto = Backbone.Collection.extend({
 	model	: app.ModeloServicioProyecto,
 
 	// localStorage	: new Backbone.LocalStorage('clientes-backbone'),
-	url: 'http://qualium.mx/sites/crmqualium/api_serviciosProyecto',
+	url: 'http://crmqualium.com/api_serviciosProyecto',
 
 	obtenerTodos : function () {
 		return this.filter( function (serProy){

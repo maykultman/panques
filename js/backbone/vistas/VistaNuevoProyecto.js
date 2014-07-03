@@ -522,7 +522,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 					formData.append('archivo[]',archivos[i]);
 					// formData.append('idpropietario',this.idProyecto);
 					var resp = $.ajax({
-			            url: 'http://qualium.mx/sites/crmqualium/api_archivos',
+			            url: 'http://crmqualium.com/api_archivos',
 			            type: 'POST',
 			            async:true,
 			            data: formData,

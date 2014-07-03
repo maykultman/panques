@@ -1,5 +1,5 @@
 var app = app || {};
 
 app.ModeloServicioCotizado = Backbone.Model.extend({
-	urlRoot	:'http://qualium.mx/sites/crmqualium/api_servicioCotizado'
+	urlRoot	:'http://crmqualium.com/api_servicioCotizado'
 });

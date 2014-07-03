@@ -1,6 +1,6 @@
 var app = app || {};
 app.ModeloServicioProyecto = Backbone.Model.extend({
-	urlRoot	:'http://qualium.mx/sites/crmqualium/api_serviciosProyecto',
+	urlRoot	:'http://crmqualium.com/api_serviciosProyecto',
 	defaults	: {
 		status	: true
 	},

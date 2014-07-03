@@ -1,5 +1,5 @@
 var app = app || {};
 
 app.ModeloUsuario = Backbone.Model.extend({
-	urlRoot	:'http://qualium.mx/sites/crmqualium/api_usuarios'
+	urlRoot	:'http://crmqualium.com/api_usuarios'
 });

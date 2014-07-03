@@ -229,7 +229,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
         var formData = new FormData($("#registroUsuario")[0]);
         //hacemos la petición ajax  
         var resp = $.ajax({
-            url: 'http://qualium.mx/sites/crmqualium/api_foto',
+            url: 'http://crmqualium.com/api_foto',
             type: 'POST',
             async:false,
             //datos del formulario

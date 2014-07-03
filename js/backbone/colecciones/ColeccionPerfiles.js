@@ -1,7 +1,7 @@
 var app = app || {};
 
 var ColeccionPerfiles = Backbone.Collection.extend({
-	url: 'http://qualium.mx/sites/crmqualium/api_perfil',
+	url: 'http://crmqualium.com/api_perfil',
 	model	: app.ModeloPerfil,
 });
 

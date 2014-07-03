@@ -1,7 +1,7 @@
 var app = app || {};
 
 var ColeccionTelefonos = Backbone.Collection.extend({
-	url 	:'http://qualium.mx/sites/crmqualium/api_telefonos',
+	url 	:'http://crmqualium.com/api_telefonos',
 	model	: app.ModeloTelefono,
 
 	// localStorage	: new Backbone.LocalStorage('telefonos-backbone'),

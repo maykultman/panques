@@ -4,7 +4,7 @@ var ColeccionProyectos = Backbone.Collection.extend({
 	
 	model	: app.ModeloProyecto,
 
-	url: 'http://qualium.mx/sites/crmqualium/api_proyectos',
+	url: 'http://crmqualium.com/api_proyectos',
 	// localStorage	: new Backbone.LocalStorage('proyectos-backbone'),
 
 	obtenerTodos : function () {

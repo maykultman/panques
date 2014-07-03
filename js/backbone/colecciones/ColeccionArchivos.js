@@ -4,7 +4,7 @@ var ColeccionArchivos = Backbone.Collection.extend({
 	model	: app.ModeloArchivo,
 
 	// localStorage	: new Backbone.LocalStorage('archivos-backbone'),
-	url 	:'http://qualium.mx/sites/crmqualium/api_archivos',
+	url 	:'http://crmqualium.com/api_archivos',
 
 	obtenerTodos : function () {
 		return this.filter( function (archivo){

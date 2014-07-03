@@ -4,7 +4,7 @@ var ColeccionRoles = Backbone.Collection.extend({
 	model	: app.ModeloRol,
 
 	// localStorage	: new Backbone.LocalStorage('clientes-backbone'),
-	url: 'http://qualium.mx/sites/crmqualium/api_roles',
+	url: 'http://crmqualium.com/api_roles',
 
 	obtenerTodos : function () {
 		return this.filter( function (rol){

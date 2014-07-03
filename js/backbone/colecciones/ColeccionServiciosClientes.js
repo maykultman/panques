@@ -39,10 +39,10 @@ ColeccionServiciosClientes = Backbone.Collection.extend({
 });
 // app.c = 'new ColeccionServiciosClientes(app.coleccionDeServiciosI)';
 var ColeccionServiciosClientesI = ColeccionServiciosClientes.extend({
-	url 	:'http://qualium.mx/sites/crmqualium/api_serviciosInteres',
+	url 	:'http://crmqualium.com/api_serviciosInteres',
 });
 var ColeccionServiciosClientesC = ColeccionServiciosClientes.extend({
-	url 	:'http://qualium.mx/sites/crmqualium/api_serviciosCliente',
+	url 	:'http://crmqualium.com/api_serviciosCliente',
 });
 
 app.coleccionServiciosClientesI = new ColeccionServiciosClientesI(app.coleccionDeServiciosI);

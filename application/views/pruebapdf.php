@@ -16,7 +16,7 @@
 				</div>
 				<div id="contenedor_derecho">
 <<<<<<< HEAD
-					<img  src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: 10px; margin-left: -30px;">
+					<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: 10px; margin-left: -30px;">
 =======
 					<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="100px" height="100px" style="margin-top: 10px; margin-left: -30px;">			
 >>>>>>> 0c7427cbc3821cb301bd08cd83dbeb9fac354be3
@@ -83,12 +83,12 @@
 				background: -o-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
 				background: -ms-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
 				background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%) !important;">
-				<img src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/face.png" alt="" class="img_redesociales">
-				<img src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/twitter.png" alt="" class="img_redesociales">
-				<img src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/google.png" alt="" class="img_redesociales">
-				<img src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/in.png" alt="" class="img_redesociales">
-				<img src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/be.png" alt="" class="img_redesociales">
-				<img src="http://qualium.mx/sites/crmqualium/img/formatoCotizacion/vine.png" alt="" class="img_redesociales">
+				<img src="http://crmqualium.com/img/formatoCotizacion/face.png" alt="" class="img_redesociales">
+				<img src="http://crmqualium.com/img/formatoCotizacion/twitter.png" alt="" class="img_redesociales">
+				<img src="http://crmqualium.com/img/formatoCotizacion/google.png" alt="" class="img_redesociales">
+				<img src="http://crmqualium.com/img/formatoCotizacion/in.png" alt="" class="img_redesociales">
+				<img src="http://crmqualium.com/img/formatoCotizacion/be.png" alt="" class="img_redesociales">
+				<img src="http://crmqualium.com/img/formatoCotizacion/vine.png" alt="" class="img_redesociales">
 			</div>		
 			<div class="desborde"></div>
 		 	<div id="contenedor_cotizados">
