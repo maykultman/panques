@@ -190,7 +190,117 @@ app.VistaNuevoContrato = Backbone.View.extend({
 	},
 	render					: function () {},
 	vistaPrevia 			: function () {
-		window.open('formatoContrato.php','ventana1','scrollbars=NO') 
+
+		var json = pasarAJson($('form').serializeArray()),
+			jsonContrato = {},
+			jsonServicios  = {},
+			jsonPagos	   = {},
+			thiS = this;
+
+		if (json.idcliente == '') {
+			alert('Seleccione un cliente para el contrato');
+			elem.preventDefault();
+			return;
+		};
+
+		if ($('#porEvento').is(':checked')) {
+			delete json.mensualidades;
+			json.fechafinal = json.fechafinal[0];
+			/*------------------------------------------------------*/
+			jsonContrato.fechafirma 		= json.fechafirma;
+			jsonContrato.fechainicio 		= json.fechainicio;
+			jsonContrato.fechafinal 		= json.fechafinal;
+			jsonContrato.idcliente 			= json.idcliente;
+			jsonContrato.idrepresentante 	= json.idrepresentante;
+			jsonContrato.nplazos 			= json.nPlazos;
+			jsonContrato.plan 				= json.plan;
+			jsonContrato.plazo 				= json.plazo;
+
+			if (json.nPlazos == '' && json.plazo == '') {
+				alert('Especifique el plazo y el numero de plazos');
+				elem.preventDefault();
+				return;
+			};
+
+		} else if ($('#iguala').is(':checked')){
+			delete json.plazo;
+			delete json.nPlazos;
+			json.fechafinal = json.fechafinal[1];
+			/*------------------------------------------------------*/
+			jsonContrato.fechafirma 		= json.fechafirma;
+			jsonContrato.fechainicio 		= json.fechainicio;
+			jsonContrato.fechafinal 		= json.fechafinal;
+			jsonContrato.idcliente 			= json.idcliente;
+			jsonContrato.idrepresentante 	= json.idrepresentante;
+			jsonContrato.nplazos 			= json.mensualidades;
+			jsonContrato.plan 				= json.plan;
+
+			if (json.mensualidades == '') {
+				alert('Especifique las mensualidades');
+				elem.preventDefault();
+				return;
+			};
+		} else {
+			alert('Elija tipo de plan');
+			elem.preventDefault();
+			return;
+		};
+
+		if (json.fechainicio == '') {
+			alert('Especifique la fecha de inicio del contrato');
+			elem.preventDefault();
+			return;
+		};
+
+		/*Datos que poseen los dos tipos de planes*/
+		jsonServicios.idservicio	= json.idservicio;
+		jsonServicios.cantidad		= json.cantidad;
+		jsonServicios.descuento		= json.descuento;
+		jsonServicios.precio		= json.precio;
+		/*Datos que poseen los dos tipos de planes*/
+		jsonPagos.fechapago 	= json.fechapago;
+		jsonPagos.pago 			= json.pago;
+
+		app.ColeccionContratos_LocalStorage.create(jsonContrato,{
+			wait	: true,
+			success	: function (exito) {
+				console.log('En contrato se guardo con exito');
+				jsonServicios.idcontrato = exito.get('id');
+				jsonPagos.idcontrato = exito.get('id');
+				thiS.guardarServicios_L(jsonServicios);
+				thiS.guardarPagos_L(jsonPagos);
+				window.open('formatoContrato','ventana1','scrollbars=NO');
+			},
+			error	: function (error) {
+				console.log('El contrato no a sido guardado');
+			}
+		});
+
+		// console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
+		elem.preventDefault();
+		
+	},
+	guardarServicios_L		: function (json) {
+		app.ColeccionServiciosContrato_LocalStorage.create(json,{
+			wait 	: true,
+			success	: function (exito) {
+				console.log('Se guardaron los Servicios');
+			},
+			error	: function (error) {
+				console.log('Error al intentar guardar Servicios');
+			}
+		});
+	},
+	guardarPagos_L			: function (json) {
+		app.ColeccionPagos_LocalStorage.create(json,{
+			wait 	: true,
+			success	: function (exito) {
+				console.log('Se guardaron los Pagos');
+			},
+			error	: function (error) {
+				console.log('Error al intentar guardar Pagos');
+			}
+		});	
 	},
 	guardar					: function (elem) {
 		var json = pasarAJson($('form').serializeArray()),

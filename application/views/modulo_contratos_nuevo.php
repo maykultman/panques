@@ -285,6 +285,10 @@
 		app.coleccionContratos = new ColeccionContratos();
 		app.coleccionServiciosContrato = new ColeccionServiciosContrato();
 		app.coleccionPagos = new ColeccionPagos();
+		
+		app.coleccionContratos_LocalStorage = new coleccionContratos_LocalStorage();
+		app.coleccionServiciosContrato_LocalStorage = new ColeccionServiciosContrato_LocalStorage();
+		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
 	</script>
 <!-- vistas -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->

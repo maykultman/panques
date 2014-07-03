@@ -7,9 +7,14 @@ app.ModeloContrato	= Backbone.Model.extend({
 	}
 });
 
+var ColeccionContratos = Backbone.Collection.extend({
+	model			: app.ModeloContrato,
+	url 	: 'http://crmqualium.com/api_contratos',
+});
+
 var ColeccionContratos_LocalStorage = Backbone.Collection.extend({
 	model			: app.ModeloContrato,
-	localStorage 	: new Backbone.LocalStorage('ColeccionContratos_LocalStorage-backbone'),
+	localStorage 	: new Backbone.LocalStorage('contratos-backbone'),
 	ordenSiguente	: function () {
 		if (!this.length) {
 			return 1;
