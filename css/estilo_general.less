@@ -1,0 +1,143 @@
+/**{
+	box-sizing: border-box;
+}*/
+@{ceroMarginPading}{
+	margin: 0px;
+	padding: 0px;
+}
+
+
+#contenedor{
+	background: #F1F1F1;
+	float: left;
+	/*display: block;*/
+	/*height: auto;*/
+	padding: 0px 0px 0px 160px;
+	width: 100%;
+}
+
+@ceroMarginPading: #titulo_del_modulo;
+
+#titulo_del_modulo{
+	/*display: none;  BORRAR ESTA PROPUEDAD  */
+	background: #fff;
+	color: #0492e6;
+	height: 50px;
+	line-height: 50px;
+	margin: 0px 0px 40px 0px;
+	padding-left: 20px;
+}
+#titulo_del_modulo label{
+	font-weight: lighter;
+	padding-left: 20px;
+}
+
+#menu_modulo{
+	background: #0492e6;
+	height: 80px;
+	font-size: 13px;
+	margin: -40px 0px 0px 0px;
+	padding:  0px 20px 0px 0px;
+}
+
+#menu_modulo li a{
+	
+	border-radius: 0px;
+	color: #fff;
+	height: 80px;
+	text-align: center;
+	width: 100px;
+
+}
+
+#menu_modulo li a:hover{
+	background: #0064d5;
+}
+
+.icono_menu_modulo{
+	color: #fff;
+	font-size: 30px;
+}
+
+hr{
+	background-color: silver;
+	/*color: gray;*/
+	height: 1px;
+}
+
+.form-control{
+	margin: 15px 0px 15px 0px;
+	width: 400px;
+}
+
+/* {{{{{{{{{Estilos dashboard}}}}}}}}} */
+	#contenedor_dashboard{
+		/*display: block;  BORRAR ESTA PROPUEDAD  */
+		float: left;
+		padding: 0px 0px 0px 160px;
+		/*margin: 50px 0px 0px 160px;*/ 
+		width: 88%;
+		-webkit-transition: 0.2s;
+		-moz-transition: 0.2s;
+	}
+
+	.div_dashboard{
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		/*float: left;*/
+		display: inline-block;
+		margin: 0px 0px 40px 40px;
+		padding: 15px;
+	}
+	.cabecera_dashboard{
+		height: 50px;
+		line-height: 50px;
+		margin-bottom: -20px;
+		width: auto;
+	}
+	.titulo_dashboard{
+		font-weight: bold;
+		margin-top: 15px;
+		float: left;
+	}
+	.icono_dashboard{
+		float: right;
+		font-size: 20px;
+	}
+/* {{{{{{{{{Estilos dashboard}}}}}}}}} */
+
+
+/* {{{{{{{{{{{{ Clientes }}}}}}}}}}}} */
+#foto_cliente {
+	width: 40px;
+	height: 40px;
+}
+/* {{{{{{{{{{{{ Clientes }}}}}}}}}}}} */
+
+.contenedor_modulo{
+	/*display: none;*/
+	/*background: #F1F1F1;*/
+	/*float: left;*/
+	/*display: inline-block;*/
+	/*width: 500px;*/
+	margin-top: 50px;
+	/*width: 100%;*/
+	padding-bottom: 40px;
+	-webkit-transition: 0.4s;
+	-moz-transition: 0.4s;
+	z-index: 1;
+}
+
+#advertencia, #error, #exito{
+	z-index: 1051; /*Es para poner el mensaje sobre todos los demás elementos*/
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 800px;
+	height: auto;
+	/*margin-top: -200px;*/
+	margin-left: -400px;
+	/*position: fixed;*/
+	/*width: auto;*/
+}

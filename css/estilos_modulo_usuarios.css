@@ -1,0 +1,231 @@
+/*----------------Estilo Usuarios----------------*/
+
+#btn_guardar{
+
+	float: left;	
+	margin-top: 100px;
+}
+
+
+
+.ancho_campos{
+
+       
+    width: 370px !important;
+   
+}
+
+.fileinput-button {
+			position: relative;
+			overflow: hidden;
+		}
+		.fileinput-button input {
+		
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			opacity: 0;
+			-ms-filter: 'alpha(opacity=0)';
+			font-size: 200px;
+			direction: ltr;
+			cursor: pointer;
+		}
+
+		/* Fixes for IE < 8 */
+		@media screen\9 {
+			.fileinput-button input {
+				filter: alpha(opacity=0);
+				font-size: 100%;
+				height: 100%;
+			}
+		}
+
+/*------Estilos Perfiles--------------------------*/
+
+#contenido_nuevoperfil{    
+   
+	height: 500px;
+	
+}
+
+.chek {
+    
+ width: 30% !important;
+
+}
+
+#btnes{
+
+	float: left;
+	
+}
+
+.flecha_abajo{
+
+	float: right !important;
+}
+
+#perfil_nuevo{
+
+	float: right;
+	margin-top:15px; 
+
+
+}
+
+
+/*tbody.scrollpermisos { 
+	display: block; 
+	height: 148px; 
+	overflow: auto; 
+	width: 398px;
+	
+	}*/
+
+	/*margin-left: auto; 
+     margin-right: auto; */
+
+
+ /* ----------------Estilos de Permisos----------------------   */
+		
+#lista_permisos{
+	width: 400px;
+	margin-top:15px; 
+}	
+
+tbody#scroll_permisos{ 
+	display: block; 
+	height: 210px; 
+	overflow: auto; 
+	width: 100%;
+}
+
+.eliminar_permiso{
+
+	float:right;
+	margin-top: 5px;
+}
+
+.linea_x{
+	width: 400px !important;
+}
+
+.contenido_permisos{
+    
+
+	display: inline-block;
+	float: left;
+	margin-right: 35px;
+	width: 500px;
+	
+}
+
+.panel-body span{
+	padding: 5px;
+	opacity: 1;
+}
+				
+/*---------estilos de catalogo de empleados--------*/
+
+.titulo{
+display: inline-block;
+
+}
+#nuevo_empleado{
+
+	float: right;
+	margin-top:15px; 
+}
+
+.titulo_empleados{
+
+	color: #0492e6;
+
+
+}
+
+.contenedor_empleado{
+	width: auto !important;
+}
+
+/*.linea_x2{
+	width: 1000px !important;
+}
+*/
+
+.ancho_campos2{
+
+	width:350px !important;
+	display: inline-block; 
+
+}
+
+    
+.campos_edicion {
+	display: inline-block;
+	float: left;
+	margin-right: 27px;
+	width: 368px !important;
+}
+	
+/*-------------Catalogo ROLES---------*/
+
+tbody#scroll_roles{ 
+	display: block; 
+	height: 210px; 
+	overflow: auto; 
+	width: 100%!important;
+}
+
+#busqueda_icono{
+
+	float: right;	
+	margin-top: -38px;
+	margin-right: 10px;
+}
+
+.valor{ 
+
+  /*display: inline-block;*/
+  width: 350px;
+  height: 30px;
+  /*padding: 6px 12px;*/
+  font-size: 14px;
+  font-family: Arial;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+td .ocultoR{
+	display: none;
+}
+td .visibleR{
+	display: block;
+}
+
+/*------------------catalogos puestos------------*/
+
+tbody#scroll_puestos{ 
+	display: block; 
+	height: 210px; 
+	overflow: auto; 
+	width: 100%;
+}
+
+
+/*------------------Consulta Clientes.............*/ 
+
+.img_usuario{
+
+	width: 100px !important;
+	height: 100px !important;
+}

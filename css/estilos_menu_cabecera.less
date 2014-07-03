@@ -1,0 +1,270 @@
+@colorPrimario-azul: #006AD5;
+@colorPrimario-azul-claro: darken(@colorPrimario-azul, -10%);
+
+@colorPrimario-Menu: #333333;
+@colorElementoDeMenuHover:  darken(@colorPrimario-Menu, -10%);
+@colorTextoMenu: #AAA;
+
+@link-color: #fff;
+@alto-cabecera: 50px;
+
+/* {{{{{{{{{{{{{{{{Estilo general}}}}}}}}}}}}}}}} */
+*{
+	font-family: Open Sans;
+	margin: 0px;
+	padding: 0px;
+}
+
+body{
+	background: #F1F1F1;
+}
+
+a:link{ /*El agregado ":link" sierve para afectar a la etiqueta ancla, pero más especificamente a todas sus propiedades*/
+	cursor: pointer;
+	text-decoration: none;
+
+}
+a:hover{
+	/*text-decoration: underline;*/
+}
+li{
+	list-style-type: none;
+}
+/* {{{{{{{{{{{{{{{{Estilo general}}}}}}}}}}}}}}}} */
+
+#cabecera{
+	background:@colorPrimario-azul;
+	color: #FFF;
+	height: @alto-cabecera;
+	width: 100%;
+	display: block;
+	padding: 13px 13px 0 13px;
+	position: fixed;
+	z-index: 3;
+}
+
+/* {{{{{{{{{{{{{{{{{Estilo de datos del usuario}}}}}}}}}}}}}}}}} */
+#divUsuario{
+	background: @colorPrimario-azul-claro;
+	float: right;
+	height: @alto-cabecera;
+	margin: -13px -13px 0px 0px;
+	padding: 0px 0px 0px 13px;
+	width: auto;
+}
+.usuario{
+	/*float: left;*/
+	display: inline-block;
+	padding: 0px 0px 0px 13px;
+	line-height: 20px;
+}
+#foto{
+	background: url(../img/fotosUsuarios/papademalcom.png);
+	height: 39px;
+	margin-top: 5px;
+	margin-bottom: -5px;
+	width: 39px;
+}
+.datosU{
+	margin-bottom: -5px;
+}
+#nombre{
+	font-weight: bold;
+}
+#perfil{
+	font-size: 12px;
+}
+.glyphicon-cog{ /*tamaño icono de configuracion*/
+	font-size: 25px;
+}
+
+#divLogo,#accesosRapidos{
+	float: left;
+}
+#divLogo{
+	height: @alto-cabecera;
+	margin: -13px 0px 0px -13px;
+	padding-left: 13px;
+	width: 160px;
+}
+#logo{
+	background: url(../img/logo.png);
+	height: 45px;
+	margin-top: 2px;
+	width: 133px;
+}
+#accesosRapidos{
+	margin: -13px 0px 0px 0px;
+}
+#accesosRapidos li a, #configuracionUsuario li a{
+	border-radius: 0px;
+	color: @link-color;
+	height: @alto-cabecera;
+	padding: 14px;
+}
+#accesosRapidos li a:hover{
+	background: darken(@colorPrimario-azul, 10%);
+}
+#configuracionUsuario{
+	margin: -13px 13px -10px -13px;
+}
+#configuracionUsuario li a:hover{
+	background: darken(@colorPrimario-azul-claro, 10%);
+}
+.dropdown-menu{
+	background: darken(@colorPrimario-azul, 5%);
+}
+/* {{{{{{{{{{{{{{{{{Estilo de datos del usuario}}}}}}}}}}}}}}}}} */
+
+/* {{{{{{{{{{{{{{{{{Estilo del menu}}}}}}}}}}}}}}}}} */
+#menu{
+	background: @colorPrimario-Menu;
+	/*height: 100%;*/
+	float: left;
+	/*padding: 0px 5px 0px 5px;*/
+	/*position: absolute;*/
+	width: 160px;
+	/*margin-left: -160px;*/
+	-webkit-transform: translateX(-160px);
+	-webkit-transition: width 0.4s;
+	-moz-transform: translateX(-160px);
+	-moz-transition: width 0.4s;
+	bottom: 0px;
+	position: fixed;
+	top: 50px;
+	/*overflow-y: auto;*/
+	/*overflow-x: hidden;*/
+	z-index: 1;
+}
+#menu-lista{
+	/*padding: 0px 5px 0px 5px;*/
+}
+#menu-lista li{
+border-bottom: 1px solid #4D4D4D;
+line-height: 50px;
+padding: 15px 0 5px 0;
+text-align: center;
+margin: 0 auto;
+padding-left: 10px;
+height: 50px;
+}
+#menu-lista li a{
+	//position: absolute;
+}
+#menu-lista li:hover{
+	background: @colorElementoDeMenuHover;
+	margin: 0 0 0px 0;
+	/*padding: 1px 10px 0px 10px;
+	padding: 5px 10px 5px 0;*/
+	border-bottom: 1px solid @colorElementoDeMenuHover;
+}
+
+.anclaMenu{
+	color: @colorTextoMenu;
+	//position: absolute;
+	-webkit-transition: .4s;
+	-moz-transition: .4s;
+	opacity: 1;
+	//margin-left: 10px;
+}
+.anclaMenu:hover{
+	color: @colorTextoMenu;
+}
+.icono{
+	color: @colorTextoMenu;
+	cursor: pointer;
+	/*padding-right: 25px;
+	padding-left: 2px;*/
+	font-size: 20px;
+	/*display: inline;*/
+}
+.icono:hover{
+	color: @colorTextoMenu;
+}
+
+#btn_menu{
+	display: none;
+}
+#btn{
+	cursor: pointer;
+	-webkit-transition: 0.4s;
+	-moz-transition: 0.4s;
+}
+#btn_menu:checked ~ #menu{
+	width: 50px;
+	-webkit-transition: width 0.4s;
+	-moz-transition: width 0.4s;
+	
+
+}
+/*#btn_menu:checked ~ .contenedor{
+	margin-left: 50px;
+	-webkit-transition: 0.4s;
+	-moz-transition: 0.4s;
+}*/
+#btn_menu:checked ~ #contenedor_dashboard{
+	/*width: 96.7%;*/
+	/*-webkit-transition: 0.4s;*/
+}
+#btn_menu:checked ~ .contenedor_modulo{
+	/*width: 110%;*/
+	/*margin-right: -110px;*/
+	/*-webkit-transform: translateX(-110px);*/
+	margin-left: -110px;
+	-webkit-transition: margin 0.4s;
+	-moz-transition: margin 0.4s;
+
+}
+
+
+.item-text{
+	display: none;line-height: 20px; padding-left: 40px; text-align:justify;
+}
+
+#btn_menu:checked ~ #menu .anclaMenu{
+	/*opacity: 0;
+	visibility: collapse;*/
+	-webkit-transform: translateX(-160px);
+	-moz-transform: translateX(-160px);
+
+	.item-text{
+		opacity:0;
+		display:none;
+		webkit-transform: all 100ms ease-in;
+	}
+}
+
+
+#btn_menu:not(checked) ~ #menu .anclaMenu{
+	.item-text{
+		opacity:1;
+		display:block;
+		webkit-transform: all 100ms ease-in;
+	}
+}
+
+#btn_menu:checked ~ #menu #btn{
+	-webkit-transform:rotate(180deg);
+	-webkit-transition: 0.4s;
+	-moz-transform:rotate(180deg);
+	-moz-transition: 0.4s;
+
+	
+
+}
+
+/*#btn_menu ~ #menu{
+	width: 160px;
+	-webkit-transition: 0.4s;
+	-moz-transition: 0.4s;
+	.anclaMenu{
+		display: inline;
+		opacity: 1;
+	}
+}*/
+/* {{{{{{{{{{{{{{{{{Estilo del menu}}}}}}}}}}}}}}}}} */
+.desborde{
+	clear: both;
+}
+
+

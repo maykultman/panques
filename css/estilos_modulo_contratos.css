@@ -1,0 +1,183 @@
+/*.fecha{
+
+	width: 150px !important;
+	
+}*/
+.btn-group	{
+	z-index: 0 !important;
+	 margin-top: -5px;
+}
+.tabla_visible{
+
+	display: inline-grid;
+}
+
+.tabla_oculto{
+
+	display: none;
+}
+
+.planes{
+
+	display: none;
+}
+
+
+
+.input_largo{
+
+	width: 100%!important;
+}
+.input_renta, .bloqueado{
+
+	width: 35%!important;
+}
+
+
+.icon_detalles{
+
+	float: right;
+	margin-top: 5px;
+}
+.inputs_planIguala{
+
+	/*width: 350px !important;*/
+	width: 100%;
+}
+
+.inputs_planEvento{
+
+	/*width: 250px !important;*/
+	width: 100%;
+}
+#span_buscar{
+	float:right;
+	margin-top: -38px;
+	margin-right:10px; 
+	
+}
+
+.color_cabecera  {
+
+  background-color: #f9f9f9;
+  color: #333;
+
+
+}
+
+.datos_primarios{
+
+	display:inline-block;
+	float: left;
+	margin-right: 90px !important;
+	width: 400px;
+
+}
+
+/*#radio1{
+
+float: left !important;
+
+
+
+
+}
+
+#radio2{
+
+	float: left;
+	margin-left: 70px; 
+
+
+}*/
+
+#tipo_plan{
+
+	float: left;
+	width: 600px;
+
+}
+
+#div_info{
+
+    display: none;
+	height: 125px;
+}
+/*#panel_tablas{
+
+	
+	width: 100%!important;
+}
+*/
+
+#tabla_servicios{
+   
+    /* display: inline-block;*/
+     /*float:left;*/
+     /*margin-right: 10px;*/
+     width: 100%!important;
+
+
+
+}
+#tabla_contrato {
+   
+	
+	
+	/*margin-top: -20px;*/
+	width: 100%;
+
+
+}
+
+tbody#tbody_servicios { 
+	display: block; /*obligado*/ 
+	height: 165px; /*la que necesites*/ 
+	overflow: auto; /*obligado*/
+	width: 100%!important;
+	
+	}
+
+/*#icono_mas {
+
+	float: right;
+	margin-left: -10px;
+	margin-top: 15px;
+
+}*/
+
+
+.input_precio {
+	width: 78px;
+	height: 20px;
+	margin-top: 1px;
+}
+
+.input_descuento {
+	width: 50px;
+	height: 20px;
+}
+
+/*.linea { 
+  
+	border-right: black 1px solid;
+
+}*/
+
+.txt{
+
+	text-align: center;
+}
+
+/*#precio_total{
+
+	margin-top:-18px; 
+}*/
+
+
+--------Historial de contratos------------------
+
+
+
+
+

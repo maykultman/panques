@@ -1,0 +1,60 @@
+
+.oculto2{
+	
+	display: none;
+}
+
+.visible2{
+		
+	display: block;
+}
+
+.nuevoServicio{
+
+display: inline-block;
+float: left;
+margin-right: 50px;
+width: 400px;
+
+
+}	
+
+#descripcion{
+
+ 
+ width: 850px;
+ height: 83px;
+
+}
+
+/*#ancho {
+
+	width: 100px;
+}
+*/
+
+
+#thead_Catalogo{
+
+	background-color: #f9f9f9;
+   /* color: #333;*/
+    display: inline-table;
+   /* width: 100%; */
+
+}
+
+tbody.scrollCatalogo { 
+	
+	display: block; /*obligado*/ 
+	height: 378px; /*la que necesites*/ 
+	overflow: auto; /*obligado*/
+	width:100% !important;
+	
+	}
+
+#chekcentro{
+
+    text-align: center;
+	width: 80px;
+}
+

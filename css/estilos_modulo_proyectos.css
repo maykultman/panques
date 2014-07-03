@@ -1,0 +1,369 @@
+/*--------------Proyecto Nuevo---------*/
+/*#nom_proy{*/
+
+	/*float: left;*/
+	/*width: 280px;*/
+	/*height: auto;*/
+/*}*/
+
+
+#fechaEntrega, #fechaInicio {
+	
+	width: 100%;
+	/*height: 25px;*/
+}
+
+#duracion {
+	
+	/*margin-top: 4px;*/
+	/*height: 25px;*/
+	width: 100%;
+	 
+	
+}
+#divfech{
+	/*width: auto;*/
+	/*float: left;*/
+
+	
+}
+
+
+.tbla_apilacion{
+
+	width: auto;
+}
+
+.tbla_apilacion td{
+
+	
+	
+	vertical-align: middle;
+	/*margin-top: -118px;
+	margin-left: 50px;
+	*/
+	/*width: 400px;*/
+
+
+}
+
+.cabecera_serv2{
+
+   
+    background-color: #f9f9f9;
+    color: #333;
+    display: inline-table;
+    width: 100%;
+  
+    
+
+
+}
+
+tbody.scrolltbla { 
+	display: block; /*obligado*/ 
+	height: 200px; /*la que necesites*/ 
+	overflow: auto; /*obligado*/
+	width: 100%;
+	
+	
+	}
+
+.fechas_proy{
+
+	/*float:left;*/
+	width: auto;
+}
+
+
+#cabecera_fija2{
+   
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 381px;
+}
+
+#servicios_proyecto tbody{
+	display: inline-block;
+	height: 190px;
+	overflow: auto;
+	width: 398px;
+	
+}
+#roles {
+	
+    background-color: #0492e6;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-top-left-radius: 5px;
+    color:white;
+    font-size:120%;
+    padding: 10px 15px;
+    width: 400px;
+}
+
+#div_empleados select{
+    height: 112px;
+	margin-top: -10px;
+}
+
+#contenedor_select{
+
+	display: inline-block;
+	float: left;	
+}
+
+#barra_rol{
+    
+    text-align:center; 
+    color:white;
+    background-color:#0492e6; 
+    float: left;
+	height: 35px;
+	width: 100%;
+
+}
+
+#otro_rol{
+
+	width: 250px;
+	float: left;
+	margin-left:155px;
+
+}
+
+
+
+#botones{
+
+	float: right;
+	/*margin-top:90px;*/
+}
+
+#medida_modal{
+
+	height:auto;
+}
+#select_rol{
+    /*display:inline-block;*/
+    /*float:left;*/
+    
+	margin-top:1px; 
+	width:100%;
+}
+
+
+#tbla_roles {
+	
+    float:left;
+	/*margin-left: 40px;*/
+	/*width: 50%;*/
+}
+
+.table-curved > :first-child > :first-child > :first-child {
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+     border-top-left-radius: 5px;
+}
+.table-curved > :first-child > :first-child > :last-child {
+    -webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	 border-top-right-radius: 5px;
+}
+
+
+#tbla_roles tr{
+		&:hover{
+			.icon-eliminar span{
+				opacity: 1;
+			}
+		};
+	}
+
+#tbla_roles2{
+	
+	/*float:left;*/
+	/*margin-left: 20px;*/
+	/*width: 50%;*/
+}
+
+#tbla_roles2 tr{
+		&:hover{
+			.icon-eliminar span{
+				opacity: 1;
+			}
+		};
+	}
+.icon-eliminar span{
+	float:left;
+	margin-left: 20px;
+	font-size: 15px;
+	padding: 5px;
+	opacity: 1;
+}
+.icon-eliminar{
+	text-align: right;
+}
+
+.icon-eliminar .eliminar_cliente span:hover{
+		
+	background: red;
+	border-radius: 3px;
+	cursor: pointer;
+	color: white;
+}
+
+#agregar_btn{
+
+    float:right;
+    margin-right: 70px;
+	margin-top: 15px;
+
+}
+
+/*--------------Tabla proyectos-------------*/
+
+.center{
+
+	text-align: center;
+}
+
+#busca_proy{
+
+  width: 230px;
+  
+}
+
+#busca_resp{
+
+  width: 230px;
+  
+}
+.color_th th{
+
+   
+   	background-color: #f9f9f9;
+	color: black;
+}
+
+
+#color_titulos{
+
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.color_success{
+ 
+ color: #FFF;
+ background-color: #468847;
+ }
+
+.color_warning{
+ 
+ color: #FFF;
+ background-color: #f89406;
+ 
+}
+.color_error{
+ 
+ color: #FFF;
+ background-color: #d9534f;
+ 
+}
+
+
+/*------------------------------MODULO PROYECTO CONSULTA--------------*/
+
+	/*--------Estilos nuevo proyecto--------*/
+		.label_servicio, .label_empleado {
+			padding: 8px;
+			margin-bottom: 0px;
+			width:260px;
+			/*height:100%;*/
+		}
+		.tag_rol {
+			margin: 3px;
+			display: inline;
+		}
+
+		.icon-eliminar .icon-circledelete {
+			padding: 5px;
+		}
+		.icon-eliminar .icon-circledelete:hover{
+			background: red;
+			border-radius: 3px;
+			cursor: pointer;
+			color: white;
+		}
+	/*estilos de la ficha de información del proyecto*/
+		.exito2{
+			-webkit-animation:efectoOpacidad 3s;
+			color: green;
+			opacity:.4;
+
+		}
+		.error2{
+			-webkit-animation:efectoOpacidad 3s;
+			color: red;
+			opacity:.4;
+
+		}
+
+		@-webkit-keyframes efectoOpacidad
+		{
+			0%   {opacity:1;}
+			50%   {opacity:1;}
+			100% {opacity:.4;}
+		}
+
+	/* estilos realizados para la seccion de nuevo proyecto */
+		.section_Visible {
+			display: block;
+			/*border: 1px solid gray;*/
+		}
+
+		.section_Oculto {
+			display: none;
+			/*border: 1px solid gray;*/
+		}
+
+		/*#guardarProyecto {
+			margin-left: 0px;
+			margin-right: 0px;
+		}*/
+
+		.fileinput-button {	/*Funciona en el modulo de consulta*/
+			position: relative;
+			overflow: hidden;
+		}
+		.fileinput-button input {	/*Funciona en el modulo de consulta*/
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			opacity: 0;
+			-ms-filter: 'alpha(opacity=0)';
+			font-size: 200px;
+			direction: ltr;
+			cursor: pointer;
+		}
+
+		/* Fixes for IE < 8 */
+		@media screen\9 {	/*Funciona en el modulo de consulta*/
+			.fileinput-button input {
+				filter: alpha(opacity=0);
+				font-size: 100%;
+				height: 100%;
+			}
+		}
