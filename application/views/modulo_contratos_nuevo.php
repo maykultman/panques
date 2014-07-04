@@ -33,7 +33,7 @@
 			// 	});
 			// });		
 		</script>
-		<section>
+		<section class="secciones1">
 			<form id="formulario">
 				<div class="row" >
 					<div class="col-md-6">
@@ -42,9 +42,13 @@
 						<div>						  
 							<input type="text" id="busqueda" class="form-control input_largo" placeholder="Buscar cliente">
 							<input type="hidden" id="hidden_idCliente" name="idcliente">
-							<span id="span_buscar" class="icon-search"></span>			
+							<span id="span_buscar" class="icon-search"></span>
+							<!--  -->	
 							<input type="text" id="input_Representante" class="form-control input_largo" disabled placeholder="Representante">
 							<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
+							<!--  -->
+							<input type="text" class="form-control input_largo" name="nombrecontrato" placeholder="Nombre para el contrato">
+							<!--  -->
 							<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se firmará el contrato">
 							<input type="hidden" id="hidden_fechafirma" name="fechafirma">
 							<input type="hidden" id="hidden_idEmpleado" name="idempleado" val="65">
@@ -203,10 +207,15 @@
 			    </table>  
 			   	<div class="desborde"></div>		 
 			   	<button type="submit" id="btn_guardar" class="btn btn-default">Guardar</button>
-			   	<button type="button" id="btn_vistaPrevia" class="btn btn-primary"><span class="icon-preview"></span>Vista previa</button>
+			   	<a id="btn_vistaPrevia" target="_blanck" class="btn btn-primary" href="formatoContrato"><span class="icon-preview"></span>Vista previa</a>
 			   	<button type="button" class="btn btn-default">Cancelar</button>
 		   	</form>
-		</section>   	 
+		</section> 
+		<section class="secciones2" style="display:none">
+			<h1>Vispre previa del contrato</h1> <button id="cerrar_vistaPrevia">Cerrar vista previa</button>
+			<div id="divVistapreviaContrato">
+			</div>
+		</section>    	 
 	</section>	                
 </div>
 
@@ -257,10 +266,28 @@
 				<span class="<%- candado %>"></span>
 			</td>
 	</script>
+	<script type="text/template" id="plantilla_contrato">
+		fechacreacion: 			<%- formatearFechaUsuario(new Date(fechacreacion)) %>	<br>
+		fechafinal: 			<%- formatearFechaUsuario(new Date(fechafinal)) %>		<br>
+		fechafirma: 			<%- formatearFechaUsuario(new Date(fechafirma)) %>		<br>
+		fechainicio: 			<%- formatearFechaUsuario(new Date(fechainicio)) %>		<br>
+		id: 					<%- id %>												<br>
+		idcliente: 				<%- idcliente %>										<br>
+		idrepresentante: 		<%- idrepresentante %>									<br>
+		nplazos: 				<%- nplazos %>											<br>
+		plan: 					<%- plan %>												<br>
+		plazo: 					<%- plazo %>											<br>
+		nombreCliente: 			<%- nombreCliente %>									<br>
+		nombreRepresentante: 	<%- nombreRepresentante %>								<br>
+		nombrecontrato: 		<%- nombrecontrato %>									<br>
+		total: 					<%- total %>											<br>
+		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>
+	</script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type="text/javascript">
 	var app = app || {};
+	app.iva = 0.16;
 	app.coleccionDeClientes 		= <?php echo json_encode($clientes) ?>;
 	app.coleccionDeServicios 		= <?php echo json_encode($servicios) ?>;
 	app.coleccionDeRepresentantes 	= <?php echo json_encode($representantes) ?>;
@@ -292,5 +319,50 @@
 		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
 	</script>
 <!-- vistas -->
+	<script type="text/javascript">
+		app = app || {};
+		var V_HojaContrato = Backbone.View.extend({
+			tagName			: 'div',
+			plantilla	: _.template($('#plantilla_contrato').html()),
+			render		: function () {
+				this.$el.html(this.plantilla(this.model.toJSON()));
+				return this;
+			}
+		});
+
+		var Consulta_Hoja	= Backbone.View.extend({
+			el	: '#divVistapreviaContrato',
+			initialize	: function () {
+				this.cargarContratos();
+			},
+			cargarContrato	: function (contrato) {
+				contrato.set({nombreCliente:app.coleccionClientes.get({id:contrato.get('idcliente')}).get('nombreComercial')});
+				contrato.set({nombreRepresentante:app.coleccionRepresentantes.get({id:contrato.get('idrepresentante')}).get('nombre')});
+
+				var precio = 0.0;
+				var descuento = 0.0;
+				var total = 0.0;
+
+				var cantidades = app.coleccionServiciosContrato_LocalStorage.pluck('cantidad');
+				var precios = app.coleccionServiciosContrato_LocalStorage.pluck('precio');
+				var descuentos = app.coleccionServiciosContrato_LocalStorage.pluck('descuento');
+
+				for (var i = 0; i < cantidades[0].length; i++) {
+					precio 		= cantidades[0][i] * precios[0][i];
+					descuento 	=precio * ( descuentos[0][i]/100 );
+					total 		+= parseFloat((precio - descuento).toFixed(2));
+				};
+				contrato.set({total:(total + (total*app.iva)).toFixed(2)});
+				var vista = new V_HojaContrato({model:contrato});
+				this.$el.html(vista.render().el);
+				// var ventana = window.open("formatoCotizacion","miventana","menubar=no");
+				// console.log(ventana);
+			},
+			cargarContratos	: function () {
+				app.coleccionContratos_LocalStorage.each(this.cargarContrato, this);
+			}
+		});
+	</script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoContrato.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/routers/router.js'?>"></script>

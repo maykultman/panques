@@ -1,11 +1,12 @@
 var app = app || {};
 
-var enrutador = Backbone.Router.extend({
-	// rutas	: {
-	// 	'modulo_consulta_prospectos'	: 'obtenerProspectos'
-	// },
+app.Enrutador = Backbone.Router.extend({
+	router 	: {
+		'vistaPrevia'	: 'verCotizacion'
+	},
 
-	// obtenerProspectos	: function () {
-	// 	app.vistaConsultaCliente.obtenerProspectos();
-	// }
+	vistaPrevia	: function (algo) {
+		console.log(algo);
+	}
 });
+app.enrutador = new app.Enrutador();

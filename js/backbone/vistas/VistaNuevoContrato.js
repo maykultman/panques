@@ -73,8 +73,8 @@ app.VistaServicioSeleccionado = Backbone.View.extend({
 			importe += parseInt($(totales[i]).val());
 		};
 		$('#importe').text('$'+importe.toFixed(2));
-		$('#IVA').text('$'+(importe*0.16).toFixed(2));
-		$('#totalNeto').text('$'+(importe + (importe*0.16)).toFixed(2));
+		$('#IVA').text('$'+(importe*app.iva).toFixed(2));
+		$('#totalNeto').text('$'+(importe + (importe*app.iva)).toFixed(2));
 
 		/*Provocamos un click automatico para que la tabla de pagos
 		  se actualice*/
@@ -161,6 +161,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		// 'change .input_renta'	: 'modificarPagos',
 		'click #btn_guardar'		: 'guardar',
 		'click #btn_vistaPrevia'	: 'vistaPrevia',
+		'click #cerrar_vistaPrevia'	: 'cerrarVistaPrevia',
 		'click #btn_recargarPagos'	: 'recargarPagos'
 	},
 	initialize				: function () {
@@ -199,7 +200,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 
 		if (json.idcliente == '') {
 			alert('Seleccione un cliente para el contrato');
-			elem.preventDefault();
+			// elem.preventDefault();
 			return;
 		};
 
@@ -207,6 +208,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			delete json.mensualidades;
 			json.fechafinal = json.fechafinal[0];
 			/*------------------------------------------------------*/
+			jsonContrato.nombrecontrato		= json.nombrecontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
@@ -215,18 +217,17 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.nplazos 			= json.nPlazos;
 			jsonContrato.plan 				= json.plan;
 			jsonContrato.plazo 				= json.plazo;
-
 			if (json.nPlazos == '' && json.plazo == '') {
 				alert('Especifique el plazo y el numero de plazos');
-				elem.preventDefault();
+				// elem.preventDefault();
 				return;
 			};
-
 		} else if ($('#iguala').is(':checked')){
 			delete json.plazo;
 			delete json.nPlazos;
 			json.fechafinal = json.fechafinal[1];
 			/*------------------------------------------------------*/
+			jsonContrato.nombrecontrato		= json.nombrecontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
@@ -237,18 +238,18 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.id = app.coleccionContratos_LocalStorage.ordenSiguente();
 			if (json.mensualidades == '') {
 				alert('Especifique las mensualidades');
-				elem.preventDefault();
+				// elem.preventDefault();
 				return;
 			};
 		} else {
 			alert('Elija tipo de plan');
-			elem.preventDefault();
+			// elem.preventDefault();
 			return;
 		};
 
 		if (json.fechainicio == '') {
 			alert('Especifique la fecha de inicio del contrato');
-			elem.preventDefault();
+			// elem.preventDefault();
 			return;
 		};
 
@@ -262,6 +263,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		jsonPagos.fechapago 	= json.fechapago;
 		jsonPagos.pago 			= json.pago;
 
+		/*Eliminar todo la coleccion para no duplicar datos*/
+		app.coleccionContratos_LocalStorage.each(function (model){ 
+			model.destroy();
+		},this);
 		app.coleccionContratos_LocalStorage.create(jsonContrato,{
 			wait	: true,
 			success	: function (exito) {
@@ -270,7 +275,11 @@ app.VistaNuevoContrato = Backbone.View.extend({
 				jsonPagos.idcontrato = exito.get('id');
 				thiS.guardarServicios_L(jsonServicios);
 				thiS.guardarPagos_L(jsonPagos);
-				window.open('formatoContrato','ventana1','scrollbars=NO');
+				
+				window.open("formatoContrato","miventana","menubar=no");
+
+				$('.secciones1').slideToggle(500);
+				$('.secciones2').slideToggle(500);
 			},
 			error	: function (error) {
 				console.log('El contrato no a sido guardado');
@@ -278,10 +287,17 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 
 		// console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
-		elem.preventDefault();
-		
+		// elem.preventDefault();
+	},
+	cerrarVistaPrevia 		: function () {
+		$('.secciones1').slideToggle(500);
+		$('.secciones2').slideToggle(500);
 	},
 	guardarServicios_L		: function (json) {
+		/*Eliminar todo la coleccion para no duplicar datos*/
+		app.coleccionServiciosContrato_LocalStorage.each(function (model){ 
+			model.destroy();
+		},this);
 		app.coleccionServiciosContrato_LocalStorage.create(json,{
 			wait 	: true,
 			success	: function (exito) {
@@ -293,6 +309,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 	},
 	guardarPagos_L			: function (json) {
+		/*Eliminar todo la coleccion para no duplicar datos*/
+		app.coleccionPagos_LocalStorage.each(function (model){ 
+			model.destroy();
+		},this);
 		app.coleccionPagos_LocalStorage.create(json,{
 			wait 	: true,
 			success	: function (exito) {
@@ -561,7 +581,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			plazo = parseInt($('#plazo').val());
 			aumento = plazo;
 			fecha = $('#fechainicio').val();
-			fecha2 = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
+			fecha2 = formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
 			if (fecha2 != 'NaN/NaN/NaN') {
 				$('#vencimientoPlanEvento').val( fecha2 );
 			} else{
@@ -574,7 +594,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			plazo = 30;
 			aumento = plazo;
 			fecha = $('#fechainicio').val();
-			fecha2 = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
+			fecha2 = formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
 			if (fecha2 != 'NaN/NaN/NaN') {
 				$('#vencimientoPlanIguala').val( fecha2 );
 			} else{
@@ -588,7 +608,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			checked = 'disabled';
 		} else {console.log('Sin plan seleccionado');return;};
 		
-		fechaNormal = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + (1*24*60*60*1000)));
+		fechaNormal = formatearFechaUsuario(new Date(new Date(fecha).getTime() + (1*24*60*60*1000)));
 		fecha2 = fechaNormal.split('/');
 
 		var Modelo;
@@ -610,7 +630,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 
 			$('#tbody_pagos').append(this.vistaPago[i].render().el);
 
-			fechaNormal = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + (plazo*24*60*60*1000)));
+			fechaNormal = formatearFechaUsuario(new Date(new Date(fecha).getTime() + (plazo*24*60*60*1000)));
 			fecha2 = fechaNormal.split('/');
 			plazo = plazo + aumento;
 		};
@@ -648,22 +668,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			this.vistaPago[parseInt($(rentas[i]).attr('id'))].model.set({pago:pagoNuevo});
 		};
 		this.modificarPagos();
-	},
-	formatearFechaUsuario	: function (fecha) {
-		var fechaFormateada = '';
-		if ((fecha.getDate()) < 10 )
-		fechaFormateada = '0'+(fecha.getDate());
-		else
-			fechaFormateada = (fecha.getDate());
-		if ((fecha.getMonth() +1) < 10 )
-			fechaFormateada += '/0'+(fecha.getMonth() +1);
-		else
-			fechaFormateada +=  '/'+(fecha.getMonth() +1);
-
-		fechaFormateada +=  '/'+fecha.getFullYear();
-
-		return fechaFormateada;
-	},
+	}
 });
 
 app.vistaNuevoContrato = new app.VistaNuevoContrato();

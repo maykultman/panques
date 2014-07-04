@@ -168,3 +168,20 @@ app.busquedaCotizacion2.cotizacion2 = (function () {
      }
      return objeto;
     }
+
+/*Debe recibir un objeto Date*/
+function formatearFechaUsuario (fecha) {
+    var fechaFormateada = '';
+    if ((fecha.getDate()) < 10 )
+    fechaFormateada = '0'+(fecha.getDate());
+    else
+        fechaFormateada = (fecha.getDate());
+    if ((fecha.getMonth() +1) < 10 )
+        fechaFormateada += '/0'+(fecha.getMonth() +1);
+    else
+        fechaFormateada +=  '/'+(fecha.getMonth() +1);
+
+    fechaFormateada +=  '/'+fecha.getFullYear();
+
+    return fechaFormateada;
+}
