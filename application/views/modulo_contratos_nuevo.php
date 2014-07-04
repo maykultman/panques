@@ -206,7 +206,7 @@
 			   	<button type="button" class="btn btn-default">Cancelar</button>
 		   	</form>
 		</section>   	 
-	</section>   	                
+	</section>	                
 </div>
 
 
@@ -269,7 +269,7 @@
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/lib/backbone.localStorage.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
 <!-- modelos -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
@@ -286,7 +286,7 @@
 		app.coleccionServiciosContrato = new ColeccionServiciosContrato();
 		app.coleccionPagos = new ColeccionPagos();
 		
-		app.coleccionContratos_LocalStorage = new coleccionContratos_LocalStorage();
+		app.coleccionContratos_LocalStorage = new ColeccionContratos_LocalStorage();
 		app.coleccionServiciosContrato_LocalStorage = new ColeccionServiciosContrato_LocalStorage();
 		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
 	</script>

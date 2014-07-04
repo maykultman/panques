@@ -189,7 +189,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 	},
 	render					: function () {},
-	vistaPrevia 			: function () {
+	vistaPrevia 			: function (elem) {
 
 		var json = pasarAJson($('form').serializeArray()),
 			jsonContrato = {},
@@ -234,7 +234,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.idrepresentante 	= json.idrepresentante;
 			jsonContrato.nplazos 			= json.mensualidades;
 			jsonContrato.plan 				= json.plan;
-
+			jsonContrato.id = app.coleccionContratos_LocalStorage.ordenSiguente();
 			if (json.mensualidades == '') {
 				alert('Especifique las mensualidades');
 				elem.preventDefault();
@@ -257,11 +257,12 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		jsonServicios.cantidad		= json.cantidad;
 		jsonServicios.descuento		= json.descuento;
 		jsonServicios.precio		= json.precio;
+
 		/*Datos que poseen los dos tipos de planes*/
 		jsonPagos.fechapago 	= json.fechapago;
 		jsonPagos.pago 			= json.pago;
 
-		app.ColeccionContratos_LocalStorage.create(jsonContrato,{
+		app.coleccionContratos_LocalStorage.create(jsonContrato,{
 			wait	: true,
 			success	: function (exito) {
 				console.log('En contrato se guardo con exito');
@@ -281,7 +282,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		
 	},
 	guardarServicios_L		: function (json) {
-		app.ColeccionServiciosContrato_LocalStorage.create(json,{
+		app.coleccionServiciosContrato_LocalStorage.create(json,{
 			wait 	: true,
 			success	: function (exito) {
 				console.log('Se guardaron los Servicios');
@@ -292,7 +293,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 	},
 	guardarPagos_L			: function (json) {
-		app.ColeccionPagos_LocalStorage.create(json,{
+		app.coleccionPagos_LocalStorage.create(json,{
 			wait 	: true,
 			success	: function (exito) {
 				console.log('Se guardaron los Pagos');

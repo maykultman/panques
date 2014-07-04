@@ -6,13 +6,18 @@ app.ModeloContrato	= Backbone.Model.extend({
 		fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
 	}
 });
+app.ModeloContrato_L	= Backbone.Model.extend({
+	defaults	: {
+		fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
+	}
+});
 
 var ColeccionContratos = Backbone.Collection.extend({
-	model			: app.ModeloContrato,
+	model			: app.ModeloContrato_L,
 	url 	: 'http://crmqualium.com/api_contratos',
 });
 
-var ColeccionContratos_LocalStorage = Backbone.Collection.extend({
+var ColeccionContratos_LocalStorage = ColeccionContratos.extend({
 	model			: app.ModeloContrato,
 	localStorage 	: new Backbone.LocalStorage('contratos-backbone'),
 	ordenSiguente	: function () {
