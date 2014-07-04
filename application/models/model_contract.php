@@ -18,6 +18,7 @@
       public function get ( $id = FALSE ) 
       {  
         $reply = $this->where($id);
+        $this->db->order_by('fechacreacion', 'desc'); 
         return $this->db->get  ( 'contratos' )->$reply();
       }
 

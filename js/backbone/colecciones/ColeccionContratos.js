@@ -13,7 +13,7 @@ app.ModeloContrato_L	= Backbone.Model.extend({
 });
 
 var ColeccionContratos = Backbone.Collection.extend({
-	model			: app.ModeloContrato_L,
+	model			: app.ModeloContrato,
 	url 	: 'http://crmqualium.com/api_contratos',
 });
 

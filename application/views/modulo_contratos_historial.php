@@ -4,27 +4,28 @@
         <tr>
 	        <th style="text-align:center;">Todos<br><input type="checkbox"></th>           
 	    	<th>
-				<input class="form-control" type="text" placeholder="Cliente">
+				<input id="cliente" class="form-control" type="text" placeholder="Cliente">
 				<span class="icon-search busqueda"></span>
 	        </th>
 	        <th>
-				<input class="form-control" type="text" placeholder="Realizado por">
+				<input id="empleado" class="form-control" type="text" placeholder="Realizado por">
 				<span class="icon-search busqueda"></span>
 	        </th>
 	        <th>
-				<input class="form-control" type="text" placeholder="Fecha de realización">
-				<span class="icon-search busqueda"></span>
+	        	<div id="bfecha" class="abajo" style="margin-left:5px;">
+					Ordenar Por Fecha&nbsp;<span id="fecha" class="downt"></span>
+				</div>			  
 	        </th>
 	        <th>Vencimiento</th>  
 	        <th>Operaciones</th>
         </tr>
         <tbody id="tbody_contratos"><!-- PLANTILLAS DE CONTRATOS --></tbody>
     </table>
-    <button type="button" class="btn btn-danger">Eliminar varios</button>
-    <button type="button" class="btn btn-default">Entregados</button>  
+    <button id="eliminar" type="button" class="btn btn-danger">Eliminar varios</button>
+    <button id="" type="button" class="btn btn-default">Entregados</button>  
   </div>
 </div>
-
+</section>
 <script type="text/javascript">
 	function formatearFechaUsuario (fecha) {
 		var fechaFormateada = '';
@@ -46,7 +47,7 @@
 <script type="text/template" id="plantilla_tr_contrato">
 	<td><input type="checkbox"></td>
 	<td><%- nombreComercial %></td>
-	<td>(sin sesiones)</td>                     
+	<td><%- nombreEmpleado  %></td>                     
 	<td><%- formatearFechaUsuario(new Date(fechacreacion)) %></td>
 	<td><%- formatearFechaUsuario(new Date(fechafinal)) %></td>
 	<td class="icon-operaciones">
@@ -70,12 +71,13 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type="text/javascript">
     var app = app || {};
-    app.coleccionDeClientes     		= <?php echo json_encode($clientes) ?>;
-    app.coleccionDeServicios    		= <?php echo json_encode($servicios) ?>;
-    app.coleccionDeRepresentantes   	= <?php echo json_encode($representantes) ?>;
+    app.coleccionDeClientes     		= <?=json_encode($clientes) ?>;
+    app.coleccionDeServicios    		= <?=json_encode($servicios) ?>;
+    app.coleccionDeRepresentantes   	= <?=json_encode($representantes) ?>;
     app.coleccionDeContratos 			= <?=json_encode($contratos)?>;
     app.coleccionDeServiciosContrato 	= <?=json_encode($serviciosDeContrato)?>;
     app.coleccionDePagos 				= <?=json_encode($pagos)?>;
+    app.coleccionDeEmpleados			= <?=json_encode($empleados)?>;
 </script>
 <!-- Utilerias -->
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
@@ -86,6 +88,7 @@
     <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>"></script>
 <!-- colecciones -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
@@ -93,10 +96,12 @@
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContratos.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosContrato.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPagos.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>"></script>
     <script type="text/javascript">
         app.coleccionContratos 			= new ColeccionContratos(app.coleccionDeContratos);
         app.coleccionServiciosContrato 	= new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
         app.coleccionPagos 				= new ColeccionPagos(app.coleccionDePagos);
+        app.coleccionEmpleados			= new ColeccionEmpleados(app.coleccionDeEmpleados);
     </script>
 <!-- vistas -->
   <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->

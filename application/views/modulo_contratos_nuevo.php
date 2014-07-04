@@ -47,6 +47,7 @@
 							<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
 							<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se firmará el contrato">
 							<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+							<input type="hidden" id="hidden_idEmpleado" name="idempleado" val="65">
 					    </div>
 						
 						

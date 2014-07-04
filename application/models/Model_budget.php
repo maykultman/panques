@@ -17,7 +17,8 @@
         
         public function get ( $id = FALSE ) 
         {  
-           $reply = $this->where( $id );  # Ejecutamos el metodo where...      
+           $reply = $this->where( $id );  # Ejecutamos el metodo where...   
+           $this->db->order_by('fecha', 'desc');    
            return $this->db->get  ( 'cotizaciones' )->$reply();  # Este metodo ejecuta get con y sin ID...
         }
 
