@@ -226,6 +226,11 @@ tbody#scroll_puestos{
 
 .img_usuario{
 
-	width: 100px !important;
-	height: 100px !important;
+	width: 120px !important;
+	height: 120px !important;
+}
+
+.input_margen{
+
+	margin-top: -5px;
 }
