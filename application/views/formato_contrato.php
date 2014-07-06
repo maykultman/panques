@@ -23,6 +23,11 @@
 		nplazos: 				<%- nplazos %>											<br>
 		plan: 					<%- plan %>												<br>
 		plazo: 					<%- plazo %>											<br>
+		nombreCliente: 			<%- nombreCliente %>									<br>
+		nombreRepresentante: 	<%- nombreRepresentante %>								<br>
+		nombrecontrato: 		<%- nombrecontrato %>									<br>
+		total: 					<%- total %>											<br>
+		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>
 		
 	</script>
 
@@ -31,7 +36,9 @@
 	var app = app || {};
 	app.iva = 0.16;
 	
-	
+	app.coleccionDeClientes 		= <?php echo json_encode($clientes) ?>;
+	app.coleccionDeServicios 		= <?php echo json_encode($servicios) ?>;
+	app.coleccionDeRepresentantes 	= <?php echo json_encode($representantes) ?>;
 	
 	
 	
@@ -44,20 +51,24 @@
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
 <!-- modelos -->
-	<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script> -->
-	<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script> -->
-	<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script> -->
+	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script><!--  -->
+	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script><!--  -->
+	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script><!--  -->
 <!-- colecciones -->
-	<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script> -->
-	<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script> -->
-	<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script> -->
+	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script><!--  -->
+	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script><!--  -->
+	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script><!--  -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContratos.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosContrato.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPagos.js'?>"></script>
 	<script type="text/javascript">
+		app.coleccionContratos = new ColeccionContratos();
+		app.coleccionServiciosContrato = new ColeccionServiciosContrato();
+		app.coleccionPagos = new ColeccionPagos();
+
 		app.coleccionContratos_LocalStorage = new ColeccionContratos_LocalStorage();
-		// app.coleccionServiciosContrato_LocalStorage = new ColeccionServiciosContrato_LocalStorage();
-		// app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
+		app.coleccionServiciosContrato_LocalStorage = new ColeccionServiciosContrato_LocalStorage();
+		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
 	</script>
 <!-- vistas -->
 	<script type="text/javascript">
@@ -74,33 +85,36 @@
 		var Consulta_Hoja	= Backbone.View.extend({
 			el	: '#divVistapreviaContrato',
 			initialize	: function () {
-				this.listenTo(app.coleccionContratos_LocalStorage,'add',this.cargarContrato);
+				// this.listenTo(app.coleccionContratos_LocalStorage,'add',this.cargarContrato);
 				app.coleccionContratos_LocalStorage.fetch();
+				app.coleccionServiciosContrato_LocalStorage.fetch();
+				app.coleccionPagos_LocalStorage.fetch();
 				
 				
 				
-				// this.cargarContratos();
+				this.cargarContratos();
 
 			},
 			cargarContrato	: function (contrato) {
-				// var precio = 0.0;
-				// var descuento = 0.0;
-				// var total = 0.0;
+				contrato.set({nombreCliente:app.coleccionClientes.get({id:contrato.get('idcliente')}).get('nombreComercial')});
+				contrato.set({nombreRepresentante:app.coleccionRepresentantes.get({id:contrato.get('idrepresentante')}).get('nombre')});
 
-				// var cantidades = app.coleccionServiciosContrato_LocalStorage.pluck('cantidad');
-				// var precios = app.coleccionServiciosContrato_LocalStorage.pluck('precio');
-				// var descuentos = app.coleccionServiciosContrato_LocalStorage.pluck('descuento');
+				var precio = 0.0;
+				var descuento = 0.0;
+				var total = 0.0;
 
-				// for (var i = 0; i < cantidades[0].length; i++) {
-				// 	precio 		= cantidades[0][i] * precios[0][i];
-				// 	descuento 	=precio * ( descuentos[0][i]/100 );
-				// 	total 		+= parseFloat((precio - descuento).toFixed(2));
-				// };
-				// contrato.set({total:(total + (total*app.iva)).toFixed(2)});
+				var cantidades = app.coleccionServiciosContrato_LocalStorage.pluck('cantidad');
+				var precios = app.coleccionServiciosContrato_LocalStorage.pluck('precio');
+				var descuentos = app.coleccionServiciosContrato_LocalStorage.pluck('descuento');
+
+				for (var i = 0; i < cantidades[0].length; i++) {
+					precio 		= cantidades[0][i] * precios[0][i];
+					descuento 	=precio * ( descuentos[0][i]/100 );
+					total 		+= parseFloat((precio - descuento).toFixed(2));
+				};
+				contrato.set({total:(total + (total*app.iva)).toFixed(2)});
 				var vista = new V_HojaContrato({model:contrato});
 				this.$el.html(vista.render().el);
-				// var ventana = window.open("formatoCotizacion","miventana","menubar=no");
-				// console.log(ventana);
 			},
 			cargarContratos	: function () {
 				app.coleccionContratos_LocalStorage.each(this.cargarContrato, this);
