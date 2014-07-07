@@ -1,6 +1,6 @@
 <header id="cabecera" class="hidden-xs">
 	<div id="divLogo">
-		<a href="#"><div id="logo"></div></a>
+		<a href="dashboard"><div id="logo"></div></a>
 	</div>
 
 	<div>
@@ -19,6 +19,7 @@
 			</li>
 		</ul>
 	</div>
+
 	
 	<div id="divUsuario">
 		<div class="usuario" id="foto"></div>

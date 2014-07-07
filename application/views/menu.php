@@ -9,19 +9,19 @@
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="modulo_Clientes"><i class="icono icon-phpbb" style="float:left"></i> <span class="item-text">Clientes</span></a>
+		<a class="anclaMenu" href="modulo_consulta_clientes"><i class="icono icon-phpbb" style="float:left"></i> <span class="item-text">Clientes</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="modulo_proyectos"><i class="icono icon-uniF53D" style="float:left"></i> <span class="item-text">Proyectos</span></a>
+		<a class="anclaMenu" href="modulo_proyectos_consulta"><i class="icono icon-uniF53D" style="float:left"></i> <span class="item-text">Proyectos</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="modulo_contratos"><i class="icono icon-uniF5E2" style="float:left"></i> <span class="item-text">Contratos</span></a>
+		<a class="anclaMenu" href="modulo_contratos_historial"><i class="icono icon-uniF5E2" style="float:left"></i> <span class="item-text">Contratos</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="modulo_cotizaciones"><i class="icono icon-calculator" style="float:left"></i> <span class="item-text">Cotización</span></a>
+		<a class="anclaMenu" href="modulo_cotizaciones_consulta"><i class="icono icon-calculator" style="float:left"></i> <span class="item-text">Cotización</span></a>
 		<div style="clear:both"></div>
 	</li>
 <!-- 	<li class="item">
@@ -33,11 +33,11 @@
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="modulo_catalogos"><i class="icono icon-book" style="float:left"></i> <span class="item-text">Catálogos</span></a>
+		<a class="anclaMenu" href="catalogo_empleados"><i class="icono icon-book" style="float:left"></i> <span class="item-text">Catálogos</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="modulo_usuarios"><i class="icono icon-user" style="float:left"></i> <span class="item-text">Usuarios</span></a>
+		<a class="anclaMenu" href="modulo_usuarios_consulta"><i class="icono icon-user" style="float:left"></i> <span class="item-text">Usuarios</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
