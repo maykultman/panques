@@ -200,18 +200,22 @@ app.VistaNuevoContrato = Backbone.View.extend({
 
 		if (json.idcliente == '') {
 			alert('Seleccione un cliente para el contrato');
-			// elem.preventDefault();
+			elem.preventDefault();
 			return;
 		};
 
 		if ($('#porEvento').is(':checked')) {
 			delete json.mensualidades;
-			json.fechafinal = json.fechafinal[0];
+			delete json.mensualidadletras;
+			if ($.isArray(json.fechafinal)) {
+				json.fechafinal = json.fechafinal[0];
+			};
 			/*------------------------------------------------------*/
 			jsonContrato.nombrecontrato		= json.nombrecontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
+			// jsonContrato.mensualidadletras		= json.mensualidadletras;
 			jsonContrato.idcliente 			= json.idcliente;
 			jsonContrato.idrepresentante 	= json.idrepresentante;
 			jsonContrato.nplazos 			= json.nPlazos;
@@ -219,18 +223,21 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.plazo 				= json.plazo;
 			if (json.nPlazos == '' && json.plazo == '') {
 				alert('Especifique el plazo y el numero de plazos');
-				// elem.preventDefault();
+				elem.preventDefault();
 				return;
 			};
 		} else if ($('#iguala').is(':checked')){
 			delete json.plazo;
 			delete json.nPlazos;
-			json.fechafinal = json.fechafinal[1];
+			if ($.isArray(json.fechafinal)) {
+				json.fechafinal = json.fechafinal[1];
+			};
 			/*------------------------------------------------------*/
 			jsonContrato.nombrecontrato		= json.nombrecontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
+			jsonContrato.mensualidadletras		= json.mensualidadletras;
 			jsonContrato.idcliente 			= json.idcliente;
 			jsonContrato.idrepresentante 	= json.idrepresentante;
 			jsonContrato.nplazos 			= json.mensualidades;
@@ -238,18 +245,18 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.id = app.coleccionContratos_LocalStorage.ordenSiguente();
 			if (json.mensualidades == '') {
 				alert('Especifique las mensualidades');
-				// elem.preventDefault();
+				elem.preventDefault();
 				return;
 			};
 		} else {
 			alert('Elija tipo de plan');
-			// elem.preventDefault();
+			elem.preventDefault();
 			return;
 		};
 
 		if (json.fechainicio == '') {
 			alert('Especifique la fecha de inicio del contrato');
-			// elem.preventDefault();
+			elem.preventDefault();
 			return;
 		};
 
@@ -275,19 +282,18 @@ app.VistaNuevoContrato = Backbone.View.extend({
 				jsonPagos.idcontrato = exito.get('id');
 				thiS.guardarServicios_L(jsonServicios);
 				thiS.guardarPagos_L(jsonPagos);
-				
-				window.open("formatoContrato","miventana","menubar=no");
 
-				$('.secciones1').slideToggle(500);
-				$('.secciones2').slideToggle(500);
+				/*Descomentar las tres lineas siguientes para ver los datos en caso de pruebas*/
+					// $('.secciones1').slideToggle(500);
+					// $('.secciones2').slideToggle(500);
+					// var consulta_Hoja = new Consulta_Hoja();
 			},
 			error	: function (error) {
 				console.log('El contrato no a sido guardado');
 			}
 		});
 
-		// console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
-		// elem.preventDefault();
+		console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
 	},
 	cerrarVistaPrevia 		: function () {
 		$('.secciones1').slideToggle(500);
@@ -338,36 +344,43 @@ app.VistaNuevoContrato = Backbone.View.extend({
 
 		if ($('#porEvento').is(':checked')) {
 			delete json.mensualidades;
-			json.fechafinal = json.fechafinal[0];
+			delete json.mensualidadletras;
+			if ($.isArray(json.fechafinal)) {
+				json.fechafinal = json.fechafinal[0];
+			};
 			/*------------------------------------------------------*/
+			jsonContrato.nombrecontrato		= json.nombrecontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
+			// jsonContrato.mensualidadletras		= json.mensualidadletras;
 			jsonContrato.idcliente 			= json.idcliente;
 			jsonContrato.idrepresentante 	= json.idrepresentante;
 			jsonContrato.nplazos 			= json.nPlazos;
 			jsonContrato.plan 				= json.plan;
 			jsonContrato.plazo 				= json.plazo;
-
 			if (json.nPlazos == '' && json.plazo == '') {
 				alert('Especifique el plazo y el numero de plazos');
 				elem.preventDefault();
 				return;
 			};
-
 		} else if ($('#iguala').is(':checked')){
 			delete json.plazo;
 			delete json.nPlazos;
-			json.fechafinal = json.fechafinal[1];
+			if ($.isArray(json.fechafinal)) {
+				json.fechafinal = json.fechafinal[1];
+			};
 			/*------------------------------------------------------*/
+			jsonContrato.nombrecontrato		= json.nombrecontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
+			jsonContrato.mensualidadletras		= json.mensualidadletras;
 			jsonContrato.idcliente 			= json.idcliente;
 			jsonContrato.idrepresentante 	= json.idrepresentante;
 			jsonContrato.nplazos 			= json.mensualidades;
 			jsonContrato.plan 				= json.plan;
-
+			jsonContrato.id = app.coleccionContratos_LocalStorage.ordenSiguente();
 			if (json.mensualidades == '') {
 				alert('Especifique las mensualidades');
 				elem.preventDefault();
@@ -395,6 +408,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		jsonPagos.pago 			= json.pago;
 
 		/* -------------------------------------------------------- */
+		/**//*Eliminar todo la coleccion para no duplicar datos*/
+		/**/app.coleccionContratos_LocalStorage.each(function (model){ 
+		/**/	model.destroy();
+		/**/},this);
 		/**/Backbone.emulateHTTP = true;
 		/**/Backbone.emulateJSON = true;
 		/**/app.coleccionContratos.create(jsonContrato,{
@@ -418,6 +435,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		elem.preventDefault();
 	},
 	guardarServicios		: function (json) {
+		/*Eliminar todo la coleccion para no duplicar datos*/
+		app.coleccionServiciosContrato_LocalStorage.each(function (model){ 
+			model.destroy();
+		},this);
 		/* -------------------------------------------------------- */
 		/**/Backbone.emulateHTTP = true;
 		/**/Backbone.emulateJSON = true;
@@ -435,6 +456,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		/* -------------------------------------------------------- */
 	},
 	guardarPagos			: function (json) {
+		/*Eliminar todo la coleccion para no duplicar datos*/
+		app.coleccionPagos_LocalStorage.each(function (model){ 
+			model.destroy();
+		},this);
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		/* -------------------------------------------------------- */

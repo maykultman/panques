@@ -82,7 +82,7 @@
 					</div>    
 				</div>
 				<br>        			    
-			    <table id="tabla_contrato" class="table table-striped">
+			    <table id="tabla_contrato" class="table table-striped"><!--  border="1" -->
 					<thead style="background-color: #f9f9f9!important;">
 						<tr>
 							<td></td>
@@ -113,7 +113,7 @@
 					    </tr>
 					    <tr class="info">
 							<td></td>
-							<td colspan="4"><b>Total Neto</b></td>						
+							<td colspan="4"><b>Total Neto</b></td>
 							<td><b id="totalNeto">$0.00</b></td>						
 							<td></td>					
 					    </tr>
@@ -182,9 +182,12 @@
 							</td>	       									          			         
 				        </tr>
 				        <tr>
-				          <td colspan="2"><b>No. de Pago</b></td>
-				          <td colspan="3"><b>Fecha de pago</b></td>
-				          <td colspan="3"><b>Renta Mensual</b></td>
+							<td colspan="2"><b>No. de Pago</b></td>
+							<td colspan="3"><b>Fecha de pago</b></td>
+							<td colspan="3">
+								<b>Renta Mensual</b>
+								<input type="texto" class="form-control input-sm inputs_planIguala" name="mensualidadletras" placeholder="Pago mensual en letras">
+							</td>
 				        </tr>
 					</thead>
 					<!-- <tbody>
@@ -267,7 +270,7 @@
 			</td>
 	</script>
 	<script type="text/template" id="plantilla_contrato">
-		fechacreacion: 			<%- formatearFechaUsuario(new Date(fechacreacion)) %>	<br>
+		<!--fechacreacion: 			<%- formatearFechaUsuario(new Date(fechacreacion)) %>	<br>
 		fechafinal: 			<%- formatearFechaUsuario(new Date(fechafinal)) %>		<br>
 		fechafirma: 			<%- formatearFechaUsuario(new Date(fechafirma)) %>		<br>
 		fechainicio: 			<%- formatearFechaUsuario(new Date(fechainicio)) %>		<br>
@@ -281,7 +284,7 @@
 		nombreRepresentante: 	<%- nombreRepresentante %>								<br>
 		nombrecontrato: 		<%- nombrecontrato %>									<br>
 		total: 					<%- total %>											<br>
-		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>
+		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>-->
 	</script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
@@ -320,48 +323,47 @@
 	</script>
 <!-- vistas -->
 	<script type="text/javascript">
-		app = app || {};
-		var V_HojaContrato = Backbone.View.extend({
-			tagName			: 'div',
-			plantilla	: _.template($('#plantilla_contrato').html()),
-			render		: function () {
-				this.$el.html(this.plantilla(this.model.toJSON()));
-				return this;
-			}
-		});
+		// app = app || {};
+		// var V_HojaContrato = Backbone.View.extend({
+		// 	tagName			: 'div',
+		// 	plantilla	: _.template($('#plantilla_contrato').html()),
+		// 	render		: function () {
+		// 		this.$el.html(this.plantilla(this.model.toJSON()));
+		// 		return this;
+		// 	}
+		// });
 
-		var Consulta_Hoja	= Backbone.View.extend({
-			el	: '#divVistapreviaContrato',
-			initialize	: function () {
-				this.cargarContratos();
-			},
-			cargarContrato	: function (contrato) {
-				contrato.set({nombreCliente:app.coleccionClientes.get({id:contrato.get('idcliente')}).get('nombreComercial')});
-				contrato.set({nombreRepresentante:app.coleccionRepresentantes.get({id:contrato.get('idrepresentante')}).get('nombre')});
+		// var Consulta_Hoja	= Backbone.View.extend({
+		// 	el	: '#divVistapreviaContrato',
+		// 	initialize	: function () {
+		// 		this.cargarContratos();
+		// 	},
+		// 	cargarContrato	: function (contrato) {
+		// 		contrato.set({nombreCliente:app.coleccionClientes.get({id:contrato.get('idcliente')}).get('nombreComercial')});
+		// 		contrato.set({nombreRepresentante:app.coleccionRepresentantes.get({id:contrato.get('idrepresentante')}).get('nombre')});
 
-				var precio = 0.0;
-				var descuento = 0.0;
-				var total = 0.0;
+		// 		var precio = 0.0;
+		// 		var descuento = 0.0;
+		// 		var total = 0.0;
 
-				var cantidades = app.coleccionServiciosContrato_LocalStorage.pluck('cantidad');
-				var precios = app.coleccionServiciosContrato_LocalStorage.pluck('precio');
-				var descuentos = app.coleccionServiciosContrato_LocalStorage.pluck('descuento');
+		// 		var cantidades = app.coleccionServiciosContrato_LocalStorage.pluck('cantidad');
+		// 		var precios = app.coleccionServiciosContrato_LocalStorage.pluck('precio');
+		// 		var descuentos = app.coleccionServiciosContrato_LocalStorage.pluck('descuento');
 
-				for (var i = 0; i < cantidades[0].length; i++) {
-					precio 		= cantidades[0][i] * precios[0][i];
-					descuento 	=precio * ( descuentos[0][i]/100 );
-					total 		+= parseFloat((precio - descuento).toFixed(2));
-				};
-				contrato.set({total:(total + (total*app.iva)).toFixed(2)});
-				var vista = new V_HojaContrato({model:contrato});
-				this.$el.html(vista.render().el);
-				// var ventana = window.open("formatoCotizacion","miventana","menubar=no");
-				// console.log(ventana);
-			},
-			cargarContratos	: function () {
-				app.coleccionContratos_LocalStorage.each(this.cargarContrato, this);
-			}
-		});
+		// 		for (var i = 0; i < cantidades[0].length; i++) {
+		// 			precio 		= cantidades[0][i] * precios[0][i];
+		// 			descuento 	=precio * ( descuentos[0][i]/100 );
+		// 			total 		+= parseFloat((precio - descuento).toFixed(2));
+		// 		};
+		// 		console.log((total + (total*app.iva)).toFixed(2));
+		// 		contrato.set({total:(total + (total*app.iva)).toFixed(2)});
+		// 		var vista = new V_HojaContrato({model:contrato});
+		// 		this.$el.html(vista.render().el);
+		// 	},
+		// 	cargarContratos	: function () {
+		// 		app.coleccionContratos_LocalStorage.each(this.cargarContrato, this);
+		// 	}
+		// });
 	</script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoContrato.js'?>"></script>
