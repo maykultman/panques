@@ -1,20 +1,23 @@
+<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
 	<section class="contenedor_principal_modulos">
     <table id="tabla_cotizaciones" class="table table-striped table-curved">
-		<thead>
-		 <tr id="color_titulos">
+		<tr id="color_titulos">
 			<th style="text-align:center; width:40px; ">Marcar</th>
 			<th>
 				<input id="buscarCliente" class="form-control" type="text" placeholder="Cliente">
 			    <span class="icon-search busqueda"></span>
 			</th>
 			<th>
-				<input id="buscarUsuario" class="form-control" type="text" placeholder="Relizado por"><span class="icon-search busqueda"></span>
+				<input id="buscarEmpleado" class="form-control" type="text" placeholder="Relizado por"><span class="icon-search busqueda"></span>
 			</th>
+				
+				<th><div id="bfecha" class="abajo" style="margin-left:5px;">
+						Ordenar Por Fecha&nbsp;<span id="fecha" class="downt"></span>
+					</div>
+				</th>
 				<th>&nbsp;Total</th>
-				<th>&nbsp;&nbsp;Fecha</th>
 				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Operaciones</th>
 		    </tr>					
-		</thead>
 		<tbody id="lista_cotizaciones">
 			<!-- Lista de las ultimas cotizaciones-->
 		</tbody>		
@@ -37,8 +40,8 @@
 	<td><input type="checkbox" class="checkCot"/>
 	<td><a href="#"><%-cliente  %></a></td>
 	<td><a href="#"><%-empleado %></a></td>
-	<td>$<%- total %></td>
 	<td><%- fecha %></td>
+	<td>$<%- total %></td>
 	<td class="iconos-operaciones">
 		<span class="icon-trash"    data-toggle="tooltip" data-placement="top" title="Eliminar">		  </span>
 		<span class="icon-preview"  data-toggle="tooltip" data-placement="top" title="Ver cotización">	  </span>

@@ -36,12 +36,12 @@ app.VistaContrato = Backbone.View.extend({
 app.VistaConsultaContrato = Backbone.View.extend({
 	el	: '.contenedor_principal_modulos',
 	events	: {
-		'click #cliente'  : 'autocompleteCliente',
-		'keyup #cliente'  : 'borrayRenderiza',
-		'click #empleado' : 'autocompleteEmpleado',
-		'keyup #empleado' : 'borrayRenderiza',
-		'click .abajo'    : 'abajo',
-		'click .arriba'   : 'arriba'
+		'click #buscarCliente'  : 'busqueda',
+		'keyup #buscarCliente'  : 'borrayRenderiza',
+		'click #buscarEmpleado' : 'busqueda',
+		'keyup #buscarEmpleado' : 'borrayRenderiza',
+		'click .abajo'    : 'ordenarporfecha',
+		'click .arriba'   : 'ordenarporfecha'
 	},
 	initialize	: function () {
 		this.$tbody_contratos = $('#tbody_contratos');
@@ -67,98 +67,21 @@ app.VistaConsultaContrato = Backbone.View.extend({
 		app.coleccionContratos.each(this.cargarContrato, this);
 	},
 
-	abajo : function()
-	{
-		var contratos = app.coleccionDeContratos;
-		var ordenar = contratos.sort(function(a,b){
-			return ( b.id - a.id );
-		})
-		var model = new Array();
-
+	ordenarporfecha : function(fecha)
+	{ 
+		var modelo = ordenar(fecha, app.coleccionDeContratos);
 		this.$tbody_contratos.html('');
-		for( i in ordenar)
+		for( i in modelo)
 		{
-			model = Backbone.Model.extend({defaults : ordenar[i] });
-			this.cargarContrato(new model);
+			this.cargarContrato( ( new ( Backbone.Model.extend({ defaults : modelo[i] }) ) ) );
 		}
-		$('#bfecha').toggleClass('arriba');
-		$('#fecha').removeClass('downt');		
-		$('#fecha').addClass('upt');		
 	},
-	arriba : function()
+	busqueda : function(elemento)
 	{
-		var contratos = app.coleccionDeContratos;
-		var ordenar = contratos.sort(function(a,b){
-			return ( a.id - b.id );
-		})
-		var model = new Array();
-
-		this.$tbody_contratos.html('');
-		for( i in ordenar)
-		{
-			model = Backbone.Model.extend({defaults : ordenar[i] });
-			this.cargarContrato(new model);
-		}
-		$('#fecha').removeClass('upt');		
-		$('#fecha').addClass('downt');
-	},
-
-	autocompleteCliente : function (elemento)
-	{		
-        clientes = new Array();  var cont  = 0; 
-        for(i in app.coleccionDeClientes)
-        {
-             clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;          
-        };
-        
-        $('#cliente').autocomplete({ source : clientes }); // Autocompletamos
- 		
- 		var esto = this; // Respaldamos el this para llamar a una funcion dentro del evento siguiente...
-
-        $( "#cliente" ).on( "autocompleteselect", function( event, ui ) {
-            /*...Buscamos al cliente que nos proporciono el autocomplete en la coleccion.....*/
-            var modeloCont = app.coleccionContratos.where
-            				({ idcliente 		 : ( ( app.coleccionClientes.findWhere
-            				({ 'nombreComercial' :     ui.item.value } ) ).toJSON() ).id });
-
-     		esto.$tbody_contratos.html('');
-     		for(i in modeloCont)
-     		{
-     			esto.cargarContrato(modeloCont[i]);
-     		}
-            
-        });
-	},
-
-	autocompleteEmpleado : function (elemento)
-	{
-        var empleados = new Array();  var cont  = 0; 
-        for(i in app.coleccionDeEmpleados)
-        {
-             empleados[cont] = app.coleccionDeEmpleados[i].nombre; cont++;          
-        };
-        
-        $('#empleado').autocomplete({ source : empleados }); // Autocompletamos
- 		
- 		var esto = this; // Respaldamos el this para llamar a una funcion dentro del evento siguiente...
-
-        $( "#empleado" ).on( "autocompleteselect", function( event, ui ) {
-            /*...Buscamos al Empleado que nos proporciono el autocomplete en la coleccion.....*/              
-            var modeloCont = app.coleccionContratos.where
-            				({ 
-	            				idempleado : ( ( app.coleccionEmpleados.findWhere( { 
-	            				'nombre'   :     ui.item.value } ) ).toJSON() ).id 
-            				});
-	     	
-	     	esto.$tbody_contratos.html('');
-	     	for(i in modeloCont)
-	     	{
-	     		esto.cargarContrato(modeloCont[i]);	
-	     	}
-            
-        });
-	}, 
-
+		// input de busqueda, this, coleccion, tabla donde se renderizara el modelo
+		autocompleteGenerico(elemento, this, app.coleccionDeContratos, this.$tbody_contratos);
+	},	
+	
 	borrayRenderiza	: function (e) 
     {
 		if(e.keyCode===8)

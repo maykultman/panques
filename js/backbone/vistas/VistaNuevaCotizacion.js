@@ -12,9 +12,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             'keypress #cliente'   : 'soloLetras',        //Valida que en el campo cliente haya solo letras
             'click 	  .btndelete' : 'eliminarServicio',  //Elimina un servicio de la tabla servicios cotizando
             'keyup    .valor'     : 'establecerTotal',   //Escucha los cambios en los inputs numericos y actualiza el total
-            'keypress #bserv'     : 'buscarServicio',   //Escucha los cambios en los inputs numericos y actualiza el total
-            'keyup #bserv'        : 'buscarServicio',
-            'click #vistaPrevia'  : 'vistaPrevia'
+            // 'keypress #bserv'     : 'buscarServicio',   //Escucha los cambios en los inputs numericos y actualiza el total
+            // 'keyup #bserv'        : 'buscarServicio',
+            'click #vistaPrevia'  : 'vistaPrevia',
+            'click #bserv' : 'completarServicio',
+            'keyup #bserv' : 'sinCoincidencias'
         },
 
         initialize : function () {
@@ -42,6 +44,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
         cargarServiciosCo : function (){
         	/*....hacemos un ciclo each a la colección pasandole cada modelo de servicio para poder pintarlo en la tabla......*/
+            this.$tablaServicios.html('');
             app.coleccionServicios.each(this.cargarServicioCo, this);
         },
 
@@ -115,21 +118,33 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             });
         },
 
+        completarServicio : function()
+        {
+          var completar=new Array();
+          
+          for(i in app.coleccionDeServicios)
+          {
+             completar[i] = app.coleccionDeServicios[i].nombre;
+          }
+          $('#bserv').autocomplete({ source : completar});
+          var esto = this;
+          $( "#bserv" ).on( "autocompleteselect", function( event, ui ) { esto.buscarServicio(ui.item.value); });
+
+        },
         buscarServicio : function(elemento)
         {
-          app.coleccionServicios.fetch({reset:true, data:{nombre: $(elemento.currentTarget).val() }});
-
-          this.sinCoincidencias();
-
-          this.$tablaServicios.html('');
-          this.cargarServiciosCo();
+            var modeloServicio = app.coleccionServicios.findWhere({ nombre : elemento});
+            var vistaServicioCotizacion = new app.VistaServicioCotizacion( { model: modeloServicio } );
+            this.$tablaServicios.html('');
+            this.$tablaServicios.append( vistaServicioCotizacion.render().el );
         },
 
-        sinCoincidencias  : function () 
+        sinCoincidencias  : function (e) 
         {
-          if (app.coleccionServicios.length == 0) {
-            app.coleccionServicios.fetch({reset:true, data:{nombre: ''}});
-          };
+          if(e.keyCode===8)
+          {
+            this.cargarServiciosCo();
+          }
         },
 
 	    // Validamos que el campo #cliente solo contenga letras

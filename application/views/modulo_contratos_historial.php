@@ -1,14 +1,15 @@
- <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
+<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
+<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
  <div id="posicion_infotd">
     <table id="tbla_cliente" class="table table-striped">      
         <tr>
 	        <th style="text-align:center;">Todos<br><input type="checkbox"></th>           
 	    	<th>
-				<input id="cliente" class="form-control" type="text" placeholder="Cliente">
+				<input id="buscarCliente" class="form-control" type="text" placeholder="Cliente">
 				<span class="icon-search busqueda"></span>
 	        </th>
 	        <th>
-				<input id="empleado" class="form-control" type="text" placeholder="Realizado por">
+				<input id="buscarEmpleado" class="form-control" type="text" placeholder="Realizado por">
 				<span class="icon-search busqueda"></span>
 	        </th>
 	        <th>
