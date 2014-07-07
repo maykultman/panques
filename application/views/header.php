@@ -10,11 +10,11 @@
 					Nuevo <span class="icon-uniF476"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Cliente</a></li>
-					<li><a href="#">Prospecto</a></li>
-					<li><a href="#">Cotización</a></li>
-					<li><a href="#">Contrato</a></li>
-					<li><a href="#">Otro</a></li>
+					<li><a href="modulo_cliente_nuevo">Cliente</a></li>
+					<li><a href="modulo_contratos_nuevo">Contrato</a></li>
+					<li><a href="modulo_cotizaciones_nuevo">Cotización</a></li>					
+					<li><a href="modulo_proyectos_nuevo">Proyecto</a></li>
+					<li><a href="modulo_usuarios_nuevo">Usuario</a></li>
 				</ul>
 			</li>
 		</ul>
