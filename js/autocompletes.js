@@ -27,7 +27,7 @@
         
         $(elemento.currentTarget).on( "autocompleteselect", function( event, ui ) {
         	var modelo;
-            /*...Buscamos al cliente que nos proporciono el autocomplete en la coleccion.....*/
+        	/*...Buscamos al cliente que nos proporciono el autocomplete en la coleccion.....*/
             if($(elemento.currentTarget).attr('id')==='buscarCliente') 
 			{
 	            modelo = coleccion.where

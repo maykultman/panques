@@ -79,7 +79,7 @@ app.VistaConsultaContrato = Backbone.View.extend({
 	busqueda : function(elemento)
 	{
 		// input de busqueda, this, coleccion, tabla donde se renderizara el modelo
-		autocompleteGenerico(elemento, this, app.coleccionDeContratos, this.$tbody_contratos);
+		autocompleteGenerico(elemento, this, app.coleccionContratos, this.$tbody_contratos);
 	},	
 	
 	borrayRenderiza	: function (e) 
