@@ -5,4 +5,10 @@ var ColeccionLocalCotizaciones = Backbone.Collection.extend({
 	model : app.ModeloLocalCotizacion,
 });
 
+var ColeccionLocalServicios = Backbone.Collection.extend({
+	localStorage 	: new Backbone.LocalStorage('servicios'),
+	model : app.ModeloLocalServicio,
+});
+
 app.coleccionLocalCotizaciones = new ColeccionLocalCotizaciones();
+app.coleccionLocalServicios = new ColeccionLocalServicios();

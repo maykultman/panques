@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotizacion</title>	
@@ -10,190 +10,229 @@
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js">
 		<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>"></script>
 	</head>
-	<body>
-		<div id="contenedor_formato" >
-			<div id="cabecera" style="background: rgb(30,87,153);
-				background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 0%, rgba(32,124,202,1) 100%, rgba(125,185,232,1) 100%);
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(0%,rgba(41,137,216,1)), color-stop(100%,rgba(32,124,202,1)), color-stop(100%,rgba(125,185,232,1)));
-				background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%);
-				background: -o-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%);
-				background: -ms-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%);
-				background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%)!important;">
+<body>
+	<div id="contenedor_formato" >
+		<div id="previaCotizacion">
+		</div>
+		<div class="desborde"></div>
+
+		<div id="servicios">
+			<div id="contenedor_cotizados">
+				<table >			
+					<thead id="theadz">
+					    <tr class="taches">
+							<th width="400"><p class="servicio">Servicio</p></th><th width="180">Días</th><th width="100">P/Unitario</th><th width="100">Precio</th>
+						</tr>
+					</thead>
+					<tbody id="tbody">
+						
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3" style="text-align: right;"><p>Total:&nbsp;&nbsp;</p></td>
+							<td><p id="total"></p></td>					
+						</tr>
+					</tfoot>
+				</table>
+		    </div>
+		</div>
+		<div id="div_terminos">
+			<p style="margin: 0 38px;"><b>Términos y condiciones</b></p>
+				<ul>
+				    <li>Para iniciar el trabajo se requiere un brief, la información solicitada completa y haber cubierto el monto del anticipo.
+				    </li>
+				    <li>Al aprobar la cotización, enviaremos un cronograma de actividades con fechas de revisión y entrega.
+					 </li>
+					 <li>Se entregará una propuesta gráﬁca para su aprobación, una vez aprobada cualquier cambio generará
+					  costo adicional.
+				     </li>
+					 <li>Los precios NO incluyen IVA.</li>
+					 <li>Anticipo del 50% y saldo contra entrega del 50%. Anticipo no reembolsable.</li>
+					 <li>El archivo ﬁnal es propiedad del cliente, el proyecto no.</li>
+					 <li>El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
+				</ul>	
+		</div>	
+		<div id="pie" style=" ">    	
+		</div>
+	</div>	
+	<!-- <td><%-importe%></td> -->
+</body>
+</html>
+<!-- Plantilla -->
+<script type="text/template" id="datosCliente">
+			<div id="cabecera">
 				<div id="contenedor_izq">					
-					<label id="p_titulo"><font color="white">PRESUPUESTO</font></label>
+					<label id="p_titulo" >PRESUPUESTO</label>
 					<div class="desborde"></div>
-					<label  id="label_nomcotizacion"><font color="white">Pagina web complicada y App</font></label>
+					<label  id="label_nomcotizacion"><%- titulo %></label>
 				</div>
 
 				<div id="contenedor_derecho">
 					<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: 10px; margin-left: -30px;">
 					<div id="div_fecha">
-						<label><font color="white"><b id="fecha"></b></font></label>
+						<label><b class="white"><%-fecha%></b></label>
 					</div>
 					<div id="lbl_cliente">
-					<label><font color="white"><b>Cliente:</b></font></label>
+						<label><font color="white"><b class="white">Cliente:</b></font></label>
 				    </div>
 				    <div id="lbl_nomcliente">
-				    <label><font color="white">Jose Alberto Canul May</font></label>
+				    <label  class="white"><%- nombreComercial %></label>
+				    </div>
+				    <div id="lbl_representante">
+				    <label  class="white">Representante: </label>
+				    </div>
+				    <div id="lbl_nombrerepresentante">
+				    <label  class="white"><%- nombre%> </label>
 				    </div>
 				</div>    
 			    				
 			</div>
 			<div class="desborde"></div>
-			<div id="barra" style="  background: #4096ee;
-				background: -moz-linear-gradient(top, #4096ee 0%, #4096ee 100%);
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4096ee), color-stop(100%,#4096ee));
-				background: -webkit-linear-gradient(top, #4096ee 0%,#4096ee 100%);
-				background: -o-linear-gradient(top, #4096ee 0%,#4096ee 100%);
-				background: -ms-linear-gradient(top, #4096ee 0%,#4096ee 100%);
-				background: linear-gradient(to bottom, #4096ee 0%,#4096ee 100%) !important;">
+			<div id="barra">
 			</div>
 			<div id="detalles">	
 				<div>
-					<p style="margin-top: -1px;"><b>Detalle</b></p>
-					<font color="gray">
-						<p>Una aplicación móvil o app es una aplicación informática diseñada para ser ejecutada en teléfonos inteligentes,tabletas y otros dispositivos móviles.</p>
-					</font>
+					<p style="margin-top: -1px;"><b>Detalle</b></p>					
+						<p style="color:gray !important;"><%- detalles %></p>					
 				</div>
 				<div id="caract">
-				    <font color="gray">			
-						<p>Características:</p>
-						<p>
-						-Directorio de restaurantes y bares en Chetumal<br>
-						-La aplicación cuenta con una página web la cual alimenta la información y el contenido<br>
-						-La aplicación se descargará de manera nativa en la App Store,Google Play y Windows Store desde sus respectivas cuentas de developers<br>
-						-La aplicación Web se pondrá visualizar desde los navegadores móviles sin tener que instalarla
-						</p>
-					</font>	
-			</div>		    
+					<p style="margin-top: -1px;"><b>Características:</b></p>
+				    <p style="color:gray !important;">	<%- caracteristicas%></p>
+				</div>		    
 			</div>
 
-			<div id="info_contacto" style="	background: #4096ee;
-				background: -moz-linear-gradient(top, #4096ee 0%, #4096ee 100%);
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4096ee), color-stop(100%,#4096ee));
-				background: -webkit-linear-gradient(top, #4096ee 0%,#4096ee 100%);
-				background: -o-linear-gradient(top, #4096ee 0%,#4096ee 100%);
-				background: -ms-linear-gradient(top, #4096ee 0%,#4096ee 100%);
-				background: linear-gradient(to bottom, #4096ee 0%,#4096ee 100%) !important;">
-				<p style="margin-left:15px; margin-top: 10px;"><font color="white"><b>Contacto</b><br>
+			<div id="info_contacto">
+				<p style="margin-left:15px; margin-top: 10px;" class="white"><b class="white">Contacto</b><br>
 				Email: contacto@qualium.mx<br>
 				Teléfono: (999)2852274<br>
 				Dirección: Calle 22 x 7 y 9
 				Col.México, C.P. 97113. Mérida, Yucatán.<br>
 			    <a href="http://qualium.mx/" target="_blank" >www.qualium.mx</a><br><br>
-		        <b>Horario de  atención</b><br>
+		        <b  class="white">Horario de  atención</b><br>
 				Lunes  a viernes 9am - 6pm</font></p>
 			</div>
 			<div class="desborde"></div>
-			<div id="redes_sociales" style="background: rgb(238,238,238); 
-				background: -moz-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%); 
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(238,238,238,1))); 
-				background: -webkit-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
-				background: -o-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
-				background: -ms-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
-				background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%) !important;">
+			<div id="redes_sociales">
 				<img  src="../../img/formatoCotizacion/face.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/twitter.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/google.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/in.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/be.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/vine.png" alt="" class="img_redesociales">
-			</div>		
-			<div class="desborde"></div>
-		 	<div id="contenedor_cotizados">
-				<table class="table">			
-					<thead style="background:#A4A4A4;">
-					    <tr>
-							<th>Servicio</th>
-							<th>Días</th>
-							<th>Unidades</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Desarrollo de aplicación movil con tecnologia HTML 5</td>
-							<td>20</td>
-							<td>1</td>
-							<td>$8,000.00</td>
-							<td>$8,000.00</td>					
-						</tr>
-						<!-- <tr>
-							<td>Desarrollo del gestor de contenidos (Back-End) para alimentar la aplicación.</td>
-							<td>4</td>
-							<td>1</td>
-							<td>$8,000.00</td>
-							<td>$8,000.00</td>					
-						</tr>
-						<tr>
-							<td>Aplicación Nativa para iOS disponible para descargar en la AppStore.
-		                    </td>
-							<td>4</td>
-							<td>1</td>
-							<td>$6,667.00</td>
-							<td>$6,667.00</td>					
-						</tr>
-						<tr>
-							<td>Aplicación Nativa para Android disponible para descargar en Google  Play</td>
-							<td>4</td>
-							<td>1</td>
-							<td>$6,667.00</td>
-							<td>$6,667.00</td>					
-						</tr>
-						<tr>
-							<td>Aplicación Nativa para Windows Phone disponible para descargar
-		                    en Windows Store.
-		                    </td>
-							<td>4</td>
-							<td>1</td>
-							<td>$6,667.00</td>
-							<td>$6,667.00</td>					
-						</tr> -->
-						<tr>
-							<td colspan="4" style="text-align: right;">Total:</td>
-							<td >$36,000.00</td>					
-						</tr>
-					</tbody>
-				</table>
-		    </div>
-			<div id="div_terminos">
-				<p style="margin: 0 38px;"><b>Términos y condiciones</b></p>
-				<ul>
-				  <li>Para iniciar el trabajo se requiere un brief, la información solicitada completa y haber cubierto el monto del anticipo.
-				  </li>
-				  <li>Al aprobar la cotización, enviaremos un cronograma de actividades con fechas de revisión y entrega.
-				  </li>
-				  <li>Se entregará una propuesta gráﬁca para su aprobación, una vez aprobada cualquier cambio generará
-				  costo adicional.
-			      </li>
-				  <li>Los precios NO incluyen IVA.</li>
-				  <li>Anticipo del 50% y saldo contra entrega del 50%. Anticipo no reembolsable.</li>
-				  <li>El archivo ﬁnal es propiedad del cliente, el proyecto no.</li>
-				  <li>El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
-				</ul>	
-			</div>	
-		    <div id="pie" style=" background: #499bea; 
-			   background: -moz-linear-gradient(top, #499bea 0%, #207ce5 85%); 
-			   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#499bea), color-stop(85%,#207ce5)); 
-			   background: -webkit-linear-gradient(top, #499bea 0%,#207ce5 85%); 
-			   background: -o-linear-gradient(top, #499bea 0%,#207ce5 85%); 
-			   background: -ms-linear-gradient(top, #499bea 0%,#207ce5 85%); 
-			   background: linear-gradient(to bottom, #499bea 0%,#207ce5 85%) !important;">    	
-		    </div>
-		</div>
-	</body>
-</html>
+			</div>
+</script>
+<script type="text/template" id="filaServicio">
+	<td><p class="servicio">  <%- idservicio	%><p>	</td>
+	<td> <%- duracion	%>  </td>
+	<td> <%- precio 	%>	</td>						
+	<td class="importe"> <%- importe 	%>	</td>
+</script>
+<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+<script type="text/javascript">
+	var app = app || {};
+		
+	app.coleccionDeClientes 		= <?=json_encode($clientes) ?>;
+	app.coleccionDeServicios 		= <?=json_encode($servicios) ?>;
+	app.coleccionDeRepresentantes 	= <?=json_encode($representantes) ?>;
 
+</script>
 <!-- Librerias -->
+<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone.localStorage.js'?>"></script>
 
 <!-- MVC -->
-
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script><!--  -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script><!--  -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script><!--  -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloLocalCotizacion.js'  		  ?>"> </script>
 
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script><!--  -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script><!--  -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/coleccionRepresentantes.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionLocalCotizaciones.js' ?>"> </script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaLocalCotizacion.js' ?>"> </script>
+<script type="text/javascript">
+ app = app || {};
+
+ var datos = Backbone.View.extend({
+ 	tanName : 'div',
+ 	plantilla : _.template($('#datosCliente').html()),
+ 
+ 	render : function()
+ 	{
+ 		this.$el.html(this.plantilla(this.model.toJSON()));
+ 		return this;
+ 	}
+ });
+
+ var Servicios = Backbone.View.extend({
+ 	tagName : 'tr',
+ 	className : '.table',
+ 	plantilla : _.template($('#filaServicio').html()),
+ 
+ 	render : function()
+ 	{
+ 		this.$el.html(this.plantilla(this.model.toJSON()));
+ 		return this;
+ 	}
+ });
+
+ var PreviaCotizacion = Backbone.View.extend({
+ 	el : 'body',
+
+ 	initialize : function()
+ 	{
+ 		this.array = 0,
+ 		app.coleccionLocalCotizaciones.fetch();
+ 		this.cargarCotizaciones();
+ 		app.coleccionLocalServicios.fetch();
+ 		this.cargarServicios();
+
+ 	},
+
+ 	cargarCotizacion : function(modelo)
+ 	{
+ 		// var fecha = formatearFechaUsuario(new Date(modelo.get('fecha')));
+ 		// console.log(fecha);
+ 		modelo.set({ fecha      :  formatearFechaUsuario(new Date(modelo.get('fecha')))  });
+ 		modelo.set({nombreComercial:app.coleccionClientes.get({id:modelo.get('idcliente')}).get('nombreComercial')});	
+ 		modelo.set({nombre:app.coleccionRepresentantes.get({id:modelo.get('idrepresentante')}).get('nombre')});	
+ 		var cotizacion = new datos({ model : modelo});
+ 		this.$('#previaCotizacion').html(cotizacion.render().el);
+ 	},
+
+ 	cargarCotizaciones : function()
+ 	{
+ 		app.coleccionLocalCotizaciones.each(this.cargarCotizacion, this);
+ 	},
+ 	cargarServicio : function(modelo)
+ 	{
+ 		modelo.set({ idservicio : app.coleccionServicios.get
+ 				  ({ id         : modelo.get('idservicio')}).get('nombre'),
+ 				     importe    : (Number(modelo.get( 'precio'    ) ) )*
+ 				     			  (Number(modelo.get( 'cantidad'  ) ) )-
+ 				     			  (Number(modelo.get( 'descuento' ) ) ) 				  	 
+ 				  });
+
+ 		var vista = new Servicios({ model: modelo});
+ 		this.$('#tbody').append( vista.render().el);
+ 		this.array += parseInt(modelo.get('importe'));		
+ 		
+ 	},
+
+ 	cargarServicios : function()
+ 	{
+ 		app.coleccionLocalServicios.each(this.cargarServicio, this);
+ 		$('#total').text('$'+this.array);
+ 		// console.log(this.array);
+ 	}
+
+
+ });
+
+ app.previaCotizacion = new PreviaCotizacion();
+
+
+</script>

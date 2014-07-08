@@ -2,9 +2,11 @@
 	<h3>Información Básica</h3>
 	<hr>
 		<div class="datos_cotizacion">
+			<input id="titulo" value="" class="form-control" placeholder="Titulo de Cotización">
 			<input id="cliente" 	  type="search" value="" class="form-control" placeholder="Buscar cliente"><span id="busqueda_icono" class="icon-search"></span>
 			<input id="representante" type="text"   value="" class="form-control" placeholder="Representante" disabled="true">	
-			<form id="registroCotizacion">			
+			<form id="registroCotizacion">
+				<input type="hidden" id="htitulo"    name="titulo"    value="">			
 				<input type="hidden" id="idcliente" name="idcliente" value="">
 				<input type="hidden" id="idrepresentante" name="idrepresentante" value="">
 				<input id="fecha"   type="text"   name="fecha" class="form-control" val="" disabled="true" >	
@@ -29,7 +31,6 @@
 				</tbody>
 			</table> <!-- Tabla de Servicios -->
 		</div>	        
-
 		<table id="mostrarTabla" class="table table-striped">
 			<thead style="background : #F9F9F9;">
 				<tr>
@@ -37,7 +38,7 @@
 					<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				</tr>
 			</thead>
-			<tbody id="trServicio"> </tbody>		
+			<tbody id="trServicio"> </tbody>
 			<tr class="info"> <td></td> <td colspan="5">Total</td> <td><p id="total">0.00</p></td><td></td></tr>			
 			<tfoot>
 			<tr>
@@ -75,12 +76,11 @@
 <script type = "text/plantilla" id="serviciosAgregado">	
 
 		<td><input type="checkbox" id="todos" name="todos"></td><td><%-nombre %></td>
-
-		<td><input type="text" id="duracion"  value="<%-realizacion%>"   class="valor">   </td>
-		<td><input type="text" id="cantidad"  value="1"				     class="valor">   </td>
-		<td><input type="text" id="precio"    value="<%-precio     %>"   class="valor">   </td>
-		<td><input type="text" id="descuento" value="0" 				 class="valor">   </td>		
-		<td><input 			   id="importe" 							 class="importes" name="importes" >
+		<td><input type="text" id="duracion"  name="duracion"  value="<%-realizacion%>"  class="valor">   </td>
+		<td><input type="text" id="cantidad"  name="cantidad"  value="1"				 class="valor">   </td>
+		<td><input type="text" id="precio"    name="precio"    value="<%-precio     %>"  class="valor">   </td>
+		<td><input type="text" id="descuento" name="descuento" value="0" 				 class="valor">   </td>		
+		<td><input 			   id="importe"   name="importes" 						     class="importes">
 		<form class="filas">
 			  <input type="hidden"   				 name="id" 		  value="<%-id%>"		   >
 		      <input type="hidden"  id="hduracion"   name="duracion"  value="<%-realizacion%>" >

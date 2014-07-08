@@ -12,7 +12,7 @@ $route['dashboard'] = 'escritorio/dashboard';
 
 $route['formatoCotizacion'] = 'escritorio/formato';
 $route['formatoContrato']   = 'escritorio/formato';
-
+// $route['pruebas'] = 'pruebas';
 # Rutas para el cliente
 $route['modulo_Clientes'] 			 = 'escritorio/clientes';
 $route['modulo_cliente_nuevo'] 		 = 'escritorio/clientes/$1';

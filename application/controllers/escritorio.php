@@ -30,7 +30,10 @@ class Escritorio extends REST {
 	{
 		$this->load->view('pruebausuario');
 	}
-
+	public function pruebas()
+	{
+		$this->load->view('pruebas');
+	}
 	public function catalogos()
 	{
 		$this->area_Estatica('modulo_catalogos');

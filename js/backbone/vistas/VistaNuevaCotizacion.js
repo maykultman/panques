@@ -16,7 +16,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             // 'keyup #bserv'        : 'buscarServicio',
             'click #vistaPrevia'  : 'vistaPrevia',
             'click #bserv' : 'completarServicio',
-            'keyup #bserv' : 'sinCoincidencias'
+            'keyup #bserv' : 'sinCoincidencias',
+            'blur  #titulo': 'titulo'
         },
 
         initialize : function () {
@@ -35,6 +36,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
         render : function () { return this; },
 
+        titulo : function()
+        {
+            $('#htitulo').val($('#titulo').val());
+            console.log($('#htitulo').val());
+        },
         cargarServicioCo	: function (serviciosCotizacion) {
         	 /*....................Instanciamos un modelo servicios y le pasamos el modelo.............*/
               var vistaServicioCotizacion = new app.VistaServicioCotizacion( { model:serviciosCotizacion } );
@@ -81,7 +87,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             	$('#total').text(array.importes);	
             }	            	
         },
-
         marcarTodosCheck : function(elemento){
         	/*..Totos los checkbox de la tabla de servicios cotizando tienen el mismo id....*/
         	var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
@@ -133,8 +138,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         },
         buscarServicio : function(elemento)
         {
-            var modeloServicio = app.coleccionServicios.findWhere({ nombre : elemento});
-            var vistaServicioCotizacion = new app.VistaServicioCotizacion( { model: modeloServicio } );
+            var modeloServicio = app.coleccionServicios.where({ nombre : elemento});
+            var vistaServicioCotizacion = new app.VistaServicioCotizacion( { model: modeloServicio[0] } );
             this.$tablaServicios.html('');
             this.$tablaServicios.append( vistaServicioCotizacion.render().el );
         },
@@ -189,27 +194,51 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
         vistaPrevia : function(elemento)
         {
-
-
-          // var html = document;
-          // console.log(html);
-
-          var f = new Date();
-          var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
-          modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
-          modelocotizacion.idempleado = '46';
-
-          
-          app.coleccionLocalCotizaciones.create
-          (
-            modelocotizacion,
-            {
-              wait: true,
-              success: function (data){ console.log('exito')},
-              error: function (error) {}
-            }
-          );
-        // javascript:window.open('formato','','width=600,height=400,left=50,top=50,toolbar=yes');
+            var modeloservicios = pasarAJson($('.filas').serializeArray());
+            var longitud = modeloservicios.id;
+        
+            var f = new Date();
+            var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
+            modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+            modelocotizacion.idempleado = '46';
+            app.coleccionLocalCotizaciones.create
+            (
+                modelocotizacion,
+                {
+                  wait: true,
+                  success: function (data)
+                  { 
+                    console.log('exito');
+                    for(i in longitud)
+                    {   
+                        app.coleccionLocalServicios.create
+                        (                           
+                            {     
+                                idcotizacion : data.get('id'),  
+                                idservicio   : modeloservicios.id[i],
+                                duracion     : modeloservicios.duracion[i],
+                                cantidad     : modeloservicios.cantidad[i],
+                                precio       : modeloservicios.precio[i],
+                                descuento    : modeloservicios.descuento[i]                          
+                            },
+                            { 
+                                wait:true,
+                                success:function(exito)
+                                { /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
+                                    console.log('Fue exito');
+                                },
+                                error:function(error)
+                                {/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o 
+                                    preguntale a la API que ¡onda! :/ ..*/
+                                    console.log('Fue error ',error);
+                                }
+                            }
+                        );
+                    };
+                  },
+                  error: function (error) {}
+                }
+            );
           
           elemento.preventDefault();
         },
