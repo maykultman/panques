@@ -67,12 +67,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	ordenarporfecha : function(fecha)
 	{	
-		var modelo = ordenar(fecha, app.coleccionCotizaciones, app.coleccionDeCotizaciones);
-		// this.$tablaCotizaciones.html('');
-		// for( i in modelo)
-		// {
-		// 	this.cargarCotizacion( (new (Backbone.Model.extend({ defaults : modelo[i] }) ) ) );
-		// }
+		ordenar(fecha, app.coleccionCotizaciones, app.coleccionDeCotizaciones);
 	},
 
 	busqueda : function(elemento)

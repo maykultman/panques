@@ -124,6 +124,7 @@ app.VistaConsultaContrato = Backbone.View.extend({
 	initialize	: function () {
 		this.$tbody_contratos = $('#tbody_contratos');
 		this.cargarContratos();
+		this.listenTo( app.coleccionContratos, 'reset', this.cargarContratos);
 	},
 	render		: function () {},
 	cargarContrato	: function (contrato) {
@@ -142,18 +143,15 @@ app.VistaConsultaContrato = Backbone.View.extend({
 		this.$tbody_contratos.append(vista.render().el);
 	},
 	cargarContratos	: function () {
+		this.$tbody_contratos.html('');
 		app.coleccionContratos.each(this.cargarContrato, this);
 	},
 
 	ordenarporfecha : function(fecha)
 	{ 
-		var modelo = ordenar(fecha, app.coleccionDeContratos);
-		this.$tbody_contratos.html('');
-		for( i in modelo)
-		{
-			this.cargarContrato( ( new ( Backbone.Model.extend({ defaults : modelo[i] }) ) ) );
-		}
+		ordenar(fecha, app.coleccionContratos, app.coleccionDeContratos);
 	},
+	
 	busqueda : function(elemento)
 	{
 		// input de busqueda, this, coleccion, tabla donde se renderizara el modelo
