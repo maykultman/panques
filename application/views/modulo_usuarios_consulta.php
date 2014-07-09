@@ -22,7 +22,7 @@
 			      <div class="panel-body">
 			      	<div class="row">
 					  <div class="col-md-4" style="width: 15% !important;"> 
-					  <img src="" alt="" class="img-thumbnail img_usuario" style="margin-left: 30px; margin-top: 5px;">
+					  <img src="" alt="" class="img-thumbnail img_usuario" style="margin-top: 5px;">
 					  </div>
 					  <div class="col-md-4" style="width: 42.5% !important">
 					  	<div class="padre">

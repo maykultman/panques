@@ -7,8 +7,11 @@ $route['default_controller'] = "escritorio";
 // $route['(:any)'] = 'escritorio/index/$1';
 // $route['escritorio/'] = 'escritorio/';
 $route['pruebausuario'] = 'escritorio/prueba';
+
 # Dashboard
 $route['dashboard'] = 'escritorio/dashboard';
+// $route['dashboard_gustavo'] = 'escritorio/dashboard';
+
 
 $route['formatoCotizacion'] = 'escritorio/formato';
 $route['formatoContrato']   = 'escritorio/formato';

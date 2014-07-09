@@ -1,0 +1,53 @@
+/*#tabla_dominios{
+	height: 300px;
+	overflow: auto;
+	width: 350px;
+}
+
+#tabla_pagos_igualas, #tabla_pagos_eventos{
+	height: 258px;
+	overflow: auto;
+	width: 500px;
+}
+
+#tabla_cotizaciones{
+	height: 300px;
+	overflow: auto;
+	width: 925px;
+}
+
+#tabla_status_proyectos{
+	width: 925px;
+	height: 300px;
+	overflow: auto;
+}
+#tabla_status_proyectos .tr_status{
+	padding: 18px 8px 18px 8px;
+}*/
+
+#icono_panel{
+
+	float: right;
+	margin-top: -18px;
+	font-size: 20px;
+}
+
+.color{
+
+	background-color: #f5f5f5 !important;
+	background-image: none !important;
+}
+
+tbody.scroll_dominios { 
+	
+	display: block; /*obligado*/ 
+	height: 145px; /*la que necesites*/ 
+	overflow: auto !important; /*obligado*/
+	width:100% !important;
+	
+	}
+
+td{
+
+	width: 100%!important
+}	

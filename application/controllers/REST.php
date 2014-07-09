@@ -34,12 +34,16 @@ class  REST extends CI_Controller {
         }
     }
 
-    public function area_Estatica($modulo, $var = FALSE)
+    public function area_Estatica($modulo=false, $var = FALSE)
     {
         $this->load->view('cabecra_y_menu.html');
         $this->load->view('header');
-        $this->load->view('menu');            
-        ($var===FALSE) ?  $this->load->view($modulo) : $this->load->view($modulo,$var); 
+        $this->load->view('menu');  
+        if($modulo)
+        {
+            ($var===FALSE) ?  $this->load->view($modulo) : $this->load->view($modulo,$var);     
+        }
+        
     }
 
     public function pre_response($query, $metod)
