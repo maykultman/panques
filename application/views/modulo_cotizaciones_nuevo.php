@@ -53,8 +53,12 @@
 			<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>				
 		</div>		
 		<!-- <table id="con"></table>	 -->
-    </section>    
+    </section>
+
 </div>
+
+
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type = "text/plantilla" id="plantilla_Cotizacion">
 </script>

@@ -173,9 +173,9 @@ app.busquedaCotizacion2.cotizacion2 = (function () {
 function formatearFechaUsuario (fecha) {
     var fechaFormateada = '';
     if ((fecha.getDate()) < 10 )
-    fechaFormateada = '0'+(fecha.getDate());
+        fechaFormateada = '0'+(fecha.getDate()); 
     else
-        fechaFormateada = (fecha.getDate());
+        fechaFormateada = (fecha.getDate()+1);
     if ((fecha.getMonth() +1) < 10 )
         fechaFormateada += '/0'+(fecha.getMonth() +1);
     else

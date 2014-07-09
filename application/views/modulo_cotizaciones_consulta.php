@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
 <script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
 	<section class="contenedor_principal_modulos">
     <table id="tabla_cotizaciones" class="table table-striped table-curved">
@@ -38,10 +39,10 @@
 
 <script type = "text/plantilla" id="tabla_Cotizacion">
 	<td><input type="checkbox" class="checkCot"/>
-	<td><a href="#"><%-cliente  %></a></td>
-	<td><a href="#"><%-empleado %></a></td>
-	<td><%- fecha %></td>
-	<td>$<%- total %></td>
+	<td> <%- cliente  %> </td>
+	<td> <%- empleado %> </td>
+	<td> <%- fecha    %> </td>
+	<td>$<%- total    %> </td>
 	<td class="iconos-operaciones">
 		<span class="icon-trash"    data-toggle="tooltip" data-placement="top" title="Eliminar">		  </span>
 		<span class="icon-preview"  data-toggle="tooltip" data-placement="top" title="Ver cotización">	  </span>
@@ -53,7 +54,7 @@
 </script>
 
 <!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
 <script type="text/javascript">
 	var app = app || {};

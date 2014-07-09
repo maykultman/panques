@@ -55,36 +55,20 @@
         });
 	}
 
-	function ordenar(fecha, coleccion)
-	{  console.log(coleccion);
-		if($(fecha.currentTarget).attr('class')==='abajo')
+	function ordenar(fecha, coleccion, coleccionDe)
+	{  
+		var parametros = ['abajo','arriba'];
+		var flecha     = ['downt','upt'];
+		
+		if($(fecha.currentTarget).attr('class')==='arriba')
 		{
-			$('#bfecha').removeClass('abajo');
-			$('#bfecha').addClass('arriba');
-			$('#fecha').removeClass('downt');		
-			$('#fecha').addClass('upt');			
+			parametros.reverse();
+			flecha.reverse();		
 		}
-		else
-		{
-			$('#bfecha').removeClass('arriba');
-			$('#bfecha').addClass('abajo');
-			$('#fecha').removeClass('upt');		
-			$('#fecha').addClass('downt');			
-		}
-		var ordenar = coleccion.sort
-		(
-			function(a,b)
-			{
-				if($(fecha.currentTarget).attr('class')==='abajo')
-				{
-					alert('e.e');
-					return ( b.fecha - a.fecha );	
-				}
-				else
-				{
-						return (a.fecha - b.fecha);
-				}			
-			}
-		);		
-		return ordenar;		
+		$( '#bfecha' ) .removeClass ( parametros [0] );
+		$( '#bfecha' ) .addClass    ( parametros [1] );
+		$( '#fecha'  ) .removeClass ( flecha     [0] );		
+		$( '#fecha'  ) .addClass    ( flecha     [1] );	
+		
+		return coleccion.reset(coleccionDe.reverse());		
 	}

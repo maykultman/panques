@@ -46,7 +46,8 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	}
 	 	/*...Añadimos campos a la colección de modelocotización...*/ 	 	
 	 	modelo.set
-	 	({ 
+	 	({  
+	 		fecha      : formatearFechaUsuario(new Date(modelo.get('fecha'))), 				  
 	 		'empleado' : app.coleccionEmpleados.get ({ id : modelo.get( 'idempleado' )} ).get('nombre'),
 	 		'cliente'  : app.coleccionClientes. get ({ id : modelo.get( 'idcliente'  )} ).get('nombreComercial'), 
 			'total'    : total
@@ -66,12 +67,12 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	ordenarporfecha : function(fecha)
 	{	
-		var modelo = ordenar(fecha, app.coleccionDeCotizaciones);
-		this.$tablaCotizaciones.html('');
-		for( i in modelo)
-		{
-			this.cargarCotizacion( (new (Backbone.Model.extend({ defaults : modelo[i] }) ) ) );
-		}
+		var modelo = ordenar(fecha, app.coleccionCotizaciones, app.coleccionDeCotizaciones);
+		// this.$tablaCotizaciones.html('');
+		// for( i in modelo)
+		// {
+		// 	this.cargarCotizacion( (new (Backbone.Model.extend({ defaults : modelo[i] }) ) ) );
+		// }
 	},
 
 	busqueda : function(elemento)
