@@ -1,45 +1,12 @@
 		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
 		<!-- scrpit de prueba para la fecha y efecto de toggle para mostrar detalles del servicio -->
-		<script>
-		 //  $(function() {
-		 //    $( ".datepicker" ).datepicker({
-		 //      changeMonth: true,
-		 //      changeYear: true
-		 //    });
-		 //  });
-
-			// $(document).ready(function(){
-			//   $(".icon_detalles").click(function(){
-			//     $("#div_info").slideToggle();
-			//   });
-			// });		
-
-			// $(document).ready(function() {
-			//     $("input[name$='options']").click(function() {
-			//         var test = $(this).val();
-
-			//         $("div.desc").hide();
-			//         $("#Cars" + test).show();
-			//     });
-			// 	var cont= 1;
-
-			// 	$('.btn-primary').on('change',function (){
-
-			// 		if ( cont==1 ){}
-
-
-			// 		// console.log($(this).html());
-			// 		$('.tabla_visible').toggleClass('tabla_oculto');
-			// 	});
-			// });		
-		</script>
 		<section class="secciones1">
 			<form id="formulario">
 				<div class="row" >
 					<div class="col-md-6">
 						<h3>Datos basicos</h3>					
 						<hr>
-						<div>						  
+						<div>
 							<input type="text" id="busqueda" class="form-control input_largo" placeholder="Buscar cliente">
 							<input type="hidden" id="hidden_idCliente" name="idcliente">
 							<span id="span_buscar" class="icon-search"></span>
@@ -47,18 +14,18 @@
 							<input type="text" id="input_Representante" class="form-control input_largo" disabled placeholder="Representante">
 							<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
 							<!--  -->
-							<input type="text" class="form-control input_largo" name="nombrecontrato" placeholder="Nombre para el contrato">
+							<input type="text" class="form-control input_largo" name="titulocontrato" placeholder="Nombre para el contrato">
 							<!--  -->
 							<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se firmará el contrato">
 							<input type="hidden" id="hidden_fechafirma" name="fechafirma">
-							<input type="hidden" id="hidden_idEmpleado" name="idempleado" val="65">
+							<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->
 					    </div>
 						
 						
 						<h5 style="display: inline-block"><b>Eliga Tipo de plan:</b></h5>
 						<div id="planes" class="btn-group" data-toggle="buttons">
-							<label for="porEvento" class="btn btn-primary">
-								<input type="radio" name="plan" id="porEvento" class="btn_plan" value="evento">Por Evento
+							<label for="evento" class="btn btn-primary">
+								<input type="radio" name="plan" id="evento" class="btn_plan" value="evento">Por Evento
 							</label>
 							<label for="iguala" class="btn btn-primary">
 								<input type="radio" name="plan" id="iguala" class="btn_plan" value="iguala">Iguala Mensual
@@ -226,9 +193,9 @@
 <!-- plantillas -->
 	<script type="text/template" id="plantillaServicio">
 		<td style="width: 580px ">
-			<span   class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>
-			<label for="servicio_<%- id %>"><%- nombre %></label>
-			<div id="div_info">
+			<!--<span   class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>-->
+			<label class="clasePrueba" for="servicio_<%- id %>"><%- nombre %></label>
+			<div class="div_info" style="display: none;">
 				<ul>	
 					<li>Concepto: 		<h7><%- concepto %>		</h7><li>
 					<li>P/Unitario: 	<h7>$<%- precio %>		</h7><li>
@@ -367,4 +334,7 @@
 	</script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoContrato.js'?>"></script>
+	<script type="text/javascript">
+		app.vistaNuevoContrato = new app.VistaNuevoContrato();
+	</script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/routers/router.js'?>"></script>

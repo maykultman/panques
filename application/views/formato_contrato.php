@@ -22,7 +22,7 @@
 	plazo: 					<%- plazo %>											<br>
 	nombreComercial: 		<%- nombreComercial %>									<br>
 	nombreRepresentante: 	<%- nombreRepresentante %>								<br>
-	nombrecontrato: 		<%- nombrecontrato %>									<br>
+	titulocontrato: 		<%- titulocontrato %>									<br>
 	total: 					<%- total %>											<br>
 	pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>
 </script>
@@ -52,7 +52,7 @@
 
 
 
-		<b><u><%- nombrecontrato %></u></b> que incluirán lo presentado en la cotización.<u></u></span></p>
+		<b><u><%- titulocontrato %></u></b> que incluirán lo presentado en la cotización.<u></u></span></p>
 
 
 

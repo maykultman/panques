@@ -171,6 +171,7 @@ class Escritorio extends REST {
 		$data['empleados']		= $this->empleado->get();		# List de representantes
 		if($this->ruta() == 'modulo_contratos_nuevo')
 		{
+			// $this->load->view('formularioContrato');
 			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'modulo_contratos_historial')
@@ -183,7 +184,9 @@ class Escritorio extends REST {
 			$data['serviciosDeContrato'] = $this->Model_ServiceContract->get();
 			$data['pagos'] = $this->Model_payment->get();
 
+			
 			$this->load->view($this->ruta(), $data);
+			// $this->load->view('formularioContrato');
 		}
 	}
 

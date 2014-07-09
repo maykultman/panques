@@ -5,6 +5,9 @@ app.VistaServicioSeleccionado = Backbone.View.extend({
 	plantillaDefault	: _.template($('#servicioContratado').html()),
 	events					: {
 		'click .eliminar'		: 'eliminarSeleccion',
+		/*El botón se encuentra en la plantilla servicioContratado del
+		  modulo de historial de contratos. Elimina de la base de datos*/
+			// 'click .eliminarBD'	: 'eliminar',
 		// 'keyup  #descuento'		: 'establecerPrecio',
 		// 'keyup  #cantidad'		: 'calcularTotal',
 		// 'keyup  #precio'		: 'calcularDescuento',
@@ -15,8 +18,11 @@ app.VistaServicioSeleccionado = Backbone.View.extend({
 	initialize			: function () {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'change', this.calcularImporteIVATotalNeto);
+		/*Es para el modulo de consulta de contratos*/
+			this.listenTo(this.model, 'destroy', this.remove);
 	},
 	render				: function () {
+		// console.log(this.model.toJSON());
 		this.$el.html(this.plantillaDefault( this.model.toJSON() ));
 
 		var thiS = this;
@@ -35,9 +41,15 @@ app.VistaServicioSeleccionado = Backbone.View.extend({
 
 		return this;
 	},
+	// eliminar	: function () {
+	// 	this.model.destroy();
+	// },
 	eliminarSeleccion	: function (elem) {
 		$('#tbody_servicios .check_posicion #servicio_'+this.model.get('id')).attr('disabled',false)
-		this.$el.remove();
+		
+		/*Si el modelo tiene url    es un modelo sin datos persistentes*/
+		try{ this.model.destroy() } catch(error) { this.$el.remove() };
+
 		this.calcularImporteIVATotalNeto();
 	},
 	calcularDescuento	: function (elem) {
@@ -93,19 +105,27 @@ app.VistaServicioContrato = app.VistaServicio.extend({
 	plantillaDefault	: _.template($('#plantillaServicio').html()),
 	events	: {
 		'click .checkbox_servicio'		: 'apilarServicio',
+		// 'click .icon_detalles'			: 'conmutarInfo' //Descomentar si desea habilitar la visibilidad de info de cada servicio
 	},
 	apilarServicio		: function (elem) {
-		var modelCopia = this.model;
-		modelCopia.set({
+		var ModelCopia = this.model;
+		ModelCopia.set({
 			descuento 		: '0',
 			cantidad		: '1',
 			total 			: parseInt(this.model.get('precio')).toFixed(2)
 		});
-		var vista = new app.VistaServicioSeleccionado({ model:modelCopia });
+		ModelCopia = Backbone.Model.extend({
+			defaults: ModelCopia.toJSON()
+		});
+		var vista = new app.VistaServicioSeleccionado({ model:new ModelCopia });
 		$('#tbody_servicios_seleccionados').append(vista.render().el);
 		$(elem.currentTarget).attr('disabled',true);
 		vista.calcularImporteIVATotalNeto();
 	},
+	// conmutarInfo	: function (elem) { //Esta función conmuta la visivilidad de la info de cada servicio. Descomentar si dedea habilitar esta funcionalidad
+	// 	 console.log($(".div_info").slideUp());
+	// 	 console.log(this.$(".div_info").slideDown());
+	// }
 });
 
 app.VistaPago = Backbone.View.extend({
@@ -191,7 +211,6 @@ app.VistaNuevoContrato = Backbone.View.extend({
 	},
 	render					: function () {},
 	vistaPrevia 			: function (elem) {
-
 		var json = pasarAJson($('form').serializeArray()),
 			jsonContrato = {},
 			jsonServicios  = {},
@@ -199,7 +218,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			thiS = this;
 
 		if (json.idcliente == '') {
-			alert('Seleccione un cliente para el contrato');
+			alerta('Seleccione un cliente para el contrato',function(){});
 			elem.preventDefault();
 			return;
 		};
@@ -211,7 +230,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 				json.fechafinal = json.fechafinal[0];
 			};
 			/*------------------------------------------------------*/
-			jsonContrato.nombrecontrato		= json.nombrecontrato;
+			jsonContrato.titulocontrato		= json.titulocontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
@@ -222,7 +241,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.plan 				= json.plan;
 			jsonContrato.plazo 				= json.plazo;
 			if (json.nPlazos == '' && json.plazo == '') {
-				alert('Especifique el plazo y el numero de plazos');
+				alerta('Especifique el plazo y el numero de plazos',function(){});
 				elem.preventDefault();
 				return;
 			};
@@ -233,7 +252,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 				json.fechafinal = json.fechafinal[1];
 			};
 			/*------------------------------------------------------*/
-			jsonContrato.nombrecontrato		= json.nombrecontrato;
+			jsonContrato.titulocontrato		= json.titulocontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
@@ -244,18 +263,24 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.plan 				= json.plan;
 			jsonContrato.id = app.coleccionContratos_LocalStorage.ordenSiguente();
 			if (json.mensualidades == '') {
-				alert('Especifique las mensualidades');
+				alerta('Especifique las mensualidades',function(){});
 				elem.preventDefault();
 				return;
 			};
 		} else {
-			alert('Elija tipo de plan');
+			alerta('Elija tipo de plan',function(){});
+			elem.preventDefault();
+			return;
+		};
+
+		if (!json.idservicio) {
+			alerta('Seleccione uno o más servicios',function(){});
 			elem.preventDefault();
 			return;
 		};
 
 		if (json.fechainicio == '') {
-			alert('Especifique la fecha de inicio del contrato');
+			alerta('Especifique la fecha de inicio del contrato',function(){});
 			elem.preventDefault();
 			return;
 		};
@@ -277,11 +302,24 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		app.coleccionContratos_LocalStorage.create(jsonContrato,{
 			wait	: true,
 			success	: function (exito) {
-				console.log('En contrato se guardo con exito');
+				console.log('En contrato se guardo en localStorage');
 				jsonServicios.idcontrato = exito.get('id');
 				jsonPagos.idcontrato = exito.get('id');
 				thiS.guardarServicios_L(jsonServicios);
 				thiS.guardarPagos_L(jsonPagos);
+
+				// /*Eliminar todo la coleccion para no duplicar datos*/
+				// app.coleccionContratos_LocalStorage.each(function (model){ 
+				// 	model.destroy();
+				// },this);
+				// /*Eliminar todo la coleccion para no duplicar datos*/
+				// app.coleccionServiciosContrato_LocalStorage.each(function (model){ 
+				// 	model.destroy();
+				// },this);
+				// /*Eliminar todo la coleccion para no duplicar datos*/
+				// app.coleccionPagos_LocalStorage.each(function (model){ 
+				// 	model.destroy();
+				// },this);
 
 				/*Descomentar las tres lineas siguientes para ver los datos en caso de pruebas*/
 					// $('.secciones1').slideToggle(500);
@@ -289,7 +327,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 					// var consulta_Hoja = new Consulta_Hoja();
 			},
 			error	: function (error) {
-				console.log('El contrato no a sido guardado');
+				console.log('El contrato no a sido guardado en localStorage');
 			}
 		});
 
@@ -307,10 +345,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		app.coleccionServiciosContrato_LocalStorage.create(json,{
 			wait 	: true,
 			success	: function (exito) {
-				console.log('Se guardaron los Servicios');
+				console.log('Se guardaron los Servicios en localStorage');
 			},
 			error	: function (error) {
-				console.log('Error al intentar guardar Servicios');
+				console.log('Error al intentar guardar Servicios en localStorage');
 			}
 		});
 	},
@@ -322,10 +360,10 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		app.coleccionPagos_LocalStorage.create(json,{
 			wait 	: true,
 			success	: function (exito) {
-				console.log('Se guardaron los Pagos');
+				console.log('Se guardaron los Pagos en localStorage');
 			},
 			error	: function (error) {
-				console.log('Error al intentar guardar Pagos');
+				console.log('Error al intentar guardar Pagos en localStorage');
 			}
 		});	
 	},
@@ -337,30 +375,31 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			thiS = this;
 
 		if (json.idcliente == '') {
-			alert('Seleccione un cliente para el contrato');
+			alerta('Seleccione un cliente para el contrato',function(){});
 			elem.preventDefault();
 			return;
 		};
 
-		if ($('#porEvento').is(':checked')) {
+		if ($('#evento').is(':checked')) {
 			delete json.mensualidades;
 			delete json.mensualidadletras;
 			if ($.isArray(json.fechafinal)) {
 				json.fechafinal = json.fechafinal[0];
 			};
 			/*------------------------------------------------------*/
-			jsonContrato.nombrecontrato		= json.nombrecontrato;
+			jsonContrato.titulocontrato		= json.titulocontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
 			// jsonContrato.mensualidadletras		= json.mensualidadletras;
 			jsonContrato.idcliente 			= json.idcliente;
 			jsonContrato.idrepresentante 	= json.idrepresentante;
+			jsonContrato.idempleado 		= json.idempleado;
 			jsonContrato.nplazos 			= json.nPlazos;
 			jsonContrato.plan 				= json.plan;
 			jsonContrato.plazo 				= json.plazo;
 			if (json.nPlazos == '' && json.plazo == '') {
-				alert('Especifique el plazo y el numero de plazos');
+				alerta('Especifique el plazo y el numero de plazos',function(){});
 				elem.preventDefault();
 				return;
 			};
@@ -371,29 +410,35 @@ app.VistaNuevoContrato = Backbone.View.extend({
 				json.fechafinal = json.fechafinal[1];
 			};
 			/*------------------------------------------------------*/
-			jsonContrato.nombrecontrato		= json.nombrecontrato;
+			jsonContrato.titulocontrato		= json.titulocontrato;
 			jsonContrato.fechafirma 		= json.fechafirma;
 			jsonContrato.fechainicio 		= json.fechainicio;
 			jsonContrato.fechafinal 		= json.fechafinal;
-			jsonContrato.mensualidadletras		= json.mensualidadletras;
+			jsonContrato.mensualidadletras	= json.mensualidadletras;
 			jsonContrato.idcliente 			= json.idcliente;
 			jsonContrato.idrepresentante 	= json.idrepresentante;
+			jsonContrato.idempleado 		= json.idempleado;
 			jsonContrato.nplazos 			= json.mensualidades;
 			jsonContrato.plan 				= json.plan;
-			jsonContrato.id = app.coleccionContratos_LocalStorage.ordenSiguente();
 			if (json.mensualidades == '') {
-				alert('Especifique las mensualidades');
+				alerta('Especifique las mensualidades',function(){});
 				elem.preventDefault();
 				return;
 			};
 		} else {
-			alert('Elija tipo de plan');
+			alerta('Elija tipo de plan',function(){});
+			elem.preventDefault();
+			return;
+		};
+
+		if (!json.idservicio) {
+			alerta('Seleccione uno o más servicios',function(){});
 			elem.preventDefault();
 			return;
 		};
 
 		if (json.fechainicio == '') {
-			alert('Especifique la fecha de inicio del contrato');
+			alerta('Especifique la fecha de inicio del contrato',function(){});
 			elem.preventDefault();
 			return;
 		};
@@ -408,23 +453,25 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		jsonPagos.pago 			= json.pago;
 
 		/* -------------------------------------------------------- */
-		/**//*Eliminar todo la coleccion para no duplicar datos*/
-		/**/app.coleccionContratos_LocalStorage.each(function (model){ 
-		/**/	model.destroy();
-		/**/},this);
 		/**/Backbone.emulateHTTP = true;
 		/**/Backbone.emulateJSON = true;
 		/**/app.coleccionContratos.create(jsonContrato,{
 		/**/	wait	: true,
 		/**/	success	: function (exito) {
-		/**/		console.log('En contrato se guardo con exito');
 		/**/		jsonServicios.idcontrato = exito.get('id');
 		/**/		jsonPagos.idcontrato = exito.get('id');
 		/**/		thiS.guardarServicios(jsonServicios);
 		/**/		thiS.guardarPagos(jsonPagos);
+		/**/		confirmar('El contrato se guardo con exito.<br>Si desea crear otro contrato haga clic en Aceptar'
+		/**/		,function(){
+		/**/			$('form')[0].reset();
+		/**/		},function(){
+		/**/			location.href = 'modulo_contratos_historial';
+		/**/		});
 		/**/	},
-		/**/	error	: function (error) {
-		/**/		console.log('El contrato no a sido guardado');
+		/**/	error	: function (model,response) {
+		/**/		error('El contrato no a sido guardado');
+		/**/		console.log(response);
 		/**/	}
 		/**/});
 		/**/Backbone.emulateHTTP = false;
@@ -435,10 +482,6 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		elem.preventDefault();
 	},
 	guardarServicios		: function (json) {
-		/*Eliminar todo la coleccion para no duplicar datos*/
-		app.coleccionServiciosContrato_LocalStorage.each(function (model){ 
-			model.destroy();
-		},this);
 		/* -------------------------------------------------------- */
 		/**/Backbone.emulateHTTP = true;
 		/**/Backbone.emulateJSON = true;
@@ -456,10 +499,6 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		/* -------------------------------------------------------- */
 	},
 	guardarPagos			: function (json) {
-		/*Eliminar todo la coleccion para no duplicar datos*/
-		app.coleccionPagos_LocalStorage.each(function (model){ 
-			model.destroy();
-		},this);
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		/* -------------------------------------------------------- */
@@ -532,6 +571,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		$('#tbody_servicios').append(vista.render().el);
 	},
 	cargarServicios			: function () {
+		$('#tbody_servicios').html('');
 		app.coleccionServicios.each(this.cargarServicio, this);
 	},
 	fecha					: function () {
@@ -695,5 +735,3 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		this.modificarPagos();
 	}
 });
-
-app.vistaNuevoContrato = new app.VistaNuevoContrato();
