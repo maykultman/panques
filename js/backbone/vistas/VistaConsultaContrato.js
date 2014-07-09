@@ -9,48 +9,62 @@ app.VistaEdicionContrato = app.VistaNuevoContrato.extend({
 		/*Respandamos this para utilizar las funciones de la clase en
 		  caso de que las funciones contengas funciones*/
 			var here = this;
-		/**/
+		/*Obtenemos y establecemos el nombre del cliente en el campo busqueda*/
 			this.$('#busqueda')
 				.val(				this.
 									model.
 									get('nombreComercial') );
-		/**/
+		/*Obtenemos y establecemos el nombre del representante en el campo input_Representante*/
 			this.$('#input_Representante')
 				.val(				this.
 									model.
 									get('nombreRepresentante') );
-		/**/
+		/*Obtenemos y establecemos la fecha final en el campo fechaFinal*/
 			this.$('#fechaFirma')
 				.val( formatearFechaUsuario(
 						new Date(	this.
 									model.
 									get('fechafirma') ) ) );
-		/**/
+		/*Obtenemos y establecemos el titulo del contrato en el campo text_titulocontrato*/
 			this.$('#text_titulocontrato')
 				.val(				this.
 									model.
 									get('titulocontrato') );
-		/**/
+		/*Obtenemos y establecemos la fecha de firma del contrato en el campo hidden_fechafirma*/
 			this.$('#hidden_fechafirma')
 				.val(				this.
 									model.
 									get('fechafirma') );
 		this.$('#'+this.model.get('plan')).click();
 		/*---------------------------------------------------------------------------------*/
-		this.cargarServicios();
-		this.$('#tbody_servicios_seleccionados').html('');
-		_.filter(app.coleccionServiciosContrato.models, function (model) {
-			if (model.get('idcontrato') == here.model.get('id')){
-				here.apilarServicioContratado(model);
-			}
-		});
+		/*Cargamos los servicios cada vez que se cliquee en el boton
+		  editar del contrato, para distinguir los servicios que ha 
+		  seleccionado*/
+		  	//La funcion tambien limpia la lista de servicios
+			this.cargarServicios();
+		/*Limpiamos la tabla de servicios que seleccione el cliente y
+		  con los que cuenta el contrato*/
+			this.$('#tbody_servicios_seleccionados').html('');
+		/*Filtramos la coleccion de servicios contratados para mostrar
+		  en pantalla todos aquellos que estes relacionados con el
+		  contrato de esta vista*/
+			_.filter(app.coleccionServiciosContrato.models, function (model) {
+				if (model.get('idcontrato') == here.model.get('id')){
+					here.apilarServicioContratado(model);
+				}
+			});
 		/*---------------------------------------------------------------------------------*/
-		// if (this.model.get('plan') == 'evento') {
-		// 	this.$('.n_pagos')[0].val(this.model.get('nplazos')).trigger('change');
-		// };
-		// if (this.model.get('plan') == 'iguala') {
-		// 	this.$('.n_pagos')[1].val(this.model.get('nplazos')).trigger('change');
-		// };
+
+		if (this.model.get('plan') == 'evento') {
+			this.$('.input_fechaInicioPago')
+				.first().val( formatearFechaUsuario(new Date(this.model.get('fechainicio'))) ).trigger('change');
+			this.$('.n_pagos').first().val(this.model.get('nplazos')).trigger('change');
+		};
+		if (this.model.get('plan') == 'iguala') {
+			this.$('.input_fechaInicioPago')
+				.last().val( formatearFechaUsuario(new Date(this.model.get('fechainicio'))) ).trigger('change');
+			this.$('.n_pagos').last().val(this.model.get('nplazos')).trigger('change');
+		};
 	},
 	/*[polimorfismo] Reescribimos la funcion.
 	  Mismo procedimientos pero adaptado al historial de contratos*/
@@ -71,7 +85,6 @@ app.VistaEdicionContrato = app.VistaNuevoContrato.extend({
 																			/*ELIMINAR LA FUNCION parents() Y css()*/
 		this.$( '#servicio_'+model.get('idservicio') ).attr('disabled',true).parents('td').css({'background':'gray'});
 		vista.calcularImporteIVATotalNeto();
-		// console.log( model.toJSON() );
 	},
 });
 app.VistaContrato = Backbone.View.extend({
