@@ -6,7 +6,7 @@
                 <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->                    
                 <thead>
                     <tr id="color_titulos">
-                        <th><!-- Todos<input type="checkbox" -->&nbsp;&nbsp;&nbsp;</th>
+                        <th>Todos <input id="todos" type="checkbox" name="todos"></th>
                         <th></th>
                         <th>
                             <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial">
@@ -26,11 +26,7 @@
             <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
             <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
             <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="checkbox" id="option1"> Marcar/Desmarcar todos
-                </label>
-            </div>
+         
             <button class="btn btn-primary">Eliminar varios</button>
         </form>
     </div>
@@ -46,7 +42,7 @@
 <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
-        <td class="contenido_prospecto"><input  type="checkbox" name="checkboxCliente" value="<%- id %>"></td>
+        <td class="contenido_prospecto"><input  type="checkbox" name="todos" value="<%- id %>"></td>
         <td>
             <% if (typeof foto != "undefined") { %>
                 <img src="<%- foto %>" alt="" class="foto">

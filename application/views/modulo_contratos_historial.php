@@ -3,7 +3,7 @@
 	<section id="posicion_infotd">
 		<table id="tbla_cliente" class="table table-striped">      
 			<tr>
-				<th style="text-align:center;">Todos<br><input type="checkbox"></th>           
+				<th style="text-align:center;">Todos<br><input id="todos" type="checkbox" class="checkCot" name="todos"/></th>           
 				<th>
 					<input id="buscarCliente" class="form-control" type="text" placeholder="Cliente">
 					<span class="icon-search busqueda"></span>
@@ -207,7 +207,7 @@
 </section>
 <!-- plantillas -->
 	<script type="text/template" id="plantilla_tr_contrato">
-		<td><input type="checkbox"></td>
+		<td><input type="checkbox" class="checkCot" name="todos"/></td>
 		<td><%- nombreComercial %></td>
 		<td><%- nombreEmpleado  %></td>                     
 		<td><%- formatearFechaUsuario(new Date(fechacreacion)) %></td>

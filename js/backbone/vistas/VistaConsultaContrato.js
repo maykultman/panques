@@ -92,9 +92,10 @@ app.VistaContrato = Backbone.View.extend({
 	plantilla : _.template($('#plantilla_tr_contrato').html()),
 	plantillaModal	: _.template($('#plantilla_modal').html()),
 	events	: {
-		'click #eliminar'				: 'eliminar',
-		'click #tr_btn_verInfo'			: 'verInfo',
-		'click #tr_btn_editar'			: 'editar',
+		'click #eliminar'		: 'eliminar',
+		'click #tr_btn_verInfo'	: 'verInfo',
+		'click #tr_btn_editar'	: 'editar',
+		
 	},
 	initialize	: function () {
 		this.listenTo(this.model, 'destroy', this.remove);
@@ -131,8 +132,9 @@ app.VistaConsultaContrato = Backbone.View.extend({
 		'keyup #buscarCliente'  : 'borrayRenderiza',
 		'click #buscarEmpleado' : 'busqueda',
 		'keyup #buscarEmpleado' : 'borrayRenderiza',
-		'click .abajo'    : 'ordenarporfecha',
-		'click .arriba'   : 'ordenarporfecha'
+		'click #todos'	        : 'marcarTodosCheck',
+		'click .abajo'    		: 'ordenarporfecha',
+		'click .arriba'   		: 'ordenarporfecha'
 	},
 	initialize	: function () {
 		this.$tbody_contratos = $('#tbody_contratos');
@@ -179,6 +181,10 @@ app.VistaConsultaContrato = Backbone.View.extend({
             this.cargarContratos();
           }
 	},
+	marcarTodosCheck : function(elemento)
+    {        
+        marcarCheck(elemento);
+    },
 });
 
 app.vistaConsultaContrato = new app.VistaConsultaContrato();

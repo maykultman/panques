@@ -13,7 +13,8 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
         'click  #buscarEmpleado' : 'busqueda',
         'keyup  #buscarEmpleado' : 'borrayRenderiza',
         'click 	.abajo'          : 'ordenarporfecha',
-		'click  .arriba'         : 'ordenarporfecha'
+		'click  .arriba'         : 'ordenarporfecha',
+		'click #todos' : 'marcarTodosCheck'
 	 },
 
 	 initialize : function ()
@@ -83,10 +84,10 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
         }
 	},
 
-	 marcarTodos : function()
-	 {
-	 	alert('e.e');
-	 },
+	marcarTodosCheck : function(elemento)
+	{
+		marcarCheck(elemento);
+    },
 
 	//  desmarcarTodos : function()
 	//  {

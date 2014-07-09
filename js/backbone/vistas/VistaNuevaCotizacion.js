@@ -17,7 +17,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             'click #vistaPrevia'  : 'vistaPrevia',
             'click #bserv' : 'completarServicio',
             'keyup #bserv' : 'sinCoincidencias',
-            'blur  #titulo': 'titulo'
+            'blur  #titulo': 'titulo',
+            'click #delete' : 'eleminiarServicios'
         },
 
         initialize : function () {
@@ -55,15 +56,37 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         },
 
         eliminarServicio : function (elemento){
-        	// var serviciosCotizados = pasarAJson($('.filas').serializeArray());
-        	// console.log(serviciosCotizados);
-        	/*....Eliminamos un modelo de la tabla de servicios cotizando....*/
-           $(elemento.currentTarget).parents('tr').remove();
-           /*.....Activamos el servicio de nuevo de la lista en la tablaServicios*/
+         // var serviciosCotizados = pasarAJson($('.filas').serializeArray());
+              /*.....Activamos el servicio de nuevo de la lista en la tablaServicios*/
            $('#listaServicios #'+$(elemento.currentTarget).attr('id')).attr('disabled',false);
            /*....Establecemos en checkbox oculto a falso y asi poder seleccionarlo de nuevo.....*/
            $('#listaServicios #'+$(elemento.currentTarget).attr('id')).attr('checked',false);
+           $(elemento.currentTarget).parents('tr').remove();
         },
+
+      eleminiarServicios : function(event)
+      {
+         var ides = document.getElementsByName('todos');
+         var array = new Array();
+         for (var i = 0; i < ides.length; i++) 
+         {
+            if ($(ides[i]).is(':checked')) {
+               array.push(ides[i]);
+            };
+         };
+
+         for (var i = 0; i < array.length; i++) 
+         {
+            $(array[i])
+            .parents('tr')
+            .children('.iconos-operaciones')
+            .children('.btndelete')
+            .click();
+         };
+
+         $('#todos').attr('checked', false);
+         event.preventDefault(); 
+      },
 
         establecerTotal : function (elemento)
         {
@@ -87,21 +110,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             	$('#total').text(array.importes);	
             }	            	
         },
-        marcarTodosCheck : function(elemento){
-        	/*..Totos los checkbox de la tabla de servicios cotizando tienen el mismo id....*/
-        	var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
-          /*..Asi es como obtenemos todos...para luego iterar sobre ellos estableciendo true o false...*/
-        	/*..Si marcar todos es TRUE entonces todos los de la lista son TRUE caso contrario FALSO*/
-     	 		if ($(elemento.currentTarget).is(':checked')) {
-     	 			for (var i = 0; i < checkboxTabla.length; i++) {
-    					checkboxTabla[i].checked = true;
-    				}
-     	 		}
-                else{
-            		for (var i = 0; i < checkboxTabla.length; i++) {
-    					checkboxTabla[i].checked = false;
-    				}
-            	}
+        marcarTodosCheck : function(elemento)
+        {        
+            marcarCheck(elemento);
         },
 
         buscarCliente : function (elemento)

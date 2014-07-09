@@ -11,11 +11,17 @@ app.VistaConsultaCP = Backbone.View.extend({
 		la tecla precionada. tras dicho evento se ejecuta la funcion
 		buscarCliente.*/
 		'keyup #inputBuscarCliente'	: 'buscarCliente',
+		'click #todos'	    : 'marcarTodosCheck',
 	},
 
 	render		: function () {
 		return this;
 	},
+
+	marcarTodosCheck : function(elemento)
+    {        
+        marcarCheck(elemento);
+    },
 	/* {{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}} */
 	agregarCliente	: function (cliente) {
 		/*El parametro cliente contiene las propiedades del cliente

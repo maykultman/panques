@@ -34,7 +34,7 @@
 		<table id="mostrarTabla" class="table table-striped">
 			<thead style="background : #F9F9F9;">
 				<tr>
-					<th>Todos<input id="todos" type="checkbox" name="todos"></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
+					<th>Todos<input id="todos" type="checkbox"></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
 					<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				</tr>
 			</thead>
@@ -42,7 +42,7 @@
 			<tr class="info"> <td></td> <td colspan="5">Total</td> <td><p id="total">0.00</p></td><td></td></tr>			
 			<tfoot>
 			<tr>
-			    <td><button id="delete_varios"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
+			    <td><button id="delete"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
 				    <button id="vistaPrevia"    type="button" class="btn btn-primary"> <span class="icon-preview"></span> Vista previa </button></td>		
 			</tr>
 			</tfoot>
@@ -57,15 +57,13 @@
 
 </div>
 
-
-
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
-<script type = "text/plantilla" id="plantilla_Cotizacion">
+	<script type = "text/plantilla" id="plantilla_Cotizacion">
 </script>
 
 <script type = "text/plantilla" id="PCservicios">
 	<td style="width: 1% !important; " class="icon-operaciones">
-		<span id="infoSC" class="icon-info"></span>
+		<span id="infoSC" class="icon-info" ></span>
 
 		<label for="<%- id %>"><%- nombre %></label>
 		<ul class="ocultoI">		
@@ -79,7 +77,7 @@
 </script>
 <script type = "text/plantilla" id="serviciosAgregado">	
 
-		<td><input type="checkbox" id="todos" name="todos"></td><td><%-nombre %></td>
+		<td><input type="checkbox" id="<%- id %>" name="todos"></td><td><%-nombre %></td>
 		<td><input type="text" id="duracion"  name="duracion"  value="<%-realizacion%>"  class="valor">   </td>
 		<td><input type="text" id="cantidad"  name="cantidad"  value="1"				 class="valor">   </td>
 		<td><input type="text" id="precio"    name="precio"    value="<%-precio     %>"  class="valor">   </td>

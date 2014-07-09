@@ -3,7 +3,7 @@
 	<section class="contenedor_principal_modulos">
     <table id="tabla_cotizaciones" class="table table-striped table-curved">
 		<tr id="color_titulos">
-			<th style="text-align:center; width:40px; ">Marcar</th>
+			<th style="text-align:center; width:40px; ">Marcar <input id="todos" type="checkbox" name="todos"></th>
 			<th>
 				<input id="buscarCliente" class="form-control" type="text" placeholder="Cliente">
 			    <span class="icon-search busqueda"></span>
@@ -24,8 +24,6 @@
 		</tbody>		
 	</table>
 		<button id="eliminar"  type="button" class="btn btn-danger">  Eliminar varios </button>
-		<button id="marcar"    type="button" class="btn btn-default"> Marcar todos    </button>
-		<button id="desmarcar" type="button" class="btn btn-default"> Desmarcar todos </button>
 	</section>
 </div>
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
@@ -38,7 +36,7 @@
 </script>
 
 <script type = "text/plantilla" id="tabla_Cotizacion">
-	<td><input type="checkbox" class="checkCot"/>
+	<td><input type="checkbox" class="checkCot" name="todos"/>
 	<td> <%- cliente  %> </td>
 	<td> <%- empleado %> </td>
 	<td> <%- fecha    %> </td>
