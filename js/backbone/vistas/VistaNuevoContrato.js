@@ -325,8 +325,8 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		/**/app.coleccionServiciosContrato.create(json,{
 		/**/	wait 	: true,
 		/**/	success	: function (coleccion) {
-		/**/		app.coleccionServiciosContrato.reset(coleccion.toJSON());
-		/**/		console.log('Se guardaron los Servicios',coleccion.toJSON());
+		// /**/		app.coleccionServiciosContrato.reset(coleccion);
+		/**/		console.log('Retorna esto: ',coleccion);
 		/**/	},
 		/**/	error	: function (error) {
 		/**/		console.log('Error al intentar guardar Servicios');
@@ -343,8 +343,8 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		/**/app.coleccionPagos.create(json,{
 		/**/	wait 	: true,
 		/**/	success	: function (coleccion) {
-		/**/		app.coleccionPagos.reset(coleccion.toJSON());
-		/**/		console.log('Se guardaron los Pagos',coleccion.toJSON());
+		// /**/		app.coleccionPagos.reset(coleccion);
+		/**/		console.log('Retorna esto: ',coleccion);
 		/**/	},
 		/**/	error	: function (error) {
 		/**/		console.log('Error al intentar guardar Pagos');
