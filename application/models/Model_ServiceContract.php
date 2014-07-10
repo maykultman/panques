@@ -18,15 +18,13 @@
  									)
  				);
  		}
- 		return true;
- 		// return $this->db->insert_batch('servicios_contrato', $post);
-		// return $this->get( $this->db->insert_id() );
+ 		
+		return $this->get();
  	}
 
- 	public function get ( $id = FALSE )
+ 	public function get ()
  	{
- 		$reply = $this->where( $id );
- 		return $this->db->get( 'servicios_contrato')->$reply();
+ 		return $this->db->get( 'servicios_contrato')->result();
  	}
 
  	public function save ( $id, $put )

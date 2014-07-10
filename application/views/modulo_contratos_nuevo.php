@@ -174,11 +174,12 @@
 							<td colspan="3" id="margen">$0.00</td>
 						</tr>
 					</tbody>
-			    </table>  
+			    </table>
+			    <input id="version" type="hidden" name="version" value="1">
 			   	<div class="desborde"></div>		 
 			   	<button type="submit" id="btn_guardar" class="btn btn-default">Guardar</button>
 			   	<a id="btn_vistaPrevia" target="_blanck" class="btn btn-primary" href="formatoContrato"><span class="icon-preview"></span>Vista previa</a>
-			   	<button type="button" class="btn btn-default">Cancelar</button>
+			   	<button type="button" id="btn_calcelar" class="btn btn-default">Cancelar</button>
 		   	</form>
 		</section> 
 		<section class="secciones2" style="display:none">
@@ -211,7 +212,7 @@
 	</script>
 	<script type="text/template" id="servicioContratado">
 		<td style="width: 50px;"><input type="checkbox"></td>
-		<td><%- nombre %><input type="hidden" name="idservicio" value="<%- id %>"></td>
+		<td><%- nombre %><input type="hidden" name="idservicio" value="<%- idserv %>"></td>
 		<!-- <td><input id="realizacion" class="input_precio inputsServicios" 	name="realizacion"	type="text" value="<%- realizacion %>" placeholder="Realización"></td> -->
 		<td><input id="cantidad" 	class="input_precio inputsServicios" 	name="cantidad"		type="number" value="<%- cantidad %>" min="1"></td>
 		<td><input id="precio" 		class="input_precio inputsServicios"	name="precio"		type="number" value="<%- precio %>"></td>
@@ -219,7 +220,7 @@
 		<td>$<%- total %> <input type="hidden" class="total" value="<%- total %>"></td>
 		<td class="icon-eliminar">
         	<div class="eliminar_cliente">
-    			<span id="<%- id %>" class="icon-circledelete eliminar"  data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+    			<span id="<%- idserv %>" class="icon-circledelete eliminar"  data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
            </div>
        </td>
 	</script>

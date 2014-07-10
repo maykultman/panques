@@ -1,6 +1,30 @@
 <script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
-	<section id="posicion_infotd">
+<style type="text/css">
+	#posicion_infotd, #section_actualizar {
+		/*float: left;*/
+		/*width: 100%;*/
+	}
+	.contenedor_principal_modulos{
+		position: relative;
+	}
+	.visiblito{
+		transition: all 300ms ease-in;
+		opacity: 1;
+	}
+	.ocultito{
+		transition: all 300ms ease-in;
+		opacity: 0;
+		position: absolute;
+		/*position: absolute;*/
+		/*display: none;*/
+	}
+	#h3_tituloActualizar {
+		background: #FFF;
+	}
+</style>
+
+	<section id="posicion_infotd" class="visiblito">
 		<table id="tbla_cliente" class="table table-striped">      
 			<tr>
 				<th style="text-align:center;">Todos<br><input id="todos" type="checkbox" class="checkCot" name="todos"/></th>           
@@ -25,7 +49,8 @@
 		<button id="eliminar" type="button" class="btn btn-danger">Eliminar varios</button>
 		<button id="" type="button" class="btn btn-default">Entregados</button>  
 	</section>
-	<section id="section_actualizar">
+	<section id="section_actualizar" class="visiblito ocultito">
+		<h3 id="h3_tituloActualizar">Actualizando contrato</h3>
 		<form id="formulario">
 			<div class="row" >
 				<div class="col-md-6">
@@ -33,14 +58,17 @@
 					<hr>
 					<div>
 						<input type="text" id="busqueda" class="form-control input_largo" placeholder="Buscar cliente" disabled>
+						<input type="hidden" id="hidden_idCliente" name="idcliente">
 						<span id="span_buscar" class="icon-search"></span>
 						<!--  -->	
 						<input type="text" id="input_Representante" class="form-control input_largo" disabled placeholder="Representante" disabled>
+						<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
 						<!--  -->
 						<input type="text" id="text_titulocontrato" class="form-control input_largo" name="titulocontrato" placeholder="Nombre para el contrato">
 						<!--  -->
 						<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se firmará el contrato">
 						<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+						<input type="hidden" id="hidden_idEmpleado" name="idempleado"><!-- BOORAR CUANDO EXISTAN SESIONES -->
 				    </div>
 					
 					<h5 style="display: inline-block"><b>Eliga Tipo de plan:</b></h5>
@@ -174,7 +202,7 @@
 						<td colspan="3"><b>Fecha de pago</b></td>
 						<td colspan="3">
 							<b>Renta Mensual</b>
-							<input type="texto" class="form-control input-sm inputs_planIguala" name="mensualidadletras" placeholder="Pago mensual en letras">
+							<input type="texto" id="text_mensualidad" class="form-control input-sm inputs_planIguala" name="mensualidadletras" placeholder="Pago mensual en letras">
 						</td>
 			        </tr>
 				</thead>
@@ -195,12 +223,13 @@
 						<td colspan="3" id="margen">$0.00</td>
 					</tr>
 				</tbody>
-		    </table>  
+		    </table> 
+		    <input id="version" type="hidden" name="version"> 
 		   	<div class="desborde"></div>		 
-		   	<button type="submit" id="btn_guardar" class="btn btn-default">Guardar[Actualizar]</button>
+		   	<button type="button" id="btn_guardar" class="btn btn-default">Guardar cambios</button>
 		   	<a id="btn_vistaPrevia" target="_blanck" class="btn btn-primary" href="formatoContrato"><span class="icon-preview"></span>Vista previa</a>
-		   	<button type="button" class="btn btn-default">Cancelar</button>
-		   	<button type="button" class="btn btn-danger">[Crear nuevo contrato con estas bases, puede ser una opcion de un contrato existente]</button>
+		   	<button type="button" id="btn_calcelar" class="btn btn-default">Cancelar</button>
+		   	<!-- <button type="button" class="btn btn-danger">[Crear nuevo contrato con estas bases, puede ser una opcion de un contrato existente]</button> -->
 		</form>
 	</section>
 </div>
@@ -250,7 +279,7 @@
 		</script>
 		<script type="text/template" id="servicioContratado">
 			<td style="width: 50px;"><input type="checkbox"></td>
-			<td><%- nombre %><input type="hidden" name="idservicio" value="<%- id %>"></td>
+			<td><%- nombre %><input type="hidden" name="idservicio" value="<%- idserv %>"></td>
 			<!-- <td><input id="realizacion" class="input_precio inputsServicios" 	name="realizacion"	type="text" value="<%- realizacion %>" placeholder="Realización"></td> -->
 			<td><input id="cantidad" 	class="input_precio inputsServicios" 	name="cantidad"		type="number" value="<%- cantidad %>" min="1"></td>
 			<td><input id="precio" 		class="input_precio inputsServicios"	name="precio"		type="number" value="<%- precio %>"></td>
@@ -258,7 +287,7 @@
 			<td>$<%- total %> <input type="hidden" class="total" value="<%- total %>"></td>
 			<td class="icon-eliminar">
 	        	<div class="eliminar_cliente">
-	    			<span id="<%- id %>" class="icon-circledelete eliminar"  data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+	    			<span id="<%- idserv %>" class="icon-circledelete eliminar"  data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
 	           </div>
 	       </td>
 		</script>
@@ -326,6 +355,10 @@
         app.coleccionServiciosContrato 	= new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
         app.coleccionPagos 				= new ColeccionPagos(app.coleccionDePagos);
         app.coleccionEmpleados			= new ColeccionEmpleados(app.coleccionDeEmpleados);
+
+        app.coleccionContratos_LocalStorage = new ColeccionContratos_LocalStorage();
+		app.coleccionServiciosContrato_LocalStorage = new ColeccionServiciosContrato_LocalStorage();
+		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
     </script>
 <!-- vistas -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->

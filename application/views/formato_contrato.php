@@ -233,7 +233,7 @@
 					descuento 	=precio * ( descuentos[0]/100 );
 					total 		+= parseFloat((precio - descuento).toFixed(2));
 				};
-				console.log((total + (total*app.iva)).toFixed(2));
+				console.log(contrato);
 				contrato.set({total:(total + (total*app.iva)).toFixed(2)});
 				var vista = new V_HojaContrato({model:contrato});
 				this.$el.html(vista.render().el);
