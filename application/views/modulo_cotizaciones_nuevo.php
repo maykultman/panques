@@ -1,61 +1,77 @@
 <section class="contenedor_principal_modulos"> 
 	<h3>Información Básica</h3>
 	<hr>
-		<div class="datos_cotizacion">
-			<input id="titulo" value="" class="form-control" placeholder="Titulo de Cotización">
-			<input id="cliente" 	  type="search" value="" class="form-control" placeholder="Buscar cliente"><span id="busqueda_icono" class="icon-search"></span>
-			<input id="representante" type="text"   value="" class="form-control" placeholder="Representante" disabled="true">	
+	<div class="row">
+		<div class="col-md-4">
+			<input id="titulo" value="" class="form-control input_datos" placeholder="Titulo de Cotización">
+			<input id="cliente" 	  type="search" value="" class="form-control input_datos" placeholder="Buscar cliente"><span id="busqueda_icono" class="icon-search"></span>
+			<input id="representante" type="text"   value="" class="form-control input_datos" placeholder="Representante" disabled="true">	
 			<form id="registroCotizacion">
-				<input type="hidden" id="htitulo"    name="titulo"    value="">			
-				<input type="hidden" id="idcliente" name="idcliente" value="">
-				<input type="hidden" id="idrepresentante" name="idrepresentante" value="">
-				<input id="fecha"   type="text"   name="fecha" class="form-control" val="" disabled="true" >	
-		</div>		
-		<div class="datos_cotizacion">
-			<textarea id="detalles" name="detalles" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Detalles"></textarea>
+				<input type="hidden" id="htitulo"    name="titulo"  class="input_datos"  value="">			
+				<input type="hidden" id="idcliente" name="idcliente" class="input_datos" value="">
+				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante" value="">
+				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" val="" disabled="true" >	
 		</div>
-		<div class="datos_cotizacion1">
-			<textarea id="caracteristicas" name="caracteristicas" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Caracteristicas"></textarea>
+		<div class="col-md-4">
+			<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;"></textarea>
+		</div>
+		<div class="col-md-4">
+			<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;"></textarea>
 		</div>
 		</form>
-
-		<div class="desborde"></div>			
-		<h3>Inversión & Tiempo</h3>
+	</div>
+    <div class="desborde"></div>			
+	<h3>Inversión & Tiempo</h3>
 	<hr>		
-	<!-- <div id="txt_aliniado" > -->
-		<div class="panel panel-primary" style="width:22%;">
-		    <table class="table table-hover">
-		    	<div class="panel-heading"><input type="text" id="bserv" style = "width : 100%;" class="valor" val="" placeholder="Buscar Servicios"></div>
-	    		<tbody id="listaServicios" style = "width : 100%;">	
-	    			<!-- Esta sección contiene la lista de los servicios -->
-				</tbody>
-			</table> <!-- Tabla de Servicios -->
+	<div class="row">
+		<div class="col-md-6" style="width: 30% !important">
+			<input type="text" id="bserv" style = "width : 100%; height:35px;" class="valor" val="" placeholder="Buscar Servicios">
+			<div class="panel panel-primary" style="margin-top: 20px">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">Seleccionar servicios</h3>
+		      </div>
+		      <div class="panel-body" style="overflow: auto; height: 250px;">
+		        <table class="table table-hover">
+		        	<tbody id="listaServicios">	
+			    		<!-- Esta sección contiene la lista de los servicios -->
+					</tbody>
+		        </table>	
+		      </div>
+		    </div>			
 		</div>
-		<div>	        
-		<table id="mostrarTabla" class="table table-striped">
-			<thead style="background : #F9F9F9;">
-				<tr>
-					<th>Todos<input id="todos" type="checkbox"></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
-					<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody id="trServicio"> </tbody>
-			<tr class="info"> <td></td> <td colspan="5">Total</td> <td><p id="total">0.00</p></td><td></td></tr>			
-			<tfoot>
-			<tr>
-			    <td><button id="delete"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
-				    <button id="vistaPrevia"    type="button" class="btn btn-primary"> <span class="icon-preview"></span> Vista previa </button></td>		
-			</tr>
-			</tfoot>
-		</table>
+		<div class="col-md-6" style="width: 70% !important">
+			<table id="mostrarTabla" class="table table-striped">
+				<thead style="background : #F9F9F9;">
+					<tr>
+						<th>Todos<input id="todos" type="checkbox" style=""></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
+						<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody id="trServicio"></tbody>
+					<tr class="info"> 
+						<td></td> 
+						<td colspan="5">Total</td> 
+						<td><p id="total">0.00</p></td>
+						<td></td>
+					</tr>			
+				<tfoot>
+					<tr>
+					    <td><button id="delete"  type="button" class="btn btn-danger">Eliminar varios 			</button>
+					    <td>
+						    <button id="vistaPrevia"    type="button" class="btn btn-primary"> 
+						    	<span class="icon-preview"></span> Vista previa 
+						    </button>
+						</td>		
+					</tr>
+				</tfoot>
+			</table>
 		</div>
-		<div class="desborde"></div><br><br> 
-		<button id="guardar"   type="button" class="btn btn-default"> Guardar  </button>		    
-		<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>				
-		
+	</div>		
+	<div class="desborde"></div><br><br> 
+	<button id="guardar"   type="button" class="btn btn-default"> Guardar  </button>		    
+	<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>		
 	<!-- </div>	 -->
     </section>
-
 
 <script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
 
