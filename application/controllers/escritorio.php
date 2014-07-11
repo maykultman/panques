@@ -137,9 +137,10 @@ class Escritorio extends REST {
 		{			
 			$this->load->view($this->ruta(), $data);			
 		}
+
 		if($this->ruta() == 'modulo_proyectos_cronograma')
-		{			
-			$this->load->view($this->ruta());			
+		{	
+			$this->load->view($this->ruta(), $data);			
 		}
 	}
 
@@ -231,18 +232,20 @@ class Escritorio extends REST {
 		$this->load->model('Modelo_permisos', 'permisos');
 		$this->load->model('Modelo_permisoPerfil', 'perper');
 		$this->load->model('modelo_perfil','perfil');
-		
+		$data['permisos'] = $this->permisos->get();
+		$data['empleados'] = $this->empleado->get();
+		$data['perfiles'] = $this->perfil->get();
 		if($this->ruta() == 'modulo_usuarios_nuevo')
 		{
-			$data['perfiles'] = $this->perfil->get();
-			$data['permisos'] = $this->permisos->get();
 			$data['permisos_perfil'] = $this->perper->get();
-			$data['empleados'] = $this->empleado->get();
 			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'modulo_usuarios_consulta')
 		{
-			$this->load->view($this->ruta());
+			$this->load->model('Modelo_permisoUsuario');
+			$data['permisosUsuario'] = $this->Modelo_permisoUsuario->get();
+			$data['usuarios'] = $this->usuario->get(false);
+			$this->load->view($this->ruta(), $data);
 		}
 	}
 

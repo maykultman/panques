@@ -19,22 +19,9 @@ app.VistaTelefonoEmpleado = Backbone.View.extend({
 		return this;
 	},
 
-	validarTelefono	: function (e) {
-		key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key);
-        letras = "1234567890";
-        especiales = "8-37-39-46";
-        tecla_especial = false
-        for(var i in especiales){
-            if(key == especiales[i]){
-                tecla_especial = true;
-                break;
-            }
-        }
-        if(letras.indexOf(tecla)==-1 && !tecla_especial){
-                return false;
-        }
-  		
+	validarTelefono	: function (e) 
+	{
+		return validarTel(e);
 	},
 
 	editarTelefono : function(events)
@@ -75,6 +62,7 @@ app.VistaTelefonoEmpleado = Backbone.View.extend({
 app.VistaCatalogoEmpleado = Backbone.View.extend({
 
 	tagName : 'div',
+	className : 'panel panel-default',
 
 	plantilla : _.template($('#datosEmpleado').html()),
 
@@ -88,15 +76,8 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 	},
 
 	initialize : function()	{ 
-		// this.listenTo(this.model[0], 'change', this.prerender);  
+		
 		this.listenTo(this.model[0], 'destroy', this.remove);
-
-	},
-
-	prerender : function()
-	{
-		this.render(this.model[0].toJSON());
-		// this.$('#nombreEmpleado').trigger('click'); /*...eventos del teclado...*/        
 	},
 
 	render : function(info) 
@@ -110,7 +91,7 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 		var select_puestos = this.$el.find('#puesto');
 		this.cargarSelectPuestos(
 			function()
-			{
+			{  // console.log(empleado.puesto);
 				$(select_puestos).children('#puesto_'+empleado.puesto).attr('disabled', true);				
 				$(select_puestos).children('#puesto_'+empleado.puesto).attr('selected', 'selected');				
 			}
@@ -166,7 +147,7 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 	},	
 
 	cargarSelectPuesto : function (puesto)
-	{
+	{   
 		var vistaPuesto = new app.VistaSelectPuesto({ model : puesto});
 		this.$('#puesto').append(vistaPuesto.render().el);	
 	},

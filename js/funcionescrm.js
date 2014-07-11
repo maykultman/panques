@@ -171,6 +171,7 @@ app.busquedaCotizacion2.cotizacion2 = (function () {
 
 /*Debe recibir un objeto Date*/
 function formatearFechaUsuario (fecha) {
+    
     var fechaFormateada = '';
     if ((fecha.getDate()) < 10 )
         fechaFormateada = '0'+(fecha.getDate()); 

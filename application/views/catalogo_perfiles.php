@@ -86,7 +86,7 @@
 		<div id="<%-id%>" class="panel-body">
 	   		<h4>Permisos</h4>				            
 	   		<div id="ListaPermisos" class="row"> 
-
+	   			<!--lista de permisos	 --> 
 	   		</div>	
 		</div>
 	</div>

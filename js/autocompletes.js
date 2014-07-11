@@ -62,7 +62,7 @@
 		
 		if($(fecha.currentTarget).attr('class')==='arriba')
 		{
-			parametros.reverse();
+			parametros.reverse(); console.log('3')
 			flecha.reverse();		
 		}
 		$( '#bfecha' ) .removeClass ( parametros [0] );
@@ -70,5 +70,5 @@
 		$( '#fecha'  ) .removeClass ( flecha     [0] );		
 		$( '#fecha'  ) .addClass    ( flecha     [1] );	
 		
-		return coleccion.reset(coleccionDe.reverse());		
+		var col = coleccion.reset(coleccionDe.reverse());		
 	}

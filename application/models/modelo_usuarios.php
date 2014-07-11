@@ -16,9 +16,7 @@
 		{  
 			$reply = $this->where(  $id  );  # Ejecutamos el metodo where...      
             return $this->db->get  ( 'usuarios' )->$reply();  # Este metodo ejecuta get con y sin ID...
-		}
-
-		
+		}		
 
 		public function session($post)
 		{   
@@ -52,6 +50,11 @@
            	} #var_dump($privilegios); die();
            	return $privilegios;			
 		}
+
+		public function save (  $id,  $put ) 
+        {   
+        	return $this->db->update('usuarios', $put, array('id' => $id)  );   
+        } 
 
 		public function update_user($id, $put)
 		{

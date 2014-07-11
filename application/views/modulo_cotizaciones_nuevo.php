@@ -12,25 +12,26 @@
 				<input id="fecha"   type="text"   name="fecha" class="form-control" val="" disabled="true" >	
 		</div>		
 		<div class="datos_cotizacion">
-			<textarea id="detalles" name="detalles" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Detalles"></textarea><br>
-
+			<textarea id="detalles" name="detalles" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Detalles"></textarea>
 		</div>
-		<div class="datos_cotizacion">
-			<textarea id="caracteristicas" name="caracteristicas" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Caracteristicas"></textarea><br>
+		<div class="datos_cotizacion1">
+			<textarea id="caracteristicas" name="caracteristicas" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Caracteristicas"></textarea>
 		</div>
 		</form>
 
 		<div class="desborde"></div>			
 		<h3>Inversión & Tiempo</h3>
 	<hr>		
-	<div id="txt_aliniado" >
-		<div class="panel panel-primary" style="width:23%;">
+	<!-- <div id="txt_aliniado" > -->
+		<div class="panel panel-primary" style="width:22%;">
 		    <table class="table table-hover">
 		    	<div class="panel-heading"><input type="text" id="bserv" style = "width : 100%;" class="valor" val="" placeholder="Buscar Servicios"></div>
-	    		<tbody id="listaServicios" style = "width : 100%;">																									
+	    		<tbody id="listaServicios" style = "width : 100%;">	
+	    			<!-- Esta sección contiene la lista de los servicios -->
 				</tbody>
 			</table> <!-- Tabla de Servicios -->
-		</div>	        
+		</div>
+		<div>	        
 		<table id="mostrarTabla" class="table table-striped">
 			<thead style="background : #F9F9F9;">
 				<tr>
@@ -47,15 +48,16 @@
 			</tr>
 			</tfoot>
 		</table>
-
+		</div>
 		<div class="desborde"></div><br><br> 
-			<button id="guardar"   type="button" class="btn btn-default"> Guardar  </button>		    
-			<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>				
-		</div>		
-		<!-- <table id="con"></table>	 -->
+		<button id="guardar"   type="button" class="btn btn-default"> Guardar  </button>		    
+		<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>				
+		
+	<!-- </div>	 -->
     </section>
 
-</div>
+
+<script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 	<script type = "text/plantilla" id="plantilla_Cotizacion">
@@ -109,6 +111,7 @@
 	app.coleccionDeRepresentantes 	  = <?php echo json_encode($representantes) 	?>;
 </script>
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'			      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCotizacion.js'			      ?>"> </script>
