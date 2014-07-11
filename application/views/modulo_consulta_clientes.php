@@ -1,18 +1,12 @@
-   
     <div id="posicion_infotd">
         <form id="clientes">
             <table id="tbla_cliente" class="table table-striped table-curved">
                 <!-- BOTON PARA PRUEBAS -->
-                <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->                    
-<<<<<<< HEAD
+                <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
                 <thead style="background-color: #f9f9f9; color: #333;">
                     <tr>
-                        <th><!-- Todos<input type="checkbox" -->&nbsp;&nbsp;&nbsp;</th>
-=======
-                <thead>
-                    <tr id="color_titulos">
                         <th>Todos <input id="todos" type="checkbox" name="todos"></th>
->>>>>>> origin/master
+
                         <th></th>
                         <th>
                             <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial">
