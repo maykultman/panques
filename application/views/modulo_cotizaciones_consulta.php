@@ -39,6 +39,7 @@
 	</td>
 </script>
 <!-- Librerias -->
+<script src="js/plugin/Gantt/js/jquery.fn.gantt.js"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
 <script type="text/javascript">
 	var app = app || {};

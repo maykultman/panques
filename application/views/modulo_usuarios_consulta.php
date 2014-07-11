@@ -51,13 +51,11 @@
 					</div>
 				</div>
 				<div class="col-md-4" style="width: 42.5% !important;">
-				  	<div class="padre">
-						<label>Nombre del Empleado</label>
-						<div style="display: table-cell">				  				
-					 		<input id="empleado" name="idempleado" type="text" class="form-control input_margen" disabled value="{{empleado}}">
+				  						
+						<div style="display: table-cell">
+							<p><b>Nombre del Empleado :</b>&nbsp;{{empleado}}</p>
 						</div>						
-					</div>
-					
+										
 					<div class="padre">
 						<label>Perfil</label>
 						<div style="display: table-cell">
