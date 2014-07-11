@@ -6,4 +6,4 @@ var ColeccionPermisosUsuario = Backbone.Collection.extend({
 
 });
 
-app.coleccionPermisosUsuario = new ColeccionPermisosUsuario(app.ColeccionDePermisosUsuario);
+app.coleccionPermisosUsuario = new ColeccionPermisosUsuario(app.coleccionDePermisosUsuario);

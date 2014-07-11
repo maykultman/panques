@@ -1,4 +1,16 @@
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
+<!-- CSS jQuery.Gantt -->
+	<link rel="stylesheet" type="text/css" href="js/plugin/Gantt/css/style.css">
+	<style type="text/css">
+      /* Bootstrap 3.x re-reset */
+      .fn-gantt *,
+      .fn-gantt *:after,
+      .fn-gantt *:before {
+        -webkit-box-sizing: content-box;
+           -moz-box-sizing: content-box;
+                box-sizing: content-box;
+      }
+	</style>
 <style type="text/css">
 	#color_titulos hr {
 		line-height: 10px;
@@ -107,6 +119,7 @@
 	    <button type="button" class="btn btn-default">Eliminar varios</button>
 	    <button type="button" class="btn btn-default">Entregar</button>  
 	</div>
+	<div class="gantt"></div>
 </div>
 
 
@@ -553,6 +566,8 @@
 </script>
 <!-- Utilerias -->
 	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+	<!-- js plugin jQuery Gantt -->
+	<script src="js/plugin/Gantt/js/jquery.fn.gantt.js"></script>
 <!-- Librerias Backbone -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>

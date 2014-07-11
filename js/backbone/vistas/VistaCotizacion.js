@@ -5,7 +5,10 @@ app.VistaCotizacion = Backbone.View.extend({
 
 	plantilla : _.template($('#tabla_Cotizacion').html()),
 
-	events : {},
+	events : {
+		'click .icon-trash' : 'eliminarCotizacion',
+		'click .icon-uniF5E2' : 'pasarAContrato'
+	},
 
 	initialize : function (){
 
@@ -15,6 +18,16 @@ app.VistaCotizacion = Backbone.View.extend({
 		this.$el.html(this.plantilla(this.model.toJSON()));
 		return this;
 	},
+
+	eliminarCotizacion : function ()
+	{
+		this.model.destroy();
+	},
+
+	pasarAContrato : function()
+	{
+		alert('contrato');
+	}
 
 });
 

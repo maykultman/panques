@@ -16,14 +16,12 @@
  					  "pago"=>$post['pago'][$i])
  				);
  		}
- 		return true;
- 		// return $this->db->insert_batch('pagos', $post);
-		// return $this->get( $this->db->insert_id() );
+ 		return true; //$this->get(false);
  	}
 
- 	public function get ( $id = FALSE )
+ 	public function get ($id=FALSE)
  	{
- 		$reply = $this->where( $id );
+ 		$reply = $this->where($id);
  		return $this->db->get( 'pagos')->$reply();
  	}
 

@@ -53,4 +53,4 @@
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPuesto.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPuestos.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas2/VistaCatalogoPuestos.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoPuestos.js'?>"></script>

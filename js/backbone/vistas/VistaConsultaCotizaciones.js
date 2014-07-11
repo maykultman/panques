@@ -9,22 +9,22 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	'click  #desmarcar' 	 : 'desmarcarTodos',
 	 	'click  #eliminar'  	 : 'eliminar',
         'click  #buscarCliente'  : 'busqueda',
-        'keyup  #buscarCliente'  : 'borrayRenderiza',
+        'click  #todos' 		 : 'marcarTodosCheck',
         'click  #buscarEmpleado' : 'busqueda',
+        'keyup  #buscarCliente'  : 'borrayRenderiza',        
         'keyup  #buscarEmpleado' : 'borrayRenderiza',
         'click 	.abajo'          : 'ordenarporfecha',
-		'click  .arriba'         : 'ordenarporfecha'
+		'click  .arriba'         : 'ordenarporfecha',
 	 },
 
 	 initialize : function ()
 	 {
 	 	this.$tablaCotizaciones = this.$('#lista_cotizaciones');
 	 	this.cargarCotizaciones(); 
-	 	this.listenTo( app.coleccionCotizaciones, 'add', this.cargarCotizacion );
+	 	
 		this.listenTo( app.coleccionCotizaciones, 'reset', this.cargarCotizaciones);	 	
+		this.listenTo( app.coleccionCotizaciones, 'remove', this.cargarCotizaciones);
 	 },
-
-    render : function (){},
 
 	cargarCotizacion : function (modelo)
 	{
@@ -46,7 +46,8 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	}
 	 	/*...Añadimos campos a la colección de modelocotización...*/ 	 	
 	 	modelo.set
-	 	({ 
+	 	({  
+	 		fecha      : formatearFechaUsuario(new Date(modelo.get('fecha'))), 				  
 	 		'empleado' : app.coleccionEmpleados.get ({ id : modelo.get( 'idempleado' )} ).get('nombre'),
 	 		'cliente'  : app.coleccionClientes. get ({ id : modelo.get( 'idcliente'  )} ).get('nombreComercial'), 
 			'total'    : total
@@ -66,12 +67,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	ordenarporfecha : function(fecha)
 	{	
-		var modelo = ordenar(fecha, app.coleccionDeCotizaciones);
-		this.$tablaCotizaciones.html('');
-		for( i in modelo)
-		{
-			this.cargarCotizacion( (new (Backbone.Model.extend({ defaults : modelo[i] }) ) ) );
-		}
+		ordenar(fecha, app.coleccionCotizaciones, app.coleccionDeCotizaciones);
 	},
 
 	busqueda : function(elemento)
@@ -87,22 +83,9 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
         }
 	},
 
-	 marcarTodos : function()
-	 {
-	 	alert('e.e');
-	 },
-
-	//  desmarcarTodos : function()
-	//  {
-	//  	alert('e.e');
-	//  },
-
-	//  eliminar : function()
-	//  {
-	//  	alert('e.e');
-	//  },
-
-
+	marcarTodosCheck : function(elemento)
+	{
+		marcarCheck(elemento);
+    }
 });
-
 app.vistaConsultaCotizaciones = new app.VistaConsultaCotizaciones();

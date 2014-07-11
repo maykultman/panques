@@ -9,8 +9,18 @@
          # 'idempleado' => $post['idempleado'],  'fecha'           =>$post['fecha'          ],
          # 'detalles'   => $post['detalles'  ]
          
-        public function create($args)
+        public function create($post)
         {   
+            $args = array(
+                          'idcliente'       => $post[  'idcliente'       ],
+                          'idrepresentante' => $post[  'idrepresentante' ],
+                          'idempleado'      => $post[  'idempleado'      ],
+                          'titulo'          => $post[  'titulo'          ],
+                          'fecha'           => $post[  'fecha'           ],
+                          'detalles'        => $post[  'detalles'        ],
+                          'caracteristicas' => $post[  'caracteristicas' ] 
+
+                        );
             $this->db->insert('cotizaciones', $args);
             return $this->get($this->db->insert_id());     
         }

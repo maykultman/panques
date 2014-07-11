@@ -5,7 +5,7 @@
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				<li>
-					<a href="modulo_proyectos_cronogroma">
+					<a href="modulo_proyectos_cronograma">
 					<div class="icono_menu_modulo">
 						<span class="icon-diskspace2"></span>
 				    </div>

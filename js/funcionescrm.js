@@ -171,11 +171,12 @@ app.busquedaCotizacion2.cotizacion2 = (function () {
 
 /*Debe recibir un objeto Date*/
 function formatearFechaUsuario (fecha) {
+    
     var fechaFormateada = '';
     if ((fecha.getDate()) < 10 )
-    fechaFormateada = '0'+(fecha.getDate());
+        fechaFormateada = '0'+(fecha.getDate()); 
     else
-        fechaFormateada = (fecha.getDate());
+        fechaFormateada = (fecha.getDate()+1);
     if ((fecha.getMonth() +1) < 10 )
         fechaFormateada += '/0'+(fecha.getMonth() +1);
     else
@@ -185,3 +186,70 @@ function formatearFechaUsuario (fecha) {
 
     return fechaFormateada;
 }
+
+/*ALertas alertify.js. Código de tercero*/
+    /*Recordar llamar a las librerias:
+    <script type="text/javascript" src="lib/alertify.js'?>"></script>
+    <link rel="stylesheet" type="text/css" href="themes/alertify.core.css'?>">
+    <link rel="stylesheet" type="text/css" href="themes/alertify.default.css'?>">*/
+    function alerta(mensaje, callback){
+        //un alert
+        alertify.alert(mensaje, callback());//"<b>Blog Reaccion Estudio</b> probando Alertify"
+    }
+
+    function confirmar(mensaje, callbackAceptar, callbackCancelar){
+        //un confirm
+        alertify.confirm(mensaje, function (e) { //"<p>Aquí confirmamos algo.<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>"
+            if (e) {
+                callbackAceptar(); //alertify.success("Has pulsado '" + alertify.labels.ok + "'");
+            } else { 
+                callbackCancelar(); //alertify.error("Has pulsado '" + alertify.labels.cancel + "'");
+            }
+        }); 
+        return false
+    }
+
+    function datos(){
+        //un prompt
+        alertify.prompt("Esto es un <b>prompt</b>, introduce un valor:", function (e, str) { 
+            if (e){
+                alertify.success("Has pulsado '" + alertify.labels.ok + "'' e introducido: " + str);
+            }else{
+                alertify.error("Has pulsado '" + alertify.labels.cancel + "'");
+            }
+        });
+        return false;
+    }
+
+    function notificacion(){
+        alertify.log("Esto es una notificación cualquiera."); 
+        return false;
+    }
+
+    function ok(){
+        alertify.success("Visita nuestro <a href=\"http://blog.reaccionestudio.com/\" style=\"color:white;\" target=\"_blank\"><b>BLOG.</b></a>"); 
+        return false;
+    }
+
+    function error(mensaje){
+        alertify.error(mensaje); //"Usuario o constraseña incorrecto/a."
+        return false; 
+    }
+    function marcarCheck(elemento)
+    {
+        /*..Totos los checkbox de la tabla de servicios cotizando tienen el mismo id....*/
+        var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
+        /*..Asi es como obtenemos todos...para luego iterar sobre ellos estableciendo true o false...*/
+        /*..Si marcar todos es TRUE entonces todos los de la lista son TRUE caso contrario FALSO*/
+        if ($(elemento.currentTarget).is(':checked')) 
+        {
+            for (var i = 0; i < checkboxTabla.length; i++) {
+                    checkboxTabla[i].checked = true;
+                }
+            }
+            else{
+                for (var i = 0; i < checkboxTabla.length; i++) {
+                    checkboxTabla[i].checked = false;
+            }
+        }
+    }

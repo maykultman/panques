@@ -29,6 +29,7 @@ $route['modulo_consulta_prospectos'] = 'escritorio/clientes/$1';
 $route['modulo_proyectos'] = 'escritorio/proyectos/$1';
 $route['modulo_proyectos_consulta']   = 'escritorio/proyectos/$1';
 $route['modulo_proyectos_nuevo']      = 'escritorio/proyectos/$1';
+$route['modulo_proyectos_cronograma'] = 'escritorio/proyectos/$1';
 
 //Rutas para la contratos...
 $route['modulo_contratos']           = 'escritorio/contratos/$1';
@@ -43,9 +44,7 @@ $route['modulo_cotizaciones_consulta'] = 'escritorio/cotizacion/$1';
 //Rutas para la facturas...
   $route['prueba_ver_proyecto'] = 'escritorio/facturas/$1';
   $route['modal_consulta_proyecto'] = 'escritorio/facturas/$1';
-//$route['modulo_facturas'] = 'escritorio/facturas/$1';
-// $route['modulo_facturass'] = 'escritorio/facturas/$1';
-// $route['modulo_facturas'] = 'escritorio/facturas/$1';
+ 
 
 //Rutas para la actividades...
 $route['modulo_actividades'] = 'escritorio/actividades/$1';

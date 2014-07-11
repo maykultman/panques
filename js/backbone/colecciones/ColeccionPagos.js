@@ -2,13 +2,14 @@ var app = app || {};
 app.ModeloPago	= Backbone.Model.extend({
 	urlRoot	: 'http://crmqualium.com/api_pagos'
 });
-app.ModeloPago_L	= Backbone.Model.extend({
-});
 
 
 var ColeccionPagos= Backbone.Collection.extend({
 	model	: app.ModeloPago,
 	url		: 'http://crmqualium.com/api_pagos'
+});
+/*---------------------------------------------------------------*/
+app.ModeloPago_L	= Backbone.Model.extend({
 });
 
 var ColeccionPagos_LocalStorage = Backbone.Collection.extend({

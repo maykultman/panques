@@ -1,20 +1,16 @@
-		<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-		 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
-          type="text/css">
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-        </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-        </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tap.js'?>">
-        </script>
+		<link   type="text/css"rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" >
+		<script type="text/javascript" src="<?=base_url().'js/jquery-ui-1.9.2.custom.min.js'?>"          >  </script>		
+        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>"   >  </script>
+        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>" >  </script>
+        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tab.js'?>"        >  </script>
         <section>
 		<script>
 		  $(function() {
 		    $( ".datepicker" ).datepicker({
-		      changeMonth: true,
-		      changeYear: true,
-		      yearRange : "1970 : 2000" ,
-		      dateFormat: 'yy-mm-dd'
+		      changeMonth : true,
+		      changeYear  : true,
+		      yearRange   : "1970 : 2000",
+		      dateFormat  : 'yy-mm-dd'
 		    });
 		  });
 		</script>  
@@ -39,8 +35,8 @@
 								  <option selected disabled> Cargo   </option>
 								</select>
 								<input name="direccion" 		  type="text"   class="form-control" 			 placeholder="Dirección"		   >
-								<input id="cel" name="movil"     		  type="text"   class="form-control"             placeholder="Telefono Móvil"	   >
-								<input id="casa" name="casa"      		  type="text"   class="form-control"             placeholder="Telefono casa"	   >									
+								<input id="cel" name="movil"      type="text"   class="form-control"             placeholder="Telefono Móvil"	   >
+								<input id="casa" name="casa"      type="text"   class="form-control"             placeholder="Telefono casa"	   >									
 								<input name="correo"    		  type="email"  class="form-control" 			 placeholder="Email"			   >
 								<input name="fecha_nacimiento"    type="text"   class="form-control datepicker"  placeholder="Fecha de nacimiento" >
 							</div>
@@ -93,84 +89,75 @@
 
 
 <script type = "text/plantilla" id="datosEmpleado">
-	<div  class="panel panel-default contenedor_empleado">
+	
 		<div class="panel-heading">
 		    <h4 class="panel-title">
-			    <a data-toggle="collapse" data-parent="#accordion" href="#col-<%- id %>">
-			    <b id="nombreEmpleado<%- id %>" class="titulo_empleados"><%-nombre%></b>
-			    <span class=" icon-uniF48B flecha_abajo"></span> 
+			    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%- id %>">
+			    	<b id="nombreEmpleado<%- id %>" class="titulo_empleados"><%-nombre%></b>
+			    	<span class=" icon-uniF48B flecha_abajo"></span> 
 			    </a>
 		    </h4>
 		</div>
 
-		<div id="col-<%- id %>" class="panel-collapse collapse">
+		<div id="collapse<%- id %>" class="panel-collapse collapse">
 		  	<div class="panel-body">
 		  	<div class="eliminar_permiso">
 		    		<span id="<%- id %>" class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
 		    </div>
-		    	<h4><b>Datos personales</b></h4></br>
+		    <h4><b>Datos personales</b></h4></br>
 		    	
-		    	<div class="row">
-				  	<div class="col-md-4">
-				  		<div class="padre">
-				  			<label>Nombre</label>
-				  			<div style="display: table-cell">				  				
-				  		 		<input id="nombrei" name="nombre" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
-							</div>				  			
-				  		 	<div class="resp" style="display: table-cell"></div>
-						</div>
+		    <div class="row">
+			  	<div class="col-md-4" style="width: 42.5% !important">
+			  		<div class="padre">
+			  			<label>Nombre</label>
+			  			<div style="display: table-cell">				  				
+			  		 		<input id="nombrei" name="nombre" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
+						</div>				  			
+			  		 	<div class="resp" style="display: table-cell"></div>
+					</div>
 						
 
-						<div class="padre">
-							<label>Puesto</label>
-							<div style="display: table-cell">								
-								<select id="puesto" name="puesto" class="form-control" style="width : 350px;">									 
-								</select>
-							</div>
-							<div class="resp" style="display: table-cell"></div>
+					<div class="padre">
+						<label>Puesto</label>
+						<div style="display: table-cell">								
+							<select id="puesto" name="puesto" class="form-control" style="width : 350px;">	</select>
 						</div>
+						<div class="resp" style="display: table-cell"></div>
+					</div>
 
-						<div class="padre">
-							<label>Dirección</label>
-							<div style="display: table-cell">									
-								<input id="direccion" name="direccion" type="text"  class="form-control ancho_campos2" placeholder="Dirección"      value="<%- direccion  %>">	
-				  			</div>
-				  			<div class="resp" style="display: table-cell"></div>
-						</div>
-				  	</div>
-
-				  	<div class="col-md-4">
-				  		<div class="padre">
-				  			<label>Correo</label>
-				  			<div style="display: table-cell">
-				  				<input id="correo" name="correo" type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
-				  			</div>
-					  		<div class="resp" style="display: table-cell"></div>
+					<div class="padre">
+						<label>Dirección</label>
+						<div style="display: table-cell">									
+							<input id="direccion" name="direccion" type="text"  class="form-control ancho_campos2" placeholder="Dirección"      value="<%- direccion  %>">	
 				  		</div>
-
-				  		<div class="padre">
-				  			<label>Fecha de Nacimiento</label>
-				  			<div style="display: table-cell">
-								<input class="form-control ancho_campos2 datepicker" type="text" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
-				  			</div>
-				  			<div class="resp" style="display: table-cell"></div>
-						</div>
-				    </div>
-
-				  <div id="tel" class="col-md-4">				  	
-					
-				  </div>
-				  
+				  		<div class="resp" style="display: table-cell"></div>
+					</div>
 				</div>
-				      
-			</div>
-		</div>		
-	</div>
-	 	
+
+				<div class="col-md-4" style="width: 42.5% !important">
+					<div class="padre">
+						<label>Correo</label>
+						<div style="display: table-cell">
+							<input id="correo" name="correo" type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
+						</div>
+				  		<div class="resp" style="display: table-cell"></div>
+					</div>
+
+					<div class="padre">
+						<label>Fecha de Nacimiento</label>
+						<div style="display: table-cell">
+							<input class="form-control ancho_campos2 datepicker" type="text" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
+						</div>
+						<div class="resp" style="display: table-cell"></div>
+					</div>
+				</div>
+
+				<div id="tel" class="col-md-4" style="width: 42.5% !important">				  	
+					
+				</div>				  
+			</div>				      
+		</div> 	
 </script>
-
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
@@ -180,6 +167,8 @@
 	app.coleccionDeTelefonos = <?php echo json_encode($telefonos) ?>;
 	app.coleccionDePuestos   = <?php echo json_encode($puestos)   ?>;
 </script>
+<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">          </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloTelefono.js'?>">          </script>
