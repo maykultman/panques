@@ -11,6 +11,7 @@
 	.visiblito{
 		transition: all 300ms ease-in;
 		opacity: 1;
+		/*display: block;*/
 	}
 	.ocultito{
 		transition: all 300ms ease-in;
@@ -23,7 +24,6 @@
 		background: #FFF;
 	}
 </style>
-
 	<section id="posicion_infotd" class="visiblito">
 		<table id="tbla_cliente" class="table table-striped">      
 			<tr>
@@ -228,7 +228,7 @@
 		   	<div class="desborde"></div>		 
 		   	<button type="button" id="btn_guardar" class="btn btn-default">Guardar cambios</button>
 		   	<a id="btn_vistaPrevia" target="_blanck" class="btn btn-primary" href="formatoContrato"><span class="icon-preview"></span>Vista previa</a>
-		   	<button type="button" id="btn_calcelar" class="btn btn-default">Cancelar</button>
+		   	<button type="button" id="btn_calcelar" class="btn btn-default jcarousel-prev">Cancelar</button>
 		   	<!-- <button type="button" class="btn btn-danger">[Crear nuevo contrato con estas bases, puede ser una opcion de un contrato existente]</button> -->
 		</form>
 	</section>
@@ -245,7 +245,7 @@
 			<div class="eliminar_cliente">
 				<span id="eliminar" class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
 			</div>
-			<span id="tr_btn_editar" class="icon-edit2" data-toggle="tooltip" data-placement="top" title="Editar"></span>               
+			<span class="icon-edit2 tr_btn_editar" data-toggle="tooltip" data-placement="top" title="Editar"></span>               
 			<span id="tr_btn_verInfo" class="icon-preview" data-toggle="modal" data-target="#modal<%- id %>" title="Ver contrato"></span>
 			<span id="" class="icon-uniF7D5" data-toggle="modal" data-target="#modal<%- id %>" title="Descargar"></span>
 		</td>
@@ -333,6 +333,8 @@
 </script>
 <!-- Utilerias -->
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+    <!-- plugins -->
+    	<script type="text/javascript" src="<?=base_url().'js/plugin/jquery.jcarousel-core.min.js'?>"></script>
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>

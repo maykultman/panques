@@ -105,7 +105,7 @@ app.VistaEdicionContrato = app.VistaNuevoContrato.extend({
 		var vista = new app.VistaServicioSeleccionado({ model:model });
 		this.$('#tbody_servicios_seleccionados').append(vista.render().el);
 																			/*ELIMINAR LA FUNCION parents() Y css()*/
-		this.$( '#servicio_'+model.get('idservicio') ).attr('disabled',true).parents('td').css({'background':'gray'});
+		this.$( '#servicio_'+model.get('idservicio') ).attr('disabled',true);
 		vista.calcularImporteIVATotalNeto();
 	},
 	/*[polimorfismo] Reescribimos la funcion.*/
@@ -116,11 +116,9 @@ app.VistaEdicionContrato = app.VistaNuevoContrato.extend({
 			window.scrollTo(0,0);
 		});
 	},
-
-	cancelar				: function () {
-		$('.visiblito').toggleClass('ocultito');
-		window.scrollTo(0,0);
-	},
+	/*[polimorfismo] Reescribimos la funcion para no redireccionar al
+	  mismo modulo historial.*/
+	cancelar	: function () {/**/},
 });
 app.VistaContrato = Backbone.View.extend({
 	tagName	: 'tr',
@@ -129,7 +127,7 @@ app.VistaContrato = Backbone.View.extend({
 	events	: {
 		'click #eliminar'		: 'eliminar',
 		'click #tr_btn_verInfo'	: 'verInfo',
-		'click #tr_btn_editar'	: 'editar',
+		'click .tr_btn_editar'	: 'editar',
 		
 	},
 	initialize	: function () {
@@ -153,7 +151,6 @@ app.VistaContrato = Backbone.View.extend({
 		// $('#posicion_infotd').css({'position':'absolute'}).hide( 'slide',{direction:'right'}, 2000, function () {
 		// 	$('#posicion_infotd').css({'position':'initial'});
 		// });
-		$('.visiblito').toggleClass('ocultito');
 	},
 	eliminar	: function () {
 		this.model.destroy({
@@ -169,7 +166,7 @@ app.VistaContrato = Backbone.View.extend({
 });
 
 app.VistaConsultaContrato = Backbone.View.extend({
-	el	: '.contenedor_principal_modulos',
+	el	: '#posicion_infotd',
 	events	: {
 		'click #buscarCliente'  : 'busqueda',
 		'keyup #buscarCliente'  : 'borrayRenderiza',
@@ -187,6 +184,8 @@ app.VistaConsultaContrato = Backbone.View.extend({
 
 		// this.listenTo( app.coleccionServiciosContrato, 'add', this.resetearSerContr );
 		// this.listenTo( app.coleccionPagos, 'add', this.resetearPagos );
+
+
 	},
 	render		: function () {},
 	// resetearSerContr	: function () {
@@ -241,5 +240,22 @@ app.VistaConsultaContrato = Backbone.View.extend({
         marcarCheck(elemento);
     },
 });
+
+app.VistaGeneral = Backbone.View.extend({
+	el 		: '.contenedor_principal_modulos',
+	events	: {
+		'click .tr_btn_editar'	: 'editar',
+		'click #btn_calcelar'	: 'cancelar'
+	},
+	editar 		: function () {
+		$('.visiblito').toggleClass('ocultito');
+	},
+	cancelar	: function () {
+		$('.visiblito').toggleClass('ocultito');
+		window.scrollTo(0,0);
+	},
+});
+
+app.vistaGeneral = new app.VistaGeneral();
 
 app.vistaConsultaContrato = new app.VistaConsultaContrato();
