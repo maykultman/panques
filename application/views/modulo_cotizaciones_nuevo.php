@@ -30,7 +30,7 @@
 		      <div class="panel-heading">
 		        <h3 class="panel-title">Seleccionar servicios</h3>
 		      </div>
-		      <div class="panel-body" style="overflow: auto; height: 250px;">
+		      <div class="panel-body" style="overflow: auto; height: 230px;">
 		        <table class="table table-hover">
 		        	<tbody id="listaServicios">	
 			    		<!-- Esta sección contiene la lista de los servicios -->
@@ -80,10 +80,10 @@
 </script>
 
 <script type = "text/plantilla" id="PCservicios">
-	<td style="width: 1% !important; " class="icon-operaciones">
+	<td   class="icon-operaciones">
 		<span id="infoSC" class="icon-info" ></span>
 
-		<label for="<%- id %>"><%- nombre %></label>
+		<label id="input_td" for="<%- id %>"><%- nombre %></label>
 		<ul class="ocultoI">		
 			<li> Concepto    : &nbsp;&nbsp; <%- concepto    %>  </li>   
 			<li> Precio      : &nbsp;&nbsp; <%- precio      %>  </li>    
