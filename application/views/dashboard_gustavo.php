@@ -3,8 +3,7 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    <h3 class="panel-title">Panel title</h3>
-			    <span class="glyphicon glyphicon-search"></span>
-	                           	  	 
+			    <span class="glyphicon glyphicon-search"></span>	                           	  	 
 			  </div>
 			  <div class="panel-body">
 			    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

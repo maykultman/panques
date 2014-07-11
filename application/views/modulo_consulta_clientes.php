@@ -4,8 +4,8 @@
             <table id="tbla_cliente" class="table table-striped table-curved">
                 <!-- BOTON PARA PRUEBAS -->
                 <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->                    
-                <thead>
-                    <tr id="color_titulos">
+                <thead style="background-color: #f9f9f9; color: #333;">
+                    <tr>
                         <th><!-- Todos<input type="checkbox" -->&nbsp;&nbsp;&nbsp;</th>
                         <th></th>
                         <th>
