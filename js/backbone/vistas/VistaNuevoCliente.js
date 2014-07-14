@@ -176,7 +176,9 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		app.coleccionServicios.create({ 
-			nombre : nombre 
+			nombre : nombre,
+			idcliente : 'el id',
+			modelo:'servicioscuaenta' 
 		},{
 			wait:true,
 			success : function (exito) {

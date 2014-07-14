@@ -12,9 +12,39 @@
 
 		public function insert_s($post)
 		{  
-
+			if(!$post['nombre'][0])
+			{
 				$this->db->insert('servicios', $post); 	$id = $this->db->insert_id();
 				return $this->get_s($id); 	
+			}
+			# Servicios nuevos creados desde el modulo de clientes
+			for ($i = 0 ; $i<count($post['nombre']); $i++)
+			{
+				$this->db->insert('servicios',array('nombre'=> $post['nombre'][$i])); 
+				$ids[$i] = $this->db->insert_id();		
+			}
+			# con los id´s de los servicios acabados de ingresar los enviamos a la tabla de servicios cuenta.
+			if($post['servicioscuenta'])
+			{
+				for ($h = 0 ; $h<count($post['nombre']); $h++)
+				{
+					$this->db->insert('servicios_cliente',array('idcliente'=> $post['idcliente'],
+																'idservicio'=>$ids[$i])); 
+					$resp[$i] = $this->db->insert_id();		
+				}
+				return count($resp);
+			}
+			if($post['serviciosinteres'])
+			{
+				for ($i = 0 ; $i<count($post['nombre']); $i++)
+				{
+					$this->db->insert('servicios_interes',array('idcliente'=> $post['idcliente'],
+																'idservicio'=>$ids[$i])); 
+					$resp[$i] = $this->db->insert_id();		
+				}
+				return count($resp);
+			}
+				
 
 		} # Fin del metodo insertar...
 
