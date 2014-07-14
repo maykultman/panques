@@ -180,13 +180,6 @@ $route['api_facturas/(:num)'] = 'facturas/api/$1';
 $route['api_puestos'] = 'puesto/api';
 $route['api_puestos/(:num)'] = 'puesto/api/$1';
 
-
-$route['api_permisoPerfil'] = 'permisoPerfil/api';
-$route['api_permisoPerfil/(:num)'] = 'permisoPerfil/api/$1';
-
-$route['api_permisoUsuario'] = 'permisoUsuario/api';
-$route['api_permisoUsuario/(:num)'] = 'permisoUsuario/api/$1';
-
 $route['api_serviciosContrato'] = 'serviciosDeContrato/api';
 $route['api_serviciosContrato/(:num)'] = 'serviciosDeContrato/api/$1';
 

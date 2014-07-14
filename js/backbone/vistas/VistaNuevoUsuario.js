@@ -1,51 +1,5 @@
 var app = app || {};
 
-//*****************************************************//
-app.VistaSelectPerfil = Backbone.View.extend({
-	tagName : 'option',
-	
-	plantilla  : _.template($('#selectperfil').html()),
-
-	events : {},
-
-	initialize : function () 
-	{
-		this.$el.attr('value', this.model.get('id'));
-		this.$el.attr('id', this.model.get('id'));			
-	}, 
-
-	render : function()
-	{
-		this.$el.html(this.plantilla(this.model.toJSON()));
-		return this;
-	}
-});
-
-app.VistaPermisoPerfil = Backbone.View.extend({
-	tagName : 'label',
-	className : 'chek',
-
-	plantilla : _.template($('#Permisos').html()),
-	events : {},
-
-	initialize : function(){},
-
-	render : function ()
-	{
-		var permi = app.coleccionPermisosPerfil.where({ idpermiso : this.model.get('id'), idperfil : this.model.get('idperfil') });
-		if (typeof permi[0] != 'undefined') {
-			this.$el.css('background','#ddffdd');
-			this.$el.css('border-radius','5px');
-			this.model.set({palomita:'checked'});
-		}
-		else{
-			this.model.set({palomita:''})
-		};
-		this.$el.html(this.plantilla(this.model.toJSON()));
-		return this;
-	},
-});
-
 app.VistaNuevoUsuario = Backbone.View.extend({
 	el : '#datosUsuario',
 
@@ -55,14 +9,12 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		'blur  #empleado'   : 'Aidempleado',
 		'keypress #empleado': 'soloLetras',
 		'change #idperfil'  : 'mostrarPermisos',
-		'change #idpermiso' : 'marcarTodos'
+		'change #idpermisos' : 'marcarTodos'
 	},
 
 	initialize : function ()
-	{
-		this.$Perfiles = this.$('#idperfil');
-        this.cargarSelectPerfiles();
-
+	{	
+		this.cargarSelectPerfiles();
 		this.$ListaPermisos = this.$('#ListaPermisos');
         this.cargarPermisos();	
 	},
@@ -92,7 +44,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	cargarPermiso : function (permiso)
 	{
-		var vistaPermiso = new app.VistaPermisoPerfil({model : permiso});		
+		var vistaPermiso = new app.VistaRenderizaPermiso({model : permiso});		
 		this.$ListaPermisos.append(vistaPermiso.render().el);
 	},
 	cargarPermisos : function (elemento)
@@ -103,7 +55,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	cargarSelectPerfil : function (perfil)
 	{
 		var vistaPerfil = new app.VistaSelectPerfil({ model : perfil});		
-	    this.$Perfiles.append(vistaPerfil.render().el);
+	    this.$('#idperfil').append(vistaPerfil.render().el);
 	},
 
 	cargarSelectPerfiles : function ()
@@ -113,66 +65,41 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	mostrarPermisos : function(idperfil)
 	{
-		var self = this;
-		$('#ListaPermisos').html('');
-		app.coleccionPermisos.each(function(model){
-			model.set({idperfil:$(idperfil.currentTarget).val()});
-			self.cargarPermiso(model);
-		}, this);
+		var nombre = app.coleccionPerfiles.findWhere({id : $(idperfil.currentTarget).val() }).get('idpermisos');
+		this.cargarPermisos();
+		if(nombre)
+		{
+			marcarPermiso(JSON.parse(nombre).idpermisos, this.$el.find('.chek').children(), this.$el);	
+		}		
 	},
 
 	Aidempleado : function()
 	{
-		var busca=0;
-		
-		for(e in this.empleado)
-	    {
-	      	if($('#empleado').val()==this.empleado[e])
-	      	{
-	       		$('#hempleado').val(this.empleado[busca+1]);
-	       	}
-	       	busca++;
-	    }
+		var idempleado = app.coleccionEmpleados.findWhere({ nombre : $('#empleado').val()});
+		$('#hempleado').val(idempleado.get('id'));
 	},
 
 	buscarEmpleado : function (elemento)
 	{
-        this.empleado = new Array();  var cont  = 0; 
+        empleado = new Array();  var cont  = 0; 
         for(i in app.coleccionDeEmpleados)
         {
-            this.empleado[cont] = app.coleccionDeEmpleados[i].nombre; cont++;
-            this.empleado[cont] = app.coleccionDeEmpleados[i].id; 	  cont++;
+            empleado[cont] = app.coleccionDeEmpleados[i].nombre; cont++;
         };
         $('#empleado').autocomplete({ source: this.empleado});
 	},
 
 	marcarTodos : function(elemento)
 	{
-		var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
-		
-		if ($(elemento.currentTarget).is(':checked')) 
-		{
- 	 		for (var i = 0; i < checkboxTabla.length; i++) 
- 	 		{
-				checkboxTabla[i].checked = true;
-			}
- 	 	}
-        else
-        {
-        	for (var i = 0; i < checkboxTabla.length; i++) 
-        	{
-				checkboxTabla[i].checked = false;
-			}
-        }        
+		marcarCheck(elemento);      
 	},
 
-	guardar : function (fotoUsuario)
+	guardar	 : function ()
 	{
 		var modeloUsuario = pasarAJson($('#registroUsuario').serializeArray());
 		modeloUsuario = limpiarJSON(modeloUsuario);	
 		
-		var permisos = modeloUsuario.idpermiso;
-		var self = this;
+		modeloUsuario.idpermisos = JSON.stringify({idpermisos:modeloUsuario.idpermisos});
 		$('#registroUsuario')[0].reset();
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
@@ -183,38 +110,12 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 				idperfil    : modeloUsuario.idperfil,
 				usuario     : modeloUsuario.usuario,
 				contrasenia : modeloUsuario.contrasenia,
-				foto        : fotoUsuario
+				foto        : fotoUsuario,
+				idpermisos  : modeloUsuario.idpermisos
 			},
 			{
 				wait	: true,
-				success : function (exito) {
-					
-					Backbone.emulateHTTP = true;
-					Backbone.emulateJSON = true;
-					for(i in modeloUsuario.idpermiso)
-					{
-						app.coleccionPermisosUsuario.create
-						(
-							{
-								idusuario :  exito.get('id'),
-								idpermiso  : modeloUsuario.idpermiso[i],							
-							},
-							{
-								wait	: true,
-								success : function (exito) {
-									console.log('exito');
-									
-									// self.cargarPermisos();
-								},
-								error 	: function (error) {}
-							}
-						);
-
-					} /*...for...*/
-					
-					Backbone.emulateHTTP = false;
-					Backbone.emulateJSON = false;
-				},
+				success : function (exito) {},
 				error 	: function (error) {}
 			}
 		);

@@ -34,7 +34,7 @@
 				        </div>
 		                <div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default btn-xs">
-								<input type="checkbox" id="idpermiso" class="btn_marcarTodos"> Marcar todos
+								<input type="checkbox" id="idpermisos" class="btn_marcarTodos"> Marcar todos
 							</label>
 						</div>			
 				    </div>
@@ -46,39 +46,37 @@
 </div>
 
 <script type="text/plantilla" id="Permisos">
-	<input id='chekPermiso' name="idpermiso" value="<%-id%>" class="chek" type="checkbox" <%-palomita%> ><%- nombre %>	
+	<input id='permiso_<%-id%>' name="idpermisos" value="<%-id%>" class="chek" type="checkbox" ><%- nombre %>	
 </script>
 
 <script type="text/plantilla" id="selectperfil">
-	<%- nombre %> 
+	{{nombre}}
 </script>
 
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
 
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/handlebars.js'?>">   </script>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDePerfiles 	  = <?php echo json_encode( $perfiles        ) ?>;
 	app.coleccionDePermisos 	  = <?php echo json_encode( $permisos        ) ?>;	
-	app.coleccionDePermisosPerfil = <?php echo json_encode( $permisos_perfil ) ?>;
 	app.coleccionDeEmpleados 	  = <?php echo json_encode( $empleados       ) ?>;
 
 </script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPerfil.js'?>">          		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermiso.js'?>">          		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermisoPerfil.js'?>">          </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloUsuario.js'?>">          		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermisoUsuario.js'?>">         </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">               </script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPerfiles.js'?>">  		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisos.js'?>">  		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/coleccionPermisosPerfil.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionUsuarios.js'?>">        </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisosUsuario.js'?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">       </script>
 
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">	 			</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoUsuario.js'?>">	   		    </script>

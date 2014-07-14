@@ -44,7 +44,7 @@
 						            
 						            <div class="btn-group" data-toggle="buttons">
 										<label class="btn btn-default btn-xs">
-											<input type="checkbox" id="idpermiso" class="btn_marcarTodos"> Marcar todos
+											<input type="checkbox" id="idpermisos" class="btn_marcarTodos"> Marcar todos
 										</label>
 									</div>
 					            </div>
@@ -62,17 +62,12 @@
 
 
 
-<script type="text/plantilla" id="Permisos">
-		<% if (typeof palomita != 'undefined') { %>
-			<input id='chekPermiso' name="idpermiso" value="<%-id%>" class="chek" type="checkbox" <%-palomita%> ><%- nombre %>
-		<% } else{ %>
-			<input id='chekPermiso' name="idpermiso" value="<%-id%>" class="chek" type="checkbox"><%- nombre %>
-		<% }; %>
-		
+<script type="text/plantilla" id="Permisos">		
+	<input id='permiso_<%- id %>' name="idpermisos" value="<%-id%>" class="chek" type="checkbox"><%- nombre %>	
 </script>
 
 <script type="text/plantilla" id="Perfil">
-<div class="panel panel-default">
+
 	<div class="panel-heading">
 	 	<a data-toggle="collapse" data-parent="#accordion" href="#collapse5<%-id%>">
 		    <h4 class="panel-title">
@@ -82,20 +77,19 @@
 		</a>
 	</div>
 
-	<div id="collapse5<%-id%>" class="panel-collapse collapse">
-		<div id="<%-id%>" class="panel-body">
-	   		<h4>Permisos</h4>				            
-	   		<div id="ListaPermisos" class="row"> 
+	<div id="collapse5<%-id%>" class="panel-body panel-collapse collapse">
+		<h4>Permisos</h4>
+		<form id="idpermisos<%-id%>"> 
+	   	<div id="ListaPermisos" class="row"> 
 	   			<!--lista de permisos	 --> 
-	   		</div>	
-		</div>
+	   	</div>	
+	   	</form></br>
+		<center><button id="guardarEdicion" type="button" class="btn btn-primary">Guardar</button></center>
 	</div>
-</div>	
-
 </script>
 
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-
+<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
@@ -103,17 +97,17 @@
 	var app = app || {};
 	app.coleccionDePerfiles = <?php echo json_encode($perfiles) ?>;
 	app.coleccionDePermisos = <?php echo json_encode($permisos) ?>;	
-	app.coleccionDePermisosPerfil = <?php echo json_encode($permisos_perfil) ?>;
+	
 </script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPerfil.js'?>">          		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermiso.js'?>">          		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermisoPerfil.js'?>">          </script>
+
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPerfiles.js'?>">  		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisos.js'?>">  		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisosPerfil.js'?>">  </script>
 
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">	        </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaPerfil.js'?>">	         		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoPerfil.js'?>">	   			</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaPerfil.js'?>">	   		</script>

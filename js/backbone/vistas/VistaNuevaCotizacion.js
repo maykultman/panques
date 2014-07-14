@@ -329,7 +329,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         Backbone.emulateHTTP = false; //Variables Globales
 		    Backbone.emulateJSON = false; //Variables Globales
 
-		   /*..Con esta instrucción evitamos que la pagina del navegador se recargue y asi no perdemos los datos..*/
 		   elemento.preventDefault();
 
 		} //Fin del metodo guardarCotizacion

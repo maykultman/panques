@@ -724,19 +724,4 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		this.modificarPagos();
 	},
 
-	jsonArray	: function (claveId,valorId,arrayClaves,arrayValores,n) { /*PARA MI FRAMEWORK*/
-		var array = new Array();
-		var stringJson = '';
-		for (var i = 0; i < n; i++) {
-			stringJson = claveId +'":"'+valorId+'",';
-			for (var ii = 0; ii < arrayClaves.length; ii++) {
-				stringJson += '"'+arrayClaves[ii] + '":"' + arrayValores[ii][i];
-                if(ii != arrayClaves.length && ii < arrayClaves.length-1) stringJson += '",';
-			};
-            
-            array.push(jQuery.parseJSON('{"'+stringJson+'"}'));
-            stringJson = '';
-		};
-		return array;
-	},
 });

@@ -8,7 +8,7 @@
 			<input id="representante" type="text"   value="" class="form-control input_datos" placeholder="Representante" disabled="true">	
 			<form id="registroCotizacion">
 				<input type="hidden" id="htitulo"    name="titulo"  class="input_datos"  value="">			
-				<input type="hidden" id="idcliente" name="idcliente" class="input_datos" value="">
+				<input type="hidden" id="idcliente"  name="idcliente" class="input_datos" value="">
 				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante" value="">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" val="" disabled="true" >	
 		</div>
@@ -31,8 +31,8 @@
 		        <h3 class="panel-title">Seleccionar servicios</h3>
 		      </div>
 		      <div class="panel-body" style="overflow: auto; height: 230px;">
-		        <table class="table table-hover">
-		        	<tbody id="listaServicios">	
+		        <table id="listaServicios" class="table table-hover" >
+		        	<tbody style="width :100%;">	
 			    		<!-- Esta sección contiene la lista de los servicios -->
 					</tbody>
 		        </table>	

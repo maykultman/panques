@@ -235,12 +235,13 @@ function formatearFechaUsuario (fecha) {
         alertify.error(mensaje); //"Usuario o constraseña incorrecto/a."
         return false; 
     }
-    function marcarCheck(elemento)
+    function marcarCheck(elemento, checkboxTabla)
     {
-        /*..Totos los checkbox de la tabla de servicios cotizando tienen el mismo id....*/
-        var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
-        /*..Asi es como obtenemos todos...para luego iterar sobre ellos estableciendo true o false...*/
-        /*..Si marcar todos es TRUE entonces todos los de la lista son TRUE caso contrario FALSO*/
+        if(!checkboxTabla)
+        {
+            var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
+        }
+        
         if ($(elemento.currentTarget).is(':checked')) 
         {
             for (var i = 0; i < checkboxTabla.length; i++) {

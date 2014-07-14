@@ -1,6 +1,6 @@
 var app = app || {};
 
-app.VistaServicioCotizacion = app.VistaServicio.extend({
+app.VistaServicioCotizacion =app.VistaServicio.extend({
 	tagName : 'tr',
 	plantillaDefault  : _.template($('#PCservicios').html()),
 
@@ -10,7 +10,7 @@ app.VistaServicioCotizacion = app.VistaServicio.extend({
 		'click .icon-info'        : 'mostrarDetalles',
 		'click .serviciosCotizar' : 'agregarServiciosCo',		
 	},
-
+	
 	initialize : function () {
 		this.$trServicio = this.$('#trServicio');		
 	},

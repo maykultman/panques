@@ -3,8 +3,6 @@ app.VistaConsultaPerfil = Backbone.View.extend
 ({
 	el : '#accordion',
 	
-	events : {},
-
 	initialize : function()
 	{
 		this.$ConsultaPerfil = this.$('#unperfil');
@@ -26,7 +24,6 @@ app.VistaConsultaPerfil = Backbone.View.extend
 	{
 		app.coleccionPerfiles.each(this.cargarPerfil, this);	
 	}
-
 });
 
 app.vistaConsultaPerfil = new app.VistaConsultaPerfil();

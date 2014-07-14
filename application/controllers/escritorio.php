@@ -45,8 +45,7 @@ class Escritorio extends REST {
 	{
 		$this->area_Estatica('modulo_catalogos');
 		$this->load->model('Modelo_permisos', 'permisos');
-		$this->load->model('Modelo_permisoPerfil', 'perper');
-
+		
 		if($this->ruta() == 'catalogo_servicios')
 		{
 			$data['servicios'] = $this->serv->get_s();
@@ -57,8 +56,6 @@ class Escritorio extends REST {
 			$this->load->model('modelo_perfil','perfil');
 			$data['perfiles'] = $this->perfil->get();
 			$data['permisos'] = $this->permisos->get();
-			$data['permisos_perfil'] = $this->perper->get();
-
 			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_permisos')
@@ -102,7 +99,7 @@ class Escritorio extends REST {
 		if($this->ruta() == 'modulo_consulta_prospectos') {	$this->datosCliente($this->ruta());	}		
 	} # Fin del metodo clientes...
 
-	public function datosCliente($vista)
+	private function datosCliente($vista)
 	{
 		$data['clientes']		  = $this->customer->get_customers($this->ruta());	# Lista de clientes
 		$data['telefonos'] 		  = $this->telefono->get();					    # Lista de telefonos
@@ -220,7 +217,7 @@ class Escritorio extends REST {
 	}
 
 	public function pdf(){
-		$this->load->view('pruebapdf');
+		echo 'hola'; //$this->load->view('pruebapdf');
 	}
 
 
@@ -230,20 +227,19 @@ class Escritorio extends REST {
 		$this->area_Estatica('modulo_usuarios');
 
 		$this->load->model('Modelo_permisos', 'permisos');
-		$this->load->model('Modelo_permisoPerfil', 'perper');
+		
 		$this->load->model('modelo_perfil','perfil');
 		$data['permisos'] = $this->permisos->get();
 		$data['empleados'] = $this->empleado->get();
 		$data['perfiles'] = $this->perfil->get();
 		if($this->ruta() == 'modulo_usuarios_nuevo')
 		{
-			$data['permisos_perfil'] = $this->perper->get();
+			
 			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'modulo_usuarios_consulta')
 		{
-			$this->load->model('Modelo_permisoUsuario');
-			$data['permisosUsuario'] = $this->Modelo_permisoUsuario->get();
+						
 			$data['usuarios'] = $this->usuario->get(false);
 			$this->load->view($this->ruta(), $data);
 		}

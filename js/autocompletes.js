@@ -54,21 +54,39 @@
 	     	}            
         });
 	}
-
-	function ordenar(fecha, coleccion, coleccionDe)
+	/*... La tarea de este metodo es aplicar css a la fecha de la cotizacion...*/
+	function ordenar(fecha)
 	{  
 		var parametros = ['abajo','arriba'];
 		var flecha     = ['downt','upt'];
 		
 		if($(fecha.currentTarget).attr('class')==='arriba')
 		{
-			parametros.reverse(); console.log('3')
+			parametros.reverse();
 			flecha.reverse();		
 		}
 		$( '#bfecha' ) .removeClass ( parametros [0] );
 		$( '#bfecha' ) .addClass    ( parametros [1] );
 		$( '#fecha'  ) .removeClass ( flecha     [0] );		
-		$( '#fecha'  ) .addClass    ( flecha     [1] );	
-		
-		var col = coleccion.reset(coleccionDe.reverse());		
+		$( '#fecha'  ) .addClass    ( flecha     [1] );		
 	}
+	/*... Este metodo es utilizado por el modulo de usuario Nuevo, consulta y consulta perfiles...*/
+	/*... Su tarea es hacer "checked" a los "checkbox" y pintarlos de color verde...*/
+	/*... Los dos primeros parametros son arrays, y el tercer es el "$el" de backbone que pinta cada permiso...*/
+	function marcarPermiso(permiso, checkbox, el)
+	{
+		for( e in permiso)
+		{
+			for(var i = 0 ; i < checkbox.length ; i++)
+			{ 
+			 	if(permiso[e] == checkbox[i].value)
+			 	{
+			 		el.find('#permiso_'+permiso[e]).attr('checked', 'true');
+			 		el.find('#permiso_'+permiso[e]).parent().css('background','#ddffdd');
+					el.find('#permiso_'+permiso[e]).parent().css('border-radius','5px');						 	
+			 	}
+			}
+		}	
+	}
+
+	 

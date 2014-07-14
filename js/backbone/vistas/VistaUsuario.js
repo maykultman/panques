@@ -1,93 +1,36 @@
 var app = app || {};
 
-app.VistaSelectPerfil = Backbone.View.extend({
-	tagName : 'option',	
-	plantilla  : Handlebars.compile($('#selectpefil').html()),
-
-	initialize : function () 
-	{
-		this.$perfil = this.$('#perfil');	
-		this.$el.attr('value', this.model.get('id'));
-		this.$el.attr('id', 'per'+this.model.get('id'));			
-	},
-
-	render : function()
-	{
-		this.$el.html(this.plantilla(this.model.toJSON()));
-		return this;	
-	}
-});
-
-app.VistaPermiso = Backbone.View.extend({
-	tagName : 'label',
-	className : 'chek',
+app.VistaPermiso = app.VistaRenderizaPermiso.extend({
 
 	plantilla : Handlebars.compile($('#Permisos').html()),
 	events : {
-		'change #chekPermiso' : 'editarPermiso'
+		'change .chek' : 'resalta'
 	},
 
-	render : function (){
-
-		this.$el.html(this.plantilla(this.model.toJSON()));
-		if(this.model.get('palomita'))
+	resalta : function()
+	{
+		if(this.$el.children().is(':checked'))
 		{
 			this.$el.css('background','#ddffdd');
-			this.$el.css('border-radius','5px');	
-		}		
-		return this;
-	},
-
-	editarPermiso : function(elemento)
-	{
-		this.$el.css('background','#ddffdd');
-		this.$el.css('border-radius','5px');
-		var idusuario = $(elemento.currentTarget).parent().parent().attr('class').split(' ');
-		if(!elemento.currentTarget.checked)
+			this.$el.css('border-radius','5px');
+		}else
 		{
-			this.model.destroy();
-			this.$el.css('background','');
-			this.$el.css('border-radius','5px');	
-		}
-		else
-		{		
-			Backbone.emulateHTTP = true;
-			Backbone.emulateJSON = true;
-
-			app.coleccionPermisosUsuario.create
-			(
-				{ 
-					idusuario : idusuario[1],
-					idpermiso : $(elemento.currentTarget).val()
-				},
-				{
-					wait: true,
-					success: function (data){},
-					error: function (error) {}
-				}
-			);
-
-			Backbone.emulateHTTP = false;
-			Backbone.emulateJSON = false;
-		} /*Creación*/
+			this.$el.css('background','#fff');
+		}		
 	}
 });
 
 app.VistaUsuario = Backbone.View.extend({
 	tagName : 'div',
 	className : 'panel panel-default',
-
 	plantilla : Handlebars.compile($('#usuario').html()),
 	events : {
-		'change   #perfil' 		: 'editar',
-		'keypress #usuarioi'    : 'editar',
-		'keypress #empleado'    : 'editar',
-		'keypress #contrasenia' : 'editar',
+		'click #guardar'    : 'editar',
 	},
 
 	render : function (){
-		this.$el.html(this.plantilla(this.model.toJSON()));	
-		
+
+		this.$el.html(this.plantilla(this.model.toJSON()));		
 		var select_Perfil = this.$el.find('#perfil');
 		var usuario = this.model;
 		this.cargarSelectPerfiles(function() 
@@ -95,13 +38,21 @@ app.VistaUsuario = Backbone.View.extend({
 			$(select_Perfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');				
 		});
 		this.cargarPermisos();
+			
+		if(this.model.get('idpermisos'))
+		{
+			marcarPermiso(	JSON.parse(this.model.get('idpermisos')).idpermisos, 
+							this.$el.find('.chek').children(), 
+							this.$el
+						 );	
+		}
 		return this;
 	},
 
 	cargarSelectPerfil : function (perfil)
 	{
 		var vistaPerfil = new app.VistaSelectPerfil({ model : perfil });
-		this.$('#perfil').append(vistaPerfil.render().el);	
+		this.$('#idperfil').append(vistaPerfil.render().el);	
 	},
 
 	cargarSelectPerfiles : function (callback) 
@@ -110,15 +61,7 @@ app.VistaUsuario = Backbone.View.extend({
 	},
 
 	cargarPermiso : function(permiso)
-	{   /*... Buscamos el permiso que le pertenece al usuario...*/
-		var permi = app.coleccionPermisosUsuario.where({ idpermiso : permiso.get('id'), idusuario : this.model.id });
-			
-		if (typeof permi[0] != 'undefined') {
-			permiso.set({palomita:'checked'}); /*... Establecemos la propiedad checked al permiso ...*/
-		}
-		else{
-			permiso.set({palomita:''})
-		};
+	{   
 		var vistaPermiso = new app.VistaPermiso({ model : permiso });
 		this.$('#ListaPermisos').append(vistaPermiso.render().el);	
 	},
@@ -129,36 +72,23 @@ app.VistaUsuario = Backbone.View.extend({
 	},
 
 	editar : function(events)
-	{		
-		if(events.keyCode===13||events.type == 'change')
-		{
-			this.model.save(
-				pasarAJson($(events.currentTarget).serializeArray()), 
+	{	
+		var modeloUsuario = pasarAJson( $('#edicionUsuario'+this.model.get('id')).serializeArray());
+		modeloUsuario.idpermisos = JSON.stringify( pasarAJson($('#permisoz'+this.model.get('id')).serializeArray()) );
+		var self = this;
+		this.model.save
+		(
+			modeloUsuario, 
+			{
+				wait:true,
+				patch:true,
+				success: function (exito)
 				{
-					wait:true,
-					patch:true,
-					success: function (exito){
-						if($(events.currentTarget).attr('id')==='usuarioi')
-						{							
-							$('#t_usuario'+exito.get('id')).text(exito.get('usuario'));
-							console.log(exito.get('usuario'));
-						}
-						$(events.currentTarget)//Selector
-						.blur()//Salimos del elem						
-						.parents('.padre')//Nos hubicamos en el padre del selector						
-						.children('.resp')//Buscamos al hijo con la clase especificada						
-						.html('&nbsp;<label class="icon-uniF479 exito">');//Removemos su atributo class						
-					}, 
-					error: function (error){
-						$(events.currentTarget)//Selector
-						.blur()
-						.parents('.padre')
-						.children('.resp')
-						.html('&nbsp;<label class="icon-uniF478 error">');
-					}
-				}
-			);
-			events.preventDefault();
-		}
+					$('#t_usuario'+exito.get('id')).text(modeloUsuario.usuario);
+				}, 
+				error: function (error){}
+			}
+		);
+		events.preventDefault();		
 	}
 });
