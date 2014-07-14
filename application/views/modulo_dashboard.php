@@ -770,5 +770,371 @@
 		  		</div>		   
 			</div>
 	    </div>
+	    <!-- prueba tabla con plugin de jquery -->
+	    <table id="tbla_cliente" class="table table-striped tablesorter" >
+               
+                <thead style="background-color: #f9f9f9; color: #333;">
+                    <tr>
+                        <th>Todos <input id="todos" type="checkbox" name="todos"></th>
+
+                        <th></th>
+                        <th>
+                            Nombre Comercial
+                        </th>
+                        <th>Giro</th>
+                        <th>
+                            Página web
+                        </th>
+                        <th style="text-align=center;">Ultima actividad</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody id="filasClientes">
+                <tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="53"></td>
+        <td>
+            
+                <img src="img/fotosClientes/safe_image (12).jpg" alt="" class="foto">
+            
+        </td>
+        <td>rafael cardenas</td>
+        
+        
+            <td>Servicios públicos</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal53" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal53" title="Ver información"></span>
+           
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="50"></td>
+        <td>
+            
+                <img src="img/fotosClientes/dunosusa.png" alt="" class="foto">
+            
+        </td>
+        <td>Dunosusa</td>
+        
+        
+            <td>Comercial</td>
+        
+    
+        
+            <td>www.dunosusa.mx</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal50" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal50" title="Ver información"></span>
+          
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="48"></td>
+        <td>
+            
+                <img src="img/fotosClientes/undefined" alt="" class="foto">
+            
+        </td>
+        <td>asdfsdf</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal48" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal48" title="Ver información"></span>
+           
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="47"></td>
+        <td>
+            
+                <img src="undefined" alt="" class="foto">
+            
+        </td>
+        <td>NUEVOp</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal47" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal47" title="Ver información"></span>
+          
+           
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="46"></td>
+        <td>
+            
+                <img src="undefined" alt="" class="foto">
+            
+        </td>
+        <td>jose alberto</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal46" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal46" title="Ver información"></span>
+          
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="45"></td>
+        <td>
+            
+                <img src="rrr.jpg" alt="" class="foto">
+            
+        </td>
+        <td>beto</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal45" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal45" title="Ver información"></span>
+            
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="44"></td>
+        <td>
+            
+                <img src="[object HTMLDivElement]" alt="" class="foto">
+            
+        </td>
+        <td>beto</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal44" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal44" title="Ver información"></span>
+          
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="43"></td>
+        <td>
+            
+                <img src="[object HTMLDivElement]" alt="" class="foto">
+            
+        </td>
+        <td>Si sirves</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal43" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal43" title="Ver información"></span>
+           
+           
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="40"></td>
+        <td>
+            
+                <img src="web2.jpg" alt="" class="foto">
+            
+        </td>
+        <td>rodrigo</td>
+        
+        
+            <td>No especificado</td>
+        
+    
+        
+            <td>No especificado</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal40" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal40" title="Ver información"></span>
+          
+            
+        </td>
+    </tr><tr>
+
+        <td class="contenido_prospecto"><input type="checkbox" name="todos" value="42"></td>
+        <td>
+            
+                <img src="rrr.jpg" alt="" class="foto">
+            
+        </td>
+        <td>José Alberto</td>
+        
+        
+            <td>Transporte</td>
+        
+    
+        
+            <td>www.albertandasocities.com</td>
+        
+
+        <td>
+            Módulo de actividad en construcción
+        </td>
+        <td class="icon-operaciones">
+            
+            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal42" title="Editar"></span>
+            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal42" title="Ver información"></span>
+                      
+        </td>
+    </tr></tbody>
+            </table>
 	</section>	
-</div>	
+</div>
+
+
+<!-- jQuery -->
+	<script src="js/jquery-latest.min.js"></script>	
+	<!-- Tablesorter: theme -->
+	<link class="theme" rel="stylesheet" href="../css/theme.default.css">
+	<!-- Tablesorter script: required -->
+	<script src="js/jquery.tablesorter.js"></script>
+	<script src="js/jquery.tablesorter.widgets.js"></script>
+	<script src="js/widget-cssStickyHeaders.js"></script>
+	<script id="js">
+	$(function(){
+
+	var options = {
+		widthFixed : true,
+		showProcessing: true,
+		headerTemplate: '{content} {icon}', // Add icon for jui theme; new in v2.7!
+
+		widgets: [ 'zebra', 'cssStickyHeaders', 'filter' ],
+
+		widgetOptions: {
+			cssStickyHeaders_offset        : 0,
+			cssStickyHeaders_addCaption    : true,
+			cssStickyHeaders_attachTo      : null,
+			cssStickyHeaders_filteredToTop : true,
+			cssStickyHeaders_zIndex        : 10
+		}
+
+	};
+
+	$("#table1").tablesorter(options);
+
+});</script>
+<script>
+$(function() {
+		$('select:first')
+		.append(o)
+		.change(function(){
+			var theme = $(this).val().toLowerCase(),
+				files = $('link.theme').each(function(){
+					this.disabled = true;
+				})
+			files.filter('[href$="theme.' + theme + '.css"]').each(function(){
+				this.disabled = false;
+			});
+			$('table')
+				.removeClass('tablesorter-' + t.join(' tablesorter-') + ' tablesorter-jui')
+				.addClass('tablesorter-' + theme.replace(/-/,''));
+		}).change();
+});
+</script>	

@@ -24,7 +24,12 @@ class Escritorio extends REST {
     }  
 
 	//Vista inicial
-	public function index(){  $this->area_Estatica();	} 
+	// public function index(){  $this->area_Estatica();	} 
+	public function login()
+	{ 	 
+	 $this->load->view('login.php');
+	} 
+	
 	public function dashboard()
 	{ 	 
 	 $this->area_Estatica('modulo_dashboard');

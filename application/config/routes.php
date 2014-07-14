@@ -3,7 +3,7 @@
 //$route['default_controller'] = "escritorio";
 //$route['404_override'] = '';
 
-$route['default_controller'] = "escritorio";
+$route['default_controller'] = "escritorio/login";
 // $route['(:any)'] = 'escritorio/index/$1';
 // $route['escritorio/'] = 'escritorio/';
 $route['pruebausuario'] = 'escritorio/prueba';
