@@ -1,11 +1,11 @@
 .gantt, .gantt2 {
     width: 100%;
     margin: 20px auto;
-    border: 14px solid #ddd;
+    border: 2px solid #ddd; /*[Antes] border: 14px solid #ddd;*/
     position: relative;
-        -webkit-border-radius: 6px;
-        -moz-border-radius: 6px;
-        border-radius: 6px;
+        /*-webkit-border-radius: 6px;*/ /*[Antes activos]*/
+        /*-moz-border-radius: 6px;*/ /*[Antes activos]*/
+        /*border-radius: 6px;*/ /*[Antes activos]*/
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -51,7 +51,7 @@
 }
 
 .fn-gantt .leftPanel .fn-label {
-    display: inline-block;
+    display: inline-block; /*[Antes activo]*/
     margin: 0 0 0 5px;
     color: #484A4D;
     width: 110px;

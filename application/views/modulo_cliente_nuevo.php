@@ -1,5 +1,7 @@
     
     <link rel="stylesheet" type="text/css" href="css/estilos_modulo_clientes_nuevo.less">
+    <!-- plugin selectize css -->
+        <link rel="stylesheet" href="js/plugin/selectize/selectize.default.css">
 
     <!-- BOTON PARA PRUEBAS -->
     <!-- <button id="btn_eliminar">x</button> -->
@@ -20,8 +22,8 @@
     <!-- REGISTRO DEL CLIENTE -->
     <div id="formularioCliente" class="visibleR">
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
-        <h2>Registro para nuevo cliente</h2>
-        <hr>
+        <!-- <h2>Registro para nuevo cliente</h2> -->
+        <!-- <hr> -->
         Tipo de cliente 
         <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary">
@@ -64,15 +66,15 @@
             <textarea id="txtareaDireccion" class="form-control" rows="3" placeholder="Dirección"></textarea>
             <!-- <input type="text" class="form-control" placeholder="Telefono de oficina"> -->
             <div class="telefonos">
-                <div> <!-- Contenedor del form de teléfono -->
+                <div class="div_telefono"> <!-- Contenedor del form de teléfono -->
                     <div class="input-group">
-                        <div class="btn-group">
-                            <form>
+                        <!-- <div class="btn-group"> -->
+                            <!-- <form> -->
                               <input type="text" class="form-control telefonoCliente" name="telefonoCliente" placeholder="Teléfono" maxlength="10"><!---->
-                            </form>
-                        </div>
-                        <div class="btn-group">
-                            <select class="form-control" name="tipoTelefonoCliente">
+                            <!-- </form> -->
+                        <!-- </div> -->
+                        <div class="input-group-btn">
+                            <select class="btn btn-default" name="tipoTelefonoCliente">
                                 <option value="Casa">Casa</option>
                                 <option value="Fax">Fax</option>
                                 <option value="Movil" selected>Movil</option>
@@ -82,22 +84,54 @@
                                 <option value="Otro">Otro</option>
                                 <option selected disabled>Tipo</option>
                             </select>
-                        </div>
-                        <div class="btn-group">
-                            <div class="otroTelefono"><button type="button" class="btn btn-default"><span class="icon-uniF476"></span></button></div>
+                        <!-- </div> -->
+                        <!-- <div class="btn-group"> -->
+                            <button type="button" class="btn btn-default eliminarCopia"><span class="icon-uniF477"></span></button>
+                            <button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
                         </div>
                     </div>
+                    <br>
                 </div> <!-- /Contenedor del form de teléfono -->
             </div>
         </div>
 
+<!-- <div class="editar editando" id="formularioTelefono">
+    <div class="input-group">
+        <input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono">
+        <div class="input-group-btn">
+            <select id="tipoNuevo" class="btn btn-default" name="tipo">
+                <option value="Casa">Casa</option>
+                <option value="Fax">Fax</option>
+                <option value="Movil" selected="">Movil</option>
+                <option value="Oficina">Oficina</option>
+                <option value="Personal">Personal</option>
+                <option value="Trabajo">Trabajo</option>
+                <option value="Otro">Otro</option>
+                <option selected="" disabled="">Tipo</option>
+            </select>
+            <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
+        </div>
+    </div>
+</div> -->
+
         <div class="desborde"></div>
 
         <br>
+        <!-- <div class="row"> -->
+            <div class="input_info">
+                <select class="menuServicios"  name="serviciosInteres[]" multiple placeholder="Servicios que le interesa el cliente" style="width:400px;">
+                </select>
+            </div>
+            <div class="input_info">
+                <select class="menuServicios"  name="serviciosCuenta[]" multiple placeholder="Servicios con los que cuenta el cliente" style="width:400px;">
+                </select>
+            </div>
+            <div class="desborde"></div>
+        <!-- </div> -->
 
-        <div id='contenedor_menus'>
-            <div class="menusServicios">
-                <form>
+        <!-- <div id='contenedor_menus'> -->
+            <!-- <div class="menusServicios"> -->
+                <!-- <form>
                     <div class='cssmenu'>
                         <h5><b>Servicios que le interesa</b> </h5>
                         <div class="col-lg-6">
@@ -118,10 +152,11 @@
                 </form>
                 <div class="desborde"></div>
                 <br>
-                <ol id="listaInteres" class="list-group"></ol>
-            </div>
-            <div class="menusServicios">
-                <form>
+                <ol id="listaInteres" class="list-group"></ol> -->
+
+            <!-- </div> -->
+            <!-- <div class="menusServicios"> -->
+                <!-- <form>
                     <div class='cssmenu'>
                         <h5><b>Servicios con los que cuenta</b> </h5>
                         <div class="col-lg-6">
@@ -142,12 +177,13 @@
                 </form>
                 <div class="desborde"></div>
                 <br>
-                <ol id="listaCuenta" class="list-group"></ol>
-            </div>
-        </div>
+                <ol id="listaCuenta" class="list-group"></ol> -->
+
+            <!-- </div> -->
+        <!-- </div> -->
 
         
-        <div class="desborde"></div>
+        <!-- <div class="desborde"></div> -->
         
         <!-- <br> -->
 
@@ -333,6 +369,10 @@
             </div>
         </div>
     </script>
+<!-- Utilerias -->
+    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+    <!-- plugins -->
+        <script src="<?=base_url().'js/plugin/selectize/selectize.min.js'?>"></script>
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>

@@ -614,7 +614,7 @@ app.VistaProyecto = Backbone.View.extend({
 		if (queda == -0) queda = 0;
 		var porcentaje = ((100 * queda)/plazo).toFixed();
 
-		console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
+		// console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
 		return {
 			plazo		:plazo,
 			queda		:queda,

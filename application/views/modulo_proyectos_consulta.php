@@ -119,7 +119,6 @@
 	    <button type="button" class="btn btn-default">Eliminar varios</button>
 	    <button type="button" class="btn btn-default">Entregar</button>  
 	</div>
-	<div class="gantt"></div>
 </div>
 
 
@@ -566,8 +565,6 @@
 </script>
 <!-- Utilerias -->
 	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-	<!-- js plugin jQuery Gantt -->
-	<script src="js/plugin/Gantt/js/jquery.fn.gantt.js"></script>
 <!-- Librerias Backbone -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>

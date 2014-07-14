@@ -1,4 +1,8 @@
 var app = app || {};
+
+var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'];
+
 app.busquedaServicio.servicio = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();

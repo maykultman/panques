@@ -15,7 +15,7 @@
                         <th>Giro</th>
                         <th>
                             Página web
-                            <!-- <input class="form-control" type="text" placeholder="Buscar"></th> -->
+                        </th>
                         <th style="text-align=center;">Ultima actividad</th>
                         <th>Operaciones</th>
                     </tr>
@@ -32,12 +32,6 @@
     </div>
 </div>
   <!--  ----------Consulta clientes-------- -->
-
-
-<script type="text/javascript">
-    var meses = new Array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-</script>
-
 
 <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
