@@ -10,7 +10,27 @@
   $(function() {
     $( "#datepicker" ).datepicker();
   });
-  </script>
+</script>
+<script>
+  $(function() {
+    $( "#from" ).datepicker({
+      defaultDate: "+1w",
+      // changeMonth: true,
+      // numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#to" ).datepicker({
+      defaultDate: "+1w",
+      // changeMonth: true,
+      // numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
+</script>
 <div class="contenedor_modulo">  
 	<section>
 	   <h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 3; width: 100%;"><label>Escritorio</label></h1>
@@ -33,9 +53,10 @@
                     </a>
                 </li>                                              
 		    </ul> 
-		</nav>	   -->
-    </section>  
-	<section class="contenedor_principal_modulos" style="padding-top: 90px;">
+		</nav>	   -->	
+    </section>
+    <!-----------------------Dashboard 1 ---------------------------------------->	     
+	<!-- <section class="contenedor_principal_modulos" style="padding-top: 90px;">
 		<div class="row">
 		  	<div class="col-md-6">
 			  	<div class="panel panel-default">
@@ -430,8 +451,324 @@
 				</table>
 			</div>
 	    </div>
+	</section> -->
+	<!------------------------- Dashboard 2 -------------------------->
+	<section class="contenedor_principal_modulos" style="padding-top: 90px;">
+		<div class="row">
+			<div class="col-md-6">
+		  		<div class="panel panel-default">
+					<div class="panel-heading color">
+				    	<h3 class="panel-title">Pagos de clientes</h3>
+				    	<span id="icono_panel" class="icon-uniF4E7" ></span>
+				    </div>
+				  	<div class="panel-body" style="height: 250px;">
+					    <ul class="nav nav-tabs" role="tablist">
+						  <li class="active"><a href="#evento" role="tab" data-toggle="tab">Evento</a></li>
+						  <li><a href="#iguala" role="tab" data-toggle="tab">Iguala Mensual</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane fade in active" id="evento" style="overflow: auto; height: 185px;">
+								<table class="table table-striped">
+								   	<thead >
+								   		<tr>
+								   			<th>Cliente</th>
+								   			<th>Monto</th>
+								   			<th>Vencimiento</th>
+								   		</tr>
+								   	</thead>
+								   	<tbody>
+								   		<tr class="danger">
+								   			<td>clinica merida</td>
+								   			<td>$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr class="danger">
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   	</tbody>
+								</table>							
+							</div>
+						    <div class="tab-pane fade" id="iguala" style="overflow: auto; height: 185px;">
+						    	<table class="table table-striped">
+								   	<thead >
+								   		<tr>
+								   			<th>Cliente</th>
+								   			<th>Monto</th>
+								   			<th>Vencimiento</th>
+								   		</tr>
+								   	</thead>
+								   	<tbody>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td>$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   		<tr>
+								   			<td>clinica merida</td>
+								   			<td >$3,000.00</td>
+								   			<td>04/05/14</td>
+								   		</tr>
+								   	</tbody>
+								</table>	
+						    </div>
+					    </div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading color">
+				    	<h3 class="panel-title">Entregas/Revisiones</h3>
+				    	<span id="icono_panel" class=" icon-uniF5C7" ></span>
+				    </div>
+				  	<div  class="panel-body" style="overflow: auto; height: 250px;">
+					   <table class="table table-hover ">
+					   	<thead>
+					   		<tr>
+					   			<th>Proyecto</th>
+					   			<th>Tipo</th>
+					   			<th>Fecha</th>
+					   		</tr>
+					   	</thead>
+					   	<tbody >
+					   		<tr>
+					   			<td>coliseoyuc.com</td>
+					   			<td>Revisión</td>
+					   			<td>04/05/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>www.clinicadelsureste.com.mx</td>
+					   			<td>Entrega</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Revisión</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Entrega</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Revisión</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Entrega</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Entrega</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Entrega</td>
+					   			<td>04/04/14</td>
+					   		</tr>
+					   	</tbody>
+					   </table>
+					</div>
+				</div>
+		  	</div>
+		  	<div class="col-md-6">
+			  	<div class="panel panel-default">
+					<div class="panel-heading color">
+				    	<h3 class="panel-title">Ingresos</h3>
+				    	<span id="icono_panel" class="icon-stocks" ></span>
+				    </div>
+				  	<div  class="panel-body" style="overflow: auto; height: 560px;">
+				  		<label for="from">From</label>
+						<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
+						<label for="to">to</label>
+						<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
+						<span id="span_ingreso" class="badge">$100,000</span>     
+					    <table class="table table-hover ">
+					   	<thead>
+					   		<tr>
+					   			<th>Cliente</th>
+					   			<th>Servicio</th>
+					   			<th>Monto</th>
+					   		</tr>
+					   	</thead>
+					   	<tbody >
+					   		<tr>
+					   			<td>coliseoyuc.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>www.clinicadeMerida.com.mx</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>crmqualium.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
+					   		<tr>
+					   			<td>postalia.com</td>
+					   			<td>Página web</td>
+					   			<td>$20,000</td>
+					   		</tr>
 
-
-
-	</section>
+					   	</tbody>
+					   </table>
+					</div>
+				</div>
+		  	</div>		  	
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading color">
+		    	<h3 class="panel-title">Mis Actividades</h3>		    	
+		    	<span id="icono_panel" class="icon-calendar2" ></span>
+		    </div>
+		  	<div class="panel-body">
+		  		<div class="row">
+		  			<div class="col-md-6" style="width: 25%  !important">
+		  				<div id="datepicker"></div>
+		  			</div>
+		  			<div class="col-md-6" style="width: 75% !important">
+		  				<table class="table table-hover">
+						   	<thead >
+						   		<tr>
+						   			<th>Actividad</th>
+						   			<th>Fecha</th>
+						   			<th>Hora</th>
+						   		</tr>
+						   	</thead>
+						   	<tbody>
+						   		<tr>
+						   			<td>Enviar email</td>
+						   			<td>10/06/14</td>
+						   			<td>10:00 am</td>
+						   		</tr>
+						   		<tr>
+						   			<td>Junta qualium</td>
+						   			<td>10/06/14 </td>
+						   			<td>11:00 am</td>
+						   		</tr>
+						   		<tr>
+						   			<td>visitar cliente</td>
+						   			<td>10/06/14</td>
+						   			<td>3:00 pm</td>
+						   		</tr>
+						   		<tr>
+						   			<td>visitar cliente</td>
+						   			<td>10/06/14</td>
+						   			<td>3:00 pm</td>
+						   		</tr>
+						   		<tr>
+						   			<td>visitar cliente</td>
+						   			<td>10/06/14</td>
+						   			<td>3:00 pm</td>
+						   		</tr>
+						   	</tbody>
+						</table>	
+		  			</div>
+		  		</div>		   
+			</div>
+	    </div>
+	</section>	
 </div>	

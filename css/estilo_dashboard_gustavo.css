@@ -38,6 +38,13 @@
 	background-image: none !important;
 }
 
+#span_ingreso{
+
+margin-left: 48px !important; 
+padding: 13px !important;
+background: #0983ff;
+}
+
 /*tbody.scroll_dominios { 
 	
 	display: block; 
