@@ -129,7 +129,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	// 	};
 	// },
 
-	agregarNuevoServ	: function (nombre) {
+	agregarNuevoServ	: function (json) {
 		/*Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
         if ((this.pasarFiltro == 1 || elemento.keyCode === 13) && $(elemento.currentTarget).attr('id') == 'inputBusquedaI') {
@@ -175,17 +175,13 @@ app.VistaNuevoCliente = Backbone.View.extend({
 
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
-		app.coleccionServicios.create({ 
-			nombre : nombre,
-			idcliente : 'el id',
-			modelo:'servicioscuaenta' 
-		},{
+		app.coleccionServicios.create( json ,{
 			wait:true,
 			success : function (exito) {
 				console.log('exito: ',exito);
 			},
-			error	: function (error) {
-				console.log('error: ',error);
+			error	: function (error, respuesta) {
+				console.log('error: ',respuesta);
 			}
 		});
 		Backbone.emulateHTTP = false;
@@ -406,6 +402,24 @@ app.VistaNuevoCliente = Backbone.View.extend({
 
 	},
 // -----nuevoCliente------------------------------ 
+	
+	/*Guardar servicios de interes y cuenta*/
+		// Obtenemos los servicios (existentes en la o no BD)
+		var servI 		= $(document.getElementsByName('serviciosInteres[]')).val(),
+		// Obtenemos array de servicios existentes
+			servPluck 	= app.coleccionServicios.pluck('id'),
+		// Aislamos los servicios nuevos (es un array)
+			servNuevoE	= _.difference( _.union( servI,servPluck ),servPluck ),
+		// Aislamos los servicios existentes en la DB
+			servInterE  = _.difference( servI,servNuevoE );
+		// esto.guardarServiciosI(exito.get('id'),esto.obtenerServicios(document.getElementsByName('serviciosInteres')));
+		// esto.guardarServiciosC(exito.get('id'),esto.obtenerServicios(document.getElementsByName('serviciosCuenta')));
+		// esto.$('.visibleR').toggleClass('ocultoR');
+
+		console.log('Servicios Nuevos: '+servNuevoE ,'Servicios en DB: '+servInterE )
+
+		return;
+
 	nuevoCliente	: function (evento) {
 		/*Se ejecuta la funcion nuevosAtributosCliente que
 		  tras terminar devuelve un json el cual es
@@ -451,13 +465,17 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					esto.guardarTelefono(exito.get('id'),'clientes',telefonos);
 
 					/*Guardar servicios de interes y cuenta*/
-					var servI 		= $(document.getElementsByName('serviciosInteres[]')).val(),
-						servPluck 	= app.coleccionServicios.pluck('id'),
-						servNuevoE	= _.difference( _.union( servI,servPluck ),servPluck ),
-						servInterE  = _.difference( servI,servNuevoE );
-					esto.guardarServiciosI(exito.get('id'),esto.obtenerServicios(document.getElementsByName('serviciosInteres')));
-					esto.guardarServiciosC(exito.get('id'),esto.obtenerServicios(document.getElementsByName('serviciosCuenta')));
-					esto.$('.visibleR').toggleClass('ocultoR');
+						// Obtenemos los servicios (existentes en la o no BD)
+						var servI 		= $(document.getElementsByName('serviciosInteres[]')).val(),
+						// Obtenemos array de servicios existentes
+							servPluck 	= app.coleccionServicios.pluck('id'),
+						// Aislamos los servicios nuevos (es un array)
+							servNuevoE	= _.difference( _.union( servI,servPluck ),servPluck ),
+						// Aislamos los servicios existentes en la DB
+							servInterE  = _.difference( servI,servNuevoE );
+						esto.guardarServiciosI(exito.get('id'),esto.obtenerServicios(document.getElementsByName('serviciosInteres')));
+						esto.guardarServiciosC(exito.get('id'),esto.obtenerServicios(document.getElementsByName('serviciosCuenta')));
+						esto.$('.visibleR').toggleClass('ocultoR');
 				},
 				error	: function () {
 					$('#error #comentario').html('Ocurrio un error al intentar registrar al cliente');

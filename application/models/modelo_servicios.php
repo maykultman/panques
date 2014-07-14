@@ -12,6 +12,7 @@
 
 		public function insert_s($post)
 		{  
+
 			if(!$post['nombre'][0])
 			{
 				$this->db->insert('servicios', $post); 	$id = $this->db->insert_id();
@@ -24,23 +25,23 @@
 				$ids[$i] = $this->db->insert_id();		
 			}
 			# con los id´s de los servicios acabados de ingresar los enviamos a la tabla de servicios cuenta.
-			if($post['servicioscuenta'])
+			if(array_key_exists('servicioscuenta', $post))
 			{
 				for ($h = 0 ; $h<count($post['nombre']); $h++)
 				{
 					$this->db->insert('servicios_cliente',array('idcliente'=> $post['idcliente'],
-																'idservicio'=>$ids[$i])); 
-					$resp[$i] = $this->db->insert_id();		
+																'idservicio'=>$ids[$h])); 
+					$resp[$h] = $this->db->insert_id();		
 				}
 				return count($resp);
 			}
-			if($post['serviciosinteres'])
+			if(array_key_exists('serviciosinteres', $post))
 			{
-				for ($i = 0 ; $i<count($post['nombre']); $i++)
+				for ($j = 0 ; $j<count($post['nombre']); $j++)
 				{
 					$this->db->insert('servicios_interes',array('idcliente'=> $post['idcliente'],
-																'idservicio'=>$ids[$i])); 
-					$resp[$i] = $this->db->insert_id();		
+																'idservicio'=>$ids[$j])); 
+					$resp[$j] = $this->db->insert_id();		
 				}
 				return count($resp);
 			}
