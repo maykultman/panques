@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'crmqlm2014residents';
+$config['encryption_key'] = '@@@@@2014/02/04crmqlm2014@@@@@residents2014/07/04@@@@@';
 
 /*
 |--------------------------------------------------------------------------
@@ -246,8 +246,8 @@ $config['encryption_key'] = 'crmqlm2014residents';
 */
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 7200;
-$config['sess_expire_on_close']	= FALSE;
-$config['sess_encrypt_cookie']	= FALSE;
+$config['sess_expire_on_close']	= TRUE;
+$config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;

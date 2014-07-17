@@ -1,4 +1,5 @@
 <?php
+	// session_start();
 	require_once 'Modelo_crud.php';
 	class Modelo_usuarios extends Modelo_crud
 	{
@@ -18,37 +19,19 @@
             return $this->db->get  ( 'usuarios' )->$reply();  # Este metodo ejecuta get con y sin ID...
 		}		
 
-		public function session($post)
-		{   
-
-			$this->db->select('id, permiso');
-			$permisos = $this->db->get('permisos')->result_array();
-			
-
-			$where = array('usuario'=>$post['usuario'], 'contrasenia'=>$post['contrasenia']); 
-			$this->db->select('idperfil'); 
-			($post) ? $query = $this->db->get_where('usuarios', $where) : $query=FALSE;	 		
-			$existe = $query->result(); 
-			if($existe)
-			{
-				$this->db->select('*');
-				$query = $this->db->get_where('perfiles', array('idperfil'=>$existe[0]->idperfil));
-				$resp = $query->result_array();
-				
-				
-				for ($i=0; $i <count($resp) ; $i++) { 
-					for ($x=0; $x <count($permisos) ; $x++) { 
-						
-						if($resp[$i]['idpermiso']==$permisos[$x]['id'])
-						{
-							$privilegios[$permisos[$x]['permiso']] = $permisos[$x]['permiso'];
-						}
-
-					}
-				}
-				
-           	} #var_dump($privilegios); die();
-           	return $privilegios;			
+		public function session($user, $pass)
+		{
+			$this->db->where(array('usuario' =>$user ,'contrasenia'=>$pass ));
+			$query = $this->db->get('usuarios');
+            if($query->num_rows == 1 )
+            {
+            	return $query->row();
+            }
+            else
+            {
+                $this->session->set_flashdata('mensaje', 'El usuario o contraseña es incorrecto');
+                redirect(base_url(), 'refresh');
+            }
 		}
 
 		public function save (  $id,  $put ) 

@@ -18,11 +18,11 @@ class  REST extends CI_Controller {
         }
     }
     # Captura el primer segmento de la URL para cargar la vista...
-    public function ruta()  {   return $this->uri->segment(1);                }
+    public function ruta()  {   return $this->uri->segment(2);                }
     # Captura el Segundo segmento de la URL tomar el id para get, update o delete...
     public function id()
     {
-        $id = $this->uri->segment(2); 
+        $id = $this->uri->segment(3); 
         # La peticion fue get entonces retorna un $id = num o $id = NULL
         if($_SERVER['REQUEST_METHOD'] ==='GET'||$_SERVER['REQUEST_METHOD'] ==='DELETE') return $id;       
         # La petición fue put O patch entonces validamos que el id sea un numero
@@ -36,7 +36,7 @@ class  REST extends CI_Controller {
 
     public function area_Estatica($modulo=false, $var = FALSE)
     {
-        $this->load->view('cabecra_y_menu.html');
+        $this->load->view('cabecera_y_menu');
         $this->load->view('header');
         $this->load->view('menu');  
         if($modulo)

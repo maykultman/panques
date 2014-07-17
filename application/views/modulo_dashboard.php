@@ -1,40 +1,10 @@
 <link rel="stylesheet" href="<?=base_url().'css/estilo_dashboard_gustavo.css'?>" type="text/css">
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-</script>
-<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-</script>
-<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tap.js'?>">
-</script>
-<script>
-  $(function() {
-    $( "#datepicker" ).datepicker();
-  });
-</script>
-<script>
-  $(function() {
-    $( "#from" ).datepicker({
-      defaultDate: "+1w",
-      // changeMonth: true,
-      // numberOfMonths: 3,
-      onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });
-    $( "#to" ).datepicker({
-      defaultDate: "+1w",
-      // changeMonth: true,
-      // numberOfMonths: 3,
-      onClose: function( selectedDate ) {
-        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
-      }
-    });
-  });
-</script>
-<div class="contenedor_modulo">  
-	<section>
-	   <h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 3; width: 100%;"><label>Escritorio</label></h1>
-	   <!-- <nav>
+<link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+<div class="contenedor_modulo">
+	<section style="display: block; position: fixed; z-index: 1; width: 100%;" >
+		 <!--  <h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 1; width: 100%;"> -->
+	   <h1 id="titulo_del_modulo" ><label>Escritorio</label></h1>
+	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				 <li>
 	            	<a href="modulo_usuarios_consulta">
@@ -53,7 +23,7 @@
                     </a>
                 </li>                                              
 		    </ul> 
-		</nav>	   -->	
+		</nav>	  	
     </section>
     <!-----------------------Dashboard 1 ---------------------------------------->	     
 	<!-- <section class="contenedor_principal_modulos" style="padding-top: 90px;">
@@ -453,8 +423,9 @@
 	    </div>
 	</section> -->
 	<!------------------------- Dashboard 2 -------------------------->
-	<section class="contenedor_principal_modulos" style="padding-top: 90px;">
-		<div class="row">
+	
+	<section class="contenedor_principal_modulos" style="padding-top: 190px;">
+		<!-- <div class="row">
 			<div class="col-md-6">
 		  		<div class="panel panel-default">
 					<div class="panel-heading color">
@@ -769,19 +740,21 @@
 		  			</div>
 		  		</div>		   
 			</div>
-	    </div>
-	    <!-- prueba tabla con plugin de jquery -->
-	    <table id="tbla_cliente" class="table table-striped tablesorter" >
-               
-                <thead style="background-color: #f9f9f9; color: #333;">
-                    <tr>
-                        <th>Todos <input id="todos" type="checkbox" name="todos"></th>
+	    </div> -->
 
-                        <th></th>
+	    <!-- prueba tabla con plugin de jquery -->
+	    <div class="wrapper">
+	    <input class="search" type="search" placeholder="Search" data-column="all">
+	     <table id="table1" class="tablesorter">               
+                <thead>
+                    <tr>
+                        <th class="sorter-false" >Todos <input id="todos" type="checkbox" name="todos"></th>
+
+                        <th ></th>
                         <th>
-                            Nombre Comercial
+                           Nombre Comercial
                         </th>
-                        <th>Giro</th>
+                        <th >Giro</th>
                         <th>
                             Página web
                         </th>
@@ -798,10 +771,10 @@
                 <img src="img/fotosClientes/safe_image (12).jpg" alt="" class="foto">
             
         </td>
-        <td>rafael cardenas</td>
+        <td>a</td>
         
         
-            <td>Servicios públicos</td>
+            <td>b</td>
         
     
         
@@ -827,10 +800,10 @@
                 <img src="img/fotosClientes/dunosusa.png" alt="" class="foto">
             
         </td>
-        <td>Dunosusa</td>
+        <td>b</td>
         
         
-            <td>Comercial</td>
+            <td>a</td>
         
     
         
@@ -856,10 +829,10 @@
                 <img src="img/fotosClientes/undefined" alt="" class="foto">
             
         </td>
-        <td>asdfsdf</td>
+        <td>d</td>
         
         
-            <td>No especificado</td>
+            <td>c</td>
         
     
         
@@ -885,10 +858,10 @@
                 <img src="undefined" alt="" class="foto">
             
         </td>
-        <td>NUEVOp</td>
+        <td>e</td>
         
         
-            <td>No especificado</td>
+            <td>d</td>
         
     
         
@@ -1085,56 +1058,56 @@
         </td>
     </tr></tbody>
             </table>
-	</section>	
 </div>
 
 
-<!-- jQuery -->
-	<script src="js/jquery-latest.min.js"></script>	
-	<!-- Tablesorter: theme -->
-	<link class="theme" rel="stylesheet" href="../css/theme.default.css">
-	<!-- Tablesorter script: required -->
-	<script src="js/jquery.tablesorter.js"></script>
-	<script src="js/jquery.tablesorter.widgets.js"></script>
-	<script src="js/widget-cssStickyHeaders.js"></script>
-	<script id="js">
-	$(function(){
+           
+	
 
-	var options = {
-		widthFixed : true,
-		showProcessing: true,
-		headerTemplate: '{content} {icon}', // Add icon for jui theme; new in v2.7!
+</section>     
 
-		widgets: [ 'zebra', 'cssStickyHeaders', 'filter' ],
-
-		widgetOptions: {
-			cssStickyHeaders_offset        : 0,
-			cssStickyHeaders_addCaption    : true,
-			cssStickyHeaders_attachTo      : null,
-			cssStickyHeaders_filteredToTop : true,
-			cssStickyHeaders_zIndex        : 10
-		}
-
-	};
-
-	$("#table1").tablesorter(options);
-
-});</script>
+   
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
+</script>
+<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
+</script>
+<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tap.js'?>">
+</script>
 <script>
-$(function() {
-		$('select:first')
-		.append(o)
-		.change(function(){
-			var theme = $(this).val().toLowerCase(),
-				files = $('link.theme').each(function(){
-					this.disabled = true;
-				})
-			files.filter('[href$="theme.' + theme + '.css"]').each(function(){
-				this.disabled = false;
-			});
-			$('table')
-				.removeClass('tablesorter-' + t.join(' tablesorter-') + ' tablesorter-jui')
-				.addClass('tablesorter-' + theme.replace(/-/,''));
-		}).change();
-});
-</script>	
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+</script>
+<script>
+  $(function() {
+    $( "#from" ).datepicker({
+      defaultDate: "+1w",
+      // changeMonth: true,
+      // numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#to" ).datepicker({
+      defaultDate: "+1w",
+      // changeMonth: true,
+      // numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
+</script>
+
+
+<script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>
+
+ 
+
+
+
