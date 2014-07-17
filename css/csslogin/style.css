@@ -27,7 +27,7 @@ h1 {
 
 form {
     position: relative;
-    width: 305px;
+    width: 335px;
     margin: 15px auto 0 auto;
     text-align: center;
 }
@@ -76,7 +76,7 @@ input:focus {
 
 button {
     cursor: pointer;
-    width: 300px !important; 
+    width: 335px !important; 
     height: 44px;
     margin-top: 25px;
     padding: 0;

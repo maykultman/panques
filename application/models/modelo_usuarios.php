@@ -30,7 +30,7 @@
             else
             {
                 $this->session->set_flashdata('mensaje', 'El usuario o contraseña es incorrecto');
-                redirect(base_url(), 'refresh');
+                redirect(base_url());
             }
 		}
 
