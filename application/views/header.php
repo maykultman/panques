@@ -24,7 +24,7 @@
 	<div id="divUsuario" class="hidden-xs">
 		<div class="usuario" id="foto"></div>
 		<div class="usuario" id="otro">
-			<div id="nombre" class="datosU">Alberto Canul May</div>
+			<div id="nombre" class="datosU"><?=$this->session->userdata('usuario')?></div>
 			<div id="perfil" class="datosU">Administrador</div>
 		</div>
 		<div id="configuracionUsuario" class="usuario">
@@ -35,10 +35,10 @@
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#">Cambiar contraseña</a></li>
-						<li><a href="#">Cerrar sesión</a></li>
+						<li><a href="logout">Cerrar sesión</a></li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 	</div>
-</header>
+</header>	

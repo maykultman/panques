@@ -35,7 +35,7 @@ class  Contacto extends REST {
 
     private function delete()
     {
-        $query = $this->contact->delete(  $this->id()  ); 
+        $query = $this->contact->destroy(  $this->id()  ); 
         $this->pre_response($query, 'delete');         
     }   
 } # Fin de la Clase Api_contacto

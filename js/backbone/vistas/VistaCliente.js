@@ -70,8 +70,6 @@ app.VistaCliente = Backbone.View.extend({
 			this.eliminarDelDOM
 		);
 		
-		
-
 		//Otras variables
 		this.pasarFiltro = 0;
 		this.esperar;

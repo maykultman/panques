@@ -1,4 +1,5 @@
     <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+<<<<<<< HEAD
     <div id="posicion_infotd">        
         <div id="clientes" class="wrapper">                            
             <table id="tbla_cliente" class="tablesorter table-striped">
@@ -30,6 +31,41 @@
         <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
         <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
         <button class="btn btn-primary" style="margin-top: 24px;">Eliminar varios</button>
+=======
+    <div id="posicion_infotd">
+        <form id="clientes">
+            <div class="wrapper">                            
+                <table id="tbla_cliente" class="tablesorter">
+                    <!-- BOTON PARA PRUEBAS -->
+                    <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
+                    <thead>
+                        <tr>
+                            <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
+                            <th class="sorter-false"></th>
+                            <th>
+                                <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
+                               <!--  <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial"> -->
+                                <span class="icon-search busqueda"></span>
+                            </th>
+                            <th class="sorter-false">Giro</th>
+                            <th class="sorter-false">
+                                Página web
+                            </th>
+                            <th style="text-align=center;">Ultima actividad</th>
+                            <th class="sorter-false">Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filasClientes">
+                    </tbody>
+                </table>
+            </div>   
+            <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
+            <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
+            <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
+         
+            <button class="btn btn-primary">Eliminar varios</button>
+        </form>
+>>>>>>> origin/master
     </div>
 </div>
   <!--  ----------Consulta clientes-------- -->
@@ -151,9 +187,8 @@
                     </table>
 
                     <div class="panel-body">
-
-                        <small class="editar">Precione la tecla enter para actualizar el campo</small>
-                        
+                        <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar</div>
+                        <br><br>
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <div class="visible" id="divCliente">
                             <form class="formCliente" method="post">
@@ -260,14 +295,14 @@
                                                     <input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono">
                                                     <div class="input-group-btn">
                                                         <select id="tipoNuevo" class="btn btn-default" name="tipo">
+                                                            <option value="No definido" selected style="display:none;">Tipo</option>
                                                             <option value="Casa">Casa</option>
                                                             <option value="Fax">Fax</option>
-                                                            <option value="Movil" selected>Movil</option>
+                                                            <option value="Movil">Movil</option>
                                                             <option value="Oficina">Oficina</option>
                                                             <option value="Personal">Personal</option>
                                                             <option value="Trabajo">Trabajo</option>
                                                             <option value="Otro">Otro</option>
-                                                            <option selected disabled>Tipo</option>
                                                         </select>
                                                         <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
                                                     </div>
@@ -558,14 +593,14 @@
                                 <input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono">
                                 <div class="input-group-btn">
                                     <select id="tipoNuevo" class="btn btn-default" name="tipo">
+                                        <option value="No definido" selected style="display:none;">Tipo</option>
                                         <option value="Casa">Casa</option>
                                         <option value="Fax">Fax</option>
-                                        <option value="Movil" selected>Movil</option>
+                                        <option value="Movil">Movil</option>
                                         <option value="Oficina">Oficina</option>
                                         <option value="Personal">Personal</option>
                                         <option value="Trabajo">Trabajo</option>
                                         <option value="Otro">Otro</option>
-                                        <option selected disabled>Tipo</option>
                                     </select>
                                     <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
                                 </div>
@@ -615,14 +650,14 @@
                 <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" placeholder="<%-numero%>" maxlength="10">
                 <div class="input-group-btn">
                     <select id="tipo" class="btn btn-default" name="tipo">
+                        <option value="No definido" selected style="display:none;"><%-tipo%></option>
                         <option value="Casa">Casa</option>
                         <option value="Fax">Fax</option>
-                        <option value="Movil" selected>Movil</option>
+                        <option value="Movil">Movil</option>
                         <option value="Oficina">Oficina</option>
                         <option value="Personal">Personal</option>
                         <option value="Trabajo">Trabajo</option>
                         <option value="Otro">Otro</option>
-                        <option selected disabled>Tipo</option>
                     </select>
                     <button id="intentarEliminacion" class="btn btn-default"><label class="icon-uniF478"></label></button>
                 </div>
