@@ -1,82 +1,67 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-//$route['default_controller'] = "escritorio";
-//$route['404_override'] = '';
+$route['default_controller'] = "escritorio";
+$route['404_override'] = '';
 
-$route['default_controller'] = "escritorio/login";
-// $route['(:any)'] = 'escritorio/index/$1';
-// $route['escritorio/'] = 'escritorio/';
-$route['pruebausuario'] = 'escritorio/prueba';
+$route['logout'] = 'escritorio/logout';
+
+$route['pruebausuario'] = 'escritorio/modulo';
 
 # Dashboard
-$route['dashboard'] = 'escritorio/dashboard';
-// $route['dashboard_gustavo'] = 'escritorio/dashboard';
+$route['escritorio/dashboard'] = 'escritorio/modulo';
 
+$route['formatoCotizacion'] = 'escritorio/modulo';
+$route['formatoContrato']   = 'escritorio/modulo';
 
-$route['formatoCotizacion'] = 'escritorio/formato';
-$route['formatoContrato']   = 'escritorio/formato';
-// $route['pruebas'] = 'pruebas';
 # Rutas para el cliente
-$route['modulo_Clientes'] 			 = 'escritorio/clientes';
-$route['modulo_cliente_nuevo'] 		 = 'escritorio/clientes/$1';
-$route['modulo_consulta_clientes'] 	 = 'escritorio/clientes/$1';
-$route['modulo_consulta_prospectos'] = 'escritorio/clientes/$1';
-
-
-// $route['catalogo_Servicios'] 		 = 'escritorio/catalogoServicios';
+$route['escritorio/modulo_Clientes'] 			 = 'escritorio/modulo';
+$route['escritorio/modulo_cliente_nuevo'] 		 = 'escritorio/modulo/$1';
+$route['escritorio/modulo_consulta_clientes'] 	 = 'escritorio/modulo/$1';
+$route['escritorio/modulo_consulta_prospectos'] = 'escritorio/modulo/$1';
 
 //Rutas para la proyectos
-$route['modulo_proyectos'] = 'escritorio/proyectos/$1';
-$route['modulo_proyectos_consulta']   = 'escritorio/proyectos/$1';
-$route['modulo_proyectos_nuevo']      = 'escritorio/proyectos/$1';
-$route['modulo_proyectos_cronograma'] = 'escritorio/proyectos/$1';
+$route['escritorio/modulo_proyectos'] = 'escritorio/modulo/$1';
+$route['escritorio/modulo_proyectos_consulta']   = 'escritorio/modulo/$1';
+$route['escritorio/modulo_proyectos_nuevo']      = 'escritorio/modulo/$1';
+$route['escritorio/modulo_proyectos_cronograma'] = 'escritorio/modulo/$1';
 
 //Rutas para la contratos...
-$route['modulo_contratos']           = 'escritorio/contratos/$1';
-$route['modulo_contratos_nuevo']     = 'escritorio/contratos/$1';
-$route['modulo_contratos_historial'] = 'escritorio/contratos/$1';
+$route['escritorio/modulo_contratos']           = 'escritorio/modulo/$1';
+$route['escritorio/modulo_contratos_nuevo']     = 'escritorio/modulo/$1';
+$route['escritorio/modulo_contratos_historial'] = 'escritorio/modulo/$1';
 
 //Rutas para la cotizacion
-$route['modulo_cotizaciones']          = 'escritorio/cotizacion/$1';
-$route['modulo_cotizaciones_nuevo']    = 'escritorio/cotizacion/$1';
-$route['modulo_cotizaciones_consulta'] = 'escritorio/cotizacion/$1';
+$route['escritorio/modulo_cotizaciones']          = 'escritorio/modulo/$1';
+$route['escritorio/modulo_cotizaciones_nuevo']    = 'escritorio/modulo/$1';
+$route['escritorio/modulo_cotizaciones_consulta'] = 'escritorio/modulo/$1';
 
 //Rutas para la facturas...
-  $route['prueba_ver_proyecto'] = 'escritorio/facturas/$1';
-  $route['modal_consulta_proyecto'] = 'escritorio/facturas/$1';
+  $route['prueba_ver_proyecto'] = 'escritorio/modulo/$1';
+  $route['escritorio/modal_consulta_proyecto'] = 'escritorio/modulo/$1';
  
 
 //Rutas para la actividades...
-$route['modulo_actividades'] = 'escritorio/actividades/$1';
-$route['pruebapdf'] = 'escritorio/pdf/$1';
-// $route['modulo_actividades'] = 'escritorio/actividades/$1';
+$route['escritorio/modulo_actividades'] = 'escritorio/modulo/$1';
+$route['escritorio/pruebapdf'] = 'escritorio/pdf/$1';
 
 //Rutas para la catalogos...
-$route['modulo_catalogos']    = 'escritorio/catalogos/$1';
-$route['catalogo_servicios']  = 'escritorio/catalogos/$1';
-$route['catalogo_perfiles']  = 'escritorio/catalogos/$1';
-$route['catalogo_permisos']  = 'escritorio/catalogos/$1';
-$route['catalogo_empleados']  = 'escritorio/catalogos/$1';
-$route['catalogo_roles']  = 'escritorio/catalogos/$1';
-$route['catalogo_puestos']  = 'escritorio/catalogos/$1';
+$route['escritorio/modulo_catalogos']    = 'escritorio/modulo/$1';
+$route['escritorio/catalogo_servicios']  = 'escritorio/modulo/$1';
+$route['escritorio/catalogo_perfiles']  = 'escritorio/modulo/$1';
+$route['escritorio/catalogo_permisos']  = 'escritorio/modulo/$1';
+$route['escritorio/catalogo_empleados']  = 'escritorio/modulo/$1';
+$route['escritorio/catalogo_roles']  = 'escritorio/modulo/$1';
+$route['escritorio/catalogo_puestos']  = 'escritorio/modulo/$1';
 
-// $route['catalogo_telefonos']  = 'escritorio/catalogos';
-// $route['catalogo_planes']  = 'escritorio/catalogos';
-
-
-// $route['modulo_catologos'] = 'escritorio/catologos/$1';
-// $route['modulo_catologos'] = 'escritorio/catologos/$1';
 
 //Rutas para el modilo de usuarios...
-$route['modulo_usuarios'] = 'escritorio/usuarios/$1';
-$route['modulo_usuarios_nuevo'] = 'escritorio/usuarios/$1';
-$route['modulo_usuarios_consulta'] = 'escritorio/usuarios/$1';
-// $route['modulo_usuarios'] = 'escritorio/usuarios/$1';
+$route['escritorio/modulo_usuarios'] = 'escritorio/modulo/$1';
+$route['escritorio/modulo_usuarios_nuevo'] = 'escritorio/modulo/$1';
+$route['escritorio/modulo_usuarios_consulta'] = 'escritorio/modulo/$1';
+// $route['escritorio/modulo_usuarios'] = 'escritorio/usuarios/$1';
 
 //Rutas para el modulo de configuracion...
-$route['modulo_configuracion'] = 'escritorio/configuracion/$1';
-// $route['modulo_configuracion'] = 'escritorio/configuracion/$1';
-// $route['modulo_configuracion'] = 'escritorio/configuracion/$1';
+$route['escritorio/modulo_configuracion'] = 'escritorio/modulo/$1';
 
 #################-----RUTAS PARA LAS APIS------######################
 

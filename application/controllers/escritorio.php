@@ -1,13 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 include 'REST.php';
-class Escritorio extends REST {
 
+class Escritorio extends REST {
+	
+	public $resp='';
 	public function __construct() 
 	{
+		
         parent::__construct();
 		$this->load->library('form_validation');
-        $this->load->model('model_customer', 	     'customer');
-        $this->load->model('model_contact', 	     'contacto');
+        $this->load->model('model_customer', 	     'customer');        
         $this->load->model('modelo_servicios',       'serv');
         $this->load->model('model_phone', 		     'telefono');
         $this->load->model('modelo_representante',   'representa');
@@ -23,29 +26,129 @@ class Escritorio extends REST {
         $this->load->model('modelo_archivos',        'archivo');
     }  
 
-	//Vista inicial
+    //Vista inicial
 	// public function index(){  $this->area_Estatica();	} 
+	public function index()
+	{ 	
+		if($this->session->userdata('usuario'))
+		{
+			$this->modulo();
+		}
+		else
+		{
+			$data['token'] = $this->token();
+			$this->load->view('login', $data);
+		}
+	}
+
+	public function token()
+	{
+		$token = md5(uniqid(rand(), true));
+		$this->session->set_userdata('token', $token);
+		return $token;
+	}
+
 	public function login()
-	{ 	 
-	 $this->load->view('login.php');
-	} 
+	{
+		if($this->input->post('token') && $this->input->post('token')== $this->session->userdata('token'))
+		{
+			$this->form_validation->set_rules('user', 'Nombre Usuario', 'required|trim|min_length[4]|max_length[50]|xss_clean');
+			$this->form_validation->set_rules('pass', 'Password', 'required|trim|min_length[3]|max_length[50]|xss_clean');
+
+			$this->form_validation->set_message('required', 'El %s es requerido');
+			$this->form_validation->set_message('min_length', 'El %s debe tener al menos %s carácteres');
+			$this->form_validation->set_message('max_length', 'El %s debe tener al menos %s carácteres');
+
+			if($this->form_validation->run() === FALSE)
+			{
+				$this->index();
+			}
+			else
+			{
+				$user  = $this->input->post('user');
+				$pass  = $this->input->post('pass');
+				$query = $this->usuario->session($user, $pass);
+				if($query == TRUE)
+				{
+					$data = array(
+							'is_logued_in' => TRUE,
+							'id_usuario'   => $query->id,
+							'perfil'	   => $query->idperfil,
+							'usuario'	   => $query->usuario
+						);
+					$this->session->set_userdata($data);
+					$this->index();
+				}
+			}
+		}
+		else
+		{		
+			redirect(base_url().'escritorio');
+		}		
+	}
+	
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url().'escritorio');
+	}
+
+	public function modulo()
+	{
+
+		if($this->session->userdata('usuario'))
+		{ 
+			if($this->ruta()==='dashboard'||$this->ruta()==='login')
+			{
+				$this->dashboard();				
+			}
+			if($this->ruta()==='modulo_cliente_nuevo'||$this->ruta()==='modulo_consulta_clientes'||$this->ruta()==='modulo_consulta_prospectos')
+			{
+
+				$this->clientes(); 
+			}
+			if($this->ruta()==='modulo_proyectos_consulta'||$this->ruta()==='modulo_proyectos_nuevo'||$this->ruta()==='modulo_proyectos_cronograma')
+			{
+				$this->proyectos();				
+			}
+			if($this->ruta()==='modulo_contratos_nuevo'||$this->ruta()==='modulo_contratos_historial')
+			{
+				$this->contratos();				
+			}
+			if($this->ruta()==='modulo_cotizaciones_nuevo'||$this->ruta()==='modulo_cotizaciones_consulta')
+			{
+				$this->cotizaciones();				
+			}
+			if
+			(   
+				$this->ruta()==='catalogo_servicios'||
+				$this->ruta()==='catalogo_perfiles' ||
+				$this->ruta()==='catalogo_permisos' ||
+				$this->ruta()==='catalogo_empleados'||
+				$this->ruta()==='catalogo_roles'    ||
+				$this->ruta()==='catalogo_puestos'
+			)
+			{
+				$this->catalogos();
+				
+			}			
+			if($this->ruta()==='modulo_usuarios_consulta'||$this->ruta()==='modulo_usuarios_nuevo')
+			{
+				$this->usuarios();				
+			}
+		}
+		else
+		{
+			redirect(base_url());
+			// $this->index();
+		}
+	}
 	
 	public function dashboard()
 	{ 	 
-	 $this->area_Estatica('modulo_dashboard');
+		$this->area_Estatica('dashboard_gustavo');
 	} 
 	
-
-
-
-	public function prueba()
-	{
-		$this->load->view('pruebausuario');
-	}
-	public function pruebas()
-	{
-		$this->load->view('pruebas');
-	}
 	public function catalogos()
 	{
 		$this->area_Estatica('modulo_catalogos');
@@ -90,7 +193,7 @@ class Escritorio extends REST {
 	}
 
 	public function clientes()
-	{	
+	{
 		$this->area_Estatica('modulo_Clientes');  # Carga la vista por default + la vista del modulo
 
 		if($this->ruta() == 'modulo_cliente_nuevo')
@@ -101,11 +204,13 @@ class Escritorio extends REST {
 		# Y simplemente lo llamamos para que nos cargue los datos y la vista.
 		
 		if($this->ruta() == 'modulo_consulta_clientes')   {	$this->datosCliente($this->ruta());	}
-		if($this->ruta() == 'modulo_consulta_prospectos') {	$this->datosCliente($this->ruta());	}		
+		if($this->ruta() == 'modulo_consulta_prospectos') {	$this->datosCliente($this->ruta());	}	
+	
 	} # Fin del metodo clientes...
 
 	private function datosCliente($vista)
 	{
+		$this->load->model('model_contact','contacto');
 		$data['clientes']		  = $this->customer->get_customers($this->ruta());	# Lista de clientes
 		$data['telefonos'] 		  = $this->telefono->get();					    # Lista de telefonos
 		$data['servicios'] 		  = $this->serv->get_sNuevoCliente();              	# Lista de Servicios
@@ -146,7 +251,7 @@ class Escritorio extends REST {
 		}
 	}
 
-	public function cotizacion()
+	public function cotizaciones()
 	{
 		$this->area_Estatica('modulo_cotizaciones');
 		$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
@@ -220,12 +325,6 @@ class Escritorio extends REST {
 	public function actividades(){
 		$this->area_Estatica('modulo_actividades.html');
 	}
-
-	public function pdf(){
-		echo 'hola'; //$this->load->view('pruebapdf');
-	}
-
-
 
 	public function usuarios()
 	{
