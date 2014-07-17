@@ -36,7 +36,7 @@ class  Representante extends REST {
 
     private function delete()
     {
-        $query = $this->rep->delete(  $this->id()  ); 
+        $query = $this->rep->destroy(  $this->id()  ); 
        $this->pre_response($query, 'delete');  
     }   
 } # Fin de la Clase Api_contacto

@@ -76,6 +76,9 @@ app.VistaNuevoCliente = Backbone.View.extend({
 
 	// Intancias
 		this.vistaTelefono = new app.VistaTelefono();
+
+	// variables
+		this.contadorContactos = 0;
 	},
 // -----render------------------------------------ 
 	render			: function () {
@@ -159,6 +162,17 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							numero			: pasarAJson(here.$telefonoRepresentante.serializeArray()).numero,
 							tipo 			: pasarAJson(here.$tipoTelefonoRepresentante.serializeArray()).tipo
 						});
+						/*-----*/
+						if (app.contactosLocal.length == 0) {
+							alerta('¡El representante ha sido guardado!', function () {
+								localStorage.clear();
+								var aceptar = $(document.getElementsByTagName('body')).find('#alertify-ok');
+								aceptar.on('click',function(){
+									// location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+									location.href = 'modulo_consulta_clientes';
+								});
+							});
+						};
 					},
 					error	: function (error, respuesta) {
 						console.log('error: ',respuesta);
@@ -167,7 +181,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			);
 		};
 		/*--------------------*/
-		if (app.contactosLocal.toJSON().length) {
+		if (app.contactosLocal.length) {
 			var contactos = app.contactosLocal.toJSON();
 			for (var i = 0; i < contactos.length; i++) {
 				var telefono = app.telefonosLocal.findWhere({idpropietario:contactos[i].id}).toJSON();
@@ -183,9 +197,27 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							numero			: telefono.numero,
 							tipo 			: telefono.tipo
 						});
+						/*-----*/
+						if (here.aumentarContadorContactos() == app.contactosLocal.length) {
+							alerta('¡Contactos guardados!', function () {
+								localStorage.clear();
+								var aceptar = $(document.getElementsByTagName('body')).find('#alertify-ok');
+								aceptar.on('click',function(){
+									// location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+									location.href = 'modulo_consulta_clientes';
+								});
+							});
+						};
 					},
 					error 	: function (model) {
 						console.log('Error guardando contacto: ', model.toJSON());
+						if (here.aumentarContadorContactos() == app.contactosLocal.length) {
+							confirmar('Ocurrio un error al intentar guardar los contactos<br><b>¿Deseas volver a intentarlo?</b>', 
+								function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/}, 
+								function () {
+									location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+								});
+						};
 					}
 				});
 
@@ -200,22 +232,25 @@ app.VistaNuevoCliente = Backbone.View.extend({
 
 		// window.location.href = "modulo_consulta_clientes";
 	},
+	aumentarContadorContactos	: function () {
+		return this.contadorContactos++;
+	},
 // -----nuevoCliente------------------------------ 
 	nuevoCliente	: function (evento) {
 		/*Se ejecuta la funcion nuevosAtributosCliente que
 		  tras terminar devuelve un json el cual es
 		  almacenado en la variable objetoCliente*/
-		var objetoCliente = this.limpiarJSON(this.nuevosAtributosCliente());
+		this.objetoCliente = this.limpiarJSON(this.nuevosAtributosCliente());
 
 		/*Nos aseguramos de que las propiedades nombreComercial y tipoCliente
 		  del objeto esten definidas. De lo contrario se alerta al usuario y
 		  la creación del cliente no procede*/
-		if (!objetoCliente.nombreComercial || !objetoCliente.tipoCliente){
+		if (!this.objetoCliente.nombreComercial || !this.objetoCliente.tipoCliente){
 			alerta('Establezca el tipo de cliente y un nombre de cliente',function (){});
 			return;
 		}
-		objetoCliente.foto = this.urlFoto();
-		console.log(objetoCliente);
+		this.objetoCliente.foto = this.urlFoto();
+		console.log(this.objetoCliente);
 		/*Guardamos la referencia a this para poder usarla en las
 		  funciones dentro de esta función*/
 		var here = this;
@@ -232,7 +267,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		  del cliente de manera exitos, de lo contrario la funcion de de la
 		  propiedad success no procedera para mostrar el formulario para el
 		  registro de contactos y representante.*/
-		app.coleccionClientes.create(objetoCliente,
+		app.coleccionClientes.create(this.objetoCliente,
 			{
 				wait:true,
 				success	: function(exito){
@@ -265,7 +300,6 @@ app.VistaNuevoCliente = Backbone.View.extend({
 								here.guardarServiciosI(exito.get('id'),servExiste);
 							};
 						};
-						
 
 						servicios 	= $(document.getElementsByName('serviciosCuenta[]')).val(),
 						servNuevo	= _.difference( _.union( servicios,servPluck ),servPluck ),
@@ -288,14 +322,14 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							here.$('.visibleR').toggleClass('ocultoR');
 						},
 						function () {
-							location.href = 'modulo_consulta_'+objetoCliente.tipoCliente+'s';
+							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
 						});
 				},
 				error	: function () {
 					confirmar('Ocurrio un error al intentar registrar al cliente<br><b>¿Desea volver a intentelo?</b>',
 						function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/},
 						function () {
-							location.href = 'modulo_consulta_'+objetoCliente.tipoCliente+'s';
+							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
 						});
 				}
 			}
@@ -764,8 +798,6 @@ app.VistaGeneralContactos = Backbone.View.extend({
                     // console.log('ERROR contacto');
                 }
             });
-        } else{
-        	alerta('Debes llenar los campos de contacto', function () {});
         };
     },
     guardarT    : function (idp, n, t) {

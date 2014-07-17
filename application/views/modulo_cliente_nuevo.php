@@ -3,24 +3,8 @@
     <!-- plugin selectize css -->
         <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
-    <!-- BOTON PARA PRUEBAS -->
-    <!-- <button id="btn_eliminar">x</button> -->
-
-    <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
-         a medida que ocurren los errores del usuario -->
-    <div class="alert alert-warning alert-dismissable oculto" id="advertencia">
-      <button type="button" id="cerrar" class="close">&times;</button>
-      <strong>¡Advertencia!</strong>
-      <div id="comentario"></div>
-    </div>
-    <div class="alert alert-danger alert-dismissable oculto" id="error">
-      <button type="button" id="cerrar" class="close">&times;</button>
-      <strong>¡Error!</strong>
-      <div id="comentario"></div>
-    </div>
-
     <!-- REGISTRO DEL CLIENTE -->
-    <div id="formularioCliente" class="visibleR">
+    <div id="formularioCliente" class="visibleR ocultoR">
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
         <!-- <h2>Registro para nuevo cliente</h2> -->
         <!-- <hr> -->
@@ -74,7 +58,7 @@
                                 <option value="No definido" selected style="display:none;">Tipo</option>
                                 <option value="Casa">Casa</option>
                                 <option value="Fax">Fax</option>
-                                <option value="Movil" selected>Movil</option>
+                                <option value="Movil">Movil</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Personal">Personal</option>
                                 <option value="Trabajo">Trabajo</option>
@@ -126,7 +110,7 @@
         <br> <!-- visibleR -->
     </div>
     <!-- REGISTRO DEL CONTACTO -->
-    <div id="formularioContacto" class="visibleR ocultoR">
+    <div id="formularioContacto" class="visibleR">
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
         <!-- <div id="div_nombreCliente"> -->
             <!-- <h2>Backbone</h2><h3>Registro para representante y contactos</h3> -->
@@ -150,7 +134,7 @@
                                 <option value="No definido" selected style="display:none;">Tipo</option>
                                 <option value="Casa">Casa</option>
                                 <option value="Fax">Fax</option>
-                                <option value="Movil" selected>Movil</option>
+                                <option value="Movil">Movil</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Personal">Personal</option>
                                 <option value="Trabajo">Trabajo</option>
@@ -221,19 +205,19 @@
     <script type="text/template" id="plantillaFormContacto">
         <div class="tab-pane active" id="<%- i %>">
             <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 45px;"><%- i %> <span class="icon-trash"></span></button>
-            <input type="text" id="contactoNombre" class="form-control" placeholder="Nombre completo del contacto">
-            <input type="text" id="contactoEmail" class="form-control" placeholder="Correo">
-            <input type="text" id="contactoCargo" class="form-control" placeholder="Cargo">
+            <input type="text" id="contactoNombre" class="form-control" value="Nombre completo del contacto">
+            <input type="text" id="contactoEmail" class="form-control" value="Correo">
+            <input type="text" id="contactoCargo" class="form-control" value="Cargo">
             <div class="telefonos">
                 <div class="div_telefono">
                     <div class="input-group">
-                        <input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10">
+                        <input type="text" class="form-control telefonoContacto" name="numero" value="Teléfono" minlength="10">
                         <div class="input-group-btn">
                             <select class="btn btn-default tipoTelefonoContacto" name="tipo"  style="height: 34px;">
                                 <option value="No definido" selected style="display:none;">Tipo</option>
                                 <option value="Casa">Casa</option>
                                 <option value="Fax">Fax</option>
-                                <option value="Movil" selected>Movil</option>
+                                <option value="Movil">Movil</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Personal">Personal</option>
                                 <option value="Trabajo">Trabajo</option>
