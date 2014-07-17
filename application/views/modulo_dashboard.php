@@ -744,7 +744,7 @@
 
 	    <!-- prueba tabla con plugin de jquery -->
 	    <div class="wrapper">
-	    <input class="search" type="search" placeholder="Search" data-column="all">
+	   
 	     <table id="table1" class="tablesorter">               
                 <thead>
                     <tr>
@@ -752,7 +752,7 @@
 
                         <th ></th>
                         <th>
-                           Nombre Comercial
+                            <input class="search" type="search" placeholder="Search" data-column="all">
                         </th>
                         <th >Giro</th>
                         <th>

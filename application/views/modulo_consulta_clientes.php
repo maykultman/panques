@@ -1,38 +1,35 @@
     <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
-    <div id="posicion_infotd">
-        <form id="clientes">
-            <div class="wrapper">                            
-                <table id="tbla_cliente" class="tablesorter">
-                    <!-- BOTON PARA PRUEBAS -->
-                    <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
-                    <thead>
-                        <tr>
-                            <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
-                            <th class="sorter-false"></th>
-                            <th>
+    <div id="posicion_infotd">        
+        <div id="clientes" class="wrapper">                            
+            <table id="tbla_cliente" class="tablesorter table-striped">
+                <!-- BOTON PARA PRUEBAS -->
+                <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
+                <thead>
+                    <tr>
+                        <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
+                        <th class="sorter-false"></th>
+                        <th>
 
-                                <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
-                               <!--  <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial"> -->
-                                <span class="icon-search busqueda"></span>
-                            </th>
-                            <th class="sorter-false">Giro</th>
-                            <th class="sorter-false">
-                                Página web
-                            </th>
-                            <th style="text-align=center;">Ultima actividad</th>
-                            <th class="sorter-false">Operaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="filasClientes">
-                    </tbody>
-                </table>
-            </div>   
-            <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
-            <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
-            <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
-         
-            <button class="btn btn-primary">Eliminar varios</button>
-        </form>
+                            <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
+                           <!--  <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial"> -->
+                            <span class="icon-search busqueda"></span>
+                        </th>
+                        <th class="sorter-false">Giro</th>
+                        <th class="sorter-false">
+                            Página web
+                        </th>
+                        <th style="text-align=center;">Ultima actividad</th>
+                        <th class="sorter-false">Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody id="filasClientes" >
+                </tbody>
+            </table>
+        </div>   
+        <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
+        <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
+        <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
+        <button class="btn btn-primary" style="margin-top: 24px;">Eliminar varios</button>
     </div>
 </div>
   <!--  ----------Consulta clientes-------- -->
@@ -677,18 +674,11 @@
  </script>
  <!-- Utilerias -->
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+         
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
     <!-- <script type="text/javascript" src="js/backbone/lib/backbone.localStorage.js"></script> -->
-
-<!-- Librerias para el scroll de la tabla -->
-<script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    
-    
 
 <!--MV*-->
     <!-- modelos -->
@@ -713,8 +703,16 @@
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaContacto.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCliente.js'?>"></script>
+   
     <!-- vista general -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCP.js'?>"></script>
     <script type="text/javascript">
         app.vistaConsultaClientes = new app.VistaConsultaClientes();
     </script>
+
+    <!-- Librerias para el scroll de la tabla -->
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    

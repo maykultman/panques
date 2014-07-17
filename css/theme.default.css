@@ -1,16 +1,17 @@
 /*************
 Default Theme
 *************/
+
 .wrapper {
 	position: relative;
 	/*top: 50px;*/
-	height: 332px;
-	overflow-x: auto;
+	height: 347px;
+	overflow: auto;
 }	
 
 
 /* overall */
-.tablesorter-default {
+.tablesorter-default  {
 	width: 100%;
 
 	/*font: 12px/18px Arial, Sans-serif;*/
@@ -19,7 +20,7 @@ Default Theme
 	border-spacing: 0;
 	/*margin: 10px 0 15px;*/
 	text-align: left;
-	line-height: 5;
+/*	line-height: 5;*/
 }
 
 /* header */
@@ -31,7 +32,7 @@ Default Theme
 	border-collapse: collapse;
 	border-bottom: #ccc 2px solid;
 	padding: 0;
-	line-height: 3;
+	line-height: 2;
 }
 
 .tablesorter-default .header,
@@ -77,11 +78,11 @@ Default Theme
 
 
 /* Zebra Widget - row alternating colors */
-.tablesorter-default tr.odd td {
-	background-color: #f9f9f9;
+/*.tablesorter-default tr.odd td {
+	background-color: #f9f9f9 ;
 }
 .tablesorter-default tr.even td {
 	background-color:#f1f1f1;
-}
+}*/
 
 

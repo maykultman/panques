@@ -57,7 +57,7 @@ display: inline-table ;
 .wrapper {
 	position: relative;
 	/*top: 50px;*/
-	height: 332px;
+	height: 450px;
 	overflow-x: auto;
 }	
 
