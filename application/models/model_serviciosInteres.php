@@ -12,8 +12,25 @@
 
 		public function insert_servInteres($post)
 		{
-			$query = $this->db->insert('servicios_interes', $post);
-			return $query; 
+
+			if(!$post['idservicio'][0])
+			{
+				$this->db->insert('servicios_interes', $post);
+				return $this->get( $this->db->insert_id() );
+			}
+
+			for($i = 0; $i<count($post['idservicio']); $i++)
+			{
+				$this->db->insert('servicios_interes', 
+								   array('idcliente'=>$post['idcliente'],
+								   		 'idservicio'=>$post['idservicio'][$i],
+								   		 'status'=>$post['status']
+								   		 )
+								);	
+				$id[$i] = $this->db->insert_id();
+
+			}
+			return $id; 
 		}
 		// public function get_servInteres($id)
 		// {

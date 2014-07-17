@@ -1,7 +1,7 @@
     
-    <link rel="stylesheet" type="text/css" href="css/estilos_modulo_clientes_nuevo.less">
+    <link rel="stylesheet" type="text/css" href="<?=base_url().'css/estilos_modulo_clientes_nuevo.less'?>">
     <!-- plugin selectize css -->
-        <link rel="stylesheet" href="js/plugin/selectize/selectize.default.css">
+        <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
     <!-- BOTON PARA PRUEBAS -->
     <!-- <button id="btn_eliminar">x</button> -->
@@ -66,15 +66,12 @@
             <textarea id="txtareaDireccion" class="form-control" rows="3" placeholder="Dirección"></textarea>
             <!-- <input type="text" class="form-control" placeholder="Telefono de oficina"> -->
             <div class="telefonos">
-                <div class="div_telefono"> <!-- Contenedor del form de teléfono -->
+                <div class="div_telefono">
                     <div class="input-group">
-                        <!-- <div class="btn-group"> -->
-                            <!-- <form> -->
-                              <input type="text" class="form-control telefonoCliente" name="telefonoCliente" placeholder="Teléfono" maxlength="10"><!---->
-                            <!-- </form> -->
-                        <!-- </div> -->
+                        <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10">
                         <div class="input-group-btn">
-                            <select class="btn btn-default" name="tipoTelefonoCliente">
+                            <select class="btn btn-default tipoTelefonoCliente" name="tipo"  style="height: 34px;">
+                                <option value="No definido" selected style="display:none;">Tipo</option>
                                 <option value="Casa">Casa</option>
                                 <option value="Fax">Fax</option>
                                 <option value="Movil" selected>Movil</option>
@@ -82,10 +79,7 @@
                                 <option value="Personal">Personal</option>
                                 <option value="Trabajo">Trabajo</option>
                                 <option value="Otro">Otro</option>
-                                <option selected disabled>Tipo</option>
                             </select>
-                        <!-- </div> -->
-                        <!-- <div class="btn-group"> -->
                             <button type="button" class="btn btn-default eliminarCopia"><span class="icon-uniF477"></span></button>
                             <button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
                         </div>
@@ -94,106 +88,29 @@
                 </div> <!-- /Contenedor del form de teléfono -->
             </div>
         </div>
-
-<!-- <div class="editar editando" id="formularioTelefono">
-    <div class="input-group">
-        <input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono">
-        <div class="input-group-btn">
-            <select id="tipoNuevo" class="btn btn-default" name="tipo">
-                <option value="Casa">Casa</option>
-                <option value="Fax">Fax</option>
-                <option value="Movil" selected="">Movil</option>
-                <option value="Oficina">Oficina</option>
-                <option value="Personal">Personal</option>
-                <option value="Trabajo">Trabajo</option>
-                <option value="Otro">Otro</option>
-                <option selected="" disabled="">Tipo</option>
-            </select>
-            <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
-        </div>
-    </div>
-</div> -->
-
         <div class="desborde"></div>
 
         <br>
-        <!-- <div class="row"> -->
-            <div class="input_info">
-                <select class="menuServicios"  name="serviciosInteres[]" multiple placeholder="Servicios que le interesa el cliente" style="width:400px;">
-                </select>
-            </div>
-            <div class="input_info">
-                <select class="menuServicios"  name="serviciosCuenta[]" multiple placeholder="Servicios con los que cuenta el cliente" style="width:400px;">
-                </select>
-            </div>
-            <div class="desborde"></div>
-        <!-- </div> -->
 
-        <!-- <div id='contenedor_menus'> -->
-            <!-- <div class="menusServicios"> -->
-                <!-- <form>
-                    <div class='cssmenu'>
-                        <h5><b>Servicios que le interesa</b> </h5>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input type="text" id="inputBusquedaI" class="form-control" placeholder="Buscar servicio">
-                                <span class="input-group-btn">
-                                    <button type="button" id="btn_agregarI" class="btn btn-default">Agregar</button>
-                                </span>
-                            </div>
-                        </div>
-                        <ul id="I">
-                            <li class='has-sub active'><a href='#'><span>Servicios</span></a>
-                                <ul id="menuServiciosInteres" style="display: block;">
-                                </ul>
-                            </li>   
-                        </ul>
-                    </div>
-                </form>
-                <div class="desborde"></div>
-                <br>
-                <ol id="listaInteres" class="list-group"></ol> -->
-
-            <!-- </div> -->
-            <!-- <div class="menusServicios"> -->
-                <!-- <form>
-                    <div class='cssmenu'>
-                        <h5><b>Servicios con los que cuenta</b> </h5>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <input type="text" id="inputBusquedaC" class="form-control" placeholder="Buscar servicio">
-                                <span class="input-group-btn">
-                                    <button type="button" id="btn_agregarC" class="btn btn-default">Agregar</button>
-                                </span>
-                            </div>
-                        </div>
-                        <ul id="C">
-                            <li class='has-sub active'><a href='#'><span>Servicios</span></a>
-                                <ul id="menuServiciosCuenta" style="display: block;">
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-                <div class="desborde"></div>
-                <br>
-                <ol id="listaCuenta" class="list-group"></ol> -->
-
-            <!-- </div> -->
-        <!-- </div> -->
-
+        <div class="input_info">
+            <h4><b>Servicios que le interesa el cliente</b></h4>
+            <select class="menuServicios"  name="serviciosInteres[]" multiple placeholder="Buscar servicios" style="width:400px;">
+            </select>
+        </div>
+        <div class="input_info">
+            <h4><b>Servicios con los que cuenta el cliente</b></h4>
+            <select class="menuServicios"  name="serviciosCuenta[]" multiple placeholder="Buscar servicios" style="width:400px;">
+            </select>
+        </div>
+        <div class="desborde"></div>
         
-        <!-- <div class="desborde"></div> -->
-        
-        <!-- <br> -->
 
         <div>
             <h5><b>Adjuntar foto o logotipo de cliente</b></h5>
             <form id="formularioFoto">
                 <input type="file" id="fotoCliente" name="fotoCliente">
             </form>
-            <div id="mensajeFoto"></div>
-            <img id="direccion">
+            <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="140" style="margin-top:10px;">
         </div>
         
         <br><br>
@@ -206,15 +123,18 @@
         <button type="button" id="btn_crear" class="btn btn-primary">Aceptar</button>
         <br>
         <br>
-        <br>
+        <br> <!-- visibleR -->
     </div>
     <!-- REGISTRO DEL CONTACTO -->
     <div id="formularioContacto" class="visibleR ocultoR">
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
-        <div id="div_nombreCliente">
+        <!-- <div id="div_nombreCliente"> -->
             <!-- <h2>Backbone</h2><h3>Registro para representante y contactos</h3> -->
+        <!-- </div> -->
+        <div class="page-header">
+            <h1><span id="span_nombreCliente"></span> <small>Registro para representante y contactos</small></h1>
         </div>
-        <hr>
+        <!-- <hr> -->
         <div class="dato_contacto">
             <div><h3>Datos de Representante</h3></div>
             <hr>
@@ -222,15 +142,12 @@
             <input type="text" id="emailRepresentante" class="form-control" placeholder="Correo">
             <input type="text" id="cargoRepresentante" class="form-control" placeholder="Cargo">
             <div class="telefonos">
-                <div>
+                <div class="div_telefono">
                     <div class="input-group">
-                        <div class="btn-group">
-                          <form>
-                            <input type="text"  class="form-control telefonoRepresentante" name="telefonoRepresentante" placeholder="Teléfono" maxlength="10">
-                          </form>
-                        </div>
-                        <div class="btn-group">
-                            <select class="form-control" name="tipoTelefonoRepresentante">
+                        <input type="text" class="form-control telefonoRepresentante" name="numero" placeholder="Teléfono" minlength="10">
+                        <div class="input-group-btn">
+                            <select class="btn btn-default tipoTelefonoRepresentante" name="tipo"  style="height: 34px;">
+                                <option value="No definido" selected style="display:none;">Tipo</option>
                                 <option value="Casa">Casa</option>
                                 <option value="Fax">Fax</option>
                                 <option value="Movil" selected>Movil</option>
@@ -238,105 +155,37 @@
                                 <option value="Personal">Personal</option>
                                 <option value="Trabajo">Trabajo</option>
                                 <option value="Otro">Otro</option>
-                                <option selected disabled>Tipo</option>
                             </select>
-                        </div>
-                        <div class="btn-group">
-                            <div class="otroTelefono"><button type="button" class="btn btn-default"><span class="icon-uniF476"></span></button></div> 
+                            <button type="button" class="btn btn-default eliminarCopia"><span class="icon-uniF477"></span></button>
+                            <button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
                         </div>
                     </div>
-                </div>
+                    <br>
+                </div> <!-- /Contenedor del form de teléfono -->
             </div>
         </div>
 
-        <div class="dato_contacto">
+        <div class="dato_contacto" id="div_contactos" style="position:relative">
             <div id="listaContactosCliente">
-              <h3>Datos de contacto</h3><br><button id="btn_otroContacto" class="btn btn-default"><span class="icon-uniF476"></span></button>
+            <h3>Datos de contacto</h3><br><button id="btn_otroContacto" class="btn btn-primary btn-sm"><span class="icon-addfriend"></span></button>
             </div>
             <div class="desborde"></div>
             <hr>
-            <input type="text" id="contactoNombre" class="form-control" placeholder="Nombre completo del contacto">
-            <input type="text" id="contactoEmail" class="form-control" placeholder="Correo">
-            <input type="text" id="contactoCargo" class="form-control" placeholder="Cargo">
-            <div class="telefonos">
-                <div>
-                    <div class="input-group">
-                        <div class="btn-group">
-                          <form>
-                            <input type="text"  class="form-control telefonoContacto" name="telefonoContacto" placeholder="Teléfono" maxlength="10">
-                          </form>
-                        </div>
-                        <div class="btn-group">
-                            <select class="form-control" name="tipoTelefonoContacto">
-                                <option value="Casa">Casa</option>
-                                <option value="Fax">Fax</option>
-                                <option value="Movil" selected>Movil</option>
-                                <option value="Oficina">Oficina</option>
-                                <option value="Personal">Personal</option>
-                                <option value="Trabajo">Trabajo</option>
-                                <option value="Otro">Otro</option>
-                                <option selected disabled>Tipo</option>
-                            </select>
-                        </div>
-                        <div class="btn-group">
-                            <div class="otroTelefono"><button type="button" class="btn btn-default"><span class="icon-uniF476"></span></button></div> 
-                        </div>
-                    </div>
+
+            <div>
+                <div class="tab-content">
+                    <!-- PLANTILLA FORMULARIO DE CONTACTO -->
                 </div>
+                <ul class="pagination pagination-ms">
+                    <!-- <li id="pagina1" class="active"><a href="#1" data-toggle="tab">1</a></li> -->
+                </ul>
             </div>
         </div>
-        <div class="desborde"></div>
         <br>
         <a href="modulo_consulta_clientes" class="btn btn-default">Cancelar</a>
         <!-- <a href="modulo_consulta_clientes" id="btn_nuevoContacto" class="btn btn-primary" role="button">Registrar Contactos</a> -->
-        <button id="btn_nuevoContacto" class="btn btn-primary">Registrar Contactos</button> 
-    </div>
-    <!-- FORMULARIO PARA REGISTRAR OTRO CONTACTO -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Agregue otro contacto</h4>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <input type="text" id="otroContactoNombre" class="form-control" placeholder="Nombre completo del contacto">
-                        <input type="text" id="otroContactoEmail" class="form-control" placeholder="Correo">
-                        <input type="text" id="otroContactoCargo" class="form-control" placeholder="Cargo">
-                        <div class="telefonos">
-                            <div>
-                                <div class="input-group">
-                                    <div class="btn-group">
-                                        <input type="text" class="form-control telefonoContacto" name="telefonoContacto" placeholder="Teléfono" maxlength="10">
-                                      
-                                    </div>
-                                    <div class="btn-group">
-                                        <select class="form-control" name="tipoTelefonoContacto">
-                                            <option value="Casa">Casa</option>
-                                            <option value="Fax">Fax</option>
-                                            <option value="Movil" selected>Movil</option>
-                                            <option value="Oficina">Oficina</option>
-                                            <option value="Personal">Personal</option>
-                                            <option value="Trabajo">Trabajo</option>
-                                            <option value="Otro">Otro</option>
-                                            <option selected disabled>Tipo</option>
-                                        </select>
-                                    </div>
-                                    <div class="btn-group">
-                                        <div class="otroTelefono"><button type="button" class="btn btn-default"><span class="icon-uniF476"></span></button></div> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_agregarContacto">Agregar</button>
-                </div>
-            </div>
-        </div>
+        <button id="btn_guardarContactos" class="btn btn-primary">Guardar Contactos</button>  <!-- visibleR ocultoR -->
+        <br><br>
     </div>
 </section>
 </div>
@@ -369,6 +218,36 @@
             </div>
         </div>
     </script>
+    <script type="text/template" id="plantillaFormContacto">
+        <div class="tab-pane active" id="<%- i %>">
+            <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 45px;"><%- i %> <span class="icon-trash"></span></button>
+            <input type="text" id="contactoNombre" class="form-control" placeholder="Nombre completo del contacto">
+            <input type="text" id="contactoEmail" class="form-control" placeholder="Correo">
+            <input type="text" id="contactoCargo" class="form-control" placeholder="Cargo">
+            <div class="telefonos">
+                <div class="div_telefono">
+                    <div class="input-group">
+                        <input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10">
+                        <div class="input-group-btn">
+                            <select class="btn btn-default tipoTelefonoContacto" name="tipo"  style="height: 34px;">
+                                <option value="No definido" selected style="display:none;">Tipo</option>
+                                <option value="Casa">Casa</option>
+                                <option value="Fax">Fax</option>
+                                <option value="Movil" selected>Movil</option>
+                                <option value="Oficina">Oficina</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Trabajo">Trabajo</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            <button type="button" class="btn btn-default eliminarCopiaC"><span class="icon-uniF477"></span></button>
+                            <button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
+                        </div>
+                    </div>
+                    <br>
+                </div> <!-- /Contenedor del form de teléfono -->
+            </div>
+        </div>
+    </script>
 <!-- Utilerias -->
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
     <!-- plugins -->
@@ -395,7 +274,7 @@
     <!-- <script type="text/javascript" src="js/backbone/colecciones/ColeccionArchivos.js"></script> -->
     <!-- <script type="text/javascript" src="js/backbone/vistas/VistaContacto.js"></script> -->
     <!-- <script type="text/javascript" src="js/backbone/vistas/VistaCliente.js"></script> -->
-    <!--<script type="text/javascript" src="js/backbone/vistas/VistaTelefono.js"></script>-->
+    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
     <!-- <script type="text/javascript" src="js/backbone/vistas/VistaArchivo.js"></script> -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoCliente.js'?>"></script>

@@ -12,15 +12,26 @@
 
 		public function insert_servCliente($post)
 		{
-			$query = $this->db->insert('servicios_cliente', $post);
-			return $query; 
+
+			if(!$post['idservicio'][0])
+			{
+				$this->db->insert('servicios_cliente', $post);
+				return $this->get( $this->db->insert_id() );
+			}
+			
+			for($i = 0; $i<count($post['idservicio']); $i++)
+			{
+				$this->db->insert('servicios_cliente', 
+								   array('idcliente'=>$post['idcliente'],
+								   		 'idservicio'=>$post['idservicio'][$i],
+								   		 'status'=>$post['status']
+								   		 )
+								);	
+				$id[$i] = $this->db->insert_id();
+
+			}
+			return $id; 
 		}
-		// public function get_servCliente($id)
-		// {
-		// 	($id===False) ? $query = $this->db->get('servicios_cliente') :
-  //                           $query = $this->db->get_where('servicios_cliente', array('id'=>$id));
-		// 	return $query->result();			
-		// }
 
 		public function get_servCliente() 
 		{			

@@ -8,7 +8,7 @@
 		{		
 			$x=0; # Este es un contador para mi array de inserción...	
 			# Se almacena campos obligatorios en la tabla de clientes... 						
-			$query = $this->db->insert('clientes', array('nombreComercial'=>$post['nombreComercial'], 
+			$cliente = $this->db->insert('clientes', array('nombreComercial'=>$post['nombreComercial'], 
 														 'tipoCliente'=>$post['tipoCliente'],
 														 'fechaCreacion'=>$post['fechaCreacion'],
 														 'visibilidad'=>$post['visibilidad'],));
@@ -41,7 +41,7 @@
 			# Ahora una vez armado el array con los atributos del cliente hacemos una inserción en la bd...
 			if(!empty($data)){	$query = $this->db->insert_batch('cliente_atributo', $data); }
 	
-			return $idcliente;
+			return $this->get($idcliente);
 		}//	----------FUNCTION INSERT_CUSTOMER--------------
 
 		# Datos del cliente para buscarlo en el modulo del proyecto...
@@ -51,7 +51,11 @@
 			$this->db->where(array('visibilidad'=>1, 'tipoCliente'=>'cliente' ));
 			return $this->db->get('clientes')->result();
 		}
-	
+		
+		public function get($id)
+		{
+			return $this->db->get_where('clientes', array('id'=>$id))->row();
+		}
 		public function get_customers($ruta)
 		{
 			($ruta=='modulo_consulta_clientes'||$ruta=='api_cliente'||$ruta=='modulo_cliente_nuevo') ?	$tipoCliente ='cliente' : $tipoCliente = 'prospecto';

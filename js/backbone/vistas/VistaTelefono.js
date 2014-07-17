@@ -3,7 +3,6 @@ var app = app || {};
 app.VistaTelefono = Backbone.View.extend({
 	tagName	: 'div',
 	className	: 'divTelefono',
-	plantilla : _.template($('#plantilla_telefono').html()),
 	events	: {
 		'keypress #numero'	: 'actualizarNumero',
 		'change #numero'	: 'actualizarNumero',
@@ -27,7 +26,25 @@ app.VistaTelefono = Backbone.View.extend({
 		return this;
 	},
 
-	//---------------------------------------------
+	crear 	: function (json) {
+		if (json.numero != '') {
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+
+			app.coleccionTelefonos.create(json,{
+				wait:true,
+				success	: function (exito) {
+					console.log('exito: ',exito);
+				},
+				error	: function (error, respuesta) {
+					console.log('error: ',respuesta);
+				}
+			});
+
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
+		};
+	},
 
 	actualizarNumero	: function (elemento) {
 		if (elemento.keyCode === 13 || elemento.type === 'change') {

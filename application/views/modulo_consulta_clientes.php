@@ -699,9 +699,9 @@
     <!-- vistas -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicioCliente.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaContacto.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCliente.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
     <!-- vista general -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCP.js'?>"></script>
     <script type="text/javascript">

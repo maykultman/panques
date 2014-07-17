@@ -1,5 +1,9 @@
 var app = app || {};
 
+app.Telefono = app.VistaTelefono.extend({
+	plantilla : _.template($('#plantilla_telefono').html())
+});
+
 app.VistaContacto = Backbone.View.extend({
 	tagName	: 'div',
 	className	: 'contenedorContacto',
@@ -224,7 +228,7 @@ app.VistaContacto = Backbone.View.extend({
 			this.$telefonos.children('label').remove();
 			for (var i = 0; i < telefonos.length; i++) {
 				/*Instanciar un objeto telefono*/
-				var vistaTelefono = new app.VistaTelefono({
+				var vistaTelefono = new app.Telefono({
 					model:telefonos[i]
 				});
 				/*Agregar td que contentran los telefonos

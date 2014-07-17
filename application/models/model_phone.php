@@ -10,8 +10,27 @@
 		
 		public function create($args)
         {   
-            $this->db->insert('telefonos', $args);
-            return $this->get($this->db->insert_id());     
+            if(!is_array($args['numero']))
+            {
+                $this->db->insert('telefonos', $args);
+                return $this->get($this->db->insert_id());    
+            }
+            else
+            {
+                for($i=0; $i<count($args['numero']); $i++)
+                {
+                    $this->db->insert('telefonos',
+                    array('idpropietario'=> $args['idpropietario'],
+                          'tabla'=>$args['tabla'],
+                          'numero'=>$args['numero'][$i],
+                          'tipo'=>$args['tipo'][$i]
+                          ));
+                    $id['exito'][$i] = $this->db->insert_id();
+                }
+                return $id;
+            }
+            
+
         }
         
         public function get ( $id = FALSE ) 
