@@ -166,7 +166,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 								localStorage.clear();
 							});
 							$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
-								location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+								location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';
 							});
 						};
 					},
@@ -174,7 +174,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						confirmar('Ocurrio un error al intentar guardar los contactos<br><b>¿Deseas volver a intentarlo?</b>', 
 							function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/}, 
 							function () {
-								location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+								location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';
 							});
 						if (app.contactosLocal.length) {
 							return; //Terminamos la secuencia de la function nuevoContacto
@@ -231,7 +231,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						localStorage.clear();
 					});
 					$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
-						location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+						location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';
 					});
 				};
 			},
@@ -241,7 +241,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					confirmar('Ocurrio un error al intentar guardar los contactos<br><b>¿Deseas volver a intentarlo?</b>', 
 						function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/}, 
 						function () {
-							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+							location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';
 						});
 				};
 			}
@@ -343,14 +343,14 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							window.scrollTo(0,0);
 						},
 						function () {
-							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+							location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';
 						});
 				},
 				error	: function () {
 					confirmar('Ocurrio un error al intentar registrar al cliente<br><b>¿Desea volver a intentelo?</b>',
 						function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/},
 						function () {
-							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+							location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';
 						});
 				}
 			}
@@ -582,6 +582,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	      	return false;
 	    } else{
 	    	$(elemento.currentTarget).css('border-color','#CCC');
+	    	return true;
 	    };
 	},
 //------validarTelefono--------------------------- 
@@ -597,6 +598,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	    } else{
 	    	$(elemento.currentTarget).css('border-color','#CCC');
 	    	$(elemento.currentTarget).next().children('select').focus();
+	    	return true;
 	    };
 	},
 //------validarPaginaWeb-------------------------- 

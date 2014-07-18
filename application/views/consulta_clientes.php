@@ -502,25 +502,6 @@
     <!--  --><!--  --><!--  --><!--  --><!--  -->
 
     <script type="text/templates" id="plantilla_contactos">
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
-        <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
-             a medida que ocurren los errores del usuario -->
-            <div id="alertasContacto">
-                <div class="alert alert-warning oculto" id="advertencia">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Advertencia!</h4>
-                    <p id="comentario"></p>
-                    <br>
-                    <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
-                    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
-                </div>
-                <div class="alert alert-danger alert-dismissable oculto" id="error">
-                    <button type="button" class="close cerrar">&times;</button>
-                    <strong>¡Error!</strong>
-                    <div id="comentario"></div>
-                </div>
-            </div>
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         <div id="icon-operacionesContacto">
             <div class="btn-group-vertical">
                 <button type="button" class="btn btn-primary" id="btn_eliminar"><label class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
@@ -610,27 +591,6 @@
     </script>
 
     <script type="text/templates" id="plantilla_telefono">
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
-        <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
-             a medida que ocurren los errores del usuario -->
-            <div id="alertasTelefono">
-                <div class="alert alert-warning oculto" id="advertencia">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Advertencia!</h4>
-                    <p id="comentario"></p>
-                    <br>
-                    <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
-                    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
-                </div>
-
-                <div class="alert alert-danger oculto" id="error">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Error!</h4>
-                    <p id="comentario"></p>
-                </div>
-            </div>
-                
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         <b class="editar editando"><%-tipo%></b>
         <div class="editar editando"><%-numero%></div>
         <div class="editar">
@@ -647,7 +607,7 @@
                         <option value="Trabajo">Trabajo</option>
                         <option value="Otro">Otro</option>
                     </select>
-                    <button id="intentarEliminacion" class="btn btn-default"><label class="icon-uniF478"></label></button>
+                    <button type="button" id="eliminar" class="btn btn-default"><label class="icon-uniF478"></label></button>
                 </div>
             </div>
         </div>

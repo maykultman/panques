@@ -9,9 +9,9 @@ app.VistaTelefono = Backbone.View.extend({
 		'change #tipo'	: 'actualizarTipo',
 		
 		/*Eventos de eliminación*/
-		'click #intentarEliminacion'	: 'advertenciaEliminar',
-		'click #alertasTelefono #eliminar'	: 'eliminar',
-		'click #alertasTelefono #cancelar'	: 'cancelar',
+		// 'click #intentarEliminacion'	: 'advertenciaEliminar',
+		'click #eliminar'	: 'eliminar',
+		// 'click #alertasTelefono #cancelar'	: 'cancelar',
 
 		// 'blur #numero'	: 'validarTelefono',
 		// 'click .close'	: 'cerrarAlerta'
@@ -92,7 +92,7 @@ app.VistaTelefono = Backbone.View.extend({
 		);
 	},
 
-	advertenciaEliminar : function (elemento) {
+	/*advertenciaEliminar : function (elemento) {
 		// if (elemento.keyCode != 13) {
 		    // console.log(elemento);
 			// elemento.preventDefault();
@@ -101,42 +101,46 @@ app.VistaTelefono = Backbone.View.extend({
 		    this.$('#advertencia').toggleClass('oculto');
 			elemento.preventDefault();
 		// };
-	},
+	},*/
 
 	eliminar	: function (elemento) {
 		// if ($(elemento.currentTarget).attr('id') == 'eliminar') {
 			// this.$('#advertencia #comentario').html('El teléfono se eliminará por completo');
 	        // this.$('#advertencia').removeClass('oculto');
 		// if (confirm('El teléfono se eliminará por completo')) {
-		var esto = this;
-		this.model.destroy({
-			success	: function () {
-				$(elemento.currentTarget)//Selector
-				//Nos hubicamos en el padre del selector
-				.parents('tr')
-				//Buscamos al hijo con la clase especificada
-				.children('.respuesta')
-				//Removemos su atributo class
-				.html('<label class="icon-uniF479 exito"></label>');
-				esto.$el.remove();
+		var here = this;
+		confirmar('El teléfono se eliminará por completo',
+			function () {
+				here.model.destroy({
+					success	: function () {
+						$(elemento.currentTarget)//Selector
+						//Nos hubicamos en el padre del selector
+						.parents('tr')
+						//Buscamos al hijo con la clase especificada
+						.children('.respuesta')
+						//Removemos su atributo class
+						.html('<label class="icon-uniF479 exito"></label>');
+						here.$el.remove();
+					},
+					error 	: function (error) {
+						$(elemento.currentTarget)//Selector
+						//Nos hubicamos en el padre del selector
+						.parents('tr')
+						//Buscamos al hijo con la clase especificada
+						.children('.respuesta')
+						//Sustituimos html por uno nuevo
+						.html('<label class="icon-uniF478 error"></label>');
+					}
+				});
 			},
-			error 	: function (error) {
-				$(elemento.currentTarget)//Selector
-				//Nos hubicamos en el padre del selector
-				.parents('tr')
-				//Buscamos al hijo con la clase especificada
-				.children('.respuesta')
-				//Sustituimos html por uno nuevo
-				.html('<label class="icon-uniF478 error"></label>');
-			}
-		});
+			function () {});
 		// };
 		// };
 	},
 
-	cancelar	: function (elemento) {
-		$(elemento.currentTarget).parents('#advertencia').children('.close').click();
-	},
+	// cancelar	: function (elemento) {
+	// 	$(elemento.currentTarget).parents('#advertencia').children('.close').click();
+	// },
 
 	validarTelefono	: function (elemento) {
 	    if ($(elemento.currentTarget).val().trim() == '') {
@@ -147,7 +151,7 @@ app.VistaTelefono = Backbone.View.extend({
 	        return false;
 	    };
 		// if(isNaN($(elemento.currentTarget).val().trim()) && $(elemento.currentTarget).val().trim() != '' ) {
-		if(!(/^\d{10}$/.test($(elemento.currentTarget).val().trim())) ) {
+		if(!(/^\d{10,20}$/.test($(elemento.currentTarget).val().trim())) ) {
 	        this.$('#error #comentario').html('No ingrese letras u otros símbolos<br>Escriba 10 números<br>Establezca un tipo de teléfono');
 	        this.$('#error').removeClass('oculto');
 	        $(elemento.currentTarget).focus();

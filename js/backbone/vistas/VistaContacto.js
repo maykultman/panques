@@ -6,6 +6,7 @@ app.Telefono = app.VistaTelefono.extend({
 
 app.VistaContacto = Backbone.View.extend({
 	tagName	: 'div',
+
 	className	: 'contenedorContacto',
 
 	plantilla : _.template($('#plantilla_contactos').html()),
@@ -22,8 +23,9 @@ app.VistaContacto = Backbone.View.extend({
 
 		'keypress .editando'	: 'actualizarAtributo',
 
+		'keyup #nuevoMail'		: 'validarCorreo',
 		'click #enviarTelefono'	: 'crearTelefono',
-		'blur #numeroNuevo'	: 'validarTelefono',
+		'blur #numeroNuevo'		: 'validarTelefono',
 
 
 		/*Eventos para las advertencias*/
@@ -41,6 +43,7 @@ app.VistaContacto = Backbone.View.extend({
 	initialize	: function () {
 		this.model.set({etiqueta:'Contacto'});
 		this.listenTo(this.model, 'destroy', this.remove);
+
 	},
 	render	: function () {
 		this.$el.html(this.plantilla( this.model.toJSON() ));
@@ -66,7 +69,8 @@ app.VistaContacto = Backbone.View.extend({
 
 			if (
 				$(elemento.currentTarget).parent().attr('id') == 
-				'telefonos') {
+				'telefonos'
+			) {
 				elemento.preventDefault();
 				return;
 			};
@@ -79,8 +83,8 @@ app.VistaContacto = Backbone.View.extend({
 			};
 
 			if ($(elemento.currentTarget).attr('id') == 'mail') {
-	        	console.log($(elemento.currentTarget).attr('id'));
-	        	if (this.validarCorreo(elemento) == false) {
+	        	// console.log($(elemento.currentTarget).attr('id'));
+	        	if (!this.validarCorreo(elemento)) {
 	        		elemento.preventDefault();
 	        		return;
 	        	};
@@ -151,14 +155,13 @@ app.VistaContacto = Backbone.View.extend({
 
 			/*Antes de guardar el nuevo telefono se valida
 			  nuevamente que el número sea correcto*/
-			if ( this.validarPreenvioTelefono(this.$numeroNuevo.val()) 
-				== false) {
+			// if ( !this.validarPreenvioTelefono(this.$numeroNuevo) ) {
 				/*En caso de que el número no sea correcto,
 				  evitamos recargar el botón*/
-				elemento.preventDefault();
+				// elemento.preventDefault();
 				/*Se evita seguir con la función*/
-				return;
-			};
+				// return;
+			// };
 
 			var json1 = pasarAJson(this.$numeroNuevo.serializeArray());
 			var json2 = pasarAJson(this.$tipoNuevo.serializeArray());
@@ -188,7 +191,7 @@ app.VistaContacto = Backbone.View.extend({
 						//Borrar el contenido del td para telefonos
 						here.$telefonos.html('');
 						//Imprimir el formulario para nuevo telefono
-						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
+						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button></div></div></div>');
 						//Obtener nuevamente los telefonos del cliente
 						here.agregarTelefono(here.model.get('id'), 'contactos');
 
@@ -265,36 +268,45 @@ app.VistaContacto = Backbone.View.extend({
 		};
 	},
 	validarTelefono	: function (elemento) {
-		if( !(/^\d{10}$/.test($(elemento.currentTarget).val().trim()))) {
-			/*En caso de que el usaurio no escriba nada,
-			se evita desplegar en mensaje, de lo contrario
-			será molhere ver un mensaje de error incluso
-			si no queremos enviar un teléfono nuevo*/
-			if ($(elemento.currentTarget).val() == '') return;
-			this.$('#alertasContacto #error #comentario').html('No ingrese letras u otros símbolos<br>Escriba 10 números<br>Establezca un tipo de teléfono');
-			this.$('#alertasContacto #error').toggleClass('oculto');
-			$(elemento.currentTarget).focus();
-	    	return false;
+		if(!(/^\d{10,20}$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
+			alerta('No ingrese letras u otros símbolos<br>Establezca un tipo de teléfono<br>Escriba 10 números como mínimo o 20 como máximo',function () {});
+			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+				$(elemento.currentTarget).focus();
+			});
+			$(elemento.currentTarget).css('border-color','#a94442');
+	        return false;
 	    } else{
-	    	this.$tipoNuevo.focus();
+	    	$(elemento.currentTarget).css('border-color','#CCC');
+	    	$(elemento.currentTarget).next().children('select').focus();
+	    	return true;
 	    };
 	},
-	validarPreenvioTelefono	: function (numero) {
-		if( !(/^\d{10}$/.test(numero))) {
-	       this.$('#alertasContacto #error #comentario').html('No ingrese letras u otros símbolos<br>Escriba 10 números<br>Establezca un tipo de teléfono');
-	       this.$('#alertasContacto #error').toggleClass('oculto');
-	       this.$numeroNuevo.focus();
-	    	return false;
-	    }
-	},
+	// validarPreenvioTelefono	: function (input) {
+	// 	console.log('si entro');
+	// 	if(!(/^\d{10,20}$/.test($(input).val().trim())) && $(input).val().trim() != '' ) {
+	// 		alerta('No ingrese letras u otros símbolos<br>Establezca un tipo de teléfono<br>Escriba 10 números como mínimo o 20 como máximo',function () {});
+	// 		$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+	// 			$(input).focus();
+	// 		});
+	// 		$(input).css('border-color','#a94442');
+	//         return false;
+	//     } else{
+	//     	$(input).css('border-color','#CCC');
+	//     	$(input).next().children('select').focus();
+	//     	return true;
+	//     };
+	// },
 	validarCorreo	: function (elemento) {
-		if( !(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(elemento.currentTarget).val().trim())) ) {
-			/*Usamos las alertas que se encuentran en el td de los teléfonos*/
-			this.$('#alertasContacto #error #comentario').html('No es un correo valido');
-			/*Usamos las alertas que se encuentran en el td de los teléfonos*/
-			this.$('#alertasContacto #error').removeClass('oculto');
-			// $(elemento.currentTarget).focus();
-			return false;
+		if( !(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
+			alerta('No es un correo valido',function () {});
+			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+				$(elemento.currentTarget).focus();
+			});
+			$(elemento.currentTarget).css('border-color','#a94442');
+	      	return false;
+	    } else{
+	    	$(elemento.currentTarget).css('border-color','#CCC');
+	    	return true;
 	    };
 	},
 	// cerrarAlerta	: function (elemento) {
