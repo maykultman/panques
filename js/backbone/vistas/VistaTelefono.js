@@ -34,10 +34,10 @@ app.VistaTelefono = Backbone.View.extend({
 			app.coleccionTelefonos.create(json,{
 				wait:true,
 				success	: function (exito) {
-					console.log('exito: ',exito);
+					/*console.log('exito: ',exito.toJSON());*/ /* NO ELIMINAR ESTAS LINEAS */
 				},
 				error	: function (error, respuesta) {
-					console.log('error: ',respuesta);
+					/*console.log('error: ',respuesta);*/ /* NO ELIMINAR ESTAS LINEAS */
 				}
 			});
 

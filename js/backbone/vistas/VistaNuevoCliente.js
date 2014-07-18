@@ -78,7 +78,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		this.vistaTelefono = new app.VistaTelefono();
 
 	// variables
-		this.contadorContactos = 0;
+		this.contadorContactos = 1;
 	},
 // -----render------------------------------------ 
 	render			: function () {
@@ -134,15 +134,13 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		var here = this;
 
 		/*Se activan las dos variables globales de Backbone para
-		mandar de manera correcta el POST de contactos. Antes de finalizar
-		esta función se desactivarán estas dos variables globales
-		para que no afecte otras funciónes.*/
+		  mandar de manera correcta el POST de contactos. Antes de finalizar
+		  esta función se desactivarán estas dos variables globales
+		  para que no afecte otras funciónes.*/
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
-		
-
 		/*Para registrar a un representante debe cumplirse quelo
-		elementosdel html que apuntan los selectores no esten vacios*/
+		  elementosdel html que apuntan los selectores no esten vacios*/
 		if (this.$nombreRepresentante.val().trim()
 			&& this.$correoRepresentante.val().trim()
 			&& this.$cargoRepresentante.val().trim()
@@ -155,7 +153,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 				),{
 					wait:true,
 					success	: function (exito) {
-						console.log('exito: ',exito.toJSON());
+						/*console.log('exito: ',exito.toJSON());*/ /* NO ELIMINAR ESTAS LINEAS */
 						here.vistaTelefono.crear({
 							idpropietario	: exito.get('id'),
 							tabla			: 'representantes',
@@ -166,71 +164,93 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						if (app.contactosLocal.length == 0) {
 							alerta('¡El representante ha sido guardado!', function () {
 								localStorage.clear();
-								var aceptar = $(document.getElementsByTagName('body')).find('#alertify-ok');
-								aceptar.on('click',function(){
-									// location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
-									location.href = 'modulo_consulta_clientes';
-								});
+							});
+							$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+								location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
 							});
 						};
 					},
 					error	: function (error, respuesta) {
-						console.log('error: ',respuesta);
+						confirmar('Ocurrio un error al intentar guardar los contactos<br><b>¿Deseas volver a intentarlo?</b>', 
+							function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/}, 
+							function () {
+								location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+							});
+						if (app.contactosLocal.length) {
+							return; //Terminamos la secuencia de la function nuevoContacto
+						};
+						/*console.log('error: ',respuesta);*/ /* NO ELIMINAR ESTAS LINEAS */
 					}
 				}
 			);
 		};
-		/*--------------------*/
-		if (app.contactosLocal.length) {
-			var contactos = app.contactosLocal.toJSON();
-			for (var i = 0; i < contactos.length; i++) {
-				var telefono = app.telefonosLocal.findWhere({idpropietario:contactos[i].id}).toJSON();
-				delete contactos[i].id;
-				app.coleccionContactos.create(
-				contactos[i],{
-					wait	: true,
-					success	: function (model) {
-						console.log('Se a guardando el contacto: ', model.toJSON());
-						here.vistaTelefono.crear({
-							idpropietario	: model.get('id'),
-							tabla			: telefono.tabla,
-							numero			: telefono.numero,
-							tipo 			: telefono.tipo
-						});
-						/*-----*/
-						if (here.aumentarContadorContactos() == app.contactosLocal.length) {
-							alerta('¡Contactos guardados!', function () {
-								localStorage.clear();
-								var aceptar = $(document.getElementsByTagName('body')).find('#alertify-ok');
-								aceptar.on('click',function(){
-									// location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
-									location.href = 'modulo_consulta_clientes';
-								});
-							});
-						};
-					},
-					error 	: function (model) {
-						console.log('Error guardando contacto: ', model.toJSON());
-						if (here.aumentarContadorContactos() == app.contactosLocal.length) {
-							confirmar('Ocurrio un error al intentar guardar los contactos<br><b>¿Deseas volver a intentarlo?</b>', 
-								function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/}, 
-								function () {
-									location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
-								});
-						};
-					}
-				});
-
-			};
-		};
-
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
-
-
-		// localStorage.clear();
-
-		// window.location.href = "modulo_consulta_clientes";
+		/*--------------------*/
+		if (app.contactosLocal.length) {
+			/*console.log('hay contactos');*/ /* NO ELIMINAR ESTAS LINEAS */
+			app.contactosLocal.each(function (model) {
+				/*console.log(model.toJSON());*/ /* NO ELIMINAR ESTAS LINEAS */
+				here.guardarC(
+					{
+						cargo		: model.get('cargo'),
+						correo		: model.get('correo'),
+						idcliente	: model.get('idcliente'),
+						nombre		: model.get('nombre')
+					},
+					model.get('id')
+				);
+			},this);
+		};
+	},
+	guardarC 	: function (jsonC,iT) {
+		var here = this;
+		/*console.log(jsonC,iT);*/ /* NO ELIMINAR ESTAS LINEAS */
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		app.coleccionContactos.create(jsonC,{
+			wait	: true,
+			success	: function (modelC) {
+				/*console.log('Se a guardando el contacto: ', modelC.get('nombre'), iT);*/ /* NO ELIMINAR ESTAS LINEAS */
+				app.telefonosLocal.each(function (modelT) {
+					if (modelT.get('id') == iT) {
+						console.log(modelC.get('nombre') + ' Tiene telefonos');
+						here.guardarT({
+							idpropietario	: modelC.get('id'),
+							tabla			: modelT.get('tabla'),
+							numero			: modelT.get('numero'),
+							tipo 			: modelT.get('tipo')
+						});
+					};
+				},this);
+				
+				/*-----*/
+				if (here.aumentarContadorContactos() == app.contactosLocal.length) {
+					/*console.log('entro al if');*/ /* NO ELIMINAR ESTAS LINEAS */
+					alerta('¡Contactos guardados!', function () {
+						localStorage.clear();
+					});
+					$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+						location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+					});
+				};
+			},
+			error 	: function (model) {
+				/*console.log('Error guardando contacto: ', model.toJSON());*/ /* NO ELIMINAR ESTAS LINEAS */
+				if (here.aumentarContadorContactos() == app.contactosLocal.length) {
+					confirmar('Ocurrio un error al intentar guardar los contactos<br><b>¿Deseas volver a intentarlo?</b>', 
+						function () {/*El sistema dejará modificará los datos ni redirigirá o otro lado*/}, 
+						function () {
+							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
+						});
+				};
+			}
+		});
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
+	},
+	guardarT 	: function (jsonTelefono) {
+		this.vistaTelefono.crear(jsonTelefono);
 	},
 	aumentarContadorContactos	: function () {
 		return this.contadorContactos++;
@@ -250,7 +270,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			return;
 		}
 		this.objetoCliente.foto = this.urlFoto();
-		console.log(this.objetoCliente);
+		/*console.log(this.objetoCliente);*/ /* NO ELIMINAR ESTAS LINEAS */
 		/*Guardamos la referencia a this para poder usarla en las
 		  funciones dentro de esta función*/
 		var here = this;
@@ -320,6 +340,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						'<p>¡El cliente ha sido guardado con exito!</p><p><b>¿Deseas registrar el <b>representante</b> o <b>contactos</b> del cliente?</b></p>',
 						function (){
 							here.$('.visibleR').toggleClass('ocultoR');
+							window.scrollTo(0,0);
 						},
 						function () {
 							location.href = 'modulo_consulta_'+here.objetoCliente.tipoCliente+'s';
@@ -352,10 +373,10 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					},{
 						wait:true,
 						success	: function (exito) {
-							console.log('exito: ', exito);
+							/*console.log('exito: ', exito);*/ /* NO ELIMINAR ESTAS LINEAS */
 						},
 						error	: function (error, respuesta) {
-							console.log('error: ', respuesta);
+							/*console.log('error: ', respuesta);*/ /* NO ELIMINAR ESTAS LINEAS */
 						}
 					});
 				// };
@@ -377,10 +398,10 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					},{
 						wait:true,
 						success	: function (exito) {
-							console.log('exito: ', exito);
+							/*console.log('exito: ', exito);*/ /* NO ELIMINAR ESTAS LINEAS */
 						},
 						error	: function (error, respuesta) {
-							console.log('error: ', respuesta);
+							/*console.log('error: ', respuesta);*/ /* NO ELIMINAR ESTAS LINEAS */
 						}
 					});
 				// };

@@ -206,15 +206,6 @@
                                     <tr class="trCliente"> <!--Giro-->
                                         <td class="atributo"><b>Giro:</b></td>
                                         <td>
-                                            <% if (typeof giro != "undefined") { %>
-                                                <label class="editar editando">
-                                                    <%- giro %>
-                                                </label>
-                                            <% } else{ %>
-                                                <label class="editar editando">
-                                                    No especificado
-                                                </label>
-                                            <% }; %>
                                             <select class="form-control editar" name="giro"> 
                                                 <option> Manufacturera </option> 
                                                 <option> Agropecuaria </option> 
@@ -223,10 +214,20 @@
                                                 <option> Educación </option> 
                                                 <option> Servicios públicos </option>
                                                 <option> Salud </option> 
-                                                <option> Comunicación </option> 
-                                                <option selected disabled>Giro</option>
-                                                <option value="" disabled style='display:none;'>Giro</option> 
-                                            </select>
+                                                <option> Comunicación </option>
+                                            <% if (typeof giro != "undefined") { %>
+                                                    <option selected style='display:none;'><%- giro %></option> 
+                                                </select>
+                                                <label class="editar editando">
+                                                    <%- giro %>
+                                                </label>
+                                            <% } else{ %>
+                                                    <option selected disabled>Giro</option>
+                                                </select>
+                                                <label class="editar editando">
+                                                    No especificado
+                                                </label>
+                                            <% }; %>
                                         </td>
                                         <td class="respuesta">
                                              <span class="icon-uniF55C" style="visibility: hidden;"></span>
