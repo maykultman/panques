@@ -1,16 +1,67 @@
-	<div id="tituloR"><br/>
-		<h4>Inicia sesión</h4>
-	</div>
-		<?php echo validation_errors(); ?>
-     	<?php echo form_open('escritorio/index') ?> <!--Hace uso del helper para crear un formulario-->
-		<tr><td><label for="usuario">usuario</label></td>
-		<td><input type="input" name="usuario"/></td></tr>
-
-		<tr><td><label for="contrasenia">contrasenia</label></td>
-		<td><input type="input" required name="contrasenia"/></td></tr>
-		<tr><td colspan="2">
-			<center><input type="submit" name="submit" value="Iniciar Session"/></center>
-		</td></tr>
-		</table>
-		</form>
-	</div> 
+<!--<nav id="menu" role="navigation">
+	<ul id="menu-lista">
+		<li class="">
+			<label class="icono"><a class="icono" href="dashboard"><span class="icon-uniF006"></span></a></label>
+			<a class="anclaMenu" href="dashboard">
+				Escritorio
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="modulo_Clientes"><span class="icon-phpbb"></span></a></label>
+			<a class="anclaMenu" href="modulo_Clientes">
+				Clientes
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="modulo_proyectos"><span class="icon-uniF53D"></span></a></label>
+			<a class="anclaMenu" href="modulo_proyectos">
+				Proyectos
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="modulo_contratos"><span class="icon-uniF5E2"></span></a></label>
+			<a class="anclaMenu" href="modulo_contratos">
+				Contratos
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="modulo_cotizaciones"><span class="icon-calculator"></span></a></label>
+			<a class="anclaMenu" href="modulo_cotizaciones">
+				Cotización
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="#"><span class="icon-spreadsheet"></span></a></label>
+			<a class="anclaMenu" href="prueba_ver_proyecto">
+				Facturas
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="#"><span class="icon-calendar2"></span></a></label>
+			<a class="anclaMenu" href="#">
+				Actividades
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="modulo_catalogos"><span class="icon-book"></span></a></label>
+			<a class="anclaMenu" href="modulo_catalogos">
+				Catálogos
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="modulo_usuarios"><span class="icon-user"></span></a></label>
+			<a class="anclaMenu" href="modulo_usuarios">
+				Usuarios
+			</a>
+		</li>
+		<li class="">
+			<label class="icono"><a class="icono" href="#"><span class="icon-uniF00F"></span></a></label>
+			<a class="anclaMenu" href="#">
+				Configuración
+			</a>
+		</li>
+		<li class="">
+			<span class="icono"><label id="btn" class="icon-uniF472" for="btn_menu"></label></span>
+		</li>
+	</ul>
+</nav>-->

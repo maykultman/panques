@@ -31,7 +31,7 @@
 		
 			<div class="row">
 				<div class="col-md-4" style="width: 15% !important;"> 
-					<img class="img-circle pull-left" src="{{foto}}" alt="Imagen-Usuario" width="120">
+					<img class="img-circle pull-left" src="<?=base_url()?>{{foto}}" alt="Imagen-Usuario" width="120">
 				</div>
 			<form id="edicionUsuario{{id}}">
 				<div class="col-md-4" style="width: 42.5% !important">

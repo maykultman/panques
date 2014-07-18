@@ -22,10 +22,10 @@
 
 	
 	<div id="divUsuario" class="hidden-xs">
-		<div class="usuario" id="foto"></div>
+		<div class="usuario" ><img  id="foto" class="img-circle pull-left" src="<?=base_url()?><?=$this->session->userdata('foto')?>"></div>
 		<div class="usuario" id="otro">
 			<div id="nombre" class="datosU"><?=$this->session->userdata('usuario')?></div>
-			<div id="perfil" class="datosU">Administrador</div>
+			<div id="perfil" class="datosU"><?=$this->session->userdata('perfil')?></div>
 		</div>
 		<div id="configuracionUsuario" class="usuario">
 			<ul class="nav navbar-nav navbar-right">

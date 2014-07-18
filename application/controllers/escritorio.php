@@ -4,7 +4,6 @@ include 'REST.php';
 
 class Escritorio extends REST {
 	
-	public $resp='';
 	public function __construct() 
 	{
 		
@@ -26,8 +25,6 @@ class Escritorio extends REST {
         $this->load->model('modelo_archivos',        'archivo');
     }  
 
-    //Vista inicial
-	// public function index(){  $this->area_Estatica();	} 
 	public function index()
 	{ 	
 		if($this->session->userdata('usuario'))
@@ -50,6 +47,7 @@ class Escritorio extends REST {
 
 	public function login()
 	{
+		$this->load->model('modelo_perfil','perfil');
 		if($this->input->post('token') && $this->input->post('token')== $this->session->userdata('token'))
 		{
 			$this->form_validation->set_rules('user', 'Nombre Usuario', 'required|trim|min_length[4]|max_length[50]|xss_clean');
@@ -68,13 +66,15 @@ class Escritorio extends REST {
 				$user  = $this->input->post('user');
 				$pass  = $this->input->post('pass');
 				$query = $this->usuario->session($user, $pass);
+				$perfil = $this->perfil->get($query->idperfil);
 				if($query == TRUE)
 				{
 					$data = array(
 							'is_logued_in' => TRUE,
 							'id_usuario'   => $query->id,
-							'perfil'	   => $query->idperfil,
-							'usuario'	   => $query->usuario
+							'perfil'	   => $perfil->nombre,
+							'usuario'	   => $query->usuario,
+							'foto'		   => $query->foto
 						);
 					$this->session->set_userdata($data);
 					$this->index();
@@ -140,7 +140,6 @@ class Escritorio extends REST {
 		else
 		{
 			redirect(base_url());
-			// $this->index();
 		}
 	}
 	

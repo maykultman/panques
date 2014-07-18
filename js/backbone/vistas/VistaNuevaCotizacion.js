@@ -327,7 +327,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
            		}
            ); //Fin de app.coleccionCotizaciones
         Backbone.emulateHTTP = false; //Variables Globales
-		    Backbone.emulateJSON = false; //Variables Globales
+		Backbone.emulateJSON = false; //Variables Globales
+		app.coleccionLocalCotizaciones.each(function (model){ 
+			model.destroy();
+		},this);
 
 		   elemento.preventDefault();
 

@@ -31,7 +31,7 @@ app.VistaUsuario = Backbone.View.extend({
 	render : function (){
 
 		this.$el.html(this.plantilla(this.model.toJSON()));		
-		var select_Perfil = this.$el.find('#perfil');
+		var select_Perfil = this.$el.find('#idperfil');
 		var usuario = this.model;
 		this.cargarSelectPerfiles(function() 
 		{	/*... Se le hace selected al puesto que le pertenece al modelo y desactiva el click...*/

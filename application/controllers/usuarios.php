@@ -1,9 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 include 'REST.php';
-class  Usuarios extends REST {
+class  Usuarios extends REST 
+{
 
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();
         $this->load->model('Modelo_usuarios', 'user');             
     }
@@ -14,8 +16,8 @@ class  Usuarios extends REST {
         $this->$metodo();
     }
     
-    private function create(){
-
+    private function create()
+    {
         $query = $this->user->create($this->ipost());
         $this->pre_response($query, 'create');                  
     }
@@ -38,4 +40,4 @@ class  Usuarios extends REST {
         $this->pre_response($query, 'delete'); 
     }
 
-} # Fin de la Clase Api_cliente
+} # Fin de la Clase Usuario

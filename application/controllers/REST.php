@@ -2,9 +2,9 @@
 
 class  REST extends CI_Controller {
 
-     public function __construct() {  parent::__construct();                  }
+    public function __construct() {  parent::__construct();                  }
 
-     public function request() 
+    public function request() 
     {
         switch ($_SERVER['REQUEST_METHOD']) 
         {
@@ -22,7 +22,7 @@ class  REST extends CI_Controller {
     # Captura el Segundo segmento de la URL tomar el id para get, update o delete...
     public function id()
     {
-        $id = $this->uri->segment(3); 
+        $id = $this->uri->segment(2); 
         # La peticion fue get entonces retorna un $id = num o $id = NULL
         if($_SERVER['REQUEST_METHOD'] ==='GET'||$_SERVER['REQUEST_METHOD'] ==='DELETE') return $id;       
         # La petición fue put O patch entonces validamos que el id sea un numero
@@ -42,8 +42,7 @@ class  REST extends CI_Controller {
         if($modulo)
         {
             ($var===FALSE) ?  $this->load->view($modulo) : $this->load->view($modulo,$var);     
-        }
-        
+        }        
     }
 
     public function pre_response($query, $metod)
@@ -84,13 +83,13 @@ class  REST extends CI_Controller {
     # Si llega como un arreglo de objetos en formato JSON lo decodifica... 
     protected function ipost()
     {   
+        var_dump($this->input->post()); die();
         ( !( $this->input->post('model') ) ) ? $post = $this->validar($this->input->post())                            
                                              : $post = (array)json_decode($this->input->post('model'));  
-      if(!$post){
-        $this->response('Incorrect set of parameters', 406); exit;
-      } 
-      return $post;
-      
+        if(!$post){
+            $this->response('Incorrect set of parameters', 406); exit;
+        } 
+        return $post;      
     } # Fin del metodo ipost()...
 
     protected function put()
@@ -107,8 +106,7 @@ class  REST extends CI_Controller {
             else                  {  parse_str($obj, $var);   
                                      return $this->validar($var);  }
         }
-        return FALSE;       
-
+        return FALSE;    
     } # Fin de la función put()...
 
     # Valida la petición CREATE y UPDATE
