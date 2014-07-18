@@ -179,6 +179,7 @@
                 </ul>
             </div>
         </div>
+        <div class="desborde"></div>
         <br>
         <a href="modulo_consulta_clientes" class="btn btn-default">Cancelar</a>
         <!-- <a href="modulo_consulta_clientes" id="btn_nuevoContacto" class="btn btn-primary" role="button">Registrar Contactos</a> -->
