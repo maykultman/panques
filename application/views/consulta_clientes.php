@@ -29,6 +29,7 @@
         <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
         <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
         <button class="btn btn-primary" style="margin-top: 8px;">Eliminar varios</button>
+        
         <!------------ Enviar Correo -------- -->
         <div id="modalCorreo" class="modal fade">
           <div class="modal-dialog">
@@ -37,11 +38,16 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Mensaje Nuevo</h4>
               </div>
-              <div class="modal-body">
-              <div>
-               <label for="">Para:</label>
-                  <input id="signup"  type="text" name="" value="" placeholder="">   
-              </div>
+              <div class="modal-body">             
+               <label id="destinatario" for="">Para:</label>
+               <input class="lbl_correo" type="text" name="" value="" placeholder="" style="outline: 0;">
+                <hr class="division">   
+               <label id="asunto" for="">Asunto:</label>
+               <input class="lbl_correo" type="text" name="" value="" placeholder="" style="outline: 0;">
+               <hr class="division">
+               <!-- <textarea id="txt_area"></textarea> -->
+               <section id="txt_area" contenteditable="true"></section>
+
               </div>
               <div class="modal-footer" style="background: #f1f1f1; padding: 10px 18px 10px !important;">
                 <button type="button" class="btn btn-primary">Enviar</button>
