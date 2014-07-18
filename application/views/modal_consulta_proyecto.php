@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
 <style type="text/css" media="">
   
   .trProyecto{

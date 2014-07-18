@@ -1,23 +1,24 @@
+    <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
     <div id="posicion_infotd">
-        <form id="clientes">
-             <table id="tbla_cliente" class="table table-striped table-curved">
+        <div id="clientes" class="wrapper">        
+             <table id="tbla_cliente"  class="tablesorter table-striped">
                 <!-- BOTON PARA PRUEBAS -->
                 <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
-                <thead style="background-color: #f9f9f9; color: #333;">
+                <thead>
                     <tr>
-                        <th>Todos <input id="todos" type="checkbox" name="todos"></th>
+                        <th class="sorter-false">Todos <input id="todos" type="checkbox" name="todos"></th>
 
-                        <th></th>
+                        <th class="sorter-false"></th>
                         <th>
-                            <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial">
+                            <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">                           
                             <span class="icon-search busqueda"></span>
                         </th>
-                        <th>Giro</th>
-                        <th>
+                        <th class="sorter-false">Giro</th>
+                        <th class="sorter-false">
                             Página web
                         </th>
                         <th style="text-align=center;">Ultima actividad</th>
-                        <th>Operaciones</th>
+                        <th class="sorter-false">Operaciones</th>
                     </tr>
                 </thead>
                 <tbody id="filasClientes">
@@ -25,14 +26,15 @@
             </table>
             <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
             <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
-            <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
+            <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->  
+            <br>        
             <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-primary">
                     <input type="checkbox" id="option1"> Marcar/Desmarcar todos
                 </label>
             </div>
             <button class="btn btn-primary">Eliminar varios</button>
-        </form>
+        </div>
     </div>
 </div>
   <!--  ----------Consulta clientes-------- -->
@@ -711,3 +713,10 @@
     <script type="text/javascript">
         app.vistaConsultaProspectos = new app.VistaConsultaProspectos();
     </script>
+
+     <!-- Librerias para el scroll de la tabla -->
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    

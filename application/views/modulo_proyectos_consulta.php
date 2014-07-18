@@ -1,3 +1,4 @@
+ <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
 <!-- CSS jQuery.Gantt -->
 	<link rel="stylesheet" type="text/css" href="js/plugin/Gantt/css/style.css">
@@ -90,35 +91,39 @@
 			<div id="comentario"></div>
 		</div>
 
-	<div id="posicion_infotd">
-		<table id="tbla_cliente" class="table table-striped">
+	<div id="posicion_infotd" class="wrapper">
+		<table id="tbla_cliente" class="tablesorter table-striped">
 			<thead>
 		        <tr id="color_titulos">
-					<th style="text-align:center;">Todos<!-- <input type="checkbox"> --></th>
+					<th  class="sorter-false">Todos<input  type="checkbox" name=""></th>
 					<th>
-				        <input type="text" class="form-control" placeholder="Clientes">
+						<input class="form-control search" type="search" placeholder="Cliente" data-column="1">
+						<span class="icon-search busqueda"></span>
+				       
 				        <!-- Cliente -->
 					</th>
 					<th>
-						<input type="text" class="form-control" placeholder="Proyecto">
-						<span class="icon-search busqueda"></span>
+						 <input class="form-control search" type="search" placeholder="Proyecto" data-column="2">                          
+                         <span class="icon-search busqueda"></span>
 						<!-- Proyecto -->
 					</th>  
 					<!-- <th><input type="text" class="form-control" placeholder="Rsponsable">
 						<span class="icon-search busqueda"></span>
 					</th> -->
-					<th>Inicio</th>
-					<th>Entrega</th>     
-					<th>Status</th>         
-					<th>Operaciones</th>
+					<th class="sorter-false">Inicio</th>
+					<th >Entrega</th>     
+					<th class="sorter-false"> Status</th>         
+					<th class="sorter-false">Operaciones</th>
 		        </tr>
 			</thead>      
-			<tbody id="tbody_proyectos">
+			<tbody id="tbody_proyectos" style="line-height: 3;">
 			</tbody> 
 	    </table>
-	    <button type="button" class="btn btn-default">Eliminar varios</button>
-	    <button type="button" class="btn btn-default">Entregar</button>  
+	    
 	</div>
+	<br>
+	<button type="button" class="btn btn-default">Eliminar varios</button>
+	<button type="button" class="btn btn-default">Entregar</button> 
 </div>
 
 
@@ -600,3 +605,10 @@
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaArchivo.js'?>"></script> <!-- Utilizamos app.V_A_ConsultaProyecto -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaProyectos.js'?>"></script>
+         
+         <!-- Librerias para el scroll de la tabla -->
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
+        <script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    

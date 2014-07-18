@@ -1,5 +1,4 @@
     <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
-<<<<<<< HEAD
     <div id="posicion_infotd">        
         <div id="clientes" class="wrapper">                            
             <table id="tbla_cliente" class="tablesorter table-striped">
@@ -10,7 +9,6 @@
                         <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
                         <th class="sorter-false"></th>
                         <th>
-
                             <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
                            <!--  <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial"> -->
                             <span class="icon-search busqueda"></span>
@@ -25,52 +23,38 @@
                 </thead>
                 <tbody id="filasClientes" >
                 </tbody>
-            </table>
+            </table>            
         </div>   
         <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
         <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
         <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
-        <button class="btn btn-primary" style="margin-top: 24px;">Eliminar varios</button>
-=======
-    <div id="posicion_infotd">
-        <form id="clientes">
-            <div class="wrapper">                            
-                <table id="tbla_cliente" class="tablesorter">
-                    <!-- BOTON PARA PRUEBAS -->
-                    <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
-                    <thead>
-                        <tr>
-                            <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
-                            <th class="sorter-false"></th>
-                            <th>
-                                <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
-                               <!--  <input id="inputBuscarCliente" class="form-control" type="text" placeholder="Nombre comercial"> -->
-                                <span class="icon-search busqueda"></span>
-                            </th>
-                            <th class="sorter-false">Giro</th>
-                            <th class="sorter-false">
-                                Página web
-                            </th>
-                            <th style="text-align=center;">Ultima actividad</th>
-                            <th class="sorter-false">Operaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="filasClientes">
-                    </tbody>
-                </table>
-            </div>   
-            <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
-            <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
-            <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
-         
-            <button class="btn btn-primary">Eliminar varios</button>
-        </form>
->>>>>>> origin/master
+        <button class="btn btn-primary" style="margin-top: 8px;">Eliminar varios</button>
+        <!------------ Enviar Correo -------- -->
+        <div id="modalCorreo" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Mensaje Nuevo</h4>
+              </div>
+              <div class="modal-body">
+                <p>One fine body&hellip;</p>
+              </div>
+              <div class="modal-footer" style="background: #f1f1f1;">
+                <button type="button" class="btn btn-primary">Enviar</button>
+                 <label class="btn btn-success fileinput-button">
+                    <span class="icon-paperclip"></span>
+                    <span>Adjuntar Foto</span>
+                        <input id="" type="file"  name="fotoUsuario">          
+                 </label>                
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Cancelar</button>                
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
-</div>
-  <!--  ----------Consulta clientes-------- -->
-
-<!-- PLANTILLAS -->
+    <!--  ----------Consulta clientes-------- -->
+     <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
         <td class="contenido_prospecto"><input  type="checkbox" name="todos" value="<%- id %>"></td>
@@ -102,7 +86,7 @@
             
             <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
             <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
-            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
             <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
             <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
             <div id="alertasCliente">

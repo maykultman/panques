@@ -2,10 +2,11 @@
 Default Theme
 *************/
 
+
 .wrapper {
 	position: relative;
 	/*top: 50px;*/
-	height: 347px;
+	height: 320px;
 	overflow: auto;
 }	
 
@@ -20,7 +21,7 @@ Default Theme
 	border-spacing: 0;
 	/*margin: 10px 0 15px;*/
 	text-align: left;
-/*	line-height: 5;*/
+	/*line-height: 4;*/
 }
 
 /* header */
@@ -86,3 +87,28 @@ Default Theme
 }*/
 
 
+.fileinput-button {
+			position: relative;
+			overflow: hidden;
+		}
+		.fileinput-button input {
+		
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			opacity: 0;
+			-ms-filter: 'alpha(opacity=0)';
+			font-size: 200px;
+			direction: ltr;
+			cursor: pointer;
+		}
+
+		/* Fixes for IE < 8 */
+		@media screen\9 {
+			.fileinput-button input {
+				filter: alpha(opacity=0);
+				font-size: 100%;
+				height: 100%;
+			}
+		}
