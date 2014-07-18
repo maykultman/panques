@@ -38,11 +38,14 @@
                 <h4 class="modal-title">Mensaje Nuevo</h4>
               </div>
               <div class="modal-body">
-                <p>One fine body&hellip;</p>
+              <div>
+               <label for="">Para:</label>
+                  <input type="text" name="" value="" placeholder="">   
               </div>
-              <div class="modal-footer" style="background: #f1f1f1;">
+              </div>
+              <div class="modal-footer" style="background: #f1f1f1; padding: 10px 18px 10px !important;">
                 <button type="button" class="btn btn-primary">Enviar</button>
-                 <label class="btn btn-success fileinput-button">
+                 <label class="btn btn-default fileinput-button">
                     <span class="icon-paperclip"></span>
                     <span>Adjuntar Foto</span>
                         <input id="" type="file"  name="fotoUsuario">          
