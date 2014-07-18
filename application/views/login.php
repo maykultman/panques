@@ -9,18 +9,18 @@
 <link rel="stylesheet" href="<?=base_url().'css/csslogin/supersized.css'?>" type="text/css">
 <link rel="stylesheet" href="<?=base_url().'css/csslogin/style.css'?>"      type="text/css">
  <!-- Javascript -->
-<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>">                    </script>
-<script type="text/javascript"  src="<?=base_url().'js/login/supersized.3.2.7.min.js'?>"> </script>
-<script type="text/javascript"  src="<?=base_url().'js/login/supersized-init.js'?>">      </script>
-<script type="text/javascript"  src="<?=base_url().'js/login/scripts.js'?>">              </script>
+<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>">                     </script>
+<script type="text/javascript" src="<?=base_url().'js/login/supersized.3.2.7.min.js'?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/login/supersized-init.js'?>">      </script>
+<script type="text/javascript" src="<?=base_url().'js/login/scripts.js'?>">              </script>
 </head>
 <body>
 <?php
-    $user    = array('name' => 'user',   'class'=>'username', 'placeholder' => 'Nombre de usuario' );
-    $pass    = array('name' => 'pass',   'class'=>'password',  'placeholder' => 'Password');
+    $user = array('name' => 'user', 'class'=>'username', 'placeholder' => 'Username' );
+    $pass = array('name' => 'pass', 'class'=>'password', 'placeholder' => 'Password' );
 ?>
 <div class="page-container">
-    <h1>CRM Qualium </h1>
+    <h1>Clientum</h1>
     <?=form_open(base_url().'escritorio/login')?>
         <?=form_input($user)?><p><?=form_error('user')?></p>
         <?=form_password($pass)?><p><?=form_error('pass')?></p>

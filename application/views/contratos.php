@@ -5,7 +5,7 @@
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				<li>
-					<a href="modulo_contratos_historial">
+					<a href="contratos_historial">
 						<div class="icono_menu_modulo">
 							<span class="icon-draft"></span>
 					    </div>
@@ -13,7 +13,7 @@
 		            </a>
 				</li>		  			       			
 	 			<li>
-	            	<a href="modulo_contratos_nuevo">
+	            	<a href="contratos_nuevo">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-newtab"></span>
 	              	   </div>

@@ -5,14 +5,14 @@
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				<li>
-					<a href="modulo_consulta_prospectos">
+					<a href="consulta_prospectos">
 					<div class="icono_menu_modulo">
 					<span class="icon-contact"></span></div>
 					Prospectos
 		            </a>
 				</li>
 	  			<li>
-					<a href="modulo_consulta_clientes">
+					<a href="consulta_clientes">
 					<div class="icono_menu_modulo">
 					<span class="icon-phpbb"></span>
 				    </div>
@@ -21,7 +21,7 @@
 				</li> 
      			
      			<li >
-                	<a href="modulo_cliente_nuevo">
+                	<a href="cliente_nuevo">
                  	   <div class="icono_menu_modulo">
                     	 <span class="icon-uniF476"></span>
                   	   </div>

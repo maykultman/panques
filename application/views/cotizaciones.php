@@ -4,7 +4,7 @@
 			<nav>
 				<ul id="menu_modulo" class="nav nav-pills">
 					<li>
-						<a href="modulo_cotizaciones_consulta">
+						<a href="cotizaciones_consulta">
 							<div class="icono_menu_modulo">
 								<span class="icon-rawaccesslogs"></span>
 							</div>
@@ -12,7 +12,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="modulo_cotizaciones_nuevo">
+						<a href="cotizaciones_nuevo">
 							<div class="icono_menu_modulo">
 								<span class="icon-calculator"></span>
 							</div>

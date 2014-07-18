@@ -7,7 +7,7 @@
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				 <li>
-	            	<a href="modulo_usuarios_consulta">
+	            	<a href="usuarios_consulta">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-friends"></span>
 	              	   </div>
@@ -15,7 +15,7 @@
 	                </a>
 	            </li>		  
 				<li>
-                	<a href="modulo_usuarios_nuevo">
+                	<a href="usuarios_nuevo">
                  		<div class="icono_menu_modulo">
                     		<span class="icon-uniF476"></span>
                   	    </div>

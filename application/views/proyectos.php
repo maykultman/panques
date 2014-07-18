@@ -5,7 +5,7 @@
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				<li>
-					<a href="modulo_proyectos_cronograma">
+					<a href="proyectos_cronograma">
 					<div class="icono_menu_modulo">
 						<span class="icon-diskspace2"></span>
 				    </div>
@@ -13,7 +13,7 @@
 		            </a>
 				</li>
 	  			<li>
-					<a href="modulo_proyectos_consulta">
+					<a href="proyectos_consulta">
 					<div class="icono_menu_modulo">
 						<span class="icon-uniF64E"></span>
 				    </div>
@@ -21,7 +21,7 @@
 			        </a>
 				</li>          			
      			<li>
-                	<a href="modulo_proyectos_nuevo">
+                	<a href="proyectos_nuevo">
                  		<div class="icono_menu_modulo">
                     		<span class="icon-uniF476"></span>
                   	    </div>

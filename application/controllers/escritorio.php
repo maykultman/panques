@@ -1,12 +1,10 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 include 'REST.php';
-
 class Escritorio extends REST {
 	
 	public function __construct() 
-	{
-		
+	{		
         parent::__construct();
 		$this->load->library('form_validation');
         $this->load->model('model_customer', 	     'customer');        
@@ -102,20 +100,20 @@ class Escritorio extends REST {
 			{
 				$this->dashboard();				
 			}
-			if($this->ruta()==='modulo_cliente_nuevo'||$this->ruta()==='modulo_consulta_clientes'||$this->ruta()==='modulo_consulta_prospectos')
+			if($this->ruta()==='cliente_nuevo'||$this->ruta()==='consulta_clientes'||$this->ruta()==='consulta_prospectos')
 			{
 
 				$this->clientes(); 
 			}
-			if($this->ruta()==='modulo_proyectos_consulta'||$this->ruta()==='modulo_proyectos_nuevo'||$this->ruta()==='modulo_proyectos_cronograma')
+			if($this->ruta()==='proyectos_consulta'||$this->ruta()==='proyectos_nuevo'||$this->ruta()==='proyectos_cronograma')
 			{
 				$this->proyectos();				
 			}
-			if($this->ruta()==='modulo_contratos_nuevo'||$this->ruta()==='modulo_contratos_historial')
+			if($this->ruta()==='contratos_nuevo'||$this->ruta()==='contratos_historial')
 			{
 				$this->contratos();				
 			}
-			if($this->ruta()==='modulo_cotizaciones_nuevo'||$this->ruta()==='modulo_cotizaciones_consulta')
+			if($this->ruta()==='cotizaciones_nuevo'||$this->ruta()==='cotizaciones_consulta')
 			{
 				$this->cotizaciones();				
 			}
@@ -132,9 +130,13 @@ class Escritorio extends REST {
 				$this->catalogos();
 				
 			}			
-			if($this->ruta()==='modulo_usuarios_consulta'||$this->ruta()==='modulo_usuarios_nuevo')
+			if($this->ruta()==='usuarios_consulta'||$this->ruta()==='usuarios_nuevo')
 			{
 				$this->usuarios();				
+			}
+			if($this->ruta()==='formatoCotizacion'||$this->ruta()==='formatoContrato')
+			{
+				$this->formato();
 			}
 		}
 		else
@@ -150,7 +152,7 @@ class Escritorio extends REST {
 	
 	public function catalogos()
 	{
-		$this->area_Estatica('modulo_catalogos');
+		$this->area_Estatica('catalogos');
 		$this->load->model('Modelo_permisos', 'permisos');
 		
 		if($this->ruta() == 'catalogo_servicios')
@@ -193,17 +195,17 @@ class Escritorio extends REST {
 
 	public function clientes()
 	{
-		$this->area_Estatica('modulo_Clientes');  # Carga la vista por default + la vista del modulo
+		$this->area_Estatica('Clientes');  # Carga la vista por default + la vista del modulo
 
-		if($this->ruta() == 'modulo_cliente_nuevo')
+		if($this->ruta() == 'cliente_nuevo')
 		{
 			$this->datosCliente($this->ruta());
 		}
 		# TipoCliente= 'cliente o prospecto' y como los dos cargan los mismos datos entonces lo asignamos a una función
 		# Y simplemente lo llamamos para que nos cargue los datos y la vista.
 		
-		if($this->ruta() == 'modulo_consulta_clientes')   {	$this->datosCliente($this->ruta());	}
-		if($this->ruta() == 'modulo_consulta_prospectos') {	$this->datosCliente($this->ruta());	}	
+		if($this->ruta() == 'consulta_clientes')   {	$this->datosCliente($this->ruta());	}
+		if($this->ruta() == 'consulta_prospectos') {	$this->datosCliente($this->ruta());	}	
 	
 	} # Fin del metodo clientes...
 
@@ -223,7 +225,7 @@ class Escritorio extends REST {
 
 	public function proyectos()
 	{
-		$this->area_Estatica('modulo_proyectos');
+		$this->area_Estatica('proyectos');
 		$this->load->model('modelo_servicioProyecto', 'serProy');
 		$this->load->model('modelo_archivos', 'archivos');
 
@@ -237,14 +239,14 @@ class Escritorio extends REST {
 		$data['archivos'] 		= $this->archivos->get('','proyectos');		# Archivos Relacionados con el proyecto
 		$data['representantes'] = $this->representa->get();
 		
-		if($this->ruta() == 'modulo_proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
+		if($this->ruta() == 'proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
-		if($this->ruta() == 'modulo_proyectos_consulta')
+		if($this->ruta() == 'proyectos_consulta')
 		{			
 			$this->load->view($this->ruta(), $data);			
 		}
 
-		if($this->ruta() == 'modulo_proyectos_cronograma')
+		if($this->ruta() == 'proyectos_cronograma')
 		{	
 			$this->load->view($this->ruta(), $data);			
 		}
@@ -252,17 +254,17 @@ class Escritorio extends REST {
 
 	public function cotizaciones()
 	{
-		$this->area_Estatica('modulo_cotizaciones');
+		$this->area_Estatica('cotizaciones');
 		$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
 		$data['servicios'] 		  = $this->serv->get_s();  	# Lista de Servicios
 		$data['representantes']	  = $this->representa->get();					# List de representantes
 		$data['empleados']	      = $this->empleado->get();
 		$data['serviciosCotizados'] = $this->SC->get();
-		if($this->ruta() == 'modulo_cotizaciones_nuevo')
+		if($this->ruta() == 'cotizaciones_nuevo')
 		{
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'modulo_cotizaciones_consulta')
+		if($this->ruta() == 'cotizaciones_consulta')
 		{   
 			$data['cotizaciones'] = $this->budget->get();
 			$this->load->view($this->ruta(), $data);
@@ -271,17 +273,17 @@ class Escritorio extends REST {
 
 	public function contratos()
 	{
-		$this->area_Estatica('modulo_contratos');
+		$this->area_Estatica('contratos');
 		$data['clientes']		= $this->customer->get_customerProyect($this->ruta());	# Lista de clientes
 		$data['servicios'] 		= $this->serv->get_s();			              	# Lista de Servicios
 		$data['representantes']	= $this->representa->get();
 		$data['empleados']		= $this->empleado->get();		# List de representantes
-		if($this->ruta() == 'modulo_contratos_nuevo')
+		if($this->ruta() == 'contratos_nuevo')
 		{
 			// $this->load->view('formularioContrato');
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'modulo_contratos_historial')
+		if($this->ruta() == 'contratos_historial')
 		{
 			$this->load->model('Model_ServiceContract');
 			$this->load->model('Model_contract');
@@ -322,12 +324,12 @@ class Escritorio extends REST {
 	}
 
 	public function actividades(){
-		$this->area_Estatica('modulo_actividades.html');
+		$this->area_Estatica('actividades.html');
 	}
 
 	public function usuarios()
 	{
-		$this->area_Estatica('modulo_usuarios');
+		$this->area_Estatica('usuarios');
 
 		$this->load->model('Modelo_permisos', 'permisos');
 		
@@ -335,12 +337,12 @@ class Escritorio extends REST {
 		$data['permisos'] = $this->permisos->get();
 		$data['empleados'] = $this->empleado->get();
 		$data['perfiles'] = $this->perfil->get();
-		if($this->ruta() == 'modulo_usuarios_nuevo')
+		if($this->ruta() == 'usuarios_nuevo')
 		{
 			
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'modulo_usuarios_consulta')
+		if($this->ruta() == 'usuarios_consulta')
 		{
 						
 			$data['usuarios'] = $this->usuario->get(false);
