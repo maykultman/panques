@@ -83,7 +83,6 @@ class  REST extends CI_Controller {
     # Si llega como un arreglo de objetos en formato JSON lo decodifica... 
     protected function ipost()
     {   
-        var_dump($this->input->post()); die();
         ( !( $this->input->post('model') ) ) ? $post = $this->validar($this->input->post())                            
                                              : $post = (array)json_decode($this->input->post('model'));  
         if(!$post){

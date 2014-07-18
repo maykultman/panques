@@ -77,75 +77,75 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 		console.log(modeloEmpleado.puesto);
 		$('#registro')[0].reset();
  		/* nombre tiene algún valor?*/
-	 // 	if(modeloEmpleado.nombre)
-	 // 	{
-		// 	if(modeloEmpleado.movil!=undefined) /*... Tiene telefono movil?...*/
-		// 	{
-		// 		var movil = modeloEmpleado.movil;
-		// 		delete modeloEmpleado.movil;    /*... eliminamos movil de modelo que contiene los datos el empleado ...*/
-		// 	}
-		// 	if(modeloEmpleado.casa!=undefined) /*... Tiene telefono de casa?...*/
-		// 	{
-		// 		var casa  = modeloEmpleado.casa;					
-		// 		delete modeloEmpleado.casa;    /*... eliminamos movil de modelo que contiene los datos el empleado ...*/
-		// 	}
+	 	if(modeloEmpleado.nombre)
+	 	{
+			if(modeloEmpleado.movil!=undefined) /*... Tiene telefono movil?...*/
+			{
+				var movil = modeloEmpleado.movil;
+				delete modeloEmpleado.movil;    /*... eliminamos movil de modelo que contiene los datos el empleado ...*/
+			}
+			if(modeloEmpleado.casa!=undefined) /*... Tiene telefono de casa?...*/
+			{
+				var casa  = modeloEmpleado.casa;					
+				delete modeloEmpleado.casa;    /*... eliminamos movil de modelo que contiene los datos el empleado ...*/
+			}
 
-		// 	Backbone.emulateHTTP = true;
-		// 	Backbone.emulateJSON = true;
-		// 	app.coleccionEmpleados.create
-		// 	(
-		// 		modeloEmpleado,
-		// 		{
-		// 			wait: true,
-		// 			success: function (exito)
-		// 			{
-		// 				if(movil) /* Esperamos un exito del post del empleado para guardar su telefono*/
-		// 				{
-		// 					modeloTelefono[0] = { id 			: '',
-		// 										  idpropietario : exito.get('id'),
-		// 										  tabla         : 'empleados', 
-		// 										  numero        : movil, 
-		// 							  			  tipo          : 'movil'
-		// 										};
-		//         		}
-		//         		if(casa)
-		// 				{
-		//         			modeloTelefono[1] = { id 			: '',
-		//         								  idpropietario : exito.get('id'),
-		// 							  			  tabla         : 'empleados', 
-		// 							  			  numero        : casa, 
-		// 							  			  tipo          : 'casa'
-		// 										};
-		// 				}						
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionEmpleados.create
+			(
+				modeloEmpleado,
+				{
+					wait: true,
+					success: function (exito)
+					{
+						if(movil) /* Esperamos un exito del post del empleado para guardar su telefono*/
+						{
+							modeloTelefono[0] = { id 			: '',
+												  idpropietario : exito.get('id'),
+												  tabla         : 'empleados', 
+												  numero        : movil, 
+									  			  tipo          : 'movil'
+												};
+		        		}
+		        		if(casa)
+						{
+		        			modeloTelefono[1] = { id 			: '',
+		        								  idpropietario : exito.get('id'),
+									  			  tabla         : 'empleados', 
+									  			  numero        : casa, 
+									  			  tipo          : 'casa'
+												};
+						}						
 						
-		// 				if(modeloTelefono.length>0)
-		// 				{
-		// 					Backbone.emulateHTTP = true;
-		// 					Backbone.emulateJSON = true;
-		// 					for (i in modeloTelefono) 
-		// 					{	
-		// 						app.coleccionTelefonos.create
-		// 						(
-		// 							modeloTelefono[i],
-		// 							{
-		// 								wait: true,
-		// 								success: function (exito){},
-		// 								error  : function(error){}
-		// 							}
-		// 						);						
-		// 					}
-		// 					Backbone.emulateHTTP = false;
-		// 					Backbone.emulateJSON = false;
-		// 				}
-		// 				$('#modal_nuevo_empleado').modal('hide'); /* Oculta el modal*/
+						if(modeloTelefono.length>0)
+						{
+							Backbone.emulateHTTP = true;
+							Backbone.emulateJSON = true;
+							for (i in modeloTelefono) 
+							{	
+								app.coleccionTelefonos.create
+								(
+									modeloTelefono[i],
+									{
+										wait: true,
+										success: function (exito){},
+										error  : function(error){}
+									}
+								);						
+							}
+							Backbone.emulateHTTP = false;
+							Backbone.emulateJSON = false;
+						}
+						$('#modal_nuevo_empleado').modal('hide'); /* Oculta el modal*/
 						
-		// 			}, // Fin de success...
-		// 			error: function (error) {}
-		// 		}
-		// 	);
-		// 	Backbone.emulateHTTP = false;
-		// 	Backbone.emulateJSON = false;			
-		// }		
+					}, // Fin de success...
+					error: function (error) {}
+				}
+			);
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;			
+		}		
 		evento.preventDefault();
 	}, /*... Fin de la función guardar ...*/
 	

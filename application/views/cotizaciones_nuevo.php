@@ -2,11 +2,11 @@
 	<h3>Información Básica</h3>
 	<hr>
 	<div class="row">
-		<div class="col-md-4">
-			<input id="titulo" value="" class="form-control input_datos" placeholder="Titulo de Cotización">
+		<div class="col-md-4"><form id="registroCotizacion">
+			<input id="titulo"        type="text"   value="" class="form-control input_datos" placeholder="Titulo de Cotización">
 			<input id="cliente" 	  type="search" value="" class="form-control input_datos" placeholder="Buscar cliente"><span id="busqueda_icono" class="icon-search"></span>
 			<input id="representante" type="text"   value="" class="form-control input_datos" placeholder="Representante" disabled="true">	
-			<form id="registroCotizacion">
+			
 				<input type="hidden" id="htitulo"    name="titulo"  class="input_datos"  value="">			
 				<input type="hidden" id="idcliente"  name="idcliente" class="input_datos" value="">
 				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante" value="">

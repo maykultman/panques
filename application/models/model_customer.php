@@ -58,7 +58,7 @@
 		}
 		public function get_customers($ruta)
 		{
-			($ruta=='modulo_consulta_clientes'||$ruta=='api_cliente'||$ruta=='modulo_cliente_nuevo') ?	$tipoCliente ='cliente' : $tipoCliente = 'prospecto';
+			($ruta=='consulta_clientes'||$ruta=='api_cliente'||$ruta=='cliente_nuevo') ?	$tipoCliente ='cliente' : $tipoCliente = 'prospecto';
 			###$cont RELLENA EL ARREGLO DATOS, $contrep RELLENA EL ARRELGO DE REPRESENTANTES y $conCont CONTACTOS###
 			$cont=0;	$contrep=0;		$contCont=0; $contTCont=0;
 			#############################TRAEMOS A TODOS LOS CLIENTES#######################################
