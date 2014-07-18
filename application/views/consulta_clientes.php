@@ -523,8 +523,8 @@
         <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         <div id="icon-operacionesContacto">
             <div class="btn-group-vertical">
-                <button type="button" class="btn btn-primary" id="btn_eliminarContacto"><label class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
-                <button type="button" class="btn btn-primary" id="btn_editarContacto"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
+                <button type="button" class="btn btn-primary" id="btn_eliminar"><label class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
+                <button type="button" class="btn btn-primary" id="btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
             </div>
         </div>
         <h3><%- etiqueta %></h3>

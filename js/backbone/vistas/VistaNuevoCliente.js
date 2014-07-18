@@ -39,13 +39,13 @@ app.VistaNuevoCliente = Backbone.View.extend({
 				'blur .telefonoContacto'	: 'validarTelefono',
 				'blur #emailRepresentante' 	: 'validarCorreo',
 			'blur .telefonoRepresentante'	: 'validarTelefono',
-			'blur #otroContactoEmail'		: 'validarCorreo',
+			// 'blur #otroContactoEmail'		: 'validarCorreo',
 
 			'keyup #rfc'	: 'validarRFC',
 
 
 					//Eventos para las advertencias
-							'click #cerrar'	: 'cerrarAlerta'
+							// 'click #cerrar'	: 'cerrarAlerta'
 		},
 
 // -----initialize-------------------------------- 
@@ -575,8 +575,11 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	validarCorreo	: function (elemento) {
 		if( !(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
 			alerta('No es un correo valido',function () {});
+			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+				$(elemento.currentTarget).focus();
+			});
 			$(elemento.currentTarget).css('border-color','#a94442');
-	      return false;
+	      	return false;
 	    } else{
 	    	$(elemento.currentTarget).css('border-color','#CCC');
 	    };
@@ -586,6 +589,9 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		// if(isNaN($(elemento.currentTarget).val().trim()) && $(elemento.currentTarget).val().trim() != '' ) {
 		if(!(/^\d{10,20}$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
 			alerta('No ingrese letras u otros símbolos<br>Establezca un tipo de teléfono<br>Escriba 10 números como mínimo o 20 como máximo',function () {});
+			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+				$(elemento.currentTarget).focus();
+			});
 			$(elemento.currentTarget).css('border-color','#a94442');
 	        return false;
 	    } else{
@@ -597,15 +603,18 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	validarPaginaWeb	: function (elemento) {
 		if (!($(elemento.currentTarget).val().trim().match(/^[a-z0-9\.-]+\.[a-z]{2,4}/gi)) && $(elemento.currentTarget).val().trim() != '' ) {
 			alerta('La dirección de la página web no es correcta',function () {});
+			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+				$(elemento.currentTarget).focus();
+			});
 			$(elemento.currentTarget).css('border-color','#a94442');
-		        return false;
+		    return false;
 	    } else{
 	    	$(elemento.currentTarget).css('border-color','#CCC');
 	    };
 	},
-	cerrarAlerta	: function () {
-		$('#error').toggleClass('oculto');
-	},
+	// cerrarAlerta	: function () {
+	// 	$('#error').toggleClass('oculto');
+	// },
 // -----validarRFC-------------------------------- 
 	validarRFC	: function (elem) {
 		$(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());

@@ -11,14 +11,14 @@ app.VistaContacto = Backbone.View.extend({
 	plantilla : _.template($('#plantilla_contactos').html()),
 
 	events	: {
-		'click #btn_eliminarContacto'	: 'advertenciaEliminar',
-		'click #alertasContacto #eliminar'	: 'eliminar',
-		'click #alertasContacto #cancelar'	: 'cancelar',
+		'click #btn_eliminar'	: 'eliminar',
+		// 'click #alertasContacto #eliminar'	: 'eliminar',
+		// 'click #alertasContacto #cancelar'	: 'cancelar',
 
 
 
 
-		'click #btn_editarContacto'	: 'editando',
+		'click #btn_editar'	: 'editando',
 
 		'keypress .editando'	: 'actualizarAtributo',
 
@@ -30,14 +30,14 @@ app.VistaContacto = Backbone.View.extend({
 			'click .cerrar'	: 'cerrarAlerta',
 			// 'click #cancelar'	: 'cerrarAlerta'
 	},
-	advertenciaEliminar : function (elemento) {
-			this.$('#alertasContacto #advertencia #comentario')
-			.html('¿Deseas eliminar al contacto <strong>'
-				+this.model.get('nombre')+'</strong>?');
+	// advertenciaEliminar : function (elemento) {
+	// 		this.$('#alertasContacto #advertencia #comentario')
+	// 		.html('¿Deseas eliminar al contacto <strong>'
+	// 			+this.model.get('nombre')+'</strong>?');
 		    
-		    this.$('#alertasContacto #advertencia').
-		    toggleClass('oculto');
-	},
+	// 	    this.$('#alertasContacto #advertencia').
+	// 	    toggleClass('oculto');
+	// },
 	initialize	: function () {
 		this.model.set({etiqueta:'Contacto'});
 		this.listenTo(this.model, 'destroy', this.remove);
@@ -48,7 +48,7 @@ app.VistaContacto = Backbone.View.extend({
 		this.$telefonos = this.$('#telefonos');
 		this.agregarTelefono(this.model.get('id'), 'contactos');
 
-		this.$btn_EditarContacto = this.$('#btn_editarContacto');
+		this.$btn_editar = this.$('#btn_editar');
 		this.$editarAtributo = this.$('.editar');
 
 		/*En caso de no haber teléfonos se hace referencia al
@@ -128,20 +128,23 @@ app.VistaContacto = Backbone.View.extend({
 	// 	this.$('#etiqueta').html(etiqueta);
 	// },
 	eliminar	: function (elemento) {
-		var esto = this;
-		this.model.destroy({
-			success	: function () {
-				esto.$el.remove();
-			}
-		});
+		var here = this;
+		confirmar('¿Deseas eliminar al contacto <strong>'+this.model.get('nombre')+'</strong>?',
+			function () {
+			here.model.destroy({
+				success	: function () {
+					here.$el.remove();
+				}
+			});
+			},function () {}); 
 		elemento.preventDefault();
 	},
-	cancelar	: function (elemento) {
-		$(elemento.currentTarget)
-		.parents('#advertencia')
-		.children('.close')
-		.click();
-	},
+	// cancelar	: function (elemento) {
+	// 	$(elemento.currentTarget)
+	// 	.parents('#advertencia')
+	// 	.children('.close')
+	// 	.click();
+	// },
 	crearTelefono	: function (elemento) {
 		if (this.$numeroNuevo.val() != '' 
 			&& typeof this.$tipoNuevo.val() != 'undefined') {
@@ -163,7 +166,7 @@ app.VistaContacto = Backbone.View.extend({
 			json1.idpropietario = this.model.get('id');
 			json1.tabla = 'contactos';
 			
-			var esto = this;
+			var here = this;
 
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;
@@ -183,15 +186,15 @@ app.VistaContacto = Backbone.View.extend({
 						//Removemos su atributo class
 						.html('<label class="icon-uniF479 exito"></label>');
 						//Borrar el contenido del td para telefonos
-						esto.$telefonos.html('');
+						here.$telefonos.html('');
 						//Imprimir el formulario para nuevo telefono
-						esto.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
+						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
 						//Obtener nuevamente los telefonos del cliente
-						esto.agregarTelefono(esto.model.get('id'), 'contactos');
+						here.agregarTelefono(here.model.get('id'), 'contactos');
 
-						esto.$editarAtributo.toggleClass('editando');
-						esto.$editarAtributo = esto.$('.editar');
-						esto.$editarAtributo.toggleClass('editando');
+						here.$editarAtributo.toggleClass('editando');
+						here.$editarAtributo = here.$('.editar');
+						here.$editarAtributo.toggleClass('editando');
 					},
 					error	: function (error) {//En caso de error
 						$(elemento.currentTarget)//Selector
@@ -240,10 +243,10 @@ app.VistaContacto = Backbone.View.extend({
 		this.$tipoNuevo = this.$('#tipoNuevo');
 	},
 	editando	: function () {
-		if (this.$btn_EditarContacto.children().attr('class') 
+		if (this.$btn_editar.children().attr('class') 
 			== 'icon-edit2 MO icon-back'
 		) {
-			this.$btn_EditarContacto
+			this.$btn_editar
 			.children()
 			.toggleClass('MO icon-back');
 
@@ -253,7 +256,7 @@ app.VistaContacto = Backbone.View.extend({
 			this.render();
 		} 
 		else{
-			this.$btn_EditarContacto
+			this.$btn_editar
 			.children()
 			.toggleClass('MO icon-back');
 
@@ -265,7 +268,7 @@ app.VistaContacto = Backbone.View.extend({
 		if( !(/^\d{10}$/.test($(elemento.currentTarget).val().trim()))) {
 			/*En caso de que el usaurio no escriba nada,
 			se evita desplegar en mensaje, de lo contrario
-			será molesto ver un mensaje de error incluso
+			será molhere ver un mensaje de error incluso
 			si no queremos enviar un teléfono nuevo*/
 			if ($(elemento.currentTarget).val() == '') return;
 			this.$('#alertasContacto #error #comentario').html('No ingrese letras u otros símbolos<br>Escriba 10 números<br>Establezca un tipo de teléfono');
@@ -294,10 +297,10 @@ app.VistaContacto = Backbone.View.extend({
 			return false;
 	    };
 	},
-	cerrarAlerta	: function (elemento) {
-		$(elemento.currentTarget).parent().addClass('oculto');
-		elemento.preventDefault();
-	},
+	// cerrarAlerta	: function (elemento) {
+	// 	$(elemento.currentTarget).parent().addClass('oculto');
+	// 	elemento.preventDefault();
+	// },
 });
 
 app.VistaRepresentante = app.VistaContacto.extend({
@@ -308,7 +311,7 @@ app.VistaRepresentante = app.VistaContacto.extend({
 		this.$telefonos = this.$('#telefonos');
 		this.agregarTelefono(this.model.get('id'), 'representantes');
 
-		this.$btn_EditarContacto = this.$('#btn_editarContacto');
+		this.$btn_editar = this.$('#btn_editar');
 		this.$editarAtributo = this.$('.editar');
 
 		/*En caso de no haber teléfonos se hace referencia al
@@ -339,7 +342,7 @@ app.VistaRepresentante = app.VistaContacto.extend({
 			json1.idpropietario = this.model.get('id');
 			json1.tabla = 'contactos';
 			
-			var esto = this;
+			var here = this;
 
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;
@@ -359,15 +362,15 @@ app.VistaRepresentante = app.VistaContacto.extend({
 						//Removemos su atributo class
 						.html('<label class="icon-uniF479 exito"></label>');
 						//Borrar el contenido del td para telefonos
-						esto.$telefonos.html('');
+						here.$telefonos.html('');
 						//Imprimir el formulario para nuevo telefono
-						esto.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
+						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
 						//Obtener nuevamente los telefonos del cliente
-						esto.agregarTelefono(esto.model.get('id'), 'representantes');
+						here.agregarTelefono(here.model.get('id'), 'representantes');
 
-						esto.$editarAtributo.toggleClass('editando');
-						esto.$editarAtributo = esto.$('.editar');
-						esto.$editarAtributo.toggleClass('editando');
+						here.$editarAtributo.toggleClass('editando');
+						here.$editarAtributo = here.$('.editar');
+						here.$editarAtributo.toggleClass('editando');
 					},
 					error	: function (error) {//En caso de error
 						$(elemento.currentTarget)//Selector
