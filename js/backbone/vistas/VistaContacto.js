@@ -122,6 +122,7 @@ app.VistaContacto = Backbone.View.extend({
 						.children('.respuesta')
 						//Sustituimos html por uno nuevo
 						.html('<label class="icon-uniF478 error"></label>');
+						alerta('No se pudo actualizar el <b>'+ valorJson[0].name[0].toUpperCase() + valorJson[0].name.substring(1) +'<b>' ,function (){});
 					}
 				}
 			);
@@ -191,7 +192,7 @@ app.VistaContacto = Backbone.View.extend({
 						//Borrar el contenido del td para telefonos
 						here.$telefonos.html('');
 						//Imprimir el formulario para nuevo telefono
-						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button></div></div></div>');
+						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option></select><button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button></div></div><br></div>');
 						//Obtener nuevamente los telefonos del cliente
 						here.agregarTelefono(here.model.get('id'), 'contactos');
 
@@ -239,7 +240,7 @@ app.VistaContacto = Backbone.View.extend({
 				});
 				/*Agregar td que contentran los telefonos
 				de este cliente*/
-				this.$telefonos.prepend(vistaTelefono.render().el);
+				this.$telefonos.append(vistaTelefono.render().el);
 			};
 		};
 		this.$numeroNuevo = this.$('#numeroNuevo');
@@ -376,7 +377,7 @@ app.VistaRepresentante = app.VistaContacto.extend({
 						//Borrar el contenido del td para telefonos
 						here.$telefonos.html('');
 						//Imprimir el formulario para nuevo telefono
-						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
+						here.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" minlength="10" maxlength="20" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div></div>');
 						//Obtener nuevamente los telefonos del cliente
 						here.agregarTelefono(here.model.get('id'), 'representantes');
 

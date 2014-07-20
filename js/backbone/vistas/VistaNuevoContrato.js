@@ -359,7 +359,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		,function(){
 			$('form')[0].reset();
 		},function(){
-			location.href = 'modulo_contratos_historial';
+			location.href = 'contratos_historial';
 		});
 	},
 
@@ -518,7 +518,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 	},
 
 	cancelar				: function () {
-		location.href = 'modulo_contratos_historial';
+		location.href = 'contratos_historial';
 	},
 
 	cargarClientes			: function () {

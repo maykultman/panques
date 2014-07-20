@@ -11,19 +11,19 @@ app.VistaCliente = Backbone.View.extend({
 	plantillaModalContacto : _.template($('#modalContacto').html()),
 	events	: {
 		//Es el boton de eliminar del tr del CLIENTE
-			'click #tr_btn_eliminar'		: 'advertenciaEliminar',
+			'click #tr_btn_eliminar'		: 'visibilidad',
 		//Boton para accesar rapidamente a la edición del cliente
 					'click #tr_btn_editar'	: 'verInfo',
 						'click .verInfo'	: 'verInfo',
 
-		//Es el boton de eliminar la ficha información del CLIENTE
-			'click #modal_btn_eliminar'		: 'advertenciaEliminar',
-		'click #alertasCliente #eliminar'	: 'visibilidad',
+		//Es el boton de eliminar del modal de información del CLIENTE
+			'click #modal_btn_eliminar'		: 'visibilidad',
+		// 'click #alertasCliente #eliminar'	: 'visibilidad',
 		'click #alertasCliente #cancelar'	: 'cancelar',
 		//Es el boton para editar CLIENTE en el MODAL
 				'click #modal_btn_editar'	: 'editando',
 		//Es el boton para ver CONTACTOS
-			'click #btn_verContactos'	: 'verContactos',
+			'click #btn_verContactos'		: 'verContactos',
 		/*Evento para nuevo teléfono*/
 		'click #divCliente #enviarTelefono'	: 'crearTelefono',
 
@@ -32,19 +32,20 @@ app.VistaCliente = Backbone.View.extend({
 		// 'blur #divCliente #numeroNuevo'	: 'validarTelefono',
 
 		/*Eventos de atributos*/
-		'keypress #nombreComercial'	: 'actualizarAtributo',
-		'change #nombreComercial'	: 'actualizarAtributo',
+		'keypress #nombreComercial'			: 'actualizarAtributo',
+		'change #nombreComercial'			: 'actualizarAtributo',
 		'keypress #divCliente .editando'	: 'actualizarAtributo',
-		'change #divCliente .editando'	: 'actualizarAtributo',
+		'change #divCliente .editando'		: 'actualizarAtributo',
 		'keydown #divCliente #comentario'	: 'actualizarComentario',
 		/*Eventos de servicios*/
-		'keypress #divCliente #inputBusquedaI'	: 'agregarNuevoServ',
-		'click	#divCliente #btn_agregarI'	: 'agregarNuevoServBoton',
-		'keypress #divCliente #inputBusquedaC'	: 'agregarNuevoServ',
-		'click	#divCliente #btn_agregarC'	: 'agregarNuevoServBoton',
+		'change .menuServicios' 			: 'guardarServicio',
+		// 'keypress #divCliente #inputBusquedaI'	: 'agregarNuevoServ',
+		// 'click	#divCliente #btn_agregarI'		: 'agregarNuevoServBoton',
+		// 'keypress #divCliente #inputBusquedaC'	: 'agregarNuevoServ',
+		// 'click	#divCliente #btn_agregarC'		: 'agregarNuevoServBoton',
 
-		'keyup #divCliente #inputBusquedaI'	: 'buscarServicioI',
-		'keyup #divCliente #inputBusquedaC'	: 'buscarServicioC',
+		// 'keyup #divCliente #inputBusquedaI'	: 'buscarServicioI',
+		// 'keyup #divCliente #inputBusquedaC'	: 'buscarServicioC',
 		'click #divCliente .icon-uniF470'	: 'quitarDeLista',
 
 		/*Eventos para nuevo contacto o representante*/
@@ -116,48 +117,10 @@ app.VistaCliente = Backbone.View.extend({
 		// var servicios;
 		/*servicios = this.model.get('serviciosInteres');
 		console.log(servicios);*/
-		this.agregarServciciosClienteI(this.$serviciosInteres, function () {
-			$('.cssmenu > #I > li > a').click(function() {
-				$('#I li').removeClass('active');
-				$(this).closest('li').addClass('active'); 
-				var checkElement = $(this).next();
-				if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-					$(this).closest('li').removeClass('active');
-					checkElement.slideUp('normal');
-				}
-				if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-					$('.cssmenu ul #I:visible').slideUp('normal');
-					checkElement.slideDown('normal');
-				}
-				if($(this).closest('li').find('ul').children().length == 0) {
-					return true;
-				} else {
-					return false; 
-				}   
-			});
-		});
+		this.agregarServciciosClienteI(this.$serviciosInteres);
 		/*servicios = this.model.get('serviciosCuenta');
 		console.log(servicios);*/
-		this.agregarServciciosClienteC(this.$serviciosCuenta, function () {
-			$('.cssmenu > #C > li > a').click(function() {
-				$('#C li').removeClass('active');
-				$(this).closest('li').addClass('active'); 
-				var checkElement = $(this).next();
-				if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-					$(this).closest('li').removeClass('active');
-					checkElement.slideUp('normal');
-				}
-				if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-					$('.cssmenu ul #C:visible').slideUp('normal');
-					checkElement.slideDown('normal');
-				}
-				if($(this).closest('li').find('ul').children().length == 0) {
-					return true;
-				} else {
-					return false; 
-				}   
-			});
-		});
+		this.agregarServciciosClienteC(this.$serviciosCuenta);
 
 		/*Obtener lo telefonos (modelos) del cliente*/
 		this.agregarTelefono(this.model.get('id'),'clientes');
@@ -172,8 +135,9 @@ app.VistaCliente = Backbone.View.extend({
 		// this.$respuesta = this.$('.respuesta'); es el tr de la palomota, no hizo falta
 
 		// {{{{{{{{{{{{{selectores de servicios de interes y actuales}}}}}}}}}}}}}
-		this.$menuServiciosInteres	  = this.$('#menuServiciosInteres');
-		this.$menuServiciosCuenta	  = this.$('#menuServiciosCuenta');
+		// this.$menuServiciosInteres	  = this.$('#menuServiciosInteres');
+		// this.$menuServiciosCuenta	  = this.$('#menuServiciosCuenta');
+			this.$menuServicios = this.$('.menuServicios');
 		// {{{{{{{{{{{{{selectores de servicios de interes y actuales}}}}}}}}}}}}}
 
 		/*La variable modal guarda el elem DOM del modal junto
@@ -340,7 +304,7 @@ app.VistaCliente = Backbone.View.extend({
 
 		submit.preventDefault();
 	},
-	advertenciaEliminar : function (elem) {
+/*	advertenciaEliminar : function (elem) {
 		// if (elem.keyCode != 13) {
 		    // console.log(elem);
 			// elem.preventDefault();
@@ -352,7 +316,7 @@ app.VistaCliente = Backbone.View.extend({
 		    this.$('#alertasCliente #advertencia')
 		    .toggleClass('oculto');
 		// };
-	},
+	},*/
 	actualizarAtributo	: function (elem) {
 		/*Cada vez que ocurre el evento keypress este metoso se 
 		ejecuta; solo cuando el valos de la propiedad es igual 13 
@@ -443,6 +407,7 @@ app.VistaCliente = Backbone.View.extend({
 						.children('.respuesta')
 						//Sustituimos html por uno nuevo
 						.html('<label class="icon-uniF478 error"></label>');
+						alerta('No se pudo actualizar el <b>'+ valorJson[0].name[0].toUpperCase() + valorJson[0].name.substring(1) +'<b>' ,function (){});
 					}
 				}
 			);
@@ -499,7 +464,7 @@ app.VistaCliente = Backbone.View.extend({
 						//Borrar el contenido del td para telefonos
 						esto.$telefonos.html('');
 						//Imprimir el formulario para nuevo telefono
-						esto.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil" selected>Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button></div></div></div>');
+						esto.$telefonos.html('<div class="editar"><div class="input-group"><input type="text" id="numeroNuevo" class="form-control" name="numero" minlength="10" maxlength="20" placeholder="Nuevo Teléfono"><div class="input-group-btn"><select id="tipoNuevo" class="btn btn-default" name="tipo"><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option><option selected disabled>Tipo</option></select><button id="enviarTelefono" class="btn btn-default"><label class="glyphicon glyphicon-send"></label></button></div></div><br></div>');
 						//Obtener nuevamente los telefonos del cliente
 						esto.agregarTelefono(esto.model.get('id'), 'clientes');
 
@@ -666,87 +631,61 @@ app.VistaCliente = Backbone.View.extend({
 				});
 				/*Agregar td que contentran los telefonos
 				de este cliente*/
-				this.$telefonos.prepend(vistaTelefono.render().el);
+				this.$telefonos.append(vistaTelefono.render().el);
 			};
 		};
 	},
-	agregarServciciosClienteI	: function (id, callback) {
-		var sI = app.coleccionServiciosClientesI.where({
-				idcliente:this.model.get('id'), 
-				status:'1'
-			});
-		if (sI.length > 1) {
-			for (var i = 0; i < sI.length; i++) {
-				if (typeof sI[i] != "undefined") {
-					var vSC = new app.VistaServicioCliente({
-							model:sI[i]
-						});
-					$(id).append(vSC.render().el);
-				}
+	agregarServciciosClienteI	: function (id) {
+		var here = this, vSC;
+		this.$(id).html('');
+		app.coleccionServiciosClientesI.each(function (model) {
+			if (here.model.get('id') == model.get('idcliente') && model.get('status') == 1) {
+				vSC = new app.VistaServicioCliente({model:model})
+				here.$(id).append(vSC.render().el);
 			};
-		} else{
-			if (typeof sI[0] != "undefined") {
-				var vSC = new app.VistaServicioCliente({model:sI[0]});
-				$(id).append(vSC.render().el);
-			}
-		};
-		callback();
-		// this.$editarAtributo = this.$('.editar');
+		}, this);
 	},
-	agregarServciciosClienteC	: function (id, callback) {
-		var sC = app.coleccionServiciosClientesC.where({
-			idcliente:this.model.get('id'), status:'1'
-		});
-
-		if (sC.length > 1) {
-			for (var i = 0; i < sC.length; i++) {
-				if (typeof sC[i] != "undefined") {
-					var vSC = new app.VistaServicioCliente({
-							model:sC[i]
-						});
-					$(id).append(vSC.render().el);
-				}
+	agregarServciciosClienteC	: function (id) {
+		var here = this, vSC;
+		this.$(id).html('');
+		app.coleccionServiciosClientesC.each(function (model) {
+			if (here.model.get('id') == model.get('idcliente') && model.get('status') == 1) {
+				vSC = new app.VistaServicioCliente({model:model})
+				here.$(id).append(vSC.render().el);
 			};
-		} else{
-			if (typeof sC[0] != "undefined") {
-				var vSC = new app.VistaServicioCliente({model:sC[0]});
-				$(id).append(vSC.render().el);
-			}
-		};
-		callback();
-		// this.$editarAtributo = this.$('.editar');
+		}, this);
 	},
-	buscarServicioI	: function (elem) {
+	// buscarServicioI	: function (elem) {
 		
-		var buscando = $(elem.currentTarget).val();
-		app.coleccionServicios.fetch({
-			reset:true, data:{nombre: buscando}
-		});
+	// 	var buscando = $(elem.currentTarget).val();
+	// 	app.coleccionServicios.fetch({
+	// 		reset:true, data:{nombre: buscando}
+	// 	});
 
-		this.sinCoincidencias();
+	// 	this.sinCoincidencias();
 
-		this.$menuServiciosInteres.html('');
-		this.cargarServiciosI();
-	},
-	buscarServicioC	: function (elem) {
+	// 	this.$menuServiciosInteres.html('');
+	// 	this.cargarServiciosI();
+	// },
+	// buscarServicioC	: function (elem) {
 		
-		var buscando = $(elem.currentTarget).val();
-		app.coleccionServicios.fetch({
-			reset:true, data:{nombre: buscando}
-		});
+	// 	var buscando = $(elem.currentTarget).val();
+	// 	app.coleccionServicios.fetch({
+	// 		reset:true, data:{nombre: buscando}
+	// 	});
 
-		this.sinCoincidencias();
+	// 	this.sinCoincidencias();
 
-		this.$menuServiciosCuenta.html('');
-		this.cargarServiciosC();
-	},
-	sinCoincidencias	: function () {
-		if (app.coleccionServicios.length == 0) {
-			app.coleccionServicios.fetch({
-				reset:true, data:{nombre: ''}
-			});
-		};
-	},
+	// 	this.$menuServiciosCuenta.html('');
+	// 	this.cargarServiciosC();
+	// },
+	// sinCoincidencias	: function () {
+	// 	if (app.coleccionServicios.length == 0) {
+	// 		app.coleccionServicios.fetch({
+	// 			reset:true, data:{nombre: ''}
+	// 		});
+	// 	};
+	// },
 	/*Las funciones cargarServicioI y cargarServicioC agregar los
 	  servicios dentro de menus desplegables especificados por los 
 	  selectores menuServiciosInteres y menuServiciosCuenta. Se 
@@ -757,25 +696,40 @@ app.VistaCliente = Backbone.View.extend({
 	  las funciones render() pasando la devolucion de render() al 
 	  elem contenido en la propiedad el de dicha clase instanciada
 	*/	
-	cargarServicioI	: function (servicio) {
-		var vistaServicioI = new app.VistaServicioInteres({
-			model:servicio
+	// cargarServicioI	: function (servicio) {
+	// 	var vistaServicioI = new app.VistaServicioInteres({
+	// 		model:servicio
+	// 	});
+	// 	this.$menuServiciosInteres.append(vistaServicioI.render().el);
+	// },
+	// cargarServicioC	: function (servicio) {
+	// 	var vistaServicioC = new app.VistaServicioCuenta({
+	// 		model:servicio
+	// 	});
+	// 	this.$menuServiciosCuenta.append(vistaServicioC.render().el);
+	// },
+	// cargarServiciosI	: function () {
+	// 	this.$menuServiciosInteres.html('');
+	// 	app.coleccionServicios.each(this.cargarServicioI, this);
+	// },
+	// cargarServiciosC	: function () {
+	// 	this.$menuServiciosCuenta.html('');
+	// 	app.coleccionServicios.each(this.cargarServicioC, this);
+	// },
+	cargarServicios 	: function () {
+		var list = '<% _.each(servicios, function(servicio) { %> <option disabled id="<%- servicio.id %>" value="<%- servicio.id %>"><%- servicio.nombre %></option> <% }); %>';
+		this.$menuServicios.
+		append(_.template(list, 
+			{ servicios : app.coleccionServicios.toJSON() }
+		));
+		this.$menuServicios.selectize({
+			create: true,
+		    // sortField: {
+		    //     field: 'text',
+		    //     direction: 'asc'
+		    // },
+		    maxItems: 1,
 		});
-		this.$menuServiciosInteres.append(vistaServicioI.render().el);
-	},
-	cargarServicioC	: function (servicio) {
-		var vistaServicioC = new app.VistaServicioCuenta({
-			model:servicio
-		});
-		this.$menuServiciosCuenta.append(vistaServicioC.render().el);
-	},
-	cargarServiciosI	: function () {
-		this.$menuServiciosInteres.html('');
-		app.coleccionServicios.each(this.cargarServicioI, this);
-	},
-	cargarServiciosC	: function () {
-		this.$menuServiciosCuenta.html('');
-		app.coleccionServicios.each(this.cargarServicioC, this);
 	},
 	quitarDeLista	: function (elem) {
 		/*Esta funcion recibe un parametro al y se ejecuta al momento 
@@ -811,18 +765,51 @@ app.VistaCliente = Backbone.View.extend({
 		quiera ver en ella*/
 		$(elem.currentTarget).parent().remove();
 	},
-	agregarNuevoServ	: function (elem) {
+	
+
+
+
+
+
+	guardarServicio	: function (elem) {
+		console.log($(elem.currentTarget).val());
+		// return;
 		var esto = this;
 
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
-
-        if (
-        	(this.pasarFiltro == 1 || elem.keyCode === 13)
-        	&& $(elem.currentTarget).attr('id') == 'inputBusquedaI'
-        ) {
-        	this.pasarFiltro = 0;
-        	if ($(elem.currentTarget).val() != '') {
+		console.log(pasarAJson(this.$('#form_serviciosI').serializeArray()));
+        if ( (elem.type === 'change' || elem.keyCode === 13) && $(elem.currentTarget).attr('id') == 'select_ServI' ) {
+        	if( app.coleccionServicios.findWhere({ id : $(elem.currentTarget).val()[0] }) ){
+    		  	app.coleccionServiciosClientesI.create(
+    		  		pasarAJson(this.$('#form_serviciosI').serializeArray()),
+    		  		{
+    		  			wait:true,
+    		  			success:function (exito) {
+    		  				console.log(exito);
+        		  			$(elem.currentTarget)
+        		  			//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Removemos su atributo class
+							.html('<label class="icon-uniF479 exito"></label>');
+						},
+						error:function () {
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Sustituimos html por uno nuevo
+							.html('<label class="icon-uniF478 error"></label>');
+        		  		}
+        		  	}
+        		);			
+        	} else {
+				console.log('no existe');
+			};
+        	/*if ($(elem.currentTarget).val() != '') {
         		var idCliente = this.model.get('id');
         		app.coleccionServicios.create(
         			{ nombre : $(elem.currentTarget).val() },
@@ -863,12 +850,12 @@ app.VistaCliente = Backbone.View.extend({
         			}
         		);
 			}
-			elem.preventDefault();
+			elem.preventDefault();*/
         };
 
-        if (
+        /*if (
         	(this.pasarFiltro == 1 || elem.keyCode === 13)
-        	&& $(elem.currentTarget).attr('id') == 'inputBusquedaC'
+        	&& $(elem.currentTarget).attr('id') == 'select_ServC'
         ) {
         	this.pasarFiltro = 0;
         	if ($(elem.currentTarget).val() != '') {
@@ -914,21 +901,29 @@ app.VistaCliente = Backbone.View.extend({
         		);
 			}
 			elem.preventDefault();
-        };
+        };*/
         
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
     },
-    agregarNuevoServBoton	: function (elem) {
-		if ($(elem.currentTarget).attr('id') == 'btn_agregarI') {
-    		this.pasarFiltro = 1;
-    		this.$('#inputBusquedaI').trigger('keypress');
-		};
-		if ($(elem.currentTarget).attr('id') == 'btn_agregarC') {
-			this.pasarFiltro = 1;
-			this.$('#inputBusquedaC').trigger('keypress');
-		};
-    },
+  //   agregarNuevoServBoton	: function (elem) {
+		// if ($(elem.currentTarget).attr('id') == 'btn_agregarI') {
+  //   		this.pasarFiltro = 1;
+  //   		this.$('#inputBusquedaI').trigger('keypress');
+		// };
+		// if ($(elem.currentTarget).attr('id') == 'btn_agregarC') {
+		// 	this.pasarFiltro = 1;
+		// 	this.$('#inputBusquedaC').trigger('keypress');
+		// };
+  //   },
+
+
+
+
+
+
+
+
 	editando	: function () {
 		// var esto = this;
 		
@@ -946,24 +941,28 @@ app.VistaCliente = Backbone.View.extend({
 			this.$('.icon-eye').click();
 		} 
 		else{
-			this.cargarServiciosI();
-			this.cargarServiciosC();
+			this.cargarServicios();
 			this.$btn_editar.children().toggleClass('MO icon-back');
 			this.$editarAtributo.toggleClass('editando');
 		};
-		// });
-			
+		// });	
 	},
 	eliminarDelDOM	: function () {
 		this.$el.remove();
 	},
 	visibilidad	: function() {
+		var here = this;
 		// if (confirm('¿Deseas eliminar al cliente?')) {
 			//El cierre del modal lo realiza bootstrap
 			// console.log();
-			this.model.cambiarVisibilidad();
-			this.$('#cerrar_consulta').click();
-			this.$el.remove();
+		confirmar('¿Está seguro de que desea eliminar al cliente <b>'+this.model.get('nombreComercial')+'<b>?',
+			function () {
+				here.$('#cerrar_consulta').click();
+				here.model.cambiarVisibilidad();
+				here.$el.remove();
+			},
+			function () {});
+			// 
 		// };
 	},
 	cancelar	: function (elem) {
@@ -1099,7 +1098,6 @@ app.VistaCliente = Backbone.View.extend({
 		modal.on('hidden.bs.modal', function () {
 			esto.$formNuevoContacto[0].reset();
 		});
-
 	},
 	agregarContacto	: function (tipo, esDe) {/*, etiqueta*/
 		var vista = new app.VistaContacto({model:tipo});

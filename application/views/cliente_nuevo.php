@@ -4,9 +4,9 @@
         <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
     <style type="text/css">
-        .obligatorio{
+        /*.obligatorio{
             color: red;
-        }
+        }*/
     </style>
 
     <!-- REGISTRO DEL CLIENTE -->
@@ -60,7 +60,7 @@
                 <div class="telefonos">
                     <div class="div_telefono">
                         <div class="input-group">
-                            <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10">
+                            <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
                             <div class="input-group-btn">
                                 <select class="btn btn-default tipoTelefonoCliente" name="tipo"  style="height: 34px;">
                                     <option value="No definido" selected style="display:none;">Tipo</option>
@@ -142,7 +142,7 @@
             <div class="telefonos">
                 <div class="div_telefono">
                     <div class="input-group">
-                        <input type="text" class="form-control telefonoRepresentante" name="numero" placeholder="Teléfono" minlength="10">
+                        <input type="text" class="form-control telefonoRepresentante" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
                         <div class="input-group-btn">
                             <select class="btn btn-default tipoTelefonoRepresentante" name="tipo"  style="height: 34px;">
                                 <option value="No definido" selected style="display:none;">Tipo</option>
@@ -226,7 +226,7 @@
             <div class="telefonos">
                 <div class="div_telefono">
                     <div class="input-group">
-                        <input type="text" class="form-control telefonoContacto" name="numero" value="Teléfono" minlength="10">
+                        <input type="text" class="form-control telefonoContacto" name="numero" value="Teléfono" minlength="10" maxlength="20">
                         <div class="input-group-btn">
                             <select class="btn btn-default tipoTelefonoContacto" name="tipo"  style="height: 34px;">
                                 <option value="No definido" selected style="display:none;">Tipo</option>
