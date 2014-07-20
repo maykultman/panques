@@ -1,13 +1,22 @@
     <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+
+    <style type="text/css">
+        .input-group select{
+            height: 34px;
+        }
+        .input-group button{
+            height: 34px;
+        }
+    </style>
+    
     <div id="posicion_infotd">
         <div id="clientes" class="wrapper">        
-             <table id="tbla_cliente"  class="tablesorter table-striped">
+            <table id="tbla_cliente" class="tablesorter table-striped">
                 <!-- BOTON PARA PRUEBAS -->
                 <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
                 <thead>
                     <tr>
-                        <th class="sorter-false">Todos <input id="todos" type="checkbox" name="todos"></th>
-
+                        <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
                         <th class="sorter-false"></th>
                         <th>
                             <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">                           

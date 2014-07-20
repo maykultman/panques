@@ -63,10 +63,9 @@ app.VistaTelefono = Backbone.View.extend({
 	},
 
 	actualizar 	: function (elemento) {
+		var valorJson = $(elemento.currentTarget).serializeArray();
 		this.model.save(
-			pasarAJson(
-				$(elemento.currentTarget).serializeArray()
-			),
+			pasarAJson(valorJson),
 			{
 				wait	: true,//Esperamos respuesta del server
 				patch	: true,//Evitamos enviar todo el modelo
@@ -87,6 +86,7 @@ app.VistaTelefono = Backbone.View.extend({
 					.children('.respuesta')
 					//Sustituimos html por uno nuevo
 					.html('<label class="icon-uniF478 error"></label>');
+					alerta('No se pudo actualizar el <b>'+ valorJson[0].name[0].toUpperCase() + valorJson[0].name.substring(1) +'<b>' ,function (){});
 				}
 			}
 		);
