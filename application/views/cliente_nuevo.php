@@ -54,13 +54,9 @@
                 <textarea id="txtareaDireccion" class="form-control form_input" rows="3" placeholder="Dirección" style="height: 34px !important;"></textarea>
                  <div class="telefonos">
                     <div class="div_telefono">
-<<<<<<< HEAD
+
                         <div class="input-group form_input">
                             <input type="text" class="form-control telefonoCliente form_input" name="numero" placeholder="Teléfono" minlength="10">
-=======
-                        <div class="input-group">
-                            <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
->>>>>>> origin/master
                             <div class="input-group-btn">
                                 <select class="btn btn-default tipoTelefonoCliente" name="tipo"  style="height: 34px;">
                                     <option value="No definido" selected style="display:none;">Tipo</option>
