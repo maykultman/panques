@@ -9,7 +9,7 @@
 }
 
 #comentarioCliente{
-	width: 900px;
+	width: 100% !important;
 }
 
 
@@ -19,14 +19,14 @@
 	visibility: visible;
 	transition: transform 1s;
 	/*background: red;*/
-	position: absolute;
+	/*position: absolute;*/
 }
 .ocultoR {
 	visibility: hidden;
 	/*opacity: 0;*/
 	transform: translateX(-2000px);
 	/*transition: transform .5s;*/
-	position: absolute;
+	/*position: absolute;*/
 	/*background: red;*/
 }
 /*-------EFECTO EN CAMBIO DE FORMULARIO---------*/
@@ -76,3 +76,34 @@
 /*.contactoEnLista{
 	display: block;
 }*/
+
+.form_input{
+
+	width: 100% !important;
+}
+
+.fileinput-button {
+	position: relative;
+	overflow: hidden;
+}
+.fileinput-button input {
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	opacity: 0;
+	-ms-filter: 'alpha(opacity=0)';
+	font-size: 200px;
+	direction: ltr;
+	cursor: pointer;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+	.fileinput-button input {
+		filter: alpha(opacity=0);
+		font-size: 100%;
+		height: 100%;
+	}
+}

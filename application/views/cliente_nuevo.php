@@ -1,4 +1,3 @@
-    
     <link rel="stylesheet" type="text/css" href="<?=base_url().'css/estilos_modulo_clientes_nuevo.less'?>">
     <!-- plugin selectize css -->
         <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
@@ -14,53 +13,49 @@
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
         <!-- <h2>Registro para nuevo cliente</h2> -->
         <!-- <hr> -->
-        <fieldset>
-            <legend><h4>Datos básicos</h4></legend>
-            Tipo de cliente <!-- <small><span class="icon-asterisk2 obligatorio"></span></small> --> 
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="radio" class="tipo_cliente" name="tipo_cliente" id="prospecto" value="prospecto"> Prospecto
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" class="tipo_cliente" name="tipo_cliente" id="cliente" value="cliente"> Cliente
-                </label>
-            </div>
-
-            <br>
-
-            <div class="input_info">
-                <input type="text" id="nombreComercial"  class="form-control" placeholder="Nombre comercial / Persona">
-                <input type="text" id="nombreFiscal" class="form-control" placeholder="Nombre fiscal">
-                <input type="email" id="email" class="form-control" placeholder="Email">
-
-                <input type="text" id="rfc" class="form-control" placeholder="RFC">
-
-                <input type="text" id="paginaCliente"  class="form-control" placeholder="Página web">
-                <!-- <input type="text" class="form-control" placeholder="Telefono movil"> -->
-
-                <!-- Este es el pequeño formulario para registrar teléfonos -->
-                  
-            </div>
-
-            <div class="input_info">
-                <select id="giro" class= "form-control" > 
-                    <option value="" disabled style='display:none;'>Giro</option> 
-                    <option> Manufacturera </option> 
-                    <option> Agropecuaria </option> 
-                    <option> Comercial </option> 
-                    <option> Transporte </option> 
-                    <option> Educación </option> 
-                    <option> Servicios públicos </option>
-                    <option> Salud </option> 
-                    <option> Comunicación </option> 
-                    <option selected disabled>Giro</option>
-                </select>
-                <textarea id="txtareaDireccion" class="form-control" rows="3" placeholder="Dirección"></textarea>
-                <!-- <input type="text" class="form-control" placeholder="Telefono de oficina"> -->
-                <div class="telefonos">
+        <h4>Datos básicos</h4>
+        <hr style="margin-top: -1px;"><br>
+        Tipo de cliente <!-- <small><span class="icon-asterisk2 obligatorio"></span></small> --> 
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary">
+                <input type="radio" class="tipo_cliente" name="tipo_cliente" id="prospecto" value="prospecto"> Prospecto
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" class="tipo_cliente" name="tipo_cliente" id="cliente" value="cliente"> Cliente
+            </label>
+        </div>
+        <div class="desborde"></div>
+        <br>  
+        <div class="row">
+            <div class="col-md-6">                
+                <!-- <div class="input_info"> -->
+                    <input type="text" id="nombreComercial"  class="form-control form_input" placeholder="Nombre comercial / Persona">
+                     <input type="text" id="nombreFiscal" class="form-control form_input" placeholder="Nombre fiscal">                    
+                    <input type="text" id="rfc" class="form-control form_input" placeholder="RFC">
+                     <select id="giro" class= "form-control form_input" > 
+                        <option value="" disabled style='display:none;'>Giro</option> 
+                        <option> Manufacturera </option> 
+                        <option> Agropecuaria </option> 
+                        <option> Comercial </option> 
+                        <option> Transporte </option> 
+                        <option> Educación </option> 
+                        <option> Servicios públicos </option>
+                        <option> Salud </option> 
+                        <option> Comunicación </option> 
+                        <option selected disabled>Giro</option>
+                    </select>
+                          
+               <!--  </div>    --> 
+            </div>          
+            <div class="col-md-6">
+                <!-- <div class="input_info"> -->
+                <input type="email" id="email" class="form-control form_input" placeholder="Email">
+                <input type="text" id="paginaCliente"  class="form-control form_input" placeholder="Página web">         
+                <textarea id="txtareaDireccion" class="form-control form_input" rows="3" placeholder="Dirección" style="height: 34px !important;"></textarea>
+                 <div class="telefonos">
                     <div class="div_telefono">
-                        <div class="input-group">
-                            <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10">
+                        <div class="input-group form_input">
+                            <input type="text" class="form-control telefonoCliente form_input" name="numero" placeholder="Teléfono" minlength="10">
                             <div class="input-group-btn">
                                 <select class="btn btn-default tipoTelefonoCliente" name="tipo"  style="height: 34px;">
                                     <option value="No definido" selected style="display:none;">Tipo</option>
@@ -78,50 +73,50 @@
                         </div>
                         <br>
                     </div> <!-- /Contenedor del form de teléfono -->
-                </div>
+                </div>                    
+                 <!-- </div>  -->               
             </div>
-            <div class="desborde"></div>
-        </fieldset>
-
+        </div>               
+        <!-- <input type="text" class="form-control" placeholder="Telefono movil"> -->
+        <!-- Este es el pequeño formulario para registrar teléfonos -->      
+        <div class="desborde"></div><br>
+        <div class="row">
+            <div class="col-md-6">               
+               <h4>Servicios que le interesa el cliente</h4>
+               <hr style="margin-top: -1px;">
+               <select class="menuServicios"  name="serviciosInteres[]" multiple placeholder="Buscar servicios">
+               </select>                
+            </div>
+            <div class="col-md-6">                
+               <h4>Servicios con los que cuenta el cliente</h4>
+               <hr style="margin-top: -1px;">
+               <select class="menuServicios"  name="serviciosCuenta[]" multiple placeholder="Buscar servicios">
+               </select>               
+            </div>
+        </div>       
         <br><br>
-
-        <div class="input_info">
-            <fieldset>
-                <legend><h4>Servicios que le interesa el cliente</h4></legend>
-                <select class="menuServicios"  name="serviciosInteres[]" multiple placeholder="Buscar servicios" style="width:400px;">
-                </select>
-            </fieldset>
-        </div>
-        <div class="input_info">
-            <fieldset>
-                <legend><h4>Servicios con los que cuenta el cliente</h4></legend>
-                <select class="menuServicios"  name="serviciosCuenta[]" multiple placeholder="Buscar servicios" style="width:400px;">
-                </select>
-            </fieldset>
-        </div>
-        <div class="desborde"></div>
-        
-        <br><br>
-
-        <fieldset>
-            <legend><h4>Adjuntar foto o logotipo de cliente</h4></legend>
-            <form id="formularioFoto">
-                <input type="file" id="fotoCliente" name="fotoCliente">
-            </form>
-            <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="140" style="margin-top:10px;">
-        </fieldset>
-        
-        <br><br>
-
-        <textarea id="comentarioCliente" class="form-control" rows="6" placeholder="Comentarios sobre el nuevo cliente"></textarea>
-
-        <br><br>
-
-        <button type="button" id="btn_crear" class="btn btn-primary">Aceptar</button>
-        <a href="modulo_consulta_clientes" class="btn btn-default">Cancelar</a>
-        <br>
-        <br>
-        <br> <!-- visibleR -->
+        <div class="row">        
+           <!-- <h4>Adjuntar logotipo del cliente</h4>
+           <hr style="margin-top: -1px;"> --> 
+           <div class="col-md-12">         
+                <form id="formularioFoto">
+                     <label class="btn btn-default fileinput-button">
+                        <span class="icon-paperclip"></span>
+                        <span>Adjuntar Logotipo</span>
+                        <input type="file" id="fotoCliente" name="fotoCliente">          
+                     </label>               
+                </form>
+                <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="140" style="margin-top: 30px;">
+                <br><br>
+                 <textarea id="comentarioCliente" class="form-control" rows="6" placeholder="Comentarios sobre el nuevo cliente"></textarea>       
+            </div>             
+       </div>
+       <br><br>
+       <button type="button" id="btn_crear" class="btn btn-primary">Guardar</button>
+       <a href="modulo_consulta_clientes" class="btn btn-default">Cancelar</a>
+       <br>
+       <br>
+       <br> <!-- visibleR -->
     </div>
     <!-- REGISTRO DEL CONTACTO -->
     <div id="formularioContacto" class="visibleR ocultoR">
