@@ -94,12 +94,12 @@
 	margin-top:15px; 
 }	
 
-tbody#scroll_permisos{ 
+/*tbody#scroll_permisos{ 
 	display: block; 
 	height: 210px; 
 	overflow: auto; 
 	width: 100%;
-}
+}*/
 
 .eliminar_permiso{
 

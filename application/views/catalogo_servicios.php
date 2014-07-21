@@ -3,16 +3,22 @@
 			<h3>Nuevo Servicio</h3>
 			<hr><br>
 			<form id="formServicio">
-				<div class="nuevoServicio">	
-					<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
-					<input type="text" id="precio" name="precio" class="form-control" placeholder="Precio">
-				</div>
-				<div class="nuevoServicio">
-				 	<input type="text" id="concepto" name="concepto" class="form-control" placeholder="Concepto">
-					<input type="text" id="realizacion" name="realizacion" class="form-control" placeholder="Tiempo Estimado">
-				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+						<input type="text" id="precio" name="precio" class="form-control" placeholder="Precio">
+					</div>
+					<div class="col-md-6">
+						<input type="text" id="concepto" name="concepto" class="form-control" placeholder="Concepto">
+						<input type="text" id="realizacion" name="realizacion" class="form-control" placeholder="Tiempo Estimado">
+					</div>
+				</div>				
 				<div class="desborde"></div>
-				<textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"></textarea><br>
+				<div class="row">
+					<div class="col-md-12">
+						<textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"></textarea>
+					</div>
+				</div>			
 				<button id="enviar" style=";" type="button" class="btn btn-default">Guardar</button>
 				<button id="btn_cancelar" type="button" class="btn btn-default">Cancelar</button>	
 			</form><br>

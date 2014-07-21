@@ -8,12 +8,16 @@
 		<section id="catalogoPuestos">	   
 		  	<h3>Nuevo Puesto</h3>
 			<hr>
-			<form id="registroPuesto">        		
-				<input id="puesto" type="text"  name="nombre" class="form-control" placeholder="Nombre del puesto" style="width:85%; display: inline-block;">
-				<div style="display: inline-block;">
-					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>		       	    
-	            </div>
-		    </form>
+			<div class="row">
+				<form id="registroPuesto">     
+					<div class="col-md-11">					   		
+						<input id="puesto" type="text"  name="nombre" class="form-control" placeholder="Nombre del puesto" style="width:100% !important; display: inline-block;">											
+		            </div>
+		            <div class="col-md-1">
+		            	<button id="guardar" type="button" class="btn btn-primary" style="margin-top: 15px; margin-left: -15px;">Guardar</button>  
+		            </div>
+		        </form>			
+			</div>			
 		    <h3>Lista de puestos</h3>
 			<hr>
 			<input id="buscar_puesto" type="search" class="form-control" placeholder="Busqueda" style="width:100%; ">
