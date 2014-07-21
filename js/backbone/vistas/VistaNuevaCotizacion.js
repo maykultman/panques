@@ -33,6 +33,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             this.$tablaServicios = this.$('#listaServicios');
             /*Invocamos el metodo para cargar y pintar los servicios*/
             this.cargarServiciosCo();
+
+            this.contadorAlerta = 1;
         },
 
         render : function () { return this; },
@@ -168,22 +170,22 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         soloLetras : function(e)
         {
           key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        especiales = "8-37-39-46";
-        tecla_especial = false
-        for(var i in especiales)
-        {
-             if(key == especiales[i])
-             {
-                 tecla_especial = true;
-                 break;
-             }
-         }
-         if(letras.indexOf(tecla)==-1 && !tecla_especial)
-         {
-             return false;
-         }         
+          tecla = String.fromCharCode(key).toLowerCase();
+          letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+          especiales = "8-37-39-46";
+          tecla_especial = false
+          for(var i in especiales)
+          {
+               if(key == especiales[i])
+               {
+                   tecla_especial = true;
+                   break;
+               }
+           }
+           if(letras.indexOf(tecla)==-1 && !tecla_especial)
+           {
+               return false;
+           }         
         },
 
         borrar : function(e)
@@ -263,77 +265,98 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         /*..Una vez que tenemos lista la cotizacion nos toca el turno de guardala en la base de datos :D ...*/
         guardarCotizacion : function (elemento)
         {    
-          confirmar('Extio', function(){}, function(){});
-      //     var f = new Date();
-      //     var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
+          var f = new Date();
+          var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
 
-      //     modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
-      //     modelocotizacion.idempleado = '65';
+          modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+          modelocotizacion.idempleado = '65';
          
-      //     /*...Ahora obtenemos el form de cada fila de la tabla servicios cotizando y lo pasamos a un array..*/
-      //     var serviciosCotizados = pasarAJson($('.filas').serializeArray());
-      //     /*..Como en el array serviciosCotizados no podemos usar el length entonces obtenermos el array de id´s
-      //     	  de los servicios de la tabla y ahora este array si nos dejara usar length y asi poder iterar sobre el array
-      //     	  serviciosCotizados ...*/
-      //     var longitud = serviciosCotizados.id;
-      //     $('#registroCotizacion')[0].reset();
-      //      Backbone.emulateHTTP = true; //Variables Globales
-		    //    Backbone.emulateJSON = true; //Variables Globales 
-      //      app.coleccionCotizaciones.create
-      //      (
-      //      		modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
-      //      		{
-      //      			wait:true,
-      //      			success:function(exito)
-      //      			{
-      //      				/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
-      //      				Backbone.emulateHTTP = true; //Variables Globales
-		   	// 			    Backbone.emulateJSON = true; //Variables Globales 
-		   	// 			    /*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
-		    //        		for(i in longitud)
-		    //        		{	
-		    //        			app.coleccionServiciosCotizados.create
-		    //        			(		           			
-		    //        				{     //El exito.get('id') obtiene el id de la cotización que se acaba de crear 
-		    //        				     // y ahora todos los servicios que estan dentro de este ciclo le pertenece a esa cotizacion acabada de crear
-		    //        					idcotizacion : exito.get('id'),  
-		    //        					idservicio   : serviciosCotizados.id[i],
-			   //         				duracion     : serviciosCotizados.duracion[i],
-			   //         				cantidad     : serviciosCotizados.cantidad[i],
-			   //         				precio       : serviciosCotizados.precio[i],
-			   //         				descuento    : serviciosCotizados.descuento[i]		           			
-			   //         			},
-		    //        				{ 
-		    //        					wait:true,
-				  //          			success:function(exito)
-				  //          			{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
-				  //          				console.log('Fue exito');
-				  //          			},
-				  //          			error:function(error)
-				  //          			{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o 
-				  //          				 preguntale a la API que ¡onda! :/ ..*/
-				  //          				console.log('Fue error ',error);
-				  //          			}
-		    //        				}
-		    //        			);
+          /*...Ahora obtenemos el form de cada fila de la tabla servicios cotizando y lo pasamos a un array..*/
+          var serviciosCotizados = pasarAJson($('.filas').serializeArray());
+          /*..Como en el array serviciosCotizados no podemos usar el length entonces obtenermos el array de id´s
+          	  de los servicios de la tabla y ahora este array si nos dejara usar length y asi poder iterar sobre el array
+          	  serviciosCotizados ...*/
+          var longitud = serviciosCotizados.id;
+          $('#registroCotizacion')[0].reset();
+          var self = this;
+           Backbone.emulateHTTP = true; //Variables Globales
+		       Backbone.emulateJSON = true; //Variables Globales 
+           app.coleccionCotizaciones.create
+           (
+           		modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
+           		{
+           			wait:true,
+           			success:function(exito)
+           			{
+           				/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
+           				Backbone.emulateHTTP = true; //Variables Globales
+		   				    Backbone.emulateJSON = true; //Variables Globales 
+		   				    /*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
+		           		for(i in longitud)
+		           		{	
+		           			app.coleccionServiciosCotizados.create
+		           			(		           			
+		           				{     //El exito.get('id') obtiene el id de la cotización que se acaba de crear 
+		           				     // y ahora todos los servicios que estan dentro de este ciclo le pertenece a esa cotizacion acabada de crear
+		           					idcotizacion : exito.get('id'),  
+		           					idservicio   : serviciosCotizados.id[i],
+			           				duracion     : serviciosCotizados.duracion[i],
+			           				cantidad     : serviciosCotizados.cantidad[i],
+			           				precio       : serviciosCotizados.precio[i],
+			           				descuento    : serviciosCotizados.descuento[i]		           			
+			           			},
+		           				{ 
+		           					wait:true,
+				           			success:function(exito)
+				           			{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
+                          if(self.aumentarContador() === longitud.length)
+                          { 
+                            confirmar('La Cotizacón '+modelocotizacion.titulo+' se guardo con exito <br> ¿Desea crear otra?', 
+                            function(){ 
+                                        $('#trServicio').html(''); 
+                                        self.cargarServiciosCo();
+                                      }, 
+                            function(){ location.href='cotizaciones_consulta';} );  
+                          }
+				           				
+                        },
+				           			error:function(error)
+				           			{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o preguntale a la API que ¡onda! :/ ..*/
+				           				  
+                            if(self.aumentarContador() == longitud.length)
+                            {
+                              confirmar('Ocurrio un error al intentar registrar la Cotización de '+modelocotizacion.titulo+'<br><b>¿Desea volver a intentelo?</b>',
+                              function () {/*El sistema dejará modificar los datos ni redirigirá o otro lado*/},
+                              function () {
+                                location.href = 'cotizaciones_consulta';
+                              });
+                            }
+				           			}
+		           				}
+		           			);
 		           			 
-		    //        		};
-		    //        		Backbone.emulateHTTP = false; //Variables Globales
-		   	// 			    Backbone.emulateJSON = false; //Variables Globales
+		           		};
+		           		Backbone.emulateHTTP = false; //Variables Globales
+		   				    Backbone.emulateJSON = false; //Variables Globales
 
-      //      			},
-      //      			error:function(error)
-      //      			{	/*..Tu modelo Cotizacion no se creo por lo tanto el modelo servicio cotizado Tampoco :( ..*/
-						//       console.log('Fue error ',error);
-      //      			}
-      //      		}
-      //      ); //Fin de app.coleccionCotizaciones
-      //     Backbone.emulateHTTP = false; //Variables Globales
-		    //   Backbone.emulateJSON = false; //Variables Globales
-		    // localStorage.clear();         
+           			},
+           			error:function(error)
+           			{	/*..Tu modelo Cotizacion no se creo por lo tanto el modelo servicio cotizado Tampoco :( ..*/
+						      console.log('Fue error ',error);
+           			}
+           		}
+           ); //Fin de app.coleccionCotizaciones
+          Backbone.emulateHTTP = false; //Variables Globales
+		      Backbone.emulateJSON = false; //Variables Globales
+		    localStorage.clear();         
 		   elemento.preventDefault();
 
-		} //Fin del metodo guardarCotizacion
+		}, //Fin del metodo guardarCotizacion
+
+    aumentarContador : function()
+    {
+      return this.contadorAlerta++;
+    }
 
 
 }); //Fin de la vista Nueva Cotización

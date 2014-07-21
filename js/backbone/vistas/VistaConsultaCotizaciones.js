@@ -3,12 +3,15 @@ app.VistaEdicionCotizacion = app.VistaNuevaCotizacion.extend({
 	el : '#section_actualizar',
 
 	events : {
-		'click #guardarEdicion' : 'guardarVersion'
+		'click #guardarEdicion' : 'guardarVersion',
+		'click #vistaPreviaversion' : 'vistaPrevia'
 	},
 
+	initialize : function(){ this.contadorAlerta=1;},
 	establecerCotizacion : function()
 	{
 		var self = this;
+		this.$('#hid').val(this.model.get('id'));
 		this.$('#titulo').val(this.model.get('titulo'));
 		this.$('#cliente').val(this.model.get('cliente'));
 		this.$('#fecha').val(this.model.get('fecha'));
@@ -43,18 +46,102 @@ app.VistaEdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		this.$('#trServicio').append(vista.render().el);
 	},
 
-	guardarVersion : function()
+	vistaPrevia : function()
+	{
+		alert('e')
+	},
+
+	guardarVersion : function(elemento)
 	{
 		var f = new Date();
         var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
-
+        modelocotizacion.idcotizacion = modelocotizacion.id;
+        delete modelocotizacion.id;
+        modelocotizacion.version = Number(this.model.get('version'))+1;
+		console.log(modelocotizacion);
         modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
         modelocotizacion.idempleado = '65';
          
         var serviciosCotizados = pasarAJson($('.filas').serializeArray());
-        var longitud = serviciosCotizados.id;
-        
-	}
+        var longitud = serviciosCotizados.id; 
+        var self = this;
+        Backbone.emulateHTTP = true; //Variables Globales
+		Backbone.emulateJSON = true; //Variables Globales 
+        app.coleccionCotizaciones.create
+        (
+           		modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
+           		{
+           			wait:true,
+           			success:function(exito)
+           			{
+           				/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
+           				Backbone.emulateHTTP = true; //Variables Globales
+		   				    Backbone.emulateJSON = true; //Variables Globales 
+		   				    /*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
+		           		for(i in longitud)
+		           		{	
+		           			app.coleccionServiciosCotizados.create
+		           			(		           			
+		           				{     //El exito.get('id') obtiene el id de la cotización que se acaba de crear 
+		           				     // y ahora todos los servicios que estan dentro de este ciclo le pertenece a esa cotizacion acabada de crear
+		           					idcotizacion : exito.get('id'),  
+		           					idservicio   : serviciosCotizados.id[i],
+			           				duracion     : serviciosCotizados.duracion[i],
+			           				cantidad     : serviciosCotizados.cantidad[i],
+			           				precio       : serviciosCotizados.precio[i],
+			           				descuento    : serviciosCotizados.descuento[i]		           			
+			           			},
+		           				{ 
+		           					wait:true,
+				           			success:function(exito)
+				           			{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
+                          if(self.aumentarContador() === longitud.length)
+                          { 
+                            confirmar('La Versión de la Cotizacón '+modelocotizacion.titulo+' se guardo con exito <br> ¿Desea crear otra?', 
+                            function(){ 
+                                        $('#trServicio').html(''); 
+                                        self.cargarServiciosCo();
+                                      }, 
+                            function(){ location.href='cotizaciones_consulta';} );  
+                          }
+				           				
+                        },
+				           			error:function(error)
+				           			{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o preguntale a la API que ¡onda! :/ ..*/
+				           				  
+                            if(self.aumentarContador() == longitud.length)
+                            {
+                              confirmar('Ocurrio un error al intentar registrar la Cotización de '+modelocotizacion.titulo+'<br><b>¿Desea volver a intentelo?</b>',
+                              function () {/*El sistema dejará modificar los datos ni redirigirá o otro lado*/},
+                              function () {
+                                location.href = 'cotizaciones_consulta';
+                              });
+                            }
+				           			}
+		           				}
+		           			);
+		           			 
+		           		};
+		           		Backbone.emulateHTTP = false; //Variables Globales
+		   				    Backbone.emulateJSON = false; //Variables Globales
+
+           			},
+           			error:function(error)
+           			{	/*..Tu modelo Cotizacion no se creo por lo tanto el modelo servicio cotizado Tampoco :( ..*/
+						      console.log('Fue error ',error);
+           			}
+           		}
+           ); //Fin de app.coleccionCotizaciones
+          	Backbone.emulateHTTP = false; //Variables Globales
+		    Backbone.emulateJSON = false; //Variables Globales
+		    localStorage.clear();         
+		   elemento.preventDefault();       
+	},
+
+	aumentarContador : function()
+    {
+      return this.contadorAlerta++;
+    }
 });
 app.VistaCotizacion = Backbone.View.extend({
 	tagName : 'tr',
@@ -185,25 +272,24 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
     eliminarMarcados : function()
     {
     	var ides = document.getElementsByName('todos');
-         var array = new Array();
-         for (var i = 0; i < ides.length; i++) 
-         {
+        var array = new Array();
+        for (var i = 0; i < ides.length; i++) 
+        {
             if ($(ides[i]).is(':checked')) {
                array.push(ides[i]);
             };
-         };
+        };
 
-         for (var i = 0; i < array.length; i++) 
-         {
-            $(array[i])
+        for (var i = 0; i < array.length; i++) 
+        {
+        	$(array[i])
             .parents('tr')
-            .children('.iconos-operaciones')
+            .children('.icon-operaciones')
             .children('.icon-trash')
             .click();
-         };
-
-         $('#todos').attr('checked', false);
-         event.preventDefault(); 
+        };
+        $('#todos').attr('checked', false);
+        event.preventDefault(); 
     }
 });
 

@@ -53,11 +53,14 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 	events : {
 		'click #guardar'  : 'guardar',
 		'keypress #cel'   : 'validarTelefono',
-		'keypress #casa'  : 'validarTelefono'
+		'keypress #casa'  : 'validarTelefono',
+		'blur #correo'    : 'validarCorreo',
+		'keypress #nombre': 'validarNombre'
 	},
 
 	initialize : function ()
 	{
+		this.contadorAlerta = 1;
 		this.$selectpuesto = this.$('#puesto');
 		this.cargarSelectPuestos();		
 	},
@@ -69,6 +72,27 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 		return validarTel(e);
 	},
 
+	validarNombre : function(e)
+	{
+		key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = "8-37-39-46";
+        tecla_especial = false;
+        for(var i in especiales)
+        {
+            if(key == especiales[i])
+            {
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial)
+        {
+            return false;
+        }                 
+	},
+
 	guardar : function (evento)
 	{
 		var modeloTelefono = new Array();
@@ -77,19 +101,19 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 		console.log(modeloEmpleado.puesto);
 		$('#registro')[0].reset();
  		/* nombre tiene algún valor?*/
-	 	if(modeloEmpleado.nombre)
+	 	if(modeloEmpleado.nombre&&modeloEmpleado.puesto)
 	 	{
 			if(modeloEmpleado.movil!=undefined) /*... Tiene telefono movil?...*/
 			{
 				var movil = modeloEmpleado.movil;
 				delete modeloEmpleado.movil;    /*... eliminamos movil de modelo que contiene los datos el empleado ...*/
-			}
+			}else{ var movil = '0000'}
 			if(modeloEmpleado.casa!=undefined) /*... Tiene telefono de casa?...*/
 			{
 				var casa  = modeloEmpleado.casa;					
 				delete modeloEmpleado.casa;    /*... eliminamos movil de modelo que contiene los datos el empleado ...*/
-			}
-
+			}else{ var casa = '00000'}
+			var self = this;
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;
 			app.coleccionEmpleados.create
@@ -116,7 +140,7 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 									  			  numero        : casa, 
 									  			  tipo          : 'casa'
 												};
-						}						
+						}
 						
 						if(modeloTelefono.length>0)
 						{
@@ -129,8 +153,16 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 									modeloTelefono[i],
 									{
 										wait: true,
-										success: function (exito){},
-										error  : function(error){}
+										success: function (exito){
+											if(self.aumentarContador() === 2)
+					                        { 
+					                            alerta('<p style="color:#1A641A"><b>El empleado '+modeloEmpleado.nombre+' se guardo con éxito<b></p>', function(){} );  
+					                        }
+											
+										},
+										error  : function(error){
+											alerta('<p style="color:FireBrick"><b>Error al registrar el Empleado</b></p>', function(){});
+										}
 									}
 								);						
 							}
@@ -145,6 +177,18 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 			);
 			Backbone.emulateHTTP = false;
 			Backbone.emulateJSON = false;			
+		}
+		else{
+			var campo;
+			if(modeloEmpleado.puesto==undefined)
+			{
+				campo = 'Cargo al empleado';
+			}
+			if(modeloEmpleado.nombre==undefined)
+			{
+				campo = 'nombre al Empleado';
+			}
+			alerta('<p style="color:FireBrick"><b>Ingrese un '+campo+'</b></p>', function(){});
 		}		
 		evento.preventDefault();
 	}, /*... Fin de la función guardar ...*/
@@ -158,7 +202,27 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 	cargarSelectPuestos : function ()
 	{	
 		app.coleccionPuestos.each(this.cargarSelectPuesto, this);
-	}
+	},
+
+	aumentarContador : function()
+    {
+      return this.contadorAlerta++;
+    },
+
+	validarCorreo	: function (elemento) 
+	{
+		if( !(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
+			alerta('No es un correo valido',function () {});
+			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+				$(elemento.currentTarget).focus();
+			});
+			$(elemento.currentTarget).css('border-color','#a94442');
+	      	return false;
+	    } else{
+	    	$(elemento.currentTarget).css('border-color','#CCC');
+	    	return true;
+	    };
+	},
 });
 
 app.vistaNuevoEmpleado = new app.VistaNuevoEmpleado();

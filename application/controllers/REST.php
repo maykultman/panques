@@ -71,6 +71,7 @@ class  REST extends CI_Controller {
     
     protected function response($data, $status)
     {  
+        $this->output->set_header("HTTP/1.0 200 OK");
         # Establece el codigo y el mensaje de estado de la cabecera de la respuesta...
          $this->output->set_status_header($status);
         # Establece el contenido de respuesta en este caso devolvemos JSON

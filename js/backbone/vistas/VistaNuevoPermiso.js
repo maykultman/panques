@@ -5,6 +5,7 @@ app.VistaNuevoPermiso = Backbone.View.extend({
 
 	events : {
 		'click     #guardar' : 'guardar',
+		'keypress  #permiso'	: 'validarNombre',
 		'keypress  #buscar_permiso' : 'buscarPermiso', //...Para hacer una busqueda en la lista Permisoes...
 		'keyup     #buscar_permiso' : 'buscarPermiso', //...Al soltar una tecla llamamos a la función buscarRol...		
 	},
@@ -15,7 +16,7 @@ app.VistaNuevoPermiso = Backbone.View.extend({
         this.$scroll_permisos = this.$('#scroll_permisos');
         /*Invocamos el metodo para cargar y pintar los servicios*/
         this.cargarPermisos();
-        this.listenTo( app.coleccionPermisos, 'add', this.cargarServicio );
+        this.listenTo( app.coleccionPermisos, 'add', this.cargarPermisos );
 		this.listenTo( app.coleccionPermisos, 'reset', this.cargarPermisos );     
 	},
 	render : function ()
@@ -50,9 +51,31 @@ app.VistaNuevoPermiso = Backbone.View.extend({
 		};
 	},
 
+	validarNombre : function(e)
+	{
+		key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = "8-37-39-46";
+        tecla_especial = false;
+        for(var i in especiales)
+        {
+            if(key == especiales[i])
+            {
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial)
+        {
+            return false;
+        }                 
+	},
+
 	guardar : function (evento)
 	{
 		var modeloPermiso = pasarAJson($('#registroPermiso').serializeArray());
+		$('#permiso').val('');
 		if(modeloPermiso.nombre)
 		{
 			Backbone.emulateHTTP = true;
@@ -62,8 +85,12 @@ app.VistaNuevoPermiso = Backbone.View.extend({
 				modeloPermiso,
 				{
 					wait: true,
-					success: function (data){},
-					error: function (error) {}
+					success: function (data){
+						alerta('<p style="color:#1A641A"><b>Permiso Guardado con Éxito</b></p>', function(){});
+					},
+					error: function (error) {
+						alerta('<p style="color:FireBrick"><b>Error al registrar el Permiso</b></p>', function(){});
+					}
 				}
 			);
 

@@ -58,9 +58,10 @@
 			<input id="cliente" 	  type="search" value="" class="form-control input_datos" placeholder="Buscar cliente"><span id="busqueda_icono" class="icon-search"></span>
 			<input id="representante" type="text"   value="" class="form-control input_datos" placeholder="Representante" disabled="true">	
 			<form id="registroCotizacion">
-				<input type="hidden" id="htitulo"    name="titulo"  class="input_datos"  value="">			
-				<input type="hidden" id="idcliente" name="idcliente" class="input_datos" value="">
-				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante" value="">
+				<input type="hidden" id="hid" 				name="id" 				value="">
+				<input type="hidden" id="htitulo"    		name="titulo"   		value="">			
+				<input type="hidden" id="idcliente" 		name="idcliente" 		value="">
+				<input type="hidden" id="idrepresentante" 	name="idrepresentante" 	value="">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" val="" disabled="true" >	
 		</div>
 		<div class="col-md-4">
@@ -109,8 +110,8 @@
 					<tr>
 					    <td><button id="delete"  type="button" class="btn btn-danger">Eliminar varios 			</button>
 					    <td>
-						    <button id="vistaPrevia"    type="button" class="btn btn-primary"> 
-						    	<span class="icon-preview"></span> Vista previa 
+						    <button id="vistaPreviaversion"    type="button" class="btn btn-primary"> 
+						    	<span class="icon-preview "></span> Vista previa 
 						    </button>
 						</td>		
 					</tr>

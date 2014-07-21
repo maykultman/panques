@@ -30,14 +30,14 @@
 			        <div class="modal-body">
 				        <form id="registro">
 				        	<div style="margin-left:85px; ">
-								<input  name="nombre" type="text"  class="form-control" placeholder="Nombre" >
+								<input  id="nombre" name="nombre" type="text"  class="form-control" placeholder="Nombre" >
 								<select id="puesto"  name="puesto"              class="form-control"                      >
 								  <option selected disabled> Cargo   </option>
 								</select>
 								<input name="direccion" 		  type="text"   class="form-control" 			 placeholder="Dirección"		   >
 								<input id="cel" name="movil"      type="text"   class="form-control"             placeholder="Telefono Móvil"	   >
 								<input id="casa" name="casa"      type="text"   class="form-control"             placeholder="Telefono casa"	   >									
-								<input name="correo"    		  type="email"  class="form-control" 			 placeholder="Email"			   >
+								<input id="correo" name="correo"    		  type="email"  class="form-control" 			 placeholder="Email"			   >
 								<input name="fecha_nacimiento"    type="text"   class="form-control datepicker"  placeholder="Fecha de nacimiento" >
 							</div>
 						</form>	

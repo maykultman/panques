@@ -9,14 +9,10 @@
 		  	<h3>Nuevo Permiso</h3>
 			<hr>
 			<form id="registroPermiso">
-        		
-					<input id="permiso" type="text"  name="nombre" class="form-control" placeholder="Nombre del permiso" style="width:85%; display: inline-block;">
-					<!-- <textarea id="comentario" name="comentario" class="form-control" rows="4" placeholder="Comentarios"></textarea> -->
-				
+				<input id="permiso" type="text"  name="nombre" class="form-control" placeholder="Nombre del permiso" style="width:85%; display: inline-block;">
 				<div style="display: inline-block;">
 					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
-		       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->
-	            </div>
+		       	</div>
 		    </form>
 		    <h3>Lista de permisos</h3>
 			<hr>
