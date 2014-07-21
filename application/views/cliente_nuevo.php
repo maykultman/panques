@@ -164,7 +164,7 @@
                 <div id="div_contactos" class="col-md-6">
                      <!-- <div class="dato_contacto" id="div_contactos" style="position:relative"> -->
                         <div id="listaContactosCliente">
-                        <h3>Datos de contacto</h3><br><button id="btn_otroContacto" class="btn btn-primary btn-sm" style="margin-right: -115px;"><span class="icon-addfriend"></span></button>
+                        <h3>Datos de contacto</h3><br><button id="btn_otroContacto" class="btn btn-primary btn-sm" ><span class="icon-addfriend"></span></button>
                         </div>
                         <div class="desborde"></div>
                         <hr>
@@ -221,7 +221,7 @@
     </script>
     <script type="text/template" id="plantillaFormContacto">
         <div class="tab-pane active" id="<%- i %>">
-            <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 45px;"><%- i %> <span class="icon-trash"></span></button>
+            <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 60px;"><%- i %> <span class="icon-trash"></span></button>
             <input type="text" id="contactoNombre" class="form-control form_input" value="Nombre completo del contacto">
             <input type="text" id="contactoEmail" class="form-control form_input" value="Correo">
             <input type="text" id="contactoCargo" class="form-control form_input" value="Cargo">

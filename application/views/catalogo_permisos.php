@@ -27,7 +27,7 @@
 		  	
 		  	<div class="panel panel-primary" >
 		     
-		      <div class="panel-body" style="overflow: auto; height: 216px; padding: 0px !important;">
+		      <div class="panel-body" style="overflow: auto; height: 211px; padding: 0px !important;">
 		        <table class="table table-hover">
 		  			<tbody id="scroll_permisos">																									
 					</tbody>									
@@ -53,10 +53,10 @@ app.coleccionDePermisos = <?=json_encode($permisos)?>
 </script>
 <script type = "text/plantilla" id="listarPermisos">
 
-	<td  class="icon-operaciones"><label class="ocultoR visibleR" for="<%- id %>"><%- nombre %></label>
+	<td ><label class="ocultoR visibleR" for="<%- id %>"><%- nombre %></label>
 	<input id="epermiso" type="text" class="valor ocultoR" value="<%- nombre %>">
 	</td>
-	<td>		
+	<td class="icon-operaciones">		
 	<div class="eliminar_permiso">
 		<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
 		<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>				

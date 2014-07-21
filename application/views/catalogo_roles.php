@@ -17,14 +17,14 @@
 		    <h3>Roles</h3>
 		  	<hr><br>	       
 	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search" style="width:100%; ">
-	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>    			
-		  	
-		  	<div class="panel panel-primary" style="width:100%;">
-		  		<table class="table table-hover">
+	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>
+	        <div class="panel panel-primary" >		     
+		      <div class="panel-body" style="overflow: auto; height: 211px; padding: 0px !important;">
+		        <table class="table table-hover">
     				<tbody id="scroll_roles"></tbody>
-				</table>							    	      
-            </div>										
-            
+				</table>
+		      </div>
+		    </div>            
 		</section>
 	</section>
 <div>
@@ -37,9 +37,11 @@
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <script type = "text/plantilla" id="listaRoles">
 	
-	<td style="width: 1% !important; " class="icon-operaciones">			
+	<td>			
 		<label name="<%- nombre %>"  class="ocultoR visibleR"><%- nombre %></label>
-		<input id="erol" type="text" class="valor ocultoR" value="<%- nombre %>">		
+		<input id="erol" type="text" class="valor ocultoR" value="<%- nombre %>">
+	</td>
+	<td class="icon-operaciones">			
 		<div class="eliminar_permiso">
 			<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
 		   	<span class="icon-edit"  data-toggle="tooltip" title="Editar">  </span>

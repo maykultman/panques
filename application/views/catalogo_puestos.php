@@ -21,13 +21,15 @@
 		    <h3>Lista de puestos</h3>
 			<hr>
 			<input id="buscar_puesto" type="search" class="form-control" placeholder="Busqueda" style="width:100%; ">
-	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>  					
-		  	<div class="panel panel-primary" style="width:100%;">
-		  		<table class="table table-hover">
-    				<tbody id="scroll_puestos">																									
+	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>
+	        <div class="panel panel-primary" >		     
+		      <div class="panel-body" style="overflow: auto; height: 211px; padding: 0px !important;">
+		        <table class="table table-hover">
+		  			<tbody id="scroll_puestos">																									
 					</tbody>									
 				</table>
-			</div>	        
+		      </div>
+		    </div>		  	       
 		</section>			
      </section> <!--Esta fin de sección pertenece al menú principal del contenido de esta página. -->
 </div>
@@ -41,13 +43,16 @@
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <script type = "text/plantilla" id="listaPuestos">
 	
-	<td style="width: 1% !important; " class="icon-operaciones">			
+	<td>			
 		<label name="<%- nombre %>"  class="ocultoR visibleR"><%- nombre %></label>
 		<input id="epuesto" type="text" class="valor ocultoR" value="<%- nombre %>">		
+			
+	</td>
+	<td class="icon-operaciones">		
 		<div class="eliminar_permiso">
-			<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
-		   	<span class="icon-edit"  data-toggle="tooltip" title="Editar">  </span>
-	    </div>			
+			<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
+			<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>			
+		</div>
 	</td>
 
 </script>
