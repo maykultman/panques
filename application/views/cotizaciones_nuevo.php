@@ -43,7 +43,7 @@
 			<table id="mostrarTabla" class="table table-striped">
 				<thead style="background : #F9F9F9;">
 					<tr>
-						<th>Todos<input id="todos" type="checkbox" style=""></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="todos" type="checkbox" style=""></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
 						<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					</tr>
 				</thead>

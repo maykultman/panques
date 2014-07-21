@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
 <!-- CSS jQuery.Gantt -->
-	<link rel="stylesheet" type="text/css" href="js/plugin/Gantt/css/style.css">
+	<link rel="stylesheet" type="text/css" href="<?=base_url().'js/plugin/Gantt/css/style.css'?>">
 	<style type="text/css">
       /* Bootstrap 3.x re-reset */
       .fn-gantt *,

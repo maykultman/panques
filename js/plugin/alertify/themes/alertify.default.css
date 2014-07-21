@@ -6,9 +6,15 @@
 	font-family: sans-serif;
 }
 .alertify {
-	background: #FFF;
-	border: 10px solid #333; /* browsers that don't support rgba */
-	border: 1px solid rgba(0,0,0,.7); /*[Antes de modificar]-> border: 10px solid rgba(0,0,0,.7);*/
+
+color: #000;
+background-color: #eee;
+/*border-color: #bce8f1;*/
+	/*color: #3c963d;
+	background-color: #dff0d8;*/
+	/*border-color: blue;*/
+	/*border: 10px;  solid #333;  browsers that don't support rgba */
+	border: 1px solid  #1E90FF; /*[Antes de modificar]-> border: 10px solid rgba(0,0,0,.7);*/
 	border-radius: 4px;
 	box-shadow: 0 3px 3px rgba(0,0,0,.3);
 	-webkit-background-clip: padding;     /* Safari 4? Chrome 6? */
@@ -22,7 +28,7 @@
 }
 .alertify-button {
 	border-radius: 4px;
-	color: #FFF;
+	/*color: #FFF;*/
 	font-weight: bold;
 	padding: 6px 15px;
 	text-decoration: none;

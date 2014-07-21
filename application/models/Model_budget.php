@@ -18,8 +18,9 @@
                           'titulo'          => $post[  'titulo'          ],
                           'fecha'           => $post[  'fecha'           ],
                           'detalles'        => $post[  'detalles'        ],
-                          'caracteristicas' => $post[  'caracteristicas' ] 
-
+                          'caracteristicas' => $post[  'caracteristicas' ], 
+                          'idcotizacion'    => $post[  'idcotizacion' ],
+                          'version'         => $post[  'version' ],
                         );
             $this->db->insert('cotizaciones', $args);
             return $this->get($this->db->insert_id());     

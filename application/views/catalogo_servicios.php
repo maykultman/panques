@@ -39,107 +39,11 @@
 						</tr>	
 					</thead>
 					<tbody>
-						<!-- <tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>	
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>	
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>	
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>	
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>pagina web</td>
-							<td>web</td>
-							<td>$1400</td>
-							<td>1 mes</td>
-							<td>pagina web con 5 modulos</td>
-													
-							 <td class="iconos-operaciones">
-								<div>
-							     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
-							    </div>
-							</td> 
-						</tr>	 -->		
+							
 					</tbody>					
 				</table>
-			</div>			
+			</div><br>
+			<button id="eliminar"  type="button" class="btn btn-danger">  Eliminar varios </button>			
 		</section>
     </section>
 </div>	

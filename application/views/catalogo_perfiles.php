@@ -39,7 +39,7 @@
 						    	
 						    	</div>
 					            <div id="btnes">				            
-						            <button type="button" class="btn btn-primary">Guardar</button>
+						            <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
 						            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						            
 						            <div class="btn-group" data-toggle="buttons">

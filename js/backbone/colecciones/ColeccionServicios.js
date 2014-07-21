@@ -31,15 +31,15 @@ var ColeccionServicios = Backbone.Collection.extend({
 		return this.last();
 	},
 
-	sync	: function (method, model, options) {
+	// sync	: function (method, model, options) {
 				
-		if (method === 'read') {
-			app.busquedaServicio.servicio.buscarPorNombre(options.data.nombre).done(function (data) {
-				// console.log(data); //Debuelbe el objeto [Object]
-				options.success(data);
-			});
-		};
-	}
+	// 	if (method === 'read') {
+	// 		app.busquedaServicio.servicio.buscarPorNombre(options.data.nombre).done(function (data) {
+	// 			// console.log(data); //Debuelbe el objeto [Object]
+	// 			options.success(data);
+	// 		});
+	// 	};
+	// }
 });
 
 app.coleccionServicios = new ColeccionServicios(app.coleccionDeServicios);

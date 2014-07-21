@@ -8,13 +8,21 @@ app.VistaPermiso = Backbone.View.extend({
 	events : {
 		'click     .icon-edit'  : 'habilitarEdicion', //..Habilita el input para la edición del rol...
 		'keypress  #epermiso'   : 'guardarEdicion',	 //..Guarda la edición del campo...
-		'click     .icon-trash' : 'eliminar'		 //..Elimina un miembro de la lista de roles..
+		'click     .icon-trash' : 'eliminar',		 //..Elimina un miembro de la lista de roles..
 	},
 
 	initialize : function ()
 	{
 		this.listenTo(this.model, 'change', this.render);  //...Change evento que escucha un cambio en el modelo
 		this.listenTo(this.model, 'destroy', this.remove); //...Destroy evento que escucha que se destruyo un modelo y remove lo emlimina de la lista
+		$('#permiso').keydown(function(event) /*...eventos del teclado...*/
+        {
+    		if(event.keyCode===13) /*...Si la tecla fue enter...*/
+    		{
+     	    	$('#guardar').trigger('click');
+     	    	event.preventDefault();
+    		};
+    	});
 	},
 
 	render : function (){
