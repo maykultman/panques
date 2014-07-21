@@ -7,7 +7,7 @@
         </script>
 		<section id="catalogoPuestos">	   
 		  	<h3>Nuevo Puesto</h3>
-			<hr>
+			<hr><br>
 			<div class="row">
 				<form id="registroPuesto">     
 					<div class="col-md-11">					   		
@@ -17,14 +17,14 @@
 		            	<button id="guardar" type="button" class="btn btn-primary" style="margin-top: 15px; margin-left: -15px;">Guardar</button>  
 		            </div>
 		        </form>			
-			</div>			
+			</div><br>			
 		    <h3>Lista de puestos</h3>
 			<hr>
 			<input id="buscar_puesto" type="search" class="form-control" placeholder="Busqueda" style="width:100%; ">
 	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>
 	        <div class="panel panel-primary" >		     
-		      <div class="panel-body" style="overflow: auto; height: 211px; padding: 0px !important;">
-		        <table class="table table-hover">
+		      <div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
+		        <table class="table table-hover" style="margin-bottom: 0px !important">
 		  			<tbody id="scroll_puestos">																									
 					</tbody>									
 				</table>

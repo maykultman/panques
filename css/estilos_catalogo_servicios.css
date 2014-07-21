@@ -1,0 +1,26 @@
+
+.oculto2{
+	
+	display: none;
+}
+
+.visible2{
+		
+	display: block;
+}
+
+
+#descripcion{
+
+ 
+ width: 100% !important;
+ height: 85px;
+
+}
+
+
+input{
+
+	width: 100% !important;
+}
+

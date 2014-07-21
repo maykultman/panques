@@ -6,21 +6,26 @@
         </script>
 		<section id="catalogo_roles">		    
 		  	<h3>Nuevo Rol</h3>
-		  	<hr><br>				
-			<form id="registro_rol">	        						
-				<input id="rol" type="text" name="nombre" class="form-control" placeholder="Nombre del rol" style="width:85%; display: inline-block;">		
-				<div style="display: inline-block;">
-					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
-		       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->
-	            </div>
-		    </form><br>
+		  	<hr><br>
+		  	<div class="row">
+		  		<form id="registro_rol">	  
+			  		<div class="col-md-11">		  			      						
+						<input id="rol" type="text" name="nombre" class="form-control" placeholder="Nombre del rol" style="width:100%;">			   
+			  		</div>
+			  		<div class="col-md-1">
+						<button id="guardar" type="button" class="btn btn-primary"
+						style="margin-top: 15px; margin-left: -15px;" >Guardar</button>
+			       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->   
+			  		</div>
+		  		</form>		  						
+		  	</div><br>			
 		    <h3>Roles</h3>
-		  	<hr><br>	       
+		  	<hr>	       
 	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search" style="width:100%; ">
 	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>
 	        <div class="panel panel-primary" >		     
-		      <div class="panel-body" style="overflow: auto; height: 211px; padding: 0px !important;">
-		        <table class="table table-hover">
+		      <div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
+		        <table class="table table-hover" style="margin-bottom: 0px !important">
     				<tbody id="scroll_roles"></tbody>
 				</table>
 		      </div>

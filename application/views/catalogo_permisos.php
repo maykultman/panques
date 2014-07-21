@@ -7,7 +7,7 @@
         </script>
 		<section id="catalogoPermisos">	   
 		  	<h3>Nuevo Permiso</h3>
-			<hr>
+			<hr><br>
 			<div class="row">
 				<form id="registroPermiso">
 					<div class="col-md-11">
@@ -19,7 +19,7 @@
 				       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->		            	
 					</div>
 				 </form>
-			</div>		   
+			</div><br>		   
 		    <h3>Lista de permisos</h3>
 			<hr>
 			<input id="buscar_permiso" type="search" class="form-control" placeholder="Busqueda" style="width:100%; ">
@@ -27,8 +27,8 @@
 		  	
 		  	<div class="panel panel-primary" >
 		     
-		      <div class="panel-body" style="overflow: auto; height: 211px; padding: 0px !important;">
-		        <table class="table table-hover">
+		      <div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
+		        <table class="table table-hover" style="margin-bottom: 0px !important">
 		  			<tbody id="scroll_permisos">																									
 					</tbody>									
 				</table>

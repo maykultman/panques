@@ -23,6 +23,7 @@ var options = {
 options.widgetOptions.cssStickyHeaders_attachTo = '.wrapper' // or $('.wrapper')
 $("#table1").tablesorter(options);
 $("#tbla_cliente").tablesorter(options);
+$("#consulta_tablaservicio").tablesorter(options);
 
 });
 
