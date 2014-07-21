@@ -258,3 +258,69 @@ function formatearFechaUsuario (fecha) {
             }
         }
     }
+
+/*Subir foto*/
+    function obtenerFoto (e) {
+        //queremos que esta variable sea global
+        this.fileExtension = "";
+            //obtenemos un array con los datos del archivo
+            var file = $("#fotoCliente")[0].files[0];
+            //obtenemos el nombre del archivo
+            var fileName = file.name;
+            //obtenemos la extensión del archivo
+            this.fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+            //obtenemos el tamaño del archivo
+            var fileSize = file.size;
+            //obtenemos el tipo de archivo image/png ejemplo
+            var fileType = file.type;
+            //mensaje con la información del archivo
+            // showMessage("<span class='info'>Foto a subir: "+fileName+", peso total: "+fileSize+" bytes.</span>");
+
+            addImage(e);
+            function addImage(e){
+              var file = e.target.files[0],
+              imageType = /image.*/;
+            
+              if (!file.type.match(imageType))
+               return;
+          
+              var reader = new FileReader();
+              reader.onload = fileOnload;
+              reader.readAsDataURL(file);
+             }
+          
+             function fileOnload(e) {
+              var result=e.target.result;
+              $('#direccion').attr("src",result);
+             }
+    };
+    function urlFoto () {
+        // console.log($("#formularioFoto")[0]);
+        var formData = new FormData($("#formularioFoto")[0]);
+        // console.log(formData);
+        // alert(JSON.stringify(formData));
+        var mensaje = "";    
+        //hacemos la petición ajax  
+        var resp = $.ajax({
+            url: 'http://crmqualium.com/api_foto',
+            type: 'POST',
+            async:false,
+            // Form data
+            //datos del formulario
+            data: formData,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+        console.log(resp);
+        if (resp.responseText != 'false'){
+            resp = resp.responseText.split('');
+            resp.pop();
+            resp.shift();
+            resp = resp.join('');
+            return 'img/fotosClientes/'+resp;   
+        } else {
+            return 'img/fotosClientes/sinfoto.png';
+        };
+    };

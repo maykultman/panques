@@ -1,15 +1,6 @@
     <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
     <!-- plugin selectize css -->
         <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
-    
-    <style type="text/css">
-        .input-group select{
-            height: 34px;
-        }
-        .input-group button{
-            height: 34px;
-        }
-    </style>
 
     <div id="posicion_infotd">        
         <div id="clientes" class="wrapper">                            
@@ -58,7 +49,6 @@
                <hr class="division">
                <!-- <textarea id="txt_area"></textarea> -->
                <section id="txt_area" contenteditable="true"></section>
-
               </div>
               <div class="modal-footer" style="background: #f1f1f1; padding: 10px 18px 10px !important;">
                 <button type="button" class="btn btn-primary">Enviar</button>
@@ -80,7 +70,7 @@
         <td class="contenido_prospecto"><input  type="checkbox" name="todos" value="<%- id %>"></td>
         <td>
             <% if (typeof foto != "undefined") { %>
-                <img src="<%- foto %>" alt="" class="foto">
+                <img src="<?=base_url().'<%- foto %>'?>" alt="" class="foto">
             <%} else{%>
                 <img src="" alt="" class="foto">
             <%}; %>
@@ -108,28 +98,6 @@
             <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
             <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
             <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
-            <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
-            <!-- <div id="alertasCliente">
-                <div class="alert alert-warning oculto" id="advertencia">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Advertencia!</h4>
-                    <p id="comentario"></p>
-                    <br>
-                    <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
-                    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
-                </div>
-                <div class="alert alert-danger alert-dismissable oculto" id="error">
-                  <button type="button" class="close cerrar">&times;</button>
-                  <strong>¡Error!</strong>
-                  <div id="comentario"></div>
-                </div>
-                <div class="alert alert-success alert-dismissable oculto" id="exito">
-                  <button type="button" class="close cerrar">&times;</button>
-                  <strong>¡Exito!</strong>
-                  <div id="comentario"></div>
-                </div>
-            </div> -->
-            <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         </td>
     </script>
     
@@ -151,7 +119,7 @@
                     <table style="margin-left:15px; margin-top:15px;">
                         <tr>
                             <td rowspan="3">
-                                <img class="" id="logo_empresa_info" src="<%- foto %>" alt="Imagen-Cliente">
+                                <img class="img-rounded" id="direccion" src="<?=base_url().'<%- foto %>'?>" alt="Imagen-Cliente" width="150" height="150">
                             </td>
                             <td style="padding:0px 10px 0px 10px; vertical-align: bottom;">
                                 <h3 class="editar editando"><b><%- nombreComercial %></b></h3>
@@ -182,11 +150,24 @@
                             </td>
                             <td class="respuesta" style="vertical-align: top;"></td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <!--BOTON PARA ACTUALIZAR FOTO DEL CLIENTE-->
+                                <form id="formularioFoto" style="margin: 5px 0px 0px 7px;">
+                                    <label class="btn btn-default btn-xs fileinput-button editar">
+                                        <span class="icon-paperclip"></span>
+                                        <span>Actualizar Logotipo</span>
+                                        <input type="file" id="fotoCliente" name="fotoCliente">          
+                                    </label>
+                                </form>
+                            </td>
+                        </tr>
                     </table>
 
+
                     <div class="panel-body">
-                        <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar</div>
-                        <br><br>
+                        <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar<br><br></div>
+                        
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <div class="visible" id="divCliente">
                             <table class="table table-striped">
@@ -305,6 +286,7 @@
                                                     <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
                                                 </div>
                                             </div>
+                                            <br>
                                         </div>
                                     </td>
                                     <td class="respuesta">
@@ -352,35 +334,10 @@
                                     <td class="atributo"><b>Servicios de interes:</b></td>
                                     <td>
                                         <div class="editar">
-                                            <!--<div class="menusServicios">
-                                                <form>
-                                                    <div class='cssmenu' style="margin-right: 0px;">
-                                                        <div class="col-lg-6">
-                                                            <div class="input-group">
-                                                                <input type="text" id="inputBusquedaI" class="form-control" name="serviciosInteres" placeholder="Buscar servicio">
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" id="btn_agregarI" class="btn btn-default editando">Agregar</button>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <ul id="I">
-                                                            <li class='has-sub'><a href='#'><span>Servicios</span></a>
-                                                                <ul id="menuServiciosInteres">
-                                                                </ul>
-                                                            </li>   
-                                                        </ul>
-                                                    </div>
-                                                </form>
-                                                <div class="desborde"></div>
-                                                <br>
-                                                <ol id="listaInteres" class="list-group"></ol>
-                                            </div>-->
-                                            <form id="form_serviciosI">
+                                            <div id="div_serviciosI">
                                                 <select id="select_ServI" class="menuServicios" name="idservicio" multiple placeholder="Buscar servicios" style="width:400px;">
                                                 </select>
-                                                <input type="hidden" name="idcliente" value="<%- id %>">
-                                                <input type="hidden" name="status" value="1">
-                                            </form>
+                                            </div>
                                         </div>
                                         <div id="serviciosInteres"></div>
                                     </td>
@@ -396,35 +353,10 @@
                                     </td>
                                     <td>
                                         <div class="editar">
-                                            <!--<div class="menusServicios">
-                                                <form>
-                                                    <div class='cssmenu' style="margin-right: 0px;">
-                                                        <div class="col-lg-6">
-                                                            <div class="input-group">
-                                                                <input type="text" id="inputBusquedaC" class="form-control" name="serviciosCuenta" placeholder="Buscar servicio">
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" id="btn_agregarC" class="btn btn-default editando">Agregar</button>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <ul id="C">
-                                                            <li class='has-sub'><a href='#'><span>Servicios</span></a>
-                                                                <ul id="menuServiciosCuenta">
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </form>
-                                                <div class="desborde"></div>
-                                                <br>
-                                                <ol id="listaCuenta" class="list-group"></ol>
-                                            </div>-->
-                                            <form id="form_serviciosC">
+                                            <div id="div_serviciosC">
                                                 <select id="select_ServC" class="menuServicios" name="idservicio" multiple placeholder="Buscar servicios" style="width:400px;">
                                                 </select>
-                                                <input type="hidden" name="idcliente" value="<%- id %>">
-                                                <input type="hidden" name="status" value="1">
-                                            </form>
+                                            </div>
                                         </div>
                                         <div id="serviciosCuenta"></div>
                                     </td>
@@ -451,12 +383,7 @@
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <!-- -------SEGUNDA PAGINA DE INFORMACION DEL CLIENTE------- --> 
                         <div class="visible oculto">
-                            <div class="row">
-                                <div class="col-md-2 col-md-offset-10">
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo</button>
-                                </div>
-                            </div>
-                            
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
                             <div id="divContactos">
                                 <!--AQUÍ VAN LOS CONTACTOS-->
                             </div>
@@ -482,7 +409,7 @@
                                 <select name="persona" class="form-control">
                                     <option value="representante">Representante</option>
                                     <option value="contacto">Contacto</option>
-                                    <option selected value="">¿Qué desea registar?</option>
+                                    <option selected disabled value="">¿Qué desea registar?</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -515,8 +442,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary" id="btn_nuevoContacto">Guardar contacto</button>
+                        <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
