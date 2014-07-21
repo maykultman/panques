@@ -71,9 +71,9 @@
 					<!--lista de permisos	 -->  	 
 				</div>  	
 				</form>
-			</div>			    
+			</div>	<br>		    
 		
-		<button id="guardar" type="button" class="btn btn-default"> Guardar  </button>
+		<center><button id="guardar" type="button" class="btn btn-primary" > Guardar  </button></center>
 	</div>
 </script>
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>

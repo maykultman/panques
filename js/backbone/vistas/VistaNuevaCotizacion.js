@@ -91,8 +91,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
          event.preventDefault(); 
       },
 
-        establecerTotal : function (elemento)
-        {
+      establecerTotal : function (elemento)
+      {
            var total = 0;
            /*...Cada que se levante una tecla recuperaremos todos los importes y lo pasamos a un array...*/          
            var array = pasarAJson($('.importes').serializeArray());

@@ -13,7 +13,7 @@ class  Foto extends REST {
     
     private function create()
     {
-        if($_FILES['fotoCliente']['name'])
+        if(array_key_exists('fotoCliente', $_FILES)) //$_FILES['fotoCliente']['name'])
         {
             $carpeta="img/fotosClientes/";
             opendir($carpeta);
@@ -24,7 +24,8 @@ class  Foto extends REST {
                     
             }
         }
-        elseif ($_FILES['fotoCliente']['name'])
+        // if($_FILES['fotoUsuario']['name'])
+        if(array_key_exists('fotoUsuario', $_FILES))
         {
             $carpeta="img/fotosUsuarios/";
             opendir($carpeta);
