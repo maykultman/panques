@@ -24,22 +24,22 @@
 	<h3>Inversión & Tiempo</h3>
 	<hr>		
 	<div class="row">
-		<div class="col-md-6" style="width: 30% !important">
+		<div class="col-md-4">
 			<input type="text" id="bserv" style = "width : 100%; height:35px;" class="valor" val="" placeholder="Buscar Servicios">
 			<div class="panel panel-primary" style="margin-top: 20px">
 		      <div class="panel-heading">
 		        <h3 class="panel-title">Seleccionar servicios</h3>
 		      </div>
-		      <div class="panel-body" style="overflow: auto; height: 230px;">
-		        <table id="listaServicios" class="table table-hover" >
-		        	<tbody style="width :100%;">	
+		      <div class="panel-body" style="overflow: auto; height: 216px; padding: 0px !important;">
+		        <table id="listaServicios" class="table table-hover">
+		        	<tbody >	
 			    		<!-- Esta sección contiene la lista de los servicios -->
 					</tbody>
 		        </table>	
 		      </div>
 		    </div>			
 		</div>
-		<div class="col-md-6" style="width: 70% !important">
+		<div class="col-md-8">
 			<table id="mostrarTabla" class="table table-striped">
 				<thead style="background : #F9F9F9;">
 					<tr>
@@ -111,7 +111,7 @@
 		</td>
 
 		<td class="iconos-operaciones">			
-			<span class="icon-circledelete btndelete"  data-toggle="tooltip" title="Eliminar" id="<%- id %>"></span>
+			<span class="icon-circledelete btndelete"  data-toggle="tooltip" title="Eliminar" id="<%- id %>" style="vertical-align: middle;"></span>
 		</td>	
 </script>
 

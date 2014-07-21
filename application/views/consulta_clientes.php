@@ -20,7 +20,7 @@
                     <tr>
                         <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
                         <th class="sorter-false"></th>
-                        <th>
+                        <th class="sorter-false">
                             <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
                             <span class="icon-search busqueda"></span>
                         </th>
@@ -28,7 +28,7 @@
                         <th class="sorter-false">
                             Página web
                         </th>
-                        <th style="text-align=center;">Ultima actividad</th>
+                        <th class="sorter-false" style="text-align=center;">Ultima actividad</th>
                         <th class="sorter-false">Operaciones</th>
                     </tr>
                 </thead>

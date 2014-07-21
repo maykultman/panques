@@ -19,7 +19,7 @@
 		<div id="comentario"></div>
 	</div>
 
-	<h1>Nuevo Proyecto</h1>
+	<!-- <h1>Nuevo Proyecto</h1> -->
 
 	<style type="text/css">
 		/*#divSecciones {
@@ -73,48 +73,54 @@
 			<li>Guardar proyecto</li>
 		</ul> -->
 		<section id="paso1" class="section_Visible"><!-- section_Oculto -->
-			<div class="panel panel-primary">
-				<div class="panel-heading">Datos de proyecto</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Datos de proyecto</b></div>
 				<div class="panel-body">
 					<form id="formNuevoProyecto">
 						<div class="row">
-							<div class="col-md-3">
-								<fieldset>
-									<legend> <h5>Cliente y nombre del proyecto</h5> </legend>
-									<div class="form-group has-feedback">
-									  	<input type="text" id="busqueda" class="form-control" placeholder="Buscar cliente" style="width: 100%;">
-									  	<span class="glyphicon glyphicon-search form-control-feedback" style="top:0px"></span>
-										<input type="hidden" id="hidden_idCliente" name="idcliente">
-									</div>
-									<input type="text" class="form-control" placeholder="Nombre del proyecto" style="width:100%" name="nombre">
-								</fieldset>
+							<div class="col-md-5">								
+								<legend><h5><b>Cliente y nombre del proyecto</b></h5> </legend>
+								<div class="form-group has-feedback">
+								  	<input type="text" id="busqueda" class="form-control" placeholder="Buscar cliente" style="width: 100%;">
+								  	<span class="glyphicon glyphicon-search form-control-feedback" style="top:0px"></span>
+									<input type="hidden" id="hidden_idCliente" name="idcliente">
+								</div>
+								<input type="text" class="form-control" placeholder="Nombre del proyecto" style="width:100%" name="nombre">						
 							</div>
-							<div class="col-md-9">
-								<fieldset>
-									<legend> <h5>Establecer fecha de inicio y fecha de entrega del proyecto</h5> </legend>
-									<div class="row">
-										<div class="col-md-3">
-											<div style="margin: 23px 0px 21px 0px;"><b>Inicio</b></div>
-								    		<input id="fechaInicio" class="form-control datepicker" type="text" name="fechainicio">
-										</div>
-										<div class="col-md-3">
-											<div style="margin: 23px 0px 21px 0px;"><b>Termino</b></div>
-											<input id="fechaEntrega" class="form-control datepicker" type="text" name="fechafinal">
-										</div>
-										<div class="col-md-3">
-											<div style="margin: 23px 0px 21px 0px;"><b>Duración en días</b></div>
-											<input type="number" id="duracion" class="form-control" min="1">
-										</div>
+							<div class="col-md-7">								
+								<legend> <h5><b>Establecer fecha de inicio y fecha de entrega del proyecto</h5></b></legend>
+								<div class="row" style="margin-top: -15px;">
+									<div class="col-md-4">
+										<div style="margin: 23px 0px 21px 0px;"><b>Inicio</b></div>
+							    		<input id="fechaInicio" class="form-control datepicker" type="text" name="fechainicio">
 									</div>
-								</fieldset>
+									<div class="col-md-4">
+										<div style="margin: 23px 0px 21px 0px;"><b>Termino</b></div>
+										<input id="fechaEntrega" class="form-control datepicker" type="text" name="fechafinal">
+									</div>
+									<div class="col-md-4">
+										<div style="margin: 23px 0px 21px 0px;"><b>Duración en días</b></div>
+										<input type="number" id="duracion" class="form-control" min="1">
+									</div>
+								</div>								
 							</div>
 						</div>
-						<br>
-						<fieldset>
-							<legend> <h5>Servicios que integrarán el proyecto</h5> </legend>
-							<div class="row">
-								<div class="col-md-3">
-									<table class="table table-hover table-curved"><!--  tbla_apilacion -->
+						<br>						
+						<legend> <h5><b>Seleccionar los servicios que integrarán el proyecto</b></h5> </legend>
+						<div class="row">
+							<div class="col-md-5">
+								<div  class="panel panel-default">
+							        <!-- Default panel contents -->
+							        <div class="panel-heading color">Servicios</div>
+							        <!-- Table -->
+							        <div class="panel-body" style="overflow: auto; height: 177px;">
+								        <table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
+								        <tbody id="tbody_servicios">
+								        	<!-- PLANTILLAS DE SERVICIOS -->
+										</tbody>
+								      </table>
+							    	</div>      
+									<!-- <table class="table table-hover table-curved">
 										<thead class="cabecera_serv2">
 											<tr class="color_th">						
 											  <th>Servicios</th>
@@ -122,40 +128,42 @@
 										</thead>
 										<tbody id="tbody_servicios" class="scrolltbla">
 										</tbody>
-									</table>	
+									</table>	 -->
 								</div>
-								<div class="col-md-7">
-									<table id="tbla_roles" class="table table-striped table-curved">
-										<thead>
-											<tr class="color_th">
-												<th>&nbsp;&nbsp;&nbsp;</th>
-												<th>Servicio seleccionado</th>
-												<th>&nbsp;&nbsp;&nbsp;</th>
-											</tr>
-									    </thead>
-									    <tbody id="tbody_servicios_seleccionados">
-									    	<!-- PLANTILLA SERVICIOS SELECCIONADOS -->
-									    </tbody>
-									    <tfoot>
-									    	<tr>
-										    	<td colspan="4">
-										    		<!-- <button type="button" id="checkboxServicios" class="btn_marcarTodos">Marcar todos</button> -->
-													<div class="btn-group" data-toggle="buttons">
-														<label class="btn btn-default btn-xs">
-															<input type="checkbox" id="checkboxServicios" class="btn_marcarTodos"> Marcar todos
-														</label>
-													</div>
-													<button type="button" class="btn btn-danger btn-xs checkboxServicios btn_eliminarMarcados">Eliminar marcados</button>
-										    	</td>
-										    </tr>
-									    </tfoot>		
-									</table>
-								</div>
-							</div> <!-- Fin class row -->
-						</fieldset>
-
-						<textarea class="form-control" rows="4" placeholder="Descripción del proyecto" name="descripcion"></textarea>
-						
+							</div>	
+							<div class="col-md-7">
+								<table id="tbla_roles" class="table table-striped table-curved">
+									<thead>
+										<tr class="color_th">
+											<th>&nbsp;&nbsp;&nbsp;</th>
+											<th>Servicios seleccionados</th>
+											<th>&nbsp;&nbsp;&nbsp;</th>
+										</tr>
+								    </thead>
+								    <tbody id="tbody_servicios_seleccionados">
+								    	<!-- PLANTILLA SERVICIOS SELECCIONADOS -->
+								    </tbody>
+								    <tfoot>
+								    	<tr>
+									    	<td colspan="4">
+									    		<!-- <button type="button" id="checkboxServicios" class="btn_marcarTodos">Marcar todos</button> -->
+												<div class="btn-group" data-toggle="buttons">
+													<label class="btn btn-default btn-xs">
+														<input type="checkbox" id="checkboxServicios" class="btn_marcarTodos"> Marcar todos
+													</label>
+												</div>
+												<button type="button" class="btn btn-danger btn-xs checkboxServicios btn_eliminarMarcados">Eliminar marcados</button>
+									    	</td>
+									    </tr>
+								    </tfoot>		
+								</table>
+							</div>
+						</div> <!-- Fin class row -->
+						<div class="row">
+							<div class="col-md-12">
+								<textarea class="form-control" rows="4" placeholder="Descripción del proyecto" name="descripcion" style="width: 100% !important;"></textarea>
+							</div>
+						</div>						
 					</form>
 				</div>
 				<!-- <div class="panel-footer">
@@ -164,19 +172,26 @@
 				</div> -->
 			</div>
 		</section>
-
 		<section id="paso2" class="section_Visible">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Roles del proyecto</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Roles del proyecto</b></div>
 				<div class="panel-body">
+					<legend><h5>Establecer a los participantes del proyecto con sus respectivos roles</h5></legend>							
 					<div class="row">
-						<div class="col-md-12">
-							<fieldset>
-								<legend><h5>Establecer participantes en el proyecto y sus respectivos roles</h5></legend>
-							</fieldset>
-						</div>
-						<div class="col-md-3">
-							<table class="table table-hover table-curved"><!--  tbla_apilacion -->
+						<div class="col-md-5">
+							<div  class="panel panel-default">
+						        <!-- Default panel contents -->
+						        <div class="panel-heading color">Empleados</div>
+						        <!-- Table -->
+						        <div class="panel-body" style="overflow: auto; height: 177px;">
+							        <table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
+							        <tbody id="tbody_empleados">
+							        	<!-- PLANTILLAS DE SERVICIOS -->
+									</tbody>
+							      </table>
+						    	</div> 								
+							</div>
+						    <!-- <table class="table table-hover table-curved">
 								<thead class="cabecera_serv2">
 									<tr class="color_th">						
 									  <th>Empleado</th>
@@ -184,9 +199,9 @@
 								</thead>
 								<tbody id="tbody_empleados" class="scrolltbla">
 								</tbody>
-							</table>
+							</table> -->
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-7">
 							<table id="tbla_roles" class="table table-striped table-curved">
 								<thead>
 									<tr class="color_th">
@@ -230,13 +245,13 @@
 		</section>
 
 		<section id="paso3" class="section_Visible">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Archivos del proyecto</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Archivos del proyecto</b></div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-12">
 							<fieldset>
-								<legend><h5>Adjunta los archivos para el proyecto. No seleccione carpetas. Los archivos deben estár en la misma carpeta</h5></legend>
+								<legend><h5>Adjunta los archivos para el proyecto. No seleccione carpetas.(Los archivos deben estár en la misma carpeta) </h5></legend>
 							</fieldset>
 						</div>
 					</div>

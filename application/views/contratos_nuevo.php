@@ -19,8 +19,7 @@
 							<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se firmará el contrato">
 							<input type="hidden" id="hidden_fechafirma" name="fechafirma">
 							<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->
-					    </div>
-						
+					    </div><br>						
 						
 						<h5 style="display: inline-block"><b>Eliga Tipo de plan:</b></h5>
 						<div id="planes" class="btn-group" data-toggle="buttons">
@@ -31,8 +30,7 @@
 								<input type="radio" name="plan" id="iguala" class="btn_plan" value="iguala">Iguala Mensual
 							</label>			
 						</div>
-					</div>
-					
+					</div>					
 					<div class="col-md-6" >	
 						<h3>Servicios a contratar</h3>
 						<hr>								            
@@ -48,7 +46,7 @@
 					    </div>
 					</div>    
 				</div>
-				<br>        			    
+				<br><br>        			    
 			    <table id="tabla_contrato" class="table table-striped"><!--  border="1" -->
 					<thead style="background-color: #f9f9f9!important;">
 						<tr>
@@ -195,7 +193,7 @@
 	<script type="text/template" id="plantillaServicio">
 		<td style="width: 580px ">
 			<!--<span   class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>-->
-			<label class="clasePrueba" for="servicio_<%- id %>"><%- nombre %></label>
+			<label class="clasePrueba" for="servicio_<%- id %>" style="width:100% !important;"><%- nombre %></label>
 			<div class="div_info" style="display: none;">
 				<ul>	
 					<li>Concepto: 		<h7><%- concepto %>		</h7><li>

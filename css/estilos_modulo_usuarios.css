@@ -94,12 +94,12 @@
 	margin-top:15px; 
 }	
 
-tbody#scroll_permisos{ 
+/*tbody#scroll_permisos{ 
 	display: block; 
 	height: 210px; 
 	overflow: auto; 
 	width: 100%;
-}
+}*/
 
 .eliminar_permiso{
 
@@ -171,12 +171,12 @@ display: inline-block;
 	
 /*-------------Catalogo ROLES---------*/
 
-tbody#scroll_roles{ 
+/*tbody#scroll_roles{ 
 	display: block; 
 	height: 210px; 
 	overflow: auto; 
 	width: 100%!important;
-}
+}*/
 
 #busqueda_icono{
 
@@ -214,13 +214,13 @@ td .visibleR{
 
 /*------------------catalogos puestos------------*/
 
-tbody#scroll_puestos{ 
+/*tbody#scroll_puestos{ 
 	display: block; 
 	height: 210px; 
 	overflow: auto; 
 	width: 100%;
 }
-
+*/
 
 /*------------------Consulta Clientes.............*/ 
 
