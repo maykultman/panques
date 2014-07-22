@@ -315,7 +315,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						here.vistaTelefono.crear({
 							idpropietario   : exito.get('id'),
 							tabla           : 'clientes',
-							numero          : pasarAJson($('.telefonoRepresentante').serializeArray()).numero,
+							numero          : pasarAJson($('.telefonoCliente').serializeArray()).numero,
 							tipo            : pasarAJson($('.tipoTelefonoCliente').serializeArray()).tipo
 						});
 
@@ -363,7 +363,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						};
 						
 					confirmar(
-						'<p>¡El cliente ha sido guardado con exito!</p><p><b>¿Deseas registrar el <b>representante</b> o <b>contactos</b> del cliente?</b></p>',
+						'<p>¡El cliente ha sido guardado con exito!</p><p><b>¿Deseas registrar al <b>representante</b> o <b>contactos</b> del cliente?</b></p>',
 						function (){
 							here.$('.visibleR').toggleClass('ocultoR');
 							window.scrollTo(0,0);
