@@ -98,4 +98,7 @@
 <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    
+<script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script> 
+
+<!-- libreria para el theaad fijo de las tablas -->  
+ 
