@@ -56,8 +56,8 @@ app.VistaCatalogoPuesto = Backbone.View.extend({
 
 	eliminar : function()
 	{
-		console.log(this.model);
-		// this.model.destroy(); //...Destruye un modelo de la lista de roles...
+		// console.log(this.model);
+		this.model.destroy(); //...Destruye un modelo de la lista de roles...
 	}
 
 });

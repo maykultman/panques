@@ -38,8 +38,7 @@
 							<th class="sorter-false">Opciones</th>
 						</tr>	
 					</thead>
-					<tbody>
-							
+					<tbody>							
 					</tbody>					
 				</table>
 			</div><br>
@@ -62,13 +61,8 @@
 	     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
 	     <span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
 	    </div>
-	</td> 
-        
-	
- </script> 
-
-
-
+	</td>
+ </script>
 <!-- Utilerias -->
     <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>-->
 <!-- Librerias -->
@@ -100,8 +94,8 @@
 <!-- <script type="text/javascript" src="js/backbone/vista_servicio.js"></script> -->
 
 <!-- Librerias para el thead fijo y  scroll de la tabla   -->
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    
+<script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    

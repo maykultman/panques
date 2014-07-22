@@ -55,6 +55,7 @@
 		</div>
 	</td>
 
+
 </script>
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
