@@ -486,7 +486,9 @@ app.VistaCliente = Backbone.View.extend({
 		Backbone.emulateJSON = false;
 	},
 	actualizarComentario      	: function (elem) {
-		$(elem.currentTarget).parents('tr').children('.respuesta').html('<img src="img/ajaxloader.gif">');
+		// $(elem.currentTarget).parents('tr').children('.respuesta').html('<img src="img/ajaxloader.gif">');
+		this.$('#spin').removeClass().addClass('spin');
+		var here = this;
 		clearTimeout(this.esperar);
 		var modelo = this.model;
 
@@ -505,13 +507,14 @@ app.VistaCliente = Backbone.View.extend({
 						wait    : true,//Esperamos respuesta del server
 						patch   : true,//Evitamos enviar todo el modelo
 						success : function (exito) {//Encaso del exito
-							$(elem.currentTarget)//Selector
+							/*$(elem.currentTarget)//Selector
 								//Nos hubicamos en el padre del selector
 								.parents('tr')
 								//Buscamos al hijo con la clase especificada
 								.children('.respuesta')
 								//Removemos su atributo class
-								.html('<label class="icon-uniF479 exito"></label>');
+								.html('<label class="icon-uniF479 exito"></label>');*/
+								here.$('#spin').removeClass().addClass('icon-uniF479 exito');
 						},
 						error   : function (error) {//En caso de error
 							$(elem.currentTarget)//Selector
@@ -549,7 +552,7 @@ app.VistaCliente = Backbone.View.extend({
 			};
 		};
 	},
-	agregarServciciosClienteI 	: function (id) {
+	agregarServciciosClienteI 	: function () {
 		this.$('#serviciosInteres').html('');
 		var here = this, vSC;
 		app.coleccionServiciosClientesI.each(function (model) {
@@ -559,7 +562,7 @@ app.VistaCliente = Backbone.View.extend({
 			};
 		}, this);
 	},
-	agregarServciciosClienteC 	: function (id) {
+	agregarServciciosClienteC 	: function () {
 		this.$('#serviciosCuenta').html('');
 		var here = this, vSC;
 		app.coleccionServiciosClientesC.each(function (model) {
@@ -616,49 +619,81 @@ app.VistaCliente = Backbone.View.extend({
 	},
 	guardarServicio           	: function (elem) {
 		var here = this;
-
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
+		
 		if ( (elem.type === 'change' || elem.which == 13) && $(elem.currentTarget).attr('id') == 'select_ServI' ) {
-			if ( app.coleccionServiciosClientesI.findWhere({ idservicio : $(elem.currentTarget).val()[0] }) ) {
-				alerta('El servicio ya está en la lista',function () {});
-				return;
-			} else {
-				if( app.coleccionServicios.findWhere({ id : $(elem.currentTarget).val()[0] }) ){
-					app.coleccionServiciosClientesI.create({
-							idcliente:here.model.get('id'),
-							idservicio:$(elem.currentTarget).val(),
-							status:true,
-						},{
-							wait:true,
-							success:function (exito) {
-								app.coleccionServiciosClientesI.fetch({
-									reset:true,
-									success:function () {
-										here.$('#serviciosInteres small .editar').toggleClass('editando');
-									}
-								});
-								$(elem.currentTarget)
-								//Nos hubicamos en el padre del selector
-								.parents('tr')
-								//Buscamos al hijo con la clase especificada
-								.children('.respuesta')
-								//Removemos su atributo class
-								.html('<label class="icon-uniF479 exito"></label>');
-								here.$('#serviciosInteres small .editar').toggleClass('editando');
-							},
-							error:function () {
-								$(elem.currentTarget)
-								//Nos hubicamos en el padre del selector
-								.parents('tr')
-								//Buscamos al hijo con la clase especificada
-								.children('.respuesta')
-								//Sustituimos html por uno nuevo
-								.html('<label class="icon-uniF478 error"></label>');
-							}
+			var servicioCliente = app.coleccionServiciosClientesI.findWhere({ idservicio : $(elem.currentTarget).val()[0], idcliente : this.model.get('id') });
+			if (servicioCliente != undefined) {
+				if ( ( servicioCliente.get('status') == '1' || servicioCliente.get('status') == true ) && servicioCliente != undefined ) {
+					alerta('El servicio ya está en la lista',function () {});
+					return;
+				} else if( ( servicioCliente.get('status') == '0' || servicioCliente.get('status') == false ) && servicioCliente != undefined ) {
+					servicioCliente.save({
+						status:'1'
+					},{
+						wait: true,
+						patch: true,
+						success : function () {
+							here.agregarServciciosClienteI();
+							here.$('#serviciosInteres small .editar').toggleClass('editando');
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Removemos su atributo class
+							.html('<label class="icon-uniF479 exito"></label>');
+						},
+						error	: function () {
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Sustituimos html por uno nuevo
+							.html('<label class="icon-uniF478 error"></label>');
 						}
-					);          
+					});
+				};
+			} else{
+				if( app.coleccionServicios.findWhere({ id : $(elem.currentTarget).val()[0] }) ){
+					Backbone.emulateHTTP = true;
+					Backbone.emulateJSON = true;
+					app.coleccionServiciosClientesI.create({
+						idcliente:here.model.get('id'),
+						idservicio:$(elem.currentTarget).val(),
+						status:true,
+					},{
+						wait:true,
+						success:function (exito) {
+							app.coleccionServiciosClientesI.fetch({
+								reset:true,
+								success:function () {
+									here.$('#serviciosInteres small .editar').toggleClass('editando');
+								}
+							});
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Removemos su atributo class
+							.html('<label class="icon-uniF479 exito"></label>');
+						},
+						error:function () {
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Sustituimos html por uno nuevo
+							.html('<label class="icon-uniF478 error"></label>');
+						}
+					});
+					Backbone.emulateHTTP = false;
+					Backbone.emulateJSON = false;          
 				} else {
+					Backbone.emulateHTTP = true;
+					Backbone.emulateJSON = true;
 					app.coleccionServicios.create({
 						idcliente           :here.model.get('id'),
 						nombre              :$(elem.currentTarget).val(),
@@ -690,7 +725,45 @@ app.VistaCliente = Backbone.View.extend({
 							.html('<label class="icon-uniF479 exito"></label>');
 						},
 						error   : function (error) {
-							console.log(error);
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Sustituimos html por uno nuevo
+							.html('<label class="icon-uniF478 error"></label>');
+						}
+					});
+					Backbone.emulateHTTP = false;
+					Backbone.emulateJSON = false;
+				};
+			};
+		};
+
+		if ( (elem.type === 'change' || elem.which == 13) && $(elem.currentTarget).attr('id') == 'select_ServC' ) {
+			var servicioCliente = app.coleccionServiciosClientesC.findWhere({ idservicio : $(elem.currentTarget).val()[0], idcliente : this.model.get('id') });
+			if (servicioCliente != undefined) {
+				if ( ( servicioCliente.get('status') == '1' || servicioCliente.get('status') == true ) && servicioCliente != undefined ) {
+					alerta('El servicio ya está en la lista',function () {});
+					return;
+				} else if( ( servicioCliente.get('status') == '0' || servicioCliente.get('status') == false ) && servicioCliente != undefined ) {
+					servicioCliente.save({
+						status:'1'
+					},{
+						wait: true,
+						patch: true,
+						success : function () {
+							here.agregarServciciosClienteC();
+							here.$('#serviciosCuenta small .editar').toggleClass('editando');
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Removemos su atributo class
+							.html('<label class="icon-uniF479 exito"></label>');
+						},
+						error	: function () {
 							$(elem.currentTarget)
 							//Nos hubicamos en el padre del selector
 							.parents('tr')
@@ -701,12 +774,91 @@ app.VistaCliente = Backbone.View.extend({
 						}
 					});
 				};
-
+			} else{
+				if( app.coleccionServicios.findWhere({ id : $(elem.currentTarget).val()[0] }) ){
+					Backbone.emulateHTTP = true;
+					Backbone.emulateJSON = true;
+					app.coleccionServiciosClientesC.create({
+						idcliente:here.model.get('id'),
+						idservicio:$(elem.currentTarget).val(),
+						status:true,
+					},{
+						wait:true,
+						success:function (exito) {
+							app.coleccionServiciosClientesC.fetch({
+								reset:true,
+								success:function () {
+									here.$('#serviciosCuenta small .editar').toggleClass('editando');
+								}
+							});
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Removemos su atributo class
+							.html('<label class="icon-uniF479 exito"></label>');
+						},
+						error:function () {
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Sustituimos html por uno nuevo
+							.html('<label class="icon-uniF478 error"></label>');
+						}
+					});
+					Backbone.emulateHTTP = false;
+					Backbone.emulateJSON = false;          
+				} else {
+					Backbone.emulateHTTP = true;
+					Backbone.emulateJSON = true;
+					app.coleccionServicios.create({
+						idcliente           : here.model.get('id'),
+						nombre              : $(elem.currentTarget).val(),
+						servicioscuenta     : 'servicioscuenta',
+						status              : ['1']
+					},{
+						wait    : true,
+						success : function (exito) {
+							app.coleccionServiciosClientesC.fetch({
+								reset:true,
+								success:function () {
+									here.$('#serviciosCuenta small .editar').toggleClass('editando');
+								}
+							});
+							app.coleccionServicios.fetch({
+								reset:true,
+								success: function (coleccion) {
+									this.$('#div_serviciosI').html('<select id="select_ServI" class="menuServicios" name="idservicio" multiple placeholder="Buscar servicios" style="width:400px;"></select>');
+									this.$('#div_serviciosC').html('<select id="select_ServC" class="menuServicios" name="idservicio" multiple placeholder="Buscar servicios" style="width:400px;"></select>');
+									here.cargarServicios();
+								}
+							});
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Removemos su atributo class
+							.html('<label class="icon-uniF479 exito"></label>');
+						},
+						error   : function (error) {
+							$(elem.currentTarget)
+							//Nos hubicamos en el padre del selector
+							.parents('tr')
+							//Buscamos al hijo con la clase especificada
+							.children('.respuesta')
+							//Sustituimos html por uno nuevo
+							.html('<label class="icon-uniF478 error"></label>');
+						}
+					});
+					Backbone.emulateHTTP = false;
+					Backbone.emulateJSON = false;
+				};
 			};
 		};
-		
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
 	},
 	editando                  	: function () {
 		// var here = this;
@@ -946,8 +1098,7 @@ app.VistaCliente = Backbone.View.extend({
 			};
 		};
 	},
-	actualizarFoto				: function (elem) {
-		
+	actualizarFoto				: function (elem) {	
 		this.model.save({
 				foto : urlFoto()	
 			},{

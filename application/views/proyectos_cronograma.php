@@ -54,7 +54,7 @@
 <!-- Utilerias -->
 	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 	<!-- js plugin jQuery Gantt -->
-	<script src="js/plugin/Gantt/js/jquery.fn.gantt.js"></script>
+		<script src="<?=base_url().'js/plugin/Gantt/js/jquery.fn.gantt.js'?>"></script>
 <!-- plantillas -->
 	<script type="text/template" id="tabla_info">
 		<h3><%- nombre %></h3>

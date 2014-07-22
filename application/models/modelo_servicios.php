@@ -31,7 +31,8 @@
 				for ($h = 0 ; $h<count($post['nombre']); $h++)
 				{
 					$this->db->insert('servicios_cliente',array('idcliente'=> $post['idcliente'],
-																'idservicio'=>$ids[$h])); 
+																'idservicio'=>$ids[$h],
+																'status'=> $post['status'][$h])); 
 					$resp[$h] = $this->db->insert_id();		
 				}
 				return count($resp);
@@ -41,7 +42,8 @@
 				for ($j = 0 ; $j<count($post['nombre']); $j++)
 				{
 					$this->db->insert('servicios_interes',array('idcliente'=> $post['idcliente'],
-																'idservicio'=>$ids[$j])); 
+																'idservicio'=>$ids[$j],
+																'status'=> $post['status'][$j])); 
 					$resp[$j] = $this->db->insert_id();		
 				}
 				return count($resp);

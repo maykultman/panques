@@ -2,6 +2,15 @@
     <!-- plugin selectize css -->
         <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
+    <style type="text/css">
+        .spin{
+            width: 15px;
+            height: 15px;
+            background-image: url(http://crmqualium.com/img/ajax-loader.gif);
+            background-size: 100% 100%;
+        }
+    </style>
+
     <div id="posicion_infotd">        
         <div id="clientes" class="wrapper">                            
             <table id="tbla_cliente" class="tablesorter table-striped">
@@ -153,11 +162,10 @@
                         <tr>
                             <td colspan="2">
                                 <!--BOTON PARA ACTUALIZAR FOTO DEL CLIENTE-->
-                                <form id="formularioFoto" style="margin: 5px 0px 0px 7px;">
-                                    <label class="btn btn-default btn-xs fileinput-button editar">
-                                        <span class="icon-paperclip"></span>
-                                        <span>Actualizar Logotipo</span>
-                                        <input type="file" id="fotoCliente" name="fotoCliente">          
+                                <form id="formularioFoto" style="margin: 5px 0px 0px 17px;">
+                                    <label class="btn btn-default btn-xs" for="fotoCliente">
+                                        Actualizar logotipo
+                                        <input type="file" id="fotoCliente" name="fotoCliente" style="display:none;">
                                     </label>
                                 </form>
                             </td>
@@ -376,7 +384,10 @@
                                             <textarea id="comentario" class="form-control editar" name="comentarioCliente" rows="3"></textarea>
                                         <% }; %>
                                     </td>
-                                    <td class="respuesta"><span class="icon-uniF55C" style="visibility: hidden;"></span></td>
+                                    <td class="respuesta">
+                                        <!--<span class="icon-uniF55C" style="visibility: hidden;"></span>-->
+                                        <div id="spin"><div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

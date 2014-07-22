@@ -313,7 +313,7 @@ function formatearFechaUsuario (fecha) {
             contentType: false,
             processData: false
         });
-        console.log(resp);
+        // console.log(resp);
         if (resp.responseText != 'false'){
             resp = resp.responseText.split('');
             resp.pop();
