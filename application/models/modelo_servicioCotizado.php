@@ -3,7 +3,7 @@
     class Modelo_servicioCotizado extends Modelo_crud
     {   
         public function create($post) 
-        {   var_dump($post); die();
+        {  
           $this->db->insert('servicios_cotizados', $post);
           return $this->get($this->db->insert_id());  
         }# Fin del metodo insert_mcontact()...

@@ -7,9 +7,13 @@ app.VistaPerfil = Backbone.View.extend({
 	plantilla : _.template($('#Perfil').html()),
 
 	events : {
-		'click #guardarEdicion' : 'editar'
+		'click #guardarEdicion' : 'editar',
+		'click .icon-trash'		: 'destroy'
 	},
-
+	initialize : function()
+	{
+		this.listenTo(this.model, 'destroy', this.remove); 
+	},
 	render : function (){
 		this.$el.html(this.plantilla(this.model.toJSON()));
 		this.$ListaPermisos = this.$('#ListaPermisos');
@@ -47,6 +51,11 @@ app.VistaPerfil = Backbone.View.extend({
 			}
 		);
 		events.preventDefault();
+	},
+
+	destroy : function()
+	{
+		this.model.destroy();
 	}
 
 });

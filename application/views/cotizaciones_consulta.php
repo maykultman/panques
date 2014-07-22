@@ -1,5 +1,6 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
 <script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=base_url().'css/estilos_modulo_cotizaciones.less'?>">
 <style type="text/css">
 	#posicion_infotd, #section_actualizar {
 		/*float: left;*/
@@ -82,10 +83,10 @@
 		      <div class="panel-heading">
 		        <h3 class="panel-title">Seleccionar servicios</h3>
 		      </div>
-		      <div class="panel-body" style="overflow: auto; height: 230px;">
+		      <div class="panel-body" style="overflow: auto; height: 230px; padding: 0px !important;">
 		        <table id="listaServicios" class="table table-hover" >
 		        	<tbody style="width :100%;">	
-			    		<!-- Esta sección contiene la lista de los servicios -->
+			    		<!-- Esta sección contiene la lista de los servicios - -->
 					</tbody>
 		        </table>	
 		      </div>

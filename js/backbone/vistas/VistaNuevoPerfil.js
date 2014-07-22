@@ -41,7 +41,6 @@ app.VistaNuevoPerfil = Backbone.View.extend({
 	{
 		var modeloPerfil = pasarAJson($('#registroPerfil').serializeArray());
 		modeloPerfil.idpermisos = JSON.stringify( modeloPerfil.idpermisos );
-		
 		if(modeloPerfil.nombre)
 		{
 			Backbone.emulateHTTP = true;
@@ -52,8 +51,12 @@ app.VistaNuevoPerfil = Backbone.View.extend({
 				{
 					wait: true,
 					success: function (exito)
-					{},
-					error: function (error) {}
+					{
+						alerta('<p style="color:#1A641A"><b>Perfil Guardado con Éxito</b></p>', function(){});
+					},
+					error: function (error) {
+						alerta('<p style="color:FireBrick"><b>Error al registrar el Perfil</b></p>', function(){});
+					}
 				}
 			); /*...Create del perfil...*/
 

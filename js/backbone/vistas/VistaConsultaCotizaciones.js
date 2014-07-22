@@ -222,10 +222,10 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	cargarCotizacion : function (modelo)
 	{
-	 	var cantidad  = 0;	 	var precio = 0;	 var descuento = 0;	 	var total  = 0;
+		var cantidad  = 0;	 	var precio = 0;	 var descuento = 0;	 	var total  = 0;
 	 	
 	 	/* Busqueda de id´s en cada colección*/
-	 	var servicio = app.coleccionServiciosCotizados.where ({ idcotizacion : modelo.get( 'id' ) });
+	 	var servicio = app.coleccionServiciosCotizados.where({ idcotizacion : modelo.get( 'id' ) });
 
 	 	 /*Calculamos el total de todos los servicios que le pertenece a una cotización*/
 	 	for(var i = 0; i < servicio.length; i++ )
@@ -236,18 +236,20 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	 	descuento = Number( servicio[i].get( 'descuento' ) );
 	 	 	total 	 += cantidad * precio - descuento;
 	 	}
-	 	/*...Añadimos campos a la colección de modelocotización...*/ 	 	
-	 	modelo.set
-	 	({    
-	 		'empleado' : app.coleccionEmpleados.get ({ id : modelo.get( 'idempleado' )} ).get('nombre'),
-	 		'cliente'  : app.coleccionClientes. get ({ id : modelo.get( 'idcliente'  )} ).get('nombreComercial'), 
-			'total'    : total
-	 	});
-	 	
-	 	/*...Ahora Instanciamos nuestra vistaCotización y le enviamos el modelo acabado de crear...*/
-	 	var vistaCotizacion = new app.VistaCotizacion({model : modelo});
-	 	/*...Lo añadimos a la tabla para que se apile en la interfaz, mediante el metodo render de la vistaCotización...*/
-	 	this.$tablaCotizaciones.append( vistaCotizacion.render().el);
+	  	/*...Añadimos campos a la colección de modelocotización...*/ 
+	 	if(app.coleccionClientes.get({ id : modelo.get( 'idcliente')}))	 	
+	 	{
+	 		modelo.set
+		 	({    
+		 		'empleado' : app.coleccionEmpleados.get ({ id : modelo.get( 'idempleado' )} ).get('nombre'),
+		 		'cliente'  : app.coleccionClientes. get ({ id : modelo.get( 'idcliente'  )} ).get('nombreComercial'), 
+				'total'    : total
+		 	});
+			 /*...Ahora Instanciamos nuestra vistaCotización y le enviamos el modelo acabado de crear...*/
+		 	var vistaCotizacion = new app.VistaCotizacion({model : modelo});
+		 	/*...Lo añadimos a la tabla para que se apile en la interfaz, mediante el metodo render de la vistaCotización...*/
+		 	this.$tablaCotizaciones.append( vistaCotizacion.render().el);
+		 }	 	
 	},
 
 	cargarCotizaciones : function ()

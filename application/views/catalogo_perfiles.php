@@ -79,6 +79,7 @@
 
 	<div id="collapse5<%-id%>" class="panel-body panel-collapse collapse">
 		<h4>Permisos</h4>
+		<span id="<%-id%>" class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
 		<form id="idpermisos<%-id%>"> 
 	   	<div id="ListaPermisos" class="row"> 
 	   			<!--lista de permisos	 --> 

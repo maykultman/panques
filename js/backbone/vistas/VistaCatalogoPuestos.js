@@ -156,8 +156,12 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 				modeloPuesto,
 				{
 					wait: true,
-					success: function (data){},
-					error: function (error) {}
+					success: function (data){
+						alerta('<p style="color:#1A641A"><b>Puesto Guardado con Éxito</b></p>', function(){});
+					},
+					error: function (error) {
+						alerta('<p style="color:FireBrick"><b>Error al registrar el Puesto</b></p>', function(){});
+					}
 				}
 			);
 			Backbone.emulateHTTP = false;

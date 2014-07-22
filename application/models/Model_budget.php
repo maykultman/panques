@@ -11,18 +11,7 @@
          
         public function create($post)
         {   
-            $args = array(
-                          'idcliente'       => $post[  'idcliente'       ],
-                          'idrepresentante' => $post[  'idrepresentante' ],
-                          'idempleado'      => $post[  'idempleado'      ],
-                          'titulo'          => $post[  'titulo'          ],
-                          'fecha'           => $post[  'fecha'           ],
-                          'detalles'        => $post[  'detalles'        ],
-                          'caracteristicas' => $post[  'caracteristicas' ], 
-                          'idcotizacion'    => $post[  'idcotizacion' ],
-                          'version'         => $post[  'version' ],
-                        );
-            $this->db->insert('cotizaciones', $args);
+            $this->db->insert('cotizaciones', $post);
             return $this->get($this->db->insert_id());     
         }
         
