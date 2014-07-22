@@ -160,7 +160,7 @@
                             <td class="respuesta" style="vertical-align: top;"></td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="2" class="editar">
                                 <!--BOTON PARA ACTUALIZAR FOTO DEL CLIENTE-->
                                 <form id="formularioFoto" style="margin: 5px 0px 0px 17px;">
                                     <label class="btn btn-default btn-xs" for="fotoCliente">

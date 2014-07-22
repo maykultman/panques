@@ -284,7 +284,6 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		}
 
 
-		$('.btn, input, textarea, select').attr('disabled',true);
 
 
 		this.objetoCliente.foto = urlFoto();
@@ -292,6 +291,13 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		/*Guardamos la referencia a this para poder usarla en las
 		  funciones dentro de esta función*/
 		var here = this;
+
+		var numero = pasarAJson($('.telefonoCliente').serializeArray()).numero,
+			tipo = pasarAJson($('.tipoTelefonoCliente').serializeArray()).tipo,
+			serviciosInteres = $(document.getElementsByName('serviciosInteres[]')).val(),
+			serviciosCuenta = $(document.getElementsByName('serviciosCuenta[]')).val();
+
+		$('.btn, input, textarea, select').attr('disabled',true);
 
 		/*Se activan las dos variables globales de Backbone para
 		  mandar de manera correcta el POST de contactos. Antes de finalizar
@@ -315,26 +321,41 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						here.vistaTelefono.crear({
 							idpropietario   : exito.get('id'),
 							tabla           : 'clientes',
-							numero          : pasarAJson($('.telefonoCliente').serializeArray()).numero,
-							tipo            : pasarAJson($('.tipoTelefonoCliente').serializeArray()).tipo
+							numero          : numero,
+							tipo            : tipo
 						});
 
 					/*Guardar servicios de interes y cuenta*/
 						// Obtenemos los servicios (existentes en la o no BD)
-						var servicios       = $(document.getElementsByName('serviciosInteres[]')).val(),
+						var servicios       = serviciosInteres,
 						// Obtenemos array de servicios existentes
 							servPluck   = app.coleccionServicios.pluck('id'),
 						// Aislamos los servicios nuevos (es un array)
 							servNuevo   = _.difference( _.union( servicios,servPluck ),servPluck ),
 						// Aislamos los servicios existentes en la DB
-							servExiste  = _.difference( servicios,servNuevo );
+							servExiste  = _.difference( servicios,servNuevo ),
+							status = [];
 						if (servNuevo[0] != null) {
-							here.agregarNuevoServ({
-								idcliente:exito.get('id'),
-								serviciosinteres:'serviciosinteres',
-								nombre:servNuevo
-							});
+							/*if (servNuevo.length > 1) {*/
+								for (var i = servNuevo.length - 1; i >= 0; i--) {
+									status.push(true);
+								};
+								here.agregarNuevoServ({
+									idcliente:exito.get('id'),
+									serviciosinteres:'serviciosinteres',
+									nombre:servNuevo,
+									status:status
+								});/*
+							} else{
+								here.agregarNuevoServ({
+									idcliente:exito.get('id'),
+									serviciosinteres:'serviciosinteres',
+									nombre:servNuevo[0],
+									status:1
+								});
+							};*/
 						};
+						status = [];
 						if(servExiste.length > 0){
 							if (servExiste.length == 1) {
 								here.guardarServiciosI(exito.get('id'),servExiste[0]);
@@ -343,16 +364,29 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							};
 						};
 
-						servicios   = $(document.getElementsByName('serviciosCuenta[]')).val(),
+						servicios   = serviciosCuenta,
 						servNuevo   = _.difference( _.union( servicios,servPluck ),servPluck ),
 						servExiste   = _.difference( servicios,servNuevo );
 
 						if (servNuevo[0] != null) {
-							here.agregarNuevoServ({
-								idcliente:exito.get('id'),
-								servicioscuenta:'servicioscuenta',
-								nombre:servNuevo
-							});
+							/*if (servNuevo.length > 1) {*/
+								for (var i = servNuevo.length - 1; i >= 0; i--) {
+									status.push(true);
+								};
+								here.agregarNuevoServ({
+									idcliente:exito.get('id'),
+									servicioscuenta:'servicioscuenta',
+									nombre:servNuevo,
+									status:status
+								});/*
+							} else{
+								here.agregarNuevoServ({
+									idcliente:exito.get('id'),
+									servicioscuenta:'servicioscuenta',
+									nombre:servNuevo[0],
+									status:1
+								});
+							};*/
 						};
 						if(servExiste.length > 0){
 							if (servExiste.length == 1) {

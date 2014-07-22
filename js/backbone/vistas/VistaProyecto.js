@@ -101,7 +101,7 @@ app.VistaProyecto = Backbone.View.extend({
 	},
 	render					: function () {
 		/*Creamos nueva propiedad duracion para calculos con fechas*/
-		this.model.set( {duracion:this.calcularDuracion()} );
+		this.model.set( {duracion : calcularDuracion(this.model.get('fechainicio'),this.model.get('fechafinal'))} );
 		this.$el.html( this.plantilla_tr(this.model.toJSON()) );
 		return this;
 	},
@@ -176,7 +176,7 @@ app.VistaProyecto = Backbone.View.extend({
 				esto.cargarRoles();
 				esto.cargarArchivosProy();
 			/* plugin Datepicker jQueryUI */
-				$('.datepicker').datepicker({ 
+				esto.$('.datepicker').datepicker({ 
 					dateFormat	: 'yy-mm-dd', 
 					monthNames	: [
 						'Enero',
@@ -203,7 +203,7 @@ app.VistaProyecto = Backbone.View.extend({
 					]
 				});
 			/* Evento para el obtener la fecha del calendario */
-				$( ".datepicker" ).on('change', function (elem){
+				esto.$( ".datepicker" ).on('change', function (elem){
 					/*Serializamos la fecha (fecha de inicio o final 
 					segun el caso). Lo pasamos como parametro a la 
 					función que  actualiza los atributos del modelo 
@@ -604,36 +604,6 @@ app.VistaProyecto = Backbone.View.extend({
 		for (var i = 0; i < archivo.length; i++) {
 			this.cargarArchivoProy(archivo[i]);
 		};
-	},
-	calcularDuracion		: function () {
-		var valorFechaInicio = new Date(this.model.get('fechainicio')).valueOf();
-		var valorFechaEntrega = new Date(this.model.get('fechafinal')).valueOf();
-		var valorFechaActual = new Date().valueOf();
-		var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - this.excluirDias(this.model.get('fechainicio'), this.model.get('fechafinal'));
-		var queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed() - this.excluirDias(new Date(), this.model.get('fechafinal'));
-		if (queda == -0) queda = 0;
-		var porcentaje = ((100 * queda)/plazo).toFixed();
-
-		// console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
-		return {
-			plazo		:plazo,
-			queda		:queda,
-			porcentaje	:porcentaje
-		};
-	},
-	excluirDias	: function (fechaInicio, fechaFinal) {
-		var contador = 0;
-		var valorFechaInicio = new Date(fechaInicio).valueOf();
-		var valorFechaEntrega = new Date(fechaFinal).valueOf();
-		var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
-		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-		for(var i = 0; i<duracion; i++){
-			var dia = (new Date(new Date(fechaInicio).getTime() + i*24*60*60*1000)).getDay();
-		   	if(days[dia] == 'Saturday' || days[dia] == 'Sunday'){ 
-		   		contador++;
-		   	};
-		};
-		return contador;
 	},
 /* Archivos nuevos */
 	cargarArchivos	: function (elem) {

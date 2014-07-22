@@ -116,10 +116,6 @@ app.VistaServicioContrato = app.VistaServicio.extend({
 		$(elem.currentTarget).attr('disabled',true);
 		vista.calcularImporteIVATotalNeto();
 	},
-	// conmutarInfo	: function (elem) { //Esta función conmuta la visivilidad de la info de cada servicio. Descomentar si dedea habilitar esta funcionalidad
-	// 	 console.log($(".div_info").slideUp());
-	// 	 console.log(this.$(".div_info").slideDown());
-	// }
 });
 
 app.VistaPago = Backbone.View.extend({

@@ -1,77 +1,17 @@
 	<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
+	<!-- plugin selectize css -->
+        <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
-	<div class="alert alert-warning oculto" id="advertencia">
-		<button type="button" class="close cerrar">×</button>
-		<h4>¡Advertencia!</h4>
-		<p id="comentario"></p>
-		<br>
-		<button type="button" id="cancelar" class="btn btn-danger">Borrar</button>
-		<button type="button" id="continuar" class="btn btn-default">Continuar</button>
-	</div>
-	<div class="alert alert-danger alert-dismissable oculto" id="error">
-		<button type="button" class="close cerrar">&times;</button>
-		<strong>¡Error!</strong>
-		<div id="comentario"></div>
-	</div>
-	<div class="alert alert-success alert-dismissable oculto" id="exito">
-		<button type="button" class="close cerrar">&times;</button>
-		<strong>¡Exito!</strong>
-		<div id="comentario"></div>
-	</div>
+        <style type="text/css">
+        .spin{
+            width: 25px;
+            height: 25px;
+            background-image: url(http://crmqualium.com/img/ajax-loader25x25.gif);
+            background-size: 100% 100%;
+        }
+    </style>
 
-	<!-- <h1>Nuevo Proyecto</h1> -->
-
-	<style type="text/css">
-		/*#divSecciones {
-			position: relative;
-		}
-		#divSecciones section {
-			box-sizing: border-box;
-			width: 100%;
-			position: absolute;
-		}
-		#divSecciones section:not(:first-of-type) {
-			display: none;
-		}
-		#progressbar {
-			margin-bottom: 30px;
-			overflow: hidden;
-			counter-reset: step;
-		}
-		#progressbar li {
-			list-style-type: none;
-			text-transform: uppercase;
-			text-align: center;
-			font-size: 9px;
-			width: 25%;
-			float: left;
-			position: relative;
-		}
-		#progressbar li:before {
-			content: counter(step);
-			counter-increment: step;
-			line-height: 20px;
-			display: block;
-			font-size: 10px;
-			color: #333;
-			background: white;
-			margin: 0 auto 5px auto;
-		}
-		#progressbar li:first-child:after {
-			content: none; 
-		}
-		#progressbar li.active:before,  #progressbar li.active:after{
-			background: #27AE60;
-			color: white;
-		}*/
-	</style>
 	<div id="divSecciones">
-		<!-- <ul id="progressbar">
-			<li class="active">Datos de proyecto</li>
-			<li>Roles del proyecto</li>
-			<li>Archivos del proyecto</li>
-			<li>Guardar proyecto</li>
-		</ul> -->
 		<section id="paso1" class="section_Visible"><!-- section_Oculto -->
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>Datos de proyecto</b></div>
@@ -80,16 +20,12 @@
 						<div class="row">
 							<div class="col-md-5">								
 								<legend><h5><b>Cliente y nombre del proyecto</b></h5> </legend>
-								<div class="form-group has-feedback">
-								  	<input type="text" id="busqueda" class="form-control" placeholder="Buscar cliente" style="width: 100%;">
-								  	<span class="glyphicon glyphicon-search form-control-feedback" style="top:0px"></span>
-									<input type="hidden" id="hidden_idCliente" name="idcliente">
-								</div>
+								<select id="busqueda" name="idcliente" placeholder="Buscar cliente" style="width: 100%;"></select>
 								<input type="text" class="form-control" placeholder="Nombre del proyecto" style="width:100%" name="nombre">						
 							</div>
 							<div class="col-md-7">								
 								<legend> <h5><b>Establecer fecha de inicio y fecha de entrega del proyecto</h5></b></legend>
-								<div class="row" style="margin-top: -15px;">
+								<div class="row" style="margin-top: -8px;">
 									<div class="col-md-4">
 										<div style="margin: 23px 0px 21px 0px;"><b>Inicio</b></div>
 							    		<input id="fechaInicio" class="form-control datepicker" type="text" name="fechainicio">
@@ -100,7 +36,10 @@
 									</div>
 									<div class="col-md-4">
 										<div style="margin: 23px 0px 21px 0px;"><b>Duración en días</b></div>
-										<input type="number" id="duracion" class="form-control" min="1">
+										<div class="row">
+											<div class="col-md-6"><input type="number" id="duracion" class="form-control" min="1" style="margin:0px;"></div>
+											<div class="col-md-6" style="margin: 5px 0px 21px 0px;"><small>días habiles</small></div>
+										</div>
 									</div>
 								</div>								
 							</div>
@@ -119,16 +58,7 @@
 								        	<!-- PLANTILLAS DE SERVICIOS -->
 										</tbody>
 								      </table>
-							    	</div>      
-									<!-- <table class="table table-hover table-curved">
-										<thead class="cabecera_serv2">
-											<tr class="color_th">						
-											  <th>Servicios</th>
-											</tr>
-										</thead>
-										<tbody id="tbody_servicios" class="scrolltbla">
-										</tbody>
-									</table>	 -->
+							    	</div>
 								</div>
 							</div>	
 							<div class="col-md-7">
@@ -166,17 +96,13 @@
 						</div>						
 					</form>
 				</div>
-				<!-- <div class="panel-footer">
-					<button type="button" id="btn_cancelarProyecto" class="btn btn-default">Cancelar</button>
-					<button type="button" class="btn btn-default btn_siguiente">Siguiente</button>
-				</div> -->
 			</div>
 		</section>
 		<section id="paso2" class="section_Visible">
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>Roles del proyecto</b></div>
 				<div class="panel-body">
-					<legend><h5>Establecer a los participantes del proyecto con sus respectivos roles</h5></legend>							
+					<legend><h5><b>Establecer participantes en el proyecto con sus respectivos roles</b></h5></legend>							
 					<div class="row">
 						<div class="col-md-5">
 							<div  class="panel panel-default">
@@ -191,15 +117,6 @@
 							      </table>
 						    	</div> 								
 							</div>
-						    <!-- <table class="table table-hover table-curved">
-								<thead class="cabecera_serv2">
-									<tr class="color_th">						
-									  <th>Empleado</th>
-									</tr>
-								</thead>
-								<tbody id="tbody_empleados" class="scrolltbla">
-								</tbody>
-							</table> -->
 						</div>
 						<div class="col-md-7">
 							<table id="tbla_roles" class="table table-striped table-curved">
@@ -218,10 +135,10 @@
 							    	<tr>
 								    	<td colspan="4">
 								    		<button id="checkboxEmpleados" class="btn_marcarTodos"></button>
-											<!-- <div class="btn-group" data-toggle="buttons">
-												<label class="btn btn-default btn-xs"> -->
+											<div class="btn-group" data-toggle="buttons">
+												<label class="btn btn-default btn-xs">
 													<input type="checkbox" id="checkboxEmpleados" class="btn_marcarTodos"> Marcar todos
-												<!-- </label> -->
+												</label>
 											</div>
 											<button type="button" class="btn btn-danger btn-xs checkboxEmpleados btn_eliminarMarcados">Eliminar marcados</button>
 								    	</td>
@@ -229,18 +146,8 @@
 							    </tfoot>
 							</table>
 						</div>
-					</div> <!-- Fin class row -->
-				<!-- <div class="progress">
-					<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-						40%
 					</div>
-				</div> -->
 				</div>
-				<!-- <div class="panel-footer">
-					<button type="button" class="btn btn-default btn_regresar">Atrás</button>
-					<button type="button" id="btn_omitir_paso" class="btn btn-default">Omitir paso</button>
-					<button type="button" class="btn btn-default btn_siguiente">Siguiente</button>
-				</div> -->
 			</div>
 		</section>
 
@@ -274,7 +181,7 @@
 		                <input type="hidden" id="fecha_creacion" name="fecha_creacion">
 				    </form>
 				    <br>
-					<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>Archivos a subir</th>
@@ -287,23 +194,15 @@
 						</tbody>
 					</table>
 				</div>
-				<!-- <div class="panel-footer">
-					<button type="button" class="btn btn-default btn_regresar">Atrás</button>
-					<button type="button" class="btn btn-default btn_siguiente">Siguiente</button>
-				</div> -->
 			</div>
 		</section>
-		<button type="button" id="btn_guardarProyecto" class="btn btn-primary btn-lg">Guardar</button>
-		<button type="button" id="btn_cancelarProyecto" class="btn btn-default btn-lg">Cancelar</button>
+		<button type="button" id="btn_guardarProyecto" class="btn btn-primary">Guardar</button>
+		<button type="button" id="btn_cancelarProyecto" class="btn btn-default">Cancelar</button>
 	</div>
 </div> <!-- LA APERTURA DE ESTA ETIQUETA ESTÁ EN OTRO DOCUMENTO. NO BORRAR!! -->
 
 
 <!-- plantillas -->
-	<!-- <script type="text/template" id="option_cliente">
-		<%- nombreComercial %>
-	</script> SIN USO TEMPORALMENTE, BORRAR SI NO SE LLEGA A UTILIZAR -->
-
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
 			<label class="label_servicio" for="servicio_<%- id %>"><%- nombre %></label>
@@ -407,9 +306,11 @@
 	app.coleccionDeEmpleados = <?php echo json_encode($empleados)?>;
 	app.coleccionDeRoles 	 = <?php echo json_encode($roles)?>;
 </script>
-
-<!-- plugin jquery -->
-	<script type="text/javascript" src="js/plugin/jquery.easing.min.js"></script>
+<!-- Utilerias -->
+    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+	<!-- plugin jquery -->
+		<!-- <script type="text/javascript" src="js/plugin/jquery.easing.min.js"></script> -->
+		<script src="<?=base_url().'js/plugin/selectize/selectize.min.js'?>"></script>
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>

@@ -7,8 +7,7 @@
 
       public function create($post)
       {
-        var_dump($_FILES); var_dump($post); die();
-          if(!empty($_FILES))
+           if(!empty($_FILES))
           {
             if(array_key_exists('archivo', $_FILES)&&$_FILES['archivo']['name']!="")
             {

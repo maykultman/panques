@@ -11,13 +11,20 @@
 		}
 
 		public function insert_s($post)
-		{  
+		{  //var_dump($post); die();
 
-			if(!$post['nombre'][0])
+			// if(!$post['nombre'][0])
+			// {
+			// 	$this->db->insert('servicios', $post['nombre']); 	$id = $this->db->insert_id();
+			// 	return $this->get_s($id); 						
+			// }
+
+			if(!is_array($post['nombre']))
 			{
 				$this->db->insert('servicios', $post); 	$id = $this->db->insert_id();
 				return $this->get_s($id); 	
 			}
+			
 			
 			# Servicios nuevos creados desde el modulo de clientes
 			for ($i = 0 ; $i<count($post['nombre']); $i++)

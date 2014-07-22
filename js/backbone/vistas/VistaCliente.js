@@ -35,7 +35,7 @@ app.VistaCliente = Backbone.View.extend({
 		'keypress #nombreComercial'         : 'actualizarAtributo',
 		// 'change #nombreComercial'            : 'actualizarAtributo', /*Descomentar si desea actualizar sin la ecesidad de hacer enter*/
 		'keypress #divCliente .editando'    : 'actualizarAtributo',
-		// 'change #divCliente .editando'       : 'actualizarAtributo', /*Descomentar si desea actualizar sin la ecesidad de hacer enter*/
+		'change #divCliente .editando'       : 'actualizarAtributo', /*Descomentar si desea actualizar sin la ecesidad de hacer enter*/
 		'keydown #divCliente #comentario'   : 'actualizarComentario',
 		/*Eventos de servicios*/
 		'change .menuServicios'             : 'guardarServicio',
@@ -119,6 +119,10 @@ app.VistaCliente = Backbone.View.extend({
 			de todo el documento (DOM general)*/
 			$(this).remove();
 			here.render();
+		});
+		modal.modal({
+			keyboard : false,
+			backdrop : false
 		});
 
 		if ($(elem.currentTarget).attr('id') == 'tr_btn_editar') {

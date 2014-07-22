@@ -191,7 +191,7 @@
 
 <!-- plantillas -->
 	<script type="text/template" id="plantillaServicio">
-		<td style="width: 580px ">
+		<td style="width: 580px">
 			<!--<span   class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>-->
 			<label class="clasePrueba" for="servicio_<%- id %>" style="width:100% !important;"><%- nombre %></label>
 			<div class="div_info" style="display: none;">

@@ -28,7 +28,6 @@ app.VistaServicioProyecto = app.VistaServicio.extend({
 });
 /* {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} */
 
-
 app.VistaNuevoProyecto = Backbone.View.extend({
 	el					: '.contenedor_principal_modulos',
 
@@ -45,23 +44,16 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		'change #duracion'					: 'calcularEntrega',
 		'keyup #duracion'					: 'calcularEntrega',
 
-		// 'click .btn_siguiente'				: 'formSiguiente',
 		'click #btn_guardarProyecto'		: 'guardarProyecto',
 		'click #btn_cancelarProyecto'		: 'cancelarProyecto',
-		// 'click #btn_omitir_paso'			: 'formSiguiente',
-		// 'click #btn_guardarRoles'			: 'validarRolesEmpleados',
-		// 'click .btn_regresar'				: 'formAnterior',
 
 		'change .btn_marcarTodos'			: 'marcarTodos',
-		'click .cerrar'						: 'cerrarAlerta',
 
 		'click #btn_subirArchivo'			: 'subirArchivo',
 		'change #inputArchivos'				: 'cargarArchivos',
 		'click #inputArchivos'				: 'eliminarFileList',
 		'click .eliminarArchivo'			: 'eliminarArchivo',
 		'click #btn_cancelarArchivo'		: 'cancelarArchivos',
-		'click #cancelar'					: 'cancelarArchivos',
-		'click #continuar'					: 'cancelarArchivos',
 	},
 
 	initialize			: function () {
@@ -73,9 +65,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$fechaInicio       = $('#fechaInicio');
 		this.cargarServicios();
 
-		this.$advertencia		= $('#advertencia');
-		this.$error 			= $('#error');
-		this.$exito 			= $('#exito');
+		// this.$advertencia		= $('#advertencia');
+		// this.$error 			= $('#error');
+		// this.$exito 			= $('#exito');
 
 		this.$formNuevoProyecto = $('#formNuevoProyecto');
 
@@ -85,11 +77,11 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$duracion          = $('#duracion');
 
 		this.$inputArchivos		= $('#inputArchivos');
-		// this.$fecha_creacion	= $('#fecha_creacion');
+		this.$fecha_creacion	= $('#fecha_creacion');
 		// this.$section_resp_Paso3 = $('#paso3 .panel-info .panel-body');
 		this.$tbody_archivos	= $('#tbody_archivos');
-		// this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
-		// this.$tablaProyecto = $('#form_subirArchivos #tabla');
+		this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
+		this.$tablaProyecto = $('#form_subirArchivos #tabla');
 		
 		this.cargarClientes();
 
@@ -130,13 +122,14 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		return this;
 	},
 	cargarClientes		: function () {
-		var esto = this;
-		this.$busqueda.autocomplete({
-			source : app.coleccionClientes.pluck('nombreComercial'),
-			select : function( event, ui ) {
-				var cliente = app.coleccionClientes.findWhere({nombreComercial:ui.item.value});
-				esto.$hidden_idCliente.val(cliente.get('id'));
-			}
+		var list = '<% _.each(clientes, function(cliente) { %> <option id="<%- cliente.id %>" value="<%- cliente.id %>"><%- cliente.nombreComercial %></option> <% }); %>';
+		this.$busqueda.
+		append(_.template(list, 
+			{ clientes : app.coleccionClientes.toJSON() }
+		));
+		this.$busqueda.append('<option selected disabled>Buscar cliente</option>');
+		this.$busqueda.selectize({
+			maxItems: 1
 		});
 	},
 	cargarServicio		: function (servicio) {
@@ -162,12 +155,13 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 	calcularDuracion	: function (elem) {
 		var fecha = this.$fechaInicio.val().split('/');
-		var valorFechaInicio = new Date(fecha[2]+'-'+fecha[1]+'-'+fecha[0]).valueOf();
+		var valorFechaInicio = fecha[2]+'-'+fecha[1]+'-'+fecha[0];
 			fecha = this.$fechaEntrega.val().split('/');
-		var valorFechaEntrega = new Date(fecha[2]+'-'+fecha[1]+'-'+fecha[0]).valueOf();
-		this.$duracion.val(
-			((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1
-		);
+		var valorFechaEntrega = fecha[2]+'-'+fecha[1]+'-'+fecha[0];
+		// this.$duracion.val(
+		// 	((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1
+		// );
+		this.$duracion.val(calcularDuracion(valorFechaInicio,valorFechaEntrega).plazo);
 	},
 	calcularEntrega 	: function () {
 		var fecha = this.$fechaInicio.val().split('/'),
@@ -192,21 +186,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		} else{
 			this.$fechaEntrega.val('');
 		};
-
-	},
-	cerrarAlerta		: function (elem) {
-		/*Este condicion evalua si existe la variable global
-		que almacena el html para la alerta de advertencia. de lo
-		contrario no pa a la otra línea. esta variable se crea y 
-		se guarda el html cuando el usuario preciona el botón de 
-		cancelar proyecto en la función cancelarProyecto.
-		DAR MANTENIMIENTO*/
-		if (this.htmlAdvertencia) {
-			this.$advertencia.html(this.htmlAdvertencia);
-			this.$advertencia.toggleClass('oculto');
-			return;	
-		};
-		$(elem.currentTarget).parent().toggleClass('oculto');
 	},
 	eliminarDeTabla		: function (elem) {
 		/*Separamos la clase del elem para acceder a la tabla
@@ -263,21 +242,12 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// .click('toggle');//Conmutamos el botón
 	},
 	guardarProyecto		: function (elem) {
-
-		/*Efecto slide de formulario*/
-		// this.formSiguiente(elem);
-		// elem.preventDefault();
-		// return;
-
 		var esto = this;
-		var modeloProyecto = this.pasarAJson(this.$formNuevoProyecto.serializeArray());
+		var modeloProyecto = pasarAJson(this.$formNuevoProyecto.serializeArray());
 
 		if (modeloProyecto.idcliente == '' || modeloProyecto.nombre == '') {
-			esto.$error
-				.children('#comentario')
-				.html('Estableca un cliente y un nombre para el proyecto<br>Si no desea asociar un cliente a un proyecto escriba <b>qualium</b> como cliente');
-			esto.$error
-				.toggleClass('oculto');
+			alerta('Estableca un cliente y un nombre para el proyecto<br>Si no desea asociar un cliente a un proyecto escriba <b>qualium</b> como cliente',
+				function () {});
 			return;
 		};
 
@@ -291,12 +261,19 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			modeloProyecto.fechafinal = 	modeloProyecto.fechafinal[2]+'-'+
 											modeloProyecto.fechafinal[1]+'-'+
 											modeloProyecto.fechafinal[0];
-		} else{};
+		};
 
 		/******************************/
 		var servicios = modeloProyecto.servicios;
 		delete modeloProyecto.servicios;
 		/******************************/
+
+		if (servicios == undefined) {
+			alerta('Debe seleccionar uno o más servicios para el proyecto',function () {});
+			return;
+		};
+
+		$('#btn_guardarProyecto, #btn_cancelarProyecto').attr('disabled',true);
 
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
@@ -307,33 +284,33 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				success	: function (exito) {
 					esto.guadarServiciosProyecto(exito.get('id'),servicios);
 					/*----------------------------------------------*/
-					// esto.globalizarIdProyecto(exito);
-					/*----------------------------------------------*/
-					esto.$exito
-						.children('#comentario')
-						.html('El proyecto <b>'	+
-												exito.get('nombre')
-												+'</b> se guardo con exito');
-					esto.$exito
-						.toggleClass('oculto');
-					/*----------------------------------------------*/
-					/*Establece el id del proyecto como propietario
-					del archivo a guardar*/
-					esto.$propietarioArchivo.val(exito.get('id'));
-					var f = new Date();
-					esto.$fecha_creacion.val(f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
 					/*Establece el id del proyecto a todos los roles
 					a guardar*/
 					$(document.getElementsByName('idproyecto')).val(exito.get('id'),servicios);
 					esto.validarRolesEmpleados();
+
+					/*Establece el id del proyecto como propietario
+					del archivo a guardar y sus fechas de creación*/
+					esto.$propietarioArchivo.val(exito.get('id'));
+					var f = new Date();
+					esto.$fecha_creacion.val(f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
 					esto.subirArchivo();
+
+					setTimeout(function() {
+						alerta('<b>El proyecto '+exito.get('nombre')+' ha sido guadado con exito</b>',function(){});
+						$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
+							location.href = 'proyectos_consulta';
+						});
+						$('#btn_guardarProyecto, #btn_cancelarProyecto').attr('disabled',false);
+					}, 1000);
 				},
 				error	: function (error) {
-					esto.$error
-						.children('#comentario')
-						.html('Ocurrio un error al intentar guardar el proyecto');
-					esto.$error
-						.toggleClass('oculto');
+					confirmar('Ocurrio un error al intentar guardar el proyecto<br><b>¿Deseas intentarlo nuevamente?</b>',
+						function () {
+						},
+						function () {
+							location.href = 'proyectos_consulta';
+						});
 				}
 			}
 		);
@@ -343,17 +320,11 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		elem.preventDefault();
 	},
 	cancelarProyecto 	: function () {
-		/*Se respalda todo el html para luego volverlo a reestablecer
-		en caso de que el usuario precione continuar. el html se 
-		restablece en la función cancelarArchivo debido a que la 
-		alerta se utiliza también para archivos. DAR MANTENIMIENTO*/
-		this.htmlAdvertencia = this.$advertencia.html();
-		this.$advertencia
-			.children('#comentario')
-			.html('¿Esta seguro de cancelar la creación de este poyecto?');
-		this.$advertencia.append('<a href="modulo_proyectos_consulta" class="btn btn-danger">Cancelar</a>').children('#cancelar').remove();
-		this.$advertencia
-			.toggleClass('oculto');
+		confirmar('¿Esta seguro de cancelar este poyecto?', 
+			function () {
+				location.href = 'proyectos_consulta';
+			},
+			function () {});
 	},
 	guadarServiciosProyecto	: function (idproyecto,servicios) {
 		if ($.isArray(servicios)) {
@@ -367,72 +338,40 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				idproyecto:idproyecto, idservicio:servicios, status:true
 			},{
 				wait 	:true,
-				success : function (exito) {
-					console.log('recordar validar que seleccione servicios para el proyecto');
-				},
-				error 	: function (error) {
-					console.log('error', error);
-				}
+				success : function (exito) { },
+				error 	: function (error) { }
 			});
 			Backbone.emulateHTTP = false;
 			Backbone.emulateJSON = false;
 		};
 	},
-	// globalizarIdProyecto	: function (modelo) {
-	// 	this.idProyecto = modelo.get('id');
-	// },
 /*Funciones para la dinamina de roles de empleados sobre el nuevo proyecto*/
-	validarRolesEmpleados			: function () {/*elem*/
-		console.log('validarRolesEmpleados');
-		// this.formSiguiente(elem);
-		// elem.preventDefault();
-		// return;
-
-		// this.count = 0;
+	validarRolesEmpleados			: function () {
 		var forms = $('#paso2 form');
 		for (var i = 0; i < forms.length; i++) {
-			var modelo = this.pasarAJson(this.$(forms[i]).serializeArray());
+			var modelo = pasarAJson(this.$(forms[i]).serializeArray());
 			/*Comprobamos si hay roles nuevos*/
 			if ( typeof modelo.nombre !== 'undefined' ) {
 				/*Aislamos los nuevos roles*/
 				var nuevosRoles = {};
 				nuevosRoles.nombre = modelo.nombre;
-
-				/* |||||||||||||||||||||||||||||||||||||| */
-				// this.count = 0;
-				// if (modelo.idrol) {
-				// 	this.count += modelo.idrol.length + nuevosRoles.nombre.length;
-
-				// } else{
-				// 	this.count += nuevosRoles.nombre.length;
-				// };
-				/* |||||||||||||||||||||||||||||||||||||| */
 				
 				delete modelo.nombre;
-				if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
+				if ( typeof modelo.idrol !== 'undefined' ) {
 					this.guadarRolRecursivo(modelo);
 				};
-				// this.guadarRolRecursivo(modelo);
+
 				this.guardarRolesNuevos({
 					idproyecto 	: modelo.idproyecto, 
 					idpersonal 	: modelo.idpersonal,
 					nombre 		: nuevosRoles.nombre
 				});
 			} else {
-
-				/* |||||||||||||||||||||||||||||||||||||||| */
-				// this.count += modelo.idrol.length;
-				/* |||||||||||||||||||||||||||||||||||||||| */
-				
-				if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
+				if ( typeof modelo.idrol !== 'undefined' ) {
 					this.guadarRolRecursivo(modelo);
 				};
-				// this.guadarRolRecursivo(modelo);
-
 			};
 		};
-		// console.log(this.count);
-		// this.count = 0;
 	},
 	guadarRolRecursivo	: function (modelo) {
 		if ($.isArray(modelo.idrol)) {
@@ -477,6 +416,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				{
 					wait	: true,
 					success : function (exito) {
+						console.log(exito);
 						esto.guadarRolRecursivo({
 							idproyecto:nuevosRoles.idproyecto, 
 							idpersonal:nuevosRoles.idpersonal, 
@@ -496,7 +436,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	cargarArchivos		: function (elem) {
 		this.$tbody_archivos.html('');
 		this.arrArchivos = new Array();
-		// if ( this.arrArchivos == $(elem.currentTarget).prop('files') ) {console.log('Si')} else{console.log('No')};
 		var archivos = $(elem.currentTarget).prop('files');
 		for (var i = 0; i < archivos.length; i++) {
 			this.$tbody_archivos.append( this.plantillaArchivo( {i:i, tipo:(archivos[i].type).split('/')[1], nombre:archivos[i].name, tamaño:(archivos[i].size/1024).toFixed() +' KB'} ) );
@@ -505,20 +444,19 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	eliminarFileList	: function () {
 		delete this.$inputArchivos.val('');
 	},
-	subirArchivo		: function () {/*elem*/
-		console.log('subirArchivo');
-		// elem.preventDefault();
+	subirArchivo		: function () {
 		var archivos = this.$inputArchivos.prop('files');
 		
 		var esto = this;
 		esto.classTr =  archivos.length - 1;
 		if (this.arrArchivos) {
 			// for (var i = 0; i < archivos.length; i++) {
+			var formData;
 			for (var i = archivos.length - 1; i >= 0; i--) {
 				if ( this.arrArchivos.indexOf(String(i)) == -1 ) {
-				this.$tbody_archivos.children('.'+i).children('.icon-eliminar').html('<img src="img/ajax-loader25x25.gif">');
-					var formData = new FormData(document.getElementById('form_subirArchivos'));
+				this.$tbody_archivos.children('.'+i).children('.icon-eliminar').html('<div class="spin"><div>');
 					// formData.append('tabla','proyectos');
+					formData = new FormData(document.getElementById('form_subirArchivos'));
 					formData.append('archivo[]',archivos[i]);
 					// formData.append('idpropietario',this.idProyecto);
 					var resp = $.ajax({
@@ -545,138 +483,23 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			};
 		}			
 	},
-	// guardarArchivo		: function (archivo) {
-	// 	Backbone.emulateHTTP = true;
-	// 	Backbone.emulateJSON = true;
-	// 	app.COLECCIONDEARCHIVOSPARAPROYECTOS.create(
-	// 		{
-	// 			idproyecto 	: this.idProyecto,
-	// 			direccion	: 'archivos/'+archivo
-	// 		},
-	// 		{
-	// 			wait 	: true,
-	// 			success : function (exito) {},
-	// 			error 	: function (error) {}
-	// 		}
-	// 	);
-	// 	Backbone.emulateHTTP = false;
-	// 	Backbone.emulateJSON = false;
-	// },
 	eliminarArchivo		: function (elem) {
 		this.arrArchivos.push( $(elem.currentTarget).attr('id') );
 		$(elem.currentTarget).parents('tr').remove();
 	},
-	cancelarArchivos	: function (elem) {
-		if ($(elem.currentTarget).attr('id') == 'btn_cancelarArchivo') {
-			$('#advertencia #comentario').html('Los archivos a subir seran cancelados');
-			$('#advertencia').removeClass('oculto');
-		}; 
-		if ($(elem.currentTarget).attr('id') == 'cancelar') {
-			for (var i = 0; i < $('.eliminarArchivo').length; i++) {
-				this.arrArchivos.push(i);
-			};
-			$('#advertencia').addClass('oculto');
-			this.$tbody_archivos.html('');
-		};
-		if ($(elem.currentTarget).attr('id') == 'continuar') {
-			/*Este condicion evalua si existe la variable global
-			que almacena el html para la alerta de advertencia. de lo
-			contrario no pa a la otra línea. esta variable se crea y 
-			se guarda el html cuando el usuario preciona el botón de 
-			cancelar proyecto en la función cancelarProyecto.
-			DAR MANTENIMIENTO*/
-			if (this.htmlAdvertencia) {
-				this.$advertencia.html(this.htmlAdvertencia);
-				this.$advertencia.toggleClass('oculto');
-			};
-			$(elem.currentTarget).parents('div').children('.cerrar').click();
-		};
+	cancelarArchivos	: function () {
+		var here = this;
+		confirmar('Los archivos a subir seran cancelados',
+			function () {
+				here.cancelarTodosLosArchivos();
+			},
+			function () {});
 	},
-/*Otros controladores*/
-	// formSiguiente		: function (elem) {
-	// 	var next_fs,current_fs,left,opacity,scale,animating;
-
-	// 	if(animating) return false;
-	// 	animating = true;
-		
-	// 	current_fs = $(elem.currentTarget).parent().parent().parent();
-	// 	next_fs = $(elem.currentTarget).parent().parent().parent().next();
-		
-	// 	//activate next step on progressbar using the index of next_fs
-	// 	$("#progressbar li").eq($("#divSecciones section").index(next_fs)).addClass("active");
-		
-	// 	//show the next fieldset
-	// 	next_fs.show(); 
-	// 	//hide the current fieldset with style
-	// 	current_fs.animate({opacity: 0}, {
-	// 		step: function(now, mx) {
-	// 			//as the opacity of current_fs reduces to 0 - stored in "now"
-	// 			//1. scale current_fs down to 80%
-	// 			scale = 1 - (1 - now) * 0.2;
-	// 			//2. bring next_fs from the right(50%)
-	// 			left = (now * 50)+"%";
-	// 			//3. increase opacity of next_fs to 1 as it moves in
-	// 			opacity = 1 - now;
-	// 			current_fs.css({'transform': 'scale('+scale+')'});
-	// 			next_fs.css({'left': left, 'opacity': opacity});
-	// 		}, 
-	// 		duration: 800, 
-	// 		complete: function(){
-	// 			current_fs.hide();
-	// 			animating = false;
-	// 		}, 
-	// 		//this comes from the custom easing plugin
-	// 		easing: 'easeInOutBack'
-	// 	});
-	// },
-	// formAnterior		: function (elem) {
-	// 	var previous_fs,current_fs,left,opacity,scale,animating;
-	// 	if(animating) return false;
-	// 	animating = true;
-		
-	// 	current_fs = $(elem.currentTarget).parent().parent().parent();
-	// 	previous_fs = $(elem.currentTarget).parent().parent().parent().prev();
-		
-	// 	//de-activate current step on progressbar
-	// 	$("#progressbar li").eq($("#divSecciones section").index(current_fs)).removeClass("active");
-		
-	// 	//show the previous fieldset
-	// 	previous_fs.show(); 
-	// 	//hide the current fieldset with style
-	// 	current_fs.animate({opacity: 0}, {
-	// 		step: function(now, mx) {
-	// 			//as the opacity of current_fs reduces to 0 - stored in "now"
-	// 			//1. scale previous_fs from 80% to 100%
-	// 			scale = 0.8 + (1 - now) * 0.2;
-	// 			//2. take current_fs to the right(50%) - from 0%
-	// 			left = ((1-now) * 50)+"%";
-	// 			//3. increase opacity of previous_fs to 1 as it moves in
-	// 			opacity = 1 - now;
-	// 			current_fs.css({'left': left});
-	// 			previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
-	// 		}, 
-	// 		duration: 800, 
-	// 		complete: function(){
-	// 			current_fs.hide();
-	// 			animating = false;
-	// 		}, 
-	// 		//this comes from the custom easing plugin
-	// 		easing: 'easeInOutBack'
-	// 	});
-	// },
-	pasarAJson			: function (objSerializado) {
-	    var json = {};
-	    $.each(objSerializado, function () {
-	        if (json[this.name]) {
-	            if (!json[this.name].push) {
-	                json[this.name] = [json[this.name]];
-	            };
-	            json[this.name].push(this.value || '');
-	        } else{
-	            json[this.name] = this.value || '';
-	        };
-	    });
-	    return json;
+	cancelarTodosLosArchivos 	: function () {
+		for (var i = 0; i < $('.eliminarArchivo').length; i++) {
+			this.arrArchivos.push(i);
+		};
+		this.$tbody_archivos.html('');
 	},
 	marcarTodos 		: function (elem) {
 		var checkboxTabla = document

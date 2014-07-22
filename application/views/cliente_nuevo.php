@@ -183,7 +183,7 @@
             <div class="desborde"></div>
             <br>
             <button id="btn_guardarContactos" class="btn btn-primary">Guardar Contactos</button>
-            <a href="modulo_consulta_clientes" class="btn btn-default">Cancelar</a>
+            <a href="consulta_clientes" class="btn btn-default">Cancelar</a>
             <!-- <a href="modulo_consulta_clientes" id="btn_nuevoContacto" class="btn btn-primary" role="button">Registrar Contactos</a> -->
               <!-- visibleR ocultoR -->          
         </div>

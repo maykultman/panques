@@ -3,7 +3,7 @@ var app = app || {};
 var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 var dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'];
 
-app.busquedaServicio.servicio = (function () {
+/*app.busquedaServicio.servicio = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = servicios.filter(function (element) {
@@ -21,9 +21,9 @@ app.busquedaServicio.servicio = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}());  
+}());*/  
 
-app.busquedaCliente.cliente = (function () {
+/*app.busquedaCliente.cliente = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = clientes.filter(function (element) {
@@ -41,7 +41,7 @@ app.busquedaCliente.cliente = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}());
+}());*/
 
 function pasarAJson (objSerializado) {
     var json = {};
@@ -59,7 +59,7 @@ function pasarAJson (objSerializado) {
 }
 
 //Para la Busqueda de Roles en el modulo catalogo Roles
-app.busquedaRol.rol = (function () {
+/*app.busquedaRol.rol = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = roles.filter(function (element) {
@@ -76,10 +76,10 @@ app.busquedaRol.rol = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}()); 
+}());*/ 
 
 //Para la Busqueda de Roles en el modulo catalogo Roles
-app.busquedaPermiso.permiso = (function () {
+/*app.busquedaPermiso.permiso = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = permisos.filter(function (element) {
@@ -95,11 +95,11 @@ app.busquedaPermiso.permiso = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}()); 
+}()); */
 
 
 //Puestos
-app.busquedaPuesto.puesto = (function () {
+/*app.busquedaPuesto.puesto = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = puestos.filter(function (element) {
@@ -115,11 +115,11 @@ app.busquedaPuesto.puesto = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}()); 
+}()); */
 
 
 //Cotizaciones...
-app.busquedaCotizacion.cotizacion = (function () {
+/*app.busquedaCotizacion.cotizacion = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = cotizaciones.filter(function (element) {
@@ -135,9 +135,9 @@ app.busquedaCotizacion.cotizacion = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}()); 
+}());*/ 
 
-app.busquedaCotizacion2.cotizacion2 = (function () {
+/*app.busquedaCotizacion2.cotizacion2 = (function () {
     buscarPorNombre = function (searchKey) {
         var deferred = $.Deferred();
         var results = cotizaciones2.filter(function (element) {
@@ -153,7 +153,7 @@ app.busquedaCotizacion2.cotizacion2 = (function () {
     return {
         buscarPorNombre: buscarPorNombre
     };
-}()); 
+}()); */
 
 
 // -----limpiarJSON------------------------------- 
@@ -323,4 +323,40 @@ function formatearFechaUsuario (fecha) {
         } else {
             return 'img/fotosClientes/sinfoto.png';
         };
+    };
+
+/*Cálculo de fechas*/
+    function calcularDuracion (fechainicio,fechafinal) {
+        var valorFechaInicio = new Date(fechainicio).valueOf();
+        var valorFechaEntrega = new Date(fechafinal).valueOf();
+        var valorFechaActual = new Date().valueOf();
+        var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - excluirDias(fechainicio, fechafinal);
+        var hoy = new Date();
+        var queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed() - excluirDias(hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate(), fechafinal);
+        if (queda == -0) queda = 0;
+        var porcentaje = ((100 * queda)/plazo).toFixed();
+
+        // console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
+        return {
+            plazo       :plazo,
+            queda       :queda,
+            porcentaje  :porcentaje
+        };
+    };
+    function excluirDias (fechainicio, fechafinal) {
+        var contador = 0;
+        var valorFechaInicio = new Date(fechainicio).valueOf();
+        var valorFechaEntrega = new Date(fechafinal).valueOf();
+        var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
+        var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        // console.log('duracion: '+ duracion);
+        for(var i = 0; i<duracion; i++){
+            var dia = (new Date(new Date(fechainicio).getTime() + i*24*60*60*1000)).getDay();
+            if(days[dia] == 'Sunday' || days[dia] == 'Saturday'){ 
+                // console.log(days[dia]);
+                contador++;
+            };
+        };
+        // console.log('Sin trabajar: '+contador);
+        return contador;
     };

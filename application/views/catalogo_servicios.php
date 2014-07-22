@@ -84,7 +84,7 @@
 
      <!-- Vistas -->
  <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoServicio.js'?>"></script>
+<!--<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoServicio.js'?>"></script>-->
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoServicio.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaServicios.js'?>"></script>
        <!-- Vistas -->

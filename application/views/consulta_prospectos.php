@@ -1,16 +1,18 @@
     <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+    <!-- plugin selectize css -->
+        <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
     <style type="text/css">
-        .input-group select{
-            height: 34px;
-        }
-        .input-group button{
-            height: 34px;
+        .spin{
+            width: 15px;
+            height: 15px;
+            background-image: url(http://crmqualium.com/img/ajax-loader.gif);
+            background-size: 100% 100%;
         }
     </style>
-    
-    <div id="posicion_infotd">
-        <div id="clientes" class="wrapper">        
+
+    <div id="posicion_infotd">        
+        <div id="clientes" class="wrapper">                            
             <table id="tbla_cliente" class="tablesorter table-striped">
                 <!-- BOTON PARA PRUEBAS -->
                 <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
@@ -19,42 +21,65 @@
                         <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
                         <th class="sorter-false"></th>
                         <th class="sorter-false">
-                            <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">                           
+                            <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
                             <span class="icon-search busqueda"></span>
                         </th>
                         <th class="sorter-false">Giro</th>
                         <th class="sorter-false">
                             Página web
                         </th>
-                        <th  class="sorter-false" style="text-align=center;">Ultima actividad</th>
+                        <th class="sorter-false" style="text-align=center;">Ultima actividad</th>
                         <th class="sorter-false">Operaciones</th>
                     </tr>
                 </thead>
                 <tbody id="filasClientes">
                 </tbody>
-            </table>
-            <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
-            <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
-            <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->  
-            <br>        
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="checkbox" id="option1"> Marcar/Desmarcar todos
-                </label>
-            </div>
-            <button class="btn btn-primary">Eliminar varios</button>
-        </div>
+            </table>            
+        </div>   
+        <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
+        <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
+        <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
+        <button class="btn btn-primary" style="margin-top: 8px;">Eliminar varios</button>
+        
+        <!------------ Enviar Correo -------- -->
+        <div id="modalCorreo" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Mensaje Nuevo</h4>
+              </div>
+              <div class="modal-body">             
+               <label id="destinatario" for="">Para:</label>
+               <input class="lbl_correo" type="text" name="" value="" placeholder="" style="outline: 0;">
+                <hr class="division">   
+               <label id="asunto" for="">Asunto:</label>
+               <input class="lbl_correo" type="text" name="" value="" placeholder="" style="outline: 0;">
+               <hr class="division">
+               <!-- <textarea id="txt_area"></textarea> -->
+               <section id="txt_area" contenteditable="true"></section>
+              </div>
+              <div class="modal-footer" style="background: #f1f1f1; padding: 10px 18px 10px !important;">
+                <button type="button" class="btn btn-primary">Enviar</button>
+                 <label class="btn btn-default fileinput-button">
+                    <span class="icon-paperclip"></span>
+                    <span>Adjuntar Foto</span>
+                        <input id="" type="file"  name="fotoUsuario">          
+                 </label>                
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Cancelar</button>                
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
-</div>
-  <!--  ----------Consulta clientes-------- -->
-
-<!-- PLANTILLAS -->
+    <!--  ----------Consulta clientes-------- -->
+     <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
         <td class="contenido_prospecto"><input  type="checkbox" name="todos" value="<%- id %>"></td>
         <td>
             <% if (typeof foto != "undefined") { %>
-                <img src="<%- foto %>" alt="" class="foto">
+                <img src="<?=base_url().'<%- foto %>'?>" alt="" class="foto">
             <%} else{%>
                 <img src="" alt="" class="foto">
             <%}; %>
@@ -80,42 +105,14 @@
             
             <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
             <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
-            <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
+            <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
             <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
-            <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
-            <div id="alertasCliente">
-                <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
-                     a medida que ocurren los errores del usuario -->
-                <div class="alert alert-warning oculto" id="advertencia">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Advertencia!</h4>
-                    <p id="comentario"></p>
-                    <br>
-                    <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
-                    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
-                </div>
-                <div class="alert alert-danger alert-dismissable oculto" id="error">
-                  <button type="button" class="close cerrar">&times;</button>
-                  <strong>¡Error!</strong>
-                  <div id="comentario"></div>
-                </div>
-                <div class="alert alert-success alert-dismissable oculto" id="exito">
-                  <button type="button" class="close cerrar">&times;</button>
-                  <strong>¡Exito!</strong>
-                  <div id="comentario"></div>
-                </div>
-            </div>
-            <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         </td>
     </script>
-    <!--  --><!--  --><!--  --><!--  --><!--  -->
+    
     <script type="text/template" id="modalCliente">
         <div class="modal fade" id="modal<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
             <div class="modal-dialog">
-
-                
-
                 <div id="icon-operaciones2">
                     <div class="btn-group-vertical">
                         <button type="button" class="btn btn-primary" id="modal_btn_eliminar"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
@@ -131,11 +128,11 @@
                     <table style="margin-left:15px; margin-top:15px;">
                         <tr>
                             <td rowspan="3">
-                                <img class="" id="logo_empresa_info" src="<%- foto %>" alt="Imagen-Cliente">
+                                <img class="img-rounded" id="direccion" src="<?=base_url().'<%- foto %>'?>" alt="Imagen-Cliente" width="150" height="150">
                             </td>
                             <td style="padding:0px 10px 0px 10px; vertical-align: bottom;">
                                 <h3 class="editar editando"><b><%- nombreComercial %></b></h3>
-                                <input type="text" id="nombreComercial" class="form-control editar" name="nombreComercial" value="<%- nombreComercial %>">
+                                <input type="text" id="nombreComercial" class="form-control input-lg editar" name="nombreComercial" value="<%- nombreComercial %>">
                             </td>
                             <td class="respuesta" style="vertical-align: bottom;"></td>
                         </tr>
@@ -162,271 +159,242 @@
                             </td>
                             <td class="respuesta" style="vertical-align: top;"></td>
                         </tr>
+                        <tr>
+                            <td colspan="2" class="editar">
+                                <!--BOTON PARA ACTUALIZAR FOTO DEL CLIENTE-->
+                                <form id="formularioFoto" style="margin: 5px 0px 0px 17px;">
+                                    <label class="btn btn-default btn-xs" for="fotoCliente">
+                                        Actualizar logotipo
+                                        <input type="file" id="fotoCliente" name="fotoCliente" style="display:none;">
+                                    </label>
+                                </form>
+                            </td>
+                        </tr>
                     </table>
 
-                    <div class="panel-body">
 
-                        <small class="editar">Precione la tecla enter para actualizar el campo</small>
+                    <div class="panel-body">
+                        <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar<br><br></div>
                         
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <div class="visible" id="divCliente">
-                            <form class="formCliente" method="post">
-                                <table class="table table-striped">
-                                    <tr class="trCliente"> <!--Nombre fical-->
-                                        <td class="atributo"><b>Nombre Físcal:</b></td>
-                                        <td>
-                                            <% if (typeof nombreFiscal != "undefined") { %>
-                                                <label class="editar editando">
-                                                    <%- nombreFiscal %>
-                                                </label>
-                                                <input type="text" class="form-control editar" name="nombreFiscal" value="<%- nombreFiscal %>">
-                                            <% } else{ %>
-                                                <label class="editar editando">
-                                                    No especificado
-                                                </label>
-                                                <input type="text" class="form-control editar" name="nombreFiscal">
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--RFC-->
-                                        <td class="atributo"><b>R.F.C:</b></td>
-                                        <td>
-                                            <% if (typeof rfc != "undefined") { %>
-                                                <label class="editar editando">
-                                                    <%- rfc %>
-                                                </label>
-                                                <input type="text" class="form-control editar" name="rfc" value="<%- rfc %>">
-                                            <% } else{ %>
-                                                <label class="editar editando">
-                                                    No especificado
-                                                </label>
-                                                <input type="text" class="form-control editar" name="rfc">
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Giro-->
-                                        <td class="atributo"><b>Giro:</b></td>
-                                        <td>
-                                            <select class="form-control editar" name="giro"> 
-                                                <option> Manufacturera </option> 
-                                                <option> Agropecuaria </option> 
-                                                <option> Comercial </option> 
-                                                <option> Transporte </option> 
-                                                <option> Educación </option> 
-                                                <option> Servicios públicos </option>
-                                                <option> Salud </option> 
-                                                <option> Comunicación </option>
-                                            <% if (typeof giro != "undefined") { %>
-                                                    <option selected style='display:none;'><%- giro %></option> 
-                                                </select>
-                                                <label class="editar editando">
-                                                    <%- giro %>
-                                                </label>
-                                            <% } else{ %>
-                                                    <option selected disabled>Giro</option>
-                                                </select>
-                                                <label class="editar editando">
-                                                    No especificado
-                                                </label>
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Dirección-->
-                                        <td class="atributo"><b>Dirección:</b></td>
-                                        <td>
-                                            <% if (typeof direccion != "undefined") { %>
-                                                <label class="editar editando">
-                                                    <%- direccion %>
-                                                </label>
-                                                <input type="text" class="form-control editar" name="direccion" value="<%- direccion %>">
-                                            <% } else{ %>
-                                                <label class="editar editando">
-                                                    No especificado
-                                                </label>
-                                                <input type="text" class="form-control editar" name="direccion">
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Telófono-->
-                                        <td class="atributo">
-                                            <b>Telefono:</b>
-                                            <!--<button type="button" id="btn_nuevoTelefono" class="btn btn-primary btn-xs editar">Nuevo</button>-->
-                                        </td>
-                                        <td id="telefonos">
+                            <table class="table table-striped">
+                                <tr class="trCliente"> <!--Nombre fical-->
+                                    <td class="atributo"><b>Nombre Físcal:</b></td>
+                                    <td>
+                                        <% if (typeof nombreFiscal != "undefined") { %>
+                                            <label class="editar editando">
+                                                <%- nombreFiscal %>
+                                            </label>
+                                            <input type="text" class="form-control editar" name="nombreFiscal" value="<%- nombreFiscal %>">
+                                        <% } else{ %>
+                                            <label class="editar editando">
+                                                No especificado
+                                            </label>
+                                            <input type="text" class="form-control editar" name="nombreFiscal">
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--RFC-->
+                                    <td class="atributo"><b>R.F.C:</b></td>
+                                    <td>
+                                        <% if (typeof rfc != "undefined") { %>
+                                            <label class="editar editando">
+                                                <%- rfc %>
+                                            </label>
+                                            <input type="text" class="form-control editar" name="rfc" value="<%- rfc %>">
+                                        <% } else{ %>
+                                            <label class="editar editando">
+                                                No especificado
+                                            </label>
+                                            <input type="text" class="form-control editar" name="rfc">
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Giro-->
+                                    <td class="atributo"><b>Giro:</b></td>
+                                    <td>
+                                        <select class="form-control editar" name="giro"> 
+                                            <option> Manufacturera </option> 
+                                            <option> Agropecuaria </option> 
+                                            <option> Comercial </option> 
+                                            <option> Transporte </option> 
+                                            <option> Educación </option> 
+                                            <option> Servicios públicos </option>
+                                            <option> Salud </option> 
+                                            <option> Comunicación </option>
+                                        <% if (typeof giro != "undefined") { %>
+                                                <option selected style='display:none;'><%- giro %></option> 
+                                            </select>
+                                            <label class="editar editando">
+                                                <%- giro %>
+                                            </label>
+                                        <% } else{ %>
+                                                <option selected disabled>Giro</option>
+                                            </select>
+                                            <label class="editar editando">
+                                                No especificado
+                                            </label>
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Dirección-->
+                                    <td class="atributo"><b>Dirección:</b></td>
+                                    <td>
+                                        <% if (typeof direccion != "undefined") { %>
+                                            <label class="editar editando">
+                                                <%- direccion %>
+                                            </label>
+                                            <input type="text" class="form-control editar" name="direccion" value="<%- direccion %>">
+                                        <% } else{ %>
+                                            <label class="editar editando">
+                                                No especificado
+                                            </label>
+                                            <input type="text" class="form-control editar" name="direccion">
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Telófono-->
+                                    <td class="atributo">
+                                        <b>Telefono:</b>
+                                        <!--<button type="button" id="btn_nuevoTelefono" class="btn btn-primary btn-xs editar">Nuevo</button>-->
+                                    </td>
+                                    <td id="telefonos">
+                                        <label class="editar editando">No especificado</label>
+                                        <div class="editar" id="formularioTelefono">
+                                            <div class="input-group">
+                                                <input type="text" id="numeroNuevo" class="form-control" name="numero" placeholder="Nuevo Teléfono" minlength="10" maxlength="20">
+                                                <div class="input-group-btn">
+                                                    <select id="tipoNuevo" class="btn btn-default" name="tipo">
+                                                        <option value="No definido" selected style="display:none;">Tipo</option>
+                                                        <option value="Casa">Casa</option>
+                                                        <option value="Fax">Fax</option>
+                                                        <option value="Movil">Movil</option>
+                                                        <option value="Oficina">Oficina</option>
+                                                        <option value="Personal">Personal</option>
+                                                        <option value="Trabajo">Trabajo</option>
+                                                        <option value="Otro">Otro</option>
+                                                    </select>
+                                                    <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Correo-->
+                                    <td class="atributo"><b>Correo electrónico:</b></td>
+                                    <td>
+                                        <% if (typeof email != "undefined") { %>
+                                            <a class="editar editando" href="#">
+                                                <%- email %>
+                                            </a>
+                                            <input type="text" id="mail" class="form-control editar" name="email" value="<%- email %>">
+                                        <% } else { %>
                                             <label class="editar editando">No especificado</label>
-                                            <div class="editar" id="formularioTelefono">
-                                                <div class="input-group">
-                                                    <input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono">
-                                                    <div class="input-group-btn">
-                                                        <select id="tipoNuevo" class="btn btn-default" name="tipo">
-                                                            <option value="Casa">Casa</option>
-                                                            <option value="Fax">Fax</option>
-                                                            <option value="Movil" selected>Movil</option>
-                                                            <option value="Oficina">Oficina</option>
-                                                            <option value="Personal">Personal</option>
-                                                            <option value="Trabajo">Trabajo</option>
-                                                            <option value="Otro">Otro</option>
-                                                            <option selected disabled>Tipo</option>
-                                                        </select>
-                                                        <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
-                                                    </div>
-                                                </div>
+                                            <input type="text" id="mail" class="form-control editar" name="email">
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Página-->
+                                    <td class="atributo"><b>Página Web:</b></td>
+                                    <td>
+                                        <% if (typeof paginaWeb != "undefined") { %>
+                                            <a class="editar editando" href="#">
+                                                <%- paginaWeb %>
+                                            </a>
+                                            <input type="text" id="url" class="form-control editar" name="paginaWeb" value="<%- paginaWeb %>">
+                                        <% } else { %>
+                                            <label class="editar editando">No especificado</label>
+                                            <input type="text" id="url" class="form-control editar" name="paginaWeb">
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Servicios I-->
+                                    <td class="atributo"><b>Servicios de interes:</b></td>
+                                    <td>
+                                        <div class="editar">
+                                            <div id="div_serviciosI">
+                                                <select id="select_ServI" class="menuServicios" name="idservicio" multiple placeholder="Buscar servicios" style="width:400px;">
+                                                </select>
                                             </div>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Correo-->
-                                        <td class="atributo"><b>Correo electrónico:</b></td>
-                                        <td>
-                                            <% if (typeof email != "undefined") { %>
-                                                <a class="editar editando" href="#">
-                                                    <%- email %>
-                                                </a>
-                                                <input type="text" id="mail" class="form-control editar" name="email" value="<%- email %>">
-                                            <% } else { %>
-                                                <label class="editar editando">No especificado</label>
-                                                <input type="text" id="mail" class="form-control editar" name="email">
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Página-->
-                                        <td class="atributo"><b>Página Web:</b></td>
-                                        <td>
-                                            <% if (typeof paginaWeb != "undefined") { %>
-                                                <a class="editar editando" href="#">
-                                                    <%- paginaWeb %>
-                                                </a>
-                                                <input type="text" id="url" class="form-control editar" name="paginaWeb" value="<%- paginaWeb %>">
-                                            <% } else { %>
-                                                <label class="editar editando">No especificado</label>
-                                                <input type="text" id="url" class="form-control editar" name="paginaWeb">
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Servicios I-->
-                                        <td class="atributo"><b>Servicios de interes:</b></td>
-                                        <td id="serviciosInteres">
-                                            <div id='contenedor_menus' class="editar">
-                                                <div class="menusServicios">
-                                                    <form>
-                                                        <div class='cssmenu' style="margin-right: 0px;">
-                                                            <div class="col-lg-6">
-                                                                <div class="input-group">
-                                                                    <input type="text" id="inputBusquedaI" class="form-control" name="serviciosInteres" placeholder="Buscar servicio">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" id="btn_agregarI" class="btn btn-default editando">Agregar</button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <ul id="I">
-                                                                <li class='has-sub'><a href='#'><span>Servicios</span></a>
-                                                                    <ul id="menuServiciosInteres">
-                                                                    </ul>
-                                                                </li>   
-                                                            </ul>
-                                                        </div>
-                                                    </form>
-                                                    <div class="desborde"></div>
-                                                    <br>
-                                                    <ol id="listaInteres" class="list-group"></ol>
-                                                </div>
+                                        </div>
+                                        <div id="serviciosInteres"></div>
+                                    </td>
+                                    <td class="respuesta">
+                                        <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr class="trCliente"> <!--Servicios C-->
+                                    <td class="atributo">
+                                        <b>Servicios actuales:</b><br>
+                                        <h6>servicios con lo que cuenta actualmente<h6>
+                                    </td>
+                                    <td>
+                                        <div class="editar">
+                                            <div id="div_serviciosC">
+                                                <select id="select_ServC" class="menuServicios" name="idservicio" multiple placeholder="Buscar servicios" style="width:400px;">
+                                                </select>
                                             </div>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr class="trCliente"> <!--Servicios I-->
-                                        <td class="atributo">
-                                            <b>Servicios actuales:</b><br>
-                                            <h6>servicios con lo que cuenta actualmente<h6>
-                                        </td>
-                                        <td id="serviciosCuenta">
-                                            <div id='contenedor_menus' class="editar">
-                                                <div class="menusServicios">
-                                                    <form>
-                                                        <div class='cssmenu' style="margin-right: 0px;">
-                                                            <div class="col-lg-6">
-                                                                <div class="input-group">
-                                                                    <input type="text" id="inputBusquedaC" class="form-control" name="serviciosCuenta" placeholder="Buscar servicio">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" id="btn_agregarC" class="btn btn-default editando">Agregar</button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <ul id="C">
-                                                                <li class='has-sub'><a href='#'><span>Servicios</span></a>
-                                                                    <ul id="menuServiciosCuenta">
-                                                                    </ul>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </form>
-                                                    <div class="desborde"></div>
-                                                    <br>
-                                                    <ol id="listaCuenta" class="list-group"></ol>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="respuesta">
-                                             <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                                            <!--RESPUESTA-->
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="atributo">Comentarios</td>
-                                        <td>
-                                            <% if (typeof comentarioCliente != "undefined") { %>
-                                                <p class="editar editando"><%- comentarioCliente %></p>
-                                                <textarea id="comentario" class="form-control editar" name="comentarioCliente" rows="3"><%- comentarioCliente %></textarea>
-                                            <% } else { %>
-                                                <p class="editar editando">No especificado.</p>
-                                                <textarea id="comentario" class="form-control editar" name="comentarioCliente" rows="3"></textarea>
-                                            <% }; %>
-                                        </td>
-                                        <td class="respuesta"><span class="icon-uniF55C" style="visibility: hidden;"></span></td>
-                                    </tr>
-                                </table>
-                                <!--<button type="button" id="actualizar" class="btn btn-primary editar">Actualizar</button>-->
-                            </form>
+                                        </div>
+                                        <div id="serviciosCuenta"></div>
+                                    </td>
+                                    <td class="respuesta">
+                                        <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                                        <!--RESPUESTA-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="atributo">Comentarios</td>
+                                    <td>
+                                        <% if (typeof comentarioCliente != "undefined") { %>
+                                            <p class="editar editando"><%- comentarioCliente %></p>
+                                            <textarea id="comentario" class="form-control editar" name="comentarioCliente" rows="3"><%- comentarioCliente %></textarea>
+                                        <% } else { %>
+                                            <p class="editar editando">No especificado.</p>
+                                            <textarea id="comentario" class="form-control editar" name="comentarioCliente" rows="3"></textarea>
+                                        <% }; %>
+                                    </td>
+                                    <td class="respuesta">
+                                        <!--<span class="icon-uniF55C" style="visibility: hidden;"></span>-->
+                                        <div id="spin"><div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <!-- -------SEGUNDA PAGINA DE INFORMACION DEL CLIENTE------- --> 
                         <div class="visible oculto">
-                            <div class="row">
-                                <div class="col-md-2 col-md-offset-10">
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo</button>
-                                </div>
-                            </div>
-                            
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
                             <div id="divContactos">
                                 <!--AQUÍ VAN LOS CONTACTOS-->
                             </div>
@@ -437,6 +405,7 @@
             </div>
         </div>
     </script>
+    
     <script type="text/template" id="modalContacto">
         <div class="modal fade" id="modalNuevoContacto<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -451,7 +420,7 @@
                                 <select name="persona" class="form-control">
                                     <option value="representante">Representante</option>
                                     <option value="contacto">Contacto</option>
-                                    <option selected value="">¿Qué desea registar?</option>
+                                    <option selected disabled value="">¿Qué desea registar?</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -465,9 +434,10 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" id="nuevoNumero" class="form-control" name="numero" placeholder="Número telefónico" maxlength="10">
+                                    <input type="text" id="nuevoNumero" class="form-control" name="numero" placeholder="Número telefónico" minlength="10" maxlength="20">
                                     <div class="input-group-btn">
                                         <select id="tipo" class="btn btn-default" name="tipo">
+                                            <option value="No definido" selected style="display:none;">Tipo</option>
                                             <option value="Casa">Casa</option>
                                             <option value="Fax">Fax</option>
                                             <option value="Movil">Movil</option>
@@ -475,7 +445,6 @@
                                             <option value="Personal">Personal</option>
                                             <option value="Trabajo">Trabajo</option>
                                             <option value="Otro">Otro</option>
-                                            <option selected value="">Tipo</option>
                                         </select>
                                         <!--<button id="otroTelefono" class="btn btn-default"><label class="icon-uniF476"></label></button>-->
                                     </div>
@@ -484,35 +453,15 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary" id="btn_nuevoContacto">Guardar contacto</button>
+                        <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
     </script>
-    <!--  --><!--  --><!--  --><!--  --><!--  -->
 
     <script type="text/templates" id="plantilla_contactos">
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
-        <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
-             a medida que ocurren los errores del usuario -->
-            <div id="alertasContacto">
-                <div class="alert alert-warning oculto" id="advertencia">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Advertencia!</h4>
-                    <p id="comentario"></p>
-                    <br>
-                    <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
-                    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
-                </div>
-                <div class="alert alert-danger alert-dismissable oculto" id="error">
-                    <button type="button" class="close cerrar">&times;</button>
-                    <strong>¡Error!</strong>
-                    <div id="comentario"></div>
-                </div>
-            </div>
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         <div id="icon-operacionesContacto">
             <div class="btn-group-vertical">
                 <button type="button" class="btn btn-primary" id="btn_eliminar"><label class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
@@ -520,126 +469,107 @@
             </div>
         </div>
         <h3><%- etiqueta %></h3>
-        <form>
-            <table class="table table-striped tbla_contacto">
-                <tr class="trContacto">
-                    <td class="atributo"><b>Nombre:</b></td>
-                    <td class="divDatoContacto">
-                        <label class="editar editando"><%- nombre %></label>
-                        <input type="text" class="form-control editar" name="nombre" value="<%- nombre %>">
-                    </td>
-                    <td class="respuesta">
-                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                        <!--RESPUESTA-->
-                    </td>
-                </tr>
-                <tr class="trContacto">
-                    <td class="atributo"><b>Correo:</b></td>
-                    <td class="divDatoContacto">
-                        <% if (typeof correo != 'undefined' && correo != '') { %>
-                            <a class="editar editando" href="<%- correo %>"><%- correo %></a>
-                            <input type="text" id="mail" class="form-control editar" name="correo" value="<%- correo %>">
-                        <% } else{ %>
-                            <label class="editar editando">No especificado</label>
-                        <% }; %>
-                    </td>
-                    <td class="respuesta">
-                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                        <!--RESPUESTA-->
-                    </td>
-                </tr>
-                <tr class="trContacto">
-                    <td class="atributo"><b>Cargo:</b></td>
-                    <td class="divDatoContacto">
-                    <% if (typeof cargo != 'undefined' && cargo != '') { %>
-                            <label class="editar editando"><%- cargo %></label>
-                            <input type="text" class="form-control editar" name="cargo" value="<%- cargo %>">
+        <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar</div>
+        <br>
+        <br>
+        <table class="table table-striped tbla_contacto">
+            <tr class="trContacto">
+                <td class="atributo"><b>Nombre:</b></td>
+                <td class="divDatoContacto">
+                    <label class="editar editando"><%- nombre %></label>
+                    <input type="text" class="form-control editar" name="nombre" value="<%- nombre %>">
+                </td>
+                <td class="respuesta">
+                     <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                    <!--RESPUESTA-->
+                </td>
+            </tr>
+            <tr class="trContacto">
+                <td class="atributo"><b>Correo:</b></td>
+                <td class="divDatoContacto">
+                    <% if (typeof correo != 'undefined' && correo != '') { %>
+                        <a class="editar editando" href="<%- correo %>"><%- correo %></a>
+                        <input type="text" id="mail" class="form-control editar" name="correo" value="<%- correo %>">
                     <% } else{ %>
                         <label class="editar editando">No especificado</label>
-                        <input type="text" class="form-control editar" placeholder="Cargo">
-                    <% }; %>                            
-                    </td>
-                    <td class="respuesta">
-                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                        <!--RESPUESTA-->
-                    </td>
-                </tr>
-                <tr class="trContacto">
-                    <td class="atributo"><b>Teléfonos:</b></td>
-                    <td class="divDatoContacto" id="telefonos">
-                        <label class="editar editando">No especificado</label>
-                        <div class="editar">
-                            <div class="input-group">
-                                <input type="text" id="numeroNuevo" class="form-control" name="numero" maxlength="10" placeholder="Nuevo Teléfono">
-                                <div class="input-group-btn">
-                                    <select id="tipoNuevo" class="btn btn-default" name="tipo">
-                                        <option value="Casa">Casa</option>
-                                        <option value="Fax">Fax</option>
-                                        <option value="Movil" selected>Movil</option>
-                                        <option value="Oficina">Oficina</option>
-                                        <option value="Personal">Personal</option>
-                                        <option value="Trabajo">Trabajo</option>
-                                        <option value="Otro">Otro</option>
-                                        <option selected disabled>Tipo</option>
-                                    </select>
-                                    <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
-                                </div>
+                    <% }; %>
+                </td>
+                <td class="respuesta">
+                     <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                    <!--RESPUESTA-->
+                </td>
+            </tr>
+            <tr class="trContacto">
+                <td class="atributo"><b>Cargo:</b></td>
+                <td class="divDatoContacto">
+                <% if (typeof cargo != 'undefined' && cargo != '') { %>
+                        <label class="editar editando"><%- cargo %></label>
+                        <input type="text" class="form-control editar" name="cargo" value="<%- cargo %>">
+                <% } else{ %>
+                    <label class="editar editando">No especificado</label>
+                    <input type="text" class="form-control editar" placeholder="Cargo">
+                <% }; %>                            
+                </td>
+                <td class="respuesta">
+                     <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                    <!--RESPUESTA-->
+                </td>
+            </tr>
+            <tr class="trContacto">
+                <td class="atributo"><b>Teléfonos:</b></td>
+                <td class="divDatoContacto" id="telefonos">
+                    <label class="editar editando">No especificado</label>
+                    <div class="editar">
+                        <div class="input-group">
+                            <input type="text" id="numeroNuevo" class="form-control" name="numero" placeholder="Nuevo Teléfono" minlength="10" maxlength="20">
+                            <div class="input-group-btn">
+                                <select id="tipoNuevo" class="btn btn-default" name="tipo">
+                                    <option value="No definido" selected style="display:none;">Tipo</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Fax">Fax</option>
+                                    <option value="Movil">Movil</option>
+                                    <option value="Oficina">Oficina</option>
+                                    <option value="Personal">Personal</option>
+                                    <option value="Trabajo">Trabajo</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
                             </div>
                         </div>
-                    </td>
-                    <td class="respuesta">
-                         <span class="icon-uniF55C" style="visibility: hidden;"></span>
-                        <!--RESPUESTA-->
-                    </td>
-                </tr>
-                <!--<tr>
-                    <td colspan="2" class="divDatoContacto">
-                        <button type="submit" class="btn btn-primary editar">Actualizar</button>
-                    </td>
-                </tr>-->
-            </table>
-        </form>
+                        <br>
+                    </div>
+                </td>
+                <td class="respuesta">
+                     <span class="icon-uniF55C" style="visibility: hidden;"></span>
+                    <!--RESPUESTA-->
+                </td>
+            </tr>
+            <!--<tr>
+                <td colspan="2" class="divDatoContacto">
+                    <button type="submit" class="btn btn-primary editar">Actualizar</button>
+                </td>
+            </tr>-->
+        </table>
     </script>
 
     <script type="text/templates" id="plantilla_telefono">
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
-        <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
-             a medida que ocurren los errores del usuario -->
-            <div id="alertasTelefono">
-                <div class="alert alert-warning oculto" id="advertencia">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Advertencia!</h4>
-                    <p id="comentario"></p>
-                    <br>
-                    <button type="button" id="eliminar" class="btn btn-danger">Eliminar</button>
-                    <button type="button" id="cancelar" class="btn btn-default">Cancelar</button>
-                </div>
-
-                <div class="alert alert-danger oculto" id="error">
-                    <button type="button" class="close cerrar">×</button>
-                    <h4>¡Error!</h4>
-                    <p id="comentario"></p>
-                </div>
-            </div>
-                
-        <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
         <b class="editar editando"><%-tipo%></b>
         <div class="editar editando"><%-numero%></div>
         <div class="editar">
             <div class="input-group">
-                <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" placeholder="<%-numero%>" maxlength="10">
+                <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" placeholder="<%-numero%>" minlength="10" maxlength="20">
                 <div class="input-group-btn">
                     <select id="tipo" class="btn btn-default" name="tipo">
+                        <option value="No definido" selected style="display:none;"><%-tipo%></option>
                         <option value="Casa">Casa</option>
                         <option value="Fax">Fax</option>
-                        <option value="Movil" selected>Movil</option>
+                        <option value="Movil">Movil</option>
                         <option value="Oficina">Oficina</option>
                         <option value="Personal">Personal</option>
                         <option value="Trabajo">Trabajo</option>
                         <option value="Otro">Otro</option>
-                        <option selected disabled>Tipo</option>
                     </select>
-                    <button id="intentarEliminacion" class="btn btn-default"><label class="icon-uniF478"></label></button>
+                    <button type="button" id="eliminar" class="btn btn-default"><label class="icon-uniF478"></label></button>
                 </div>
             </div>
         </div>
@@ -658,10 +588,10 @@
 
     <script type="text/template" id="serviciosC">
         <div>
-            <label for="<%- 1+id %>"><%- nombre %></label>
-            <!--<label for="<%- 1+id %>" class="concepto"><%- concepto %></label>-->
+            <label for="<%- id %>"><%- nombre %></label>
+            <!--<label for="<%- id %>" class="concepto"><%- concepto %></label>-->
             <div class='check_posicion'>
-                <input type="checkbox" class="serviciosCuenta editando" name="nameServiciosCuenta" value="<%- 1+id %>" id="<%- 1+id %>">
+                <input type="checkbox" class="serviciosCuenta editando" name="nameServiciosCuenta" value="<%- id %>" id="<%- id %>">
             </div>
         </div>
     </script>
@@ -671,7 +601,7 @@
         <%- nombre %>
         <br>
     </script>
-
+   
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type="text/javascript">
     app.coleccionDeClientes = <?php echo json_encode($clientes) ?>;
@@ -689,11 +619,13 @@
  </script>
  <!-- Utilerias -->
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+    <!-- plugins -->
+        <script src="<?=base_url().'js/plugin/selectize/selectize.min.js'?>"></script>
+         
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
     <!-- <script type="text/javascript" src="js/backbone/lib/backbone.localStorage.js"></script> -->
-    
 
 <!--MV*-->
     <!-- modelos -->
@@ -718,6 +650,7 @@
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaContacto.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCliente.js'?>"></script>
+   
     <!-- vista general -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCP.js'?>"></script>
     <script type="text/javascript">

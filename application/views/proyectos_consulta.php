@@ -1,17 +1,5 @@
  <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
-<!-- CSS jQuery.Gantt -->
-	<link rel="stylesheet" type="text/css" href="js/plugin/Gantt/css/style.css">
-	<style type="text/css">
-      /* Bootstrap 3.x re-reset */
-      .fn-gantt *,
-      .fn-gantt *:after,
-      .fn-gantt *:before {
-        -webkit-box-sizing: content-box;
-           -moz-box-sizing: content-box;
-                box-sizing: content-box;
-      }
-	</style>
 <style type="text/css">
 	#color_titulos hr {
 		line-height: 10px;
@@ -528,7 +516,7 @@
 	<script type="text/template" id="tr_archivo">
 		<td>
 			<% if (nombre.split('.')[1] == 'jpg') { %>
-				<a href="<%- ruta %>" download><img src="<%- ruta %>" style="width:50px; height:50px;"></a>
+				<a href="<%- ruta %>" download><img src="<?=base_url().'<%- ruta %>'?>" style="width:50px; height:50px;"></a>
 			<% } else { %>
 				<a href="<%- ruta %>" download><%- nombre %></a>
 			<% }; %>
