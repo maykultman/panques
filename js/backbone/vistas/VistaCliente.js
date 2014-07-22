@@ -50,19 +50,18 @@ app.VistaCliente = Backbone.View.extend({
 		'blur #nuevoMail'   : 'validarCorreo',
 		'blur #nuevoNumero' : 'validarTelefono',
 
-		'change #fotoCliente' : 'actualizarFoto'
+		'change #fotoCliente' : 'actualizarFoto',
+
+		'click #tr_btn_actualizarTipo'	: 'actualizarTipo'
 	},
 	initialize  : function () {
 		this.listenTo(app.coleccionServiciosClientesI, 'reset', this.agregarServciciosClienteI);
 		this.listenTo(app.coleccionServiciosClientesC, 'reset', this.agregarServciciosClienteC);
+		this.listenTo(this.model, 'change:tipoCliente', this.remove);
 		// this.listenTo(app.coleccionServicios, 'reset', this.cargarServicios);
 		/*Listener para capturar los CAMBIOS en cada uno de
 		los ATRIBUTOS de los modelos*/
-		this.listenTo(
-			this.model, 
-			'change:visibilidad', 
-			this.eliminarDelDOM
-		);
+		this.listenTo(this.model, 'change:visibilidad', this.remove);
 		
 		//Otras variables
 		this.pasarFiltro = 0;
@@ -887,23 +886,14 @@ app.VistaCliente = Backbone.View.extend({
 		};
 		// });  
 	},
-	eliminarDelDOM            	: function () {
-		this.$el.remove();
-	},
 	visibilidad               	: function() {
 		var here = this;
-		// if (confirm('¿Deseas eliminar al cliente?')) {
-			//El cierre del modal lo realiza bootstrap
-			// console.log();
 		confirmar('¿Está seguro de que desea eliminar al cliente <b>'+this.model.get('nombreComercial')+'<b>?',
 			function () {
 				here.$('#cerrar_consulta').click();
 				here.model.cambiarVisibilidad();
-				here.$el.remove();
 			},
 			function () {});
-			// 
-		// };
 	},
 	cancelar                  	: function (elem) {
 		$(elem.currentTarget)
@@ -1115,5 +1105,26 @@ app.VistaCliente = Backbone.View.extend({
 					}
 				}
 			);
+	},
+	actualizarTipo 				: function (argument) {
+		var here = this;
+		confirmar('El prospecto <b>'+this.model.get('nombreComercial')+'</b> se actualizará a cliente',
+			function () {
+				here.model.save({
+					tipoCliente : 'cliente'
+				},{
+					patch	: true,
+					wait 	: true,
+					success	: function (exito) {
+						console.log(exito.toJSON());
+						alerta('<b style="color:green;">El prospecto ha sido actualizado, ahora se encuentra en la sección de clientes</b>',function () {});
+					},
+					error 	: function (error) {
+						console.log(error.toJSON());
+						alerta('<b style="color:fireBrick;">Ocurrio un error al actualizar al prospecto</b>',function () {});
+					}
+				});
+			},
+			function () {});		
 	}
 });

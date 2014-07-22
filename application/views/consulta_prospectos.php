@@ -99,7 +99,7 @@
         <% }; %>
 
         <td>
-            Módulo de actividad en construcción
+            Módulo de actividad
         </td>
         <td class="icon-operaciones">
             
@@ -107,6 +107,7 @@
             <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
             <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
             <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
+            <span class="icon-shortcut" id="tr_btn_actualizarTipo" title="Actualizar a cliente"></span>
         </td>
     </script>
     

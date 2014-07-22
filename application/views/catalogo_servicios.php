@@ -74,20 +74,16 @@
 	app.coleccionDeServicios = <?php echo json_encode($servicios) ?>;
 </script>
 <!--MV*-->
-   <!-- modelos -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-   <!-- modelos -->
+   	<!-- modelos -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
 
     <!-- colecciones -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-     <!-- colecciones -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
 
      <!-- Vistas -->
- <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
-<!--<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoServicio.js'?>"></script>-->
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoServicio.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaServicios.js'?>"></script>
-       <!-- Vistas -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoServicio.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaServicios.js'?>"></script>
 <script type="text/javascript">
 	var app = app || {};
 </script>

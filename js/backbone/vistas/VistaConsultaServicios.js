@@ -29,7 +29,7 @@ app.VistaConsultaServicios = Backbone.View.extend({
 
 	cargarServicio	: function (modelodeladd) {
 		var vistaCatalogoServicio = new app.VistaCatalogoServicio( { model:modelodeladd } );
-		this.$tablaServicios.append( vistaCatalogoServicio.render().el );
+		this.$tablaServicios.prepend( vistaCatalogoServicio.render().el );
 	},
 
 	cargarServicios	: function () {
@@ -77,9 +77,7 @@ app.VistaConsultaServicios = Backbone.View.extend({
 		 .html('¿Deseas cancelar el registro?');
 		 this.$('#alertasCliente #advertencia').toggleClass('oculto');
 		 //$('#formServicio')[0].reset();
-
 	},
-
 
     cerrarAlerta	: function (elemento) {
     	console.log(elemento);
