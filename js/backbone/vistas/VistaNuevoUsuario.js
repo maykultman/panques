@@ -86,7 +86,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
         {
             empleado[cont] = app.coleccionDeEmpleados[i].nombre; cont++;
         };
-        $('#empleado').autocomplete({ source: this.empleado});
+        $('#empleado').autocomplete({ source: empleado});
 	},
 
 	marcarTodos : function(elemento)
@@ -94,7 +94,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		marcarCheck(elemento);      
 	},
 
-	guardar	 : function ()
+	guardar	 : function (fotoUsuario)
 	{
 		var modeloUsuario = pasarAJson($('#registroUsuario').serializeArray());
 		modeloUsuario = limpiarJSON(modeloUsuario);	
@@ -115,7 +115,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 			},
 			{
 				wait	: true,
-				success : function (exito) {},
+				success : function (exito) { location.href='usuarios_consulta'; },
 				error 	: function (error) {}
 			}
 		);
@@ -143,13 +143,13 @@ app.VistaNuevoUsuario = Backbone.View.extend({
         var nombreFoto = jQuery.parseJSON(resp.responseText);
         if (nombreFoto != false)
         {
-        	var foto = 'img/fotosUsuario/'+nombreFoto+'';	
+        	var foto = 'img/fotosUsuarios/'+nombreFoto+'';	
         	this.guardar(foto);        	
         	return;
         }
         else
         {        	
-        	return 'img/fotoUsuario/sinfoto.png';
+        	return 'img/fotoUsuarios/sinfoto.png';
         };
 
         evento.preventDefault();
