@@ -80,8 +80,8 @@ class Escritorio extends REST {
 			}
 		}
 		else
-		{		
-			redirect(base_url().'escritorio');
+		{	
+			redirect(base_url().'escritorio');	
 		}		
 	}
 	
@@ -96,6 +96,10 @@ class Escritorio extends REST {
 
 		if($this->session->userdata('usuario'))
 		{ 
+			if(!$this->ruta())
+			{
+				redirect('escritorio/dashboard');
+			}
 			if($this->ruta()==='dashboard'||$this->ruta()==='login')
 			{
 				$this->dashboard();				
@@ -134,7 +138,7 @@ class Escritorio extends REST {
 			{
 				$this->usuarios();				
 			}
-			if($this->ruta()==='formatoCotizacion'||$this->ruta()==='formatoContrato')
+			if($this->ruta()==='formatoCotizacion'||$this->ruta()==='formatoContrato'||$this->ruta()==='vistaPreviaCotizacion')
 			{
 				$this->formato();
 			}
@@ -324,6 +328,15 @@ class Escritorio extends REST {
 			$data['representantes']	  = $this->representa->get();
 
 			$this->load->view('formato_contrato', $data);
+		}
+		if($this->ruta()==='vistaPreviaCotizacion')
+		{
+			$this->load->model('modelo_servicioProyecto');
+			$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+			$data['servicios'] 		  = $this->serv->get_Servicios_Proyecto();  	# Lista de Servicios
+			$data['representantes']	  = $this->representa->get();
+			$data['cotizaciones'] 	  = $this->budget->get();
+			$this->load->view('vistaPreviaCotizacion', $data);
 		}
 		
 	}

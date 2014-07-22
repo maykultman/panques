@@ -76,7 +76,7 @@ app.VistaEdicionCotizacion = app.VistaNuevaCotizacion.extend({
            			{
            				/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
            				Backbone.emulateHTTP = true; //Variables Globales
-		   				    Backbone.emulateJSON = true; //Variables Globales 
+		   				Backbone.emulateJSON = true; //Variables Globales 
 		   				    /*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
 		           		for(i in longitud)
 		           		{	
@@ -149,9 +149,10 @@ app.VistaCotizacion = Backbone.View.extend({
 	plantilla : _.template($('#tabla_Cotizacion').html()),
 
 	events : {
-		'click .icon-trash' : 'eliminarCotizacion',
-		'click .icon-uniF5E2' : 'pasarAContrato',
-		'click .tr_btn_editar' : 'edicionCotizacion'
+		'click .icon-trash' 	: 'eliminarCotizacion',
+		'click .icon-uniF5E2' 	: 'pasarAContrato',
+		'click .tr_btn_editar' 	: 'edicionCotizacion',
+		'click .icon-preview'	: 'vistaPrevia'
 	},
 
 	initialize : function (){
@@ -177,6 +178,18 @@ app.VistaCotizacion = Backbone.View.extend({
 	pasarAContrato : function()
 	{
 		alert('contrato');
+	},
+
+	vistaPrevia : function()
+	{
+		localStorage.clear();
+ 		var servicios = app.coleccionServiciosCotizados.where({ idcotizacion : this.model.id });
+		for(i in servicios)
+		{
+			app.coleccionLocalServicios.create(servicios[i].toJSON());
+		}
+		app.coleccionLocalCotizaciones.create(this.model.toJSON());
+		window.open("vistaPreviaCotizacion");
 	}
 
 });
@@ -209,21 +222,19 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	cargarCotizacion : function (modelo)
 	{
-	 	var cantidad  = 0;	 	var precio = 0;	 	
-	 	var descuento = 0;	 	var total  = 0;
+	 	var cantidad  = 0;	 	var precio = 0;	 var descuento = 0;	 	var total  = 0;
 	 	
 	 	/* Busqueda de id´s en cada colección*/
 	 	var servicio = app.coleccionServiciosCotizados.where ({ idcotizacion : modelo.get( 'id' ) });
 
-	 	 /*Este ciclo es para calcular el total de todos los servicios que le pertenece a una cotización*/
+	 	 /*Calculamos el total de todos los servicios que le pertenece a una cotización*/
 	 	for(var i = 0; i < servicio.length; i++ )
 	 	{
-	 		/*...Le pedimos el dato para hacer la operación total a la colección de servicios...*/
+	 		/*...obtenemos el valor de los campos y hacemos la operación...*/
 	 		cantidad  = Number( servicio[i].get( 'cantidad'  ) );
 	 	 	precio 	  = Number( servicio[i].get( 'precio'    ) );
 	 	 	descuento = Number( servicio[i].get( 'descuento' ) );
-	 	 	/*Despues de obtener los datos hacemos la operación para calcular el total*/
-	 	 	total 	  += cantidad * precio - descuento;
+	 	 	total 	 += cantidad * precio - descuento;
 	 	}
 	 	/*...Añadimos campos a la colección de modelocotización...*/ 	 	
 	 	modelo.set
@@ -247,7 +258,6 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	ordenarporfecha : function(fecha)
 	{	app.coleccionCotizaciones.reset( app.coleccionCotizaciones.toJSON().reverse() );
-		// app.coleccionDeCotizaciones = app.coleccionCotizaciones.toJSON();
 		ordenar(fecha);
 	},
 

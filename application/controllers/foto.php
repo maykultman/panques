@@ -13,7 +13,7 @@ class  Foto extends REST {
     
     private function create()
     {
-        if(array_key_exists('fotoCliente', $_FILES)) //$_FILES['fotoCliente']['name'])
+        if(array_key_exists('fotoCliente', $_FILES)) 
         {
             $carpeta="img/fotosClientes/";
             opendir($carpeta);
@@ -24,7 +24,6 @@ class  Foto extends REST {
                     
             }
         }
-        // if($_FILES['fotoUsuario']['name'])
         if(array_key_exists('fotoUsuario', $_FILES))
         {
             $carpeta="img/fotosUsuarios/";
@@ -39,39 +38,7 @@ class  Foto extends REST {
         else
         {
             $this->response(false, 200);
-        }
-        // if($_FILES['fotoCliente']['name']||$_FILES['fotoUsuario']['tmp_name'])
-        // {
-        //     if(array_key_exists('fotoCliente', $_FILES)&&$_FILES['fotoCliente']['name']!="")
-        //     {
-        //         $carpeta="img/fotosClientes/";
-        //         opendir($carpeta);
-        //         $destino=$carpeta.$_FILES['fotoCliente']['name'];  
-        //         if(copy($_FILES['fotoCliente']['tmp_name'], $destino))
-        //         {
-        //             $this->pre_response($_FILES['fotoCliente']['name'],'create');
-                    
-        //         }
-                
-        //     }
-        //     elseif(array_key_exists('fotoUsuario', $_FILES)&&$_FILES['fotoUsuario']['name']!="")
-        //     {
-        //         $carpeta="img/fotosUsuarios/";
-        //         opendir($carpeta);
-        //         $destino=$carpeta.$_FILES['fotoUsuario']['name'];  
-        //         if(copy($_FILES['fotoUsuario']['tmp_name'], $destino))
-        //         {
-        //             $this->pre_response($_FILES['fotoUsuario']['name'], 'create');
-                    
-        //         }
-                
-        //     }
-        // }
-        // else
-        // {
-        //     $data['Response'] = 'Sin foto';
-        //     $this->response($data, 200);
-        // }
+        }        
     }
 
 } # Fin de la Clase archivosimedia

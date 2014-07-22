@@ -150,7 +150,7 @@
 		<td><input type="text" id="descuento" name="descuento" value="0" 				 class="valor">   </td>		
 		<td><input 			   id="importe"   name="importes" 						     class="importes">
 		<form class="filas">
-			  <input type="hidden"   				 name="id" 		  value="<%-id%>"		   >
+			  <input type="hidden"   				 name="id" 		  value="<%-idservicio%>"		   >
 		      <input type="hidden"  id="hduracion"   name="duracion"  value="<%-duracion%>" >
 		      <input type="hidden"  id="hcantidad"   name="cantidad"  value="1"                > 
 		      <input type="hidden"  id="hprecio"     name="precio" 	  value="<%-precio     %>" >
@@ -179,8 +179,9 @@
 	</td>
 </script>
 <!-- Librerias -->
-<script src="js/plugin/Gantt/js/jquery.fn.gantt.js"></script>
+<script src="<?=base_url().'js/plugin/Gantt/js/jquery.fn.gantt.js'?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone.localStorage.js'?>"></script>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeCotizaciones   	= <?php echo json_encode($cotizaciones)   	  ?>;
@@ -193,23 +194,23 @@
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <!-- MVC -->
 
-<script type = "text/javascript" src = "<?=base_url().'js/backbone/modelos/ModeloServicio.js'			       ?>" > </script>
+<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloServicio.js'			       ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloCotizacion.js'               ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloCliente.js'                  ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloEmpleado.js'                 ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloRepresentante.js'            ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'         ?>" > </script>
+<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloLocalCotizacion.js'         ?>" > </script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'	           ?>" > </script>
+<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionServicios.js'	           ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'      ?>" > </script>
+<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionLocalCotizaciones.js' ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionClientes.js'		   ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/coleccionServiciosCotizados.js'?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'         ?>" > </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'    ?>" > </script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'				      ?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicioCotizacion.js'	      ?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevaCotizacion.js'		      ?>"> </script>
+<script type ="text/javascript"  src = " <?=base_url().'js/backbone/vistas/VistaServicio.js'				      ?>"> </script>
+<script type ="text/javascript"  src = " <?=base_url().'js/backbone/vistas/VistaServicioCotizacion.js'	      ?>"> </script>
+<script type ="text/javascript"  src = " <?=base_url().'js/backbone/vistas/VistaNuevaCotizacion.js'		      ?>"> </script>
 <script type = "text/javascript" src = " <?=base_url().'js/backbone/vistas/VistaConsultaCotizaciones.js'	   ?>" > </script>
-
-

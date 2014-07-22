@@ -188,14 +188,11 @@
  		app.coleccionLocalCotizaciones.fetch();
  		this.cargarCotizaciones();
  		app.coleccionLocalServicios.fetch();
- 		this.cargarServicios();
-
+ 		this.cargarServicios(); 		
  	},
 
  	cargarCotizacion : function(modelo)
  	{
- 		// var fecha = formatearFechaUsuario(new Date(modelo.get('fecha')));
- 		// console.log(fecha);
  		modelo.set({ fecha      :  formatearFechaUsuario(new Date(modelo.get('fecha')))  });
  		modelo.set({nombreComercial:app.coleccionClientes.get({id:modelo.get('idcliente')}).get('nombreComercial')});	
  		modelo.set({nombre:app.coleccionRepresentantes.get({id:modelo.get('idrepresentante')}).get('nombre')});	
@@ -205,11 +202,11 @@
 
  	cargarCotizaciones : function()
  	{
- 		app.coleccionLocalCotizaciones.each(this.cargarCotizacion, this);
+ 		app.coleccionLocalCotizaciones.each(this.cargarCotizacion, this); 		
  	},
  	cargarServicio : function(modelo)
  	{
- 		modelo.set({ idservicio : app.coleccionServicios
+ 		modelo.set({ idservicio : app.coleccionServicios.get
  				  ({ id         : modelo.get('idservicio')}).get('nombre'),
  				     importe    : (Number(modelo.get( 'precio'    ) ) )*
  				     			  (Number(modelo.get( 'cantidad'  ) ) )-
@@ -218,14 +215,13 @@
 
  		var vista = new Servicios({ model: modelo});
  		this.$('#tbody').append( vista.render().el);
- 		this.array += parseInt(modelo.get('importe'));		
- 		
+ 		this.array += parseInt(modelo.get('importe'));	
  	},
 
  	cargarServicios : function()
  	{
  		app.coleccionLocalServicios.each(this.cargarServicio, this);
- 		$('#total').text('$'+this.array);
+ 		$('#total').text('$'+this.array); 		
  	}
  });
 

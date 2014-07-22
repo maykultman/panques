@@ -18,7 +18,9 @@ class  Usuarios extends REST
     
     private function create()
     {
-        $query = $this->user->create($this->ipost());
+        $post = $this->ipost();
+        $post['contrasenia'] = md5($post['contrasenia']);
+        $query = $this->user->create($post);
         $this->pre_response($query, 'create');                  
     }
 

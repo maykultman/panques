@@ -32,6 +32,7 @@ $route[ 'escritorio/catalogo_roles'     	] = 'escritorio/modulo';
 $route[ 'escritorio/catalogo_puestos'   	] = 'escritorio/modulo';
 $route[ 'escritorio/usuarios_nuevo'    	 	] = 'escritorio/modulo';
 $route[ 'escritorio/usuarios_consulta' 	 	] = 'escritorio/modulo';
+$route[ 'escritorio/vistaPreviaCotizacion'  ] = 'escritorio/modulo';
 $route['escritorio/configuracion'		 	] = 'escritorio/modulo';
 
 #################-----RUTAS PARA LAS APIS------######################
