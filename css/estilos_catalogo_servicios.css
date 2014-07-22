@@ -1,10 +1,10 @@
 
-.oculto2{
+td .oculto2{
 	
 	display: none;
 }
 
-.visible2{
+td .visible2{
 		
 	display: block;
 }

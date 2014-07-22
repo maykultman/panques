@@ -46,11 +46,11 @@
 		<label name="<%- nombre %>"  class="ocultoR visibleR"><%- nombre %></label>
 		<input id="erol" type="text" class="valor ocultoR" value="<%- nombre %>">
 	</td>
-	<td class="icon-operaciones">			
-		<div class="eliminar_permiso">
-			<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
-		   	<span class="icon-edit"  data-toggle="tooltip" title="Editar">  </span>
-	    </div>			
+	<td class="icon-operaciones">		
+	<div class="eliminar_permiso">
+		<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
+		<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>				
+	</div>
 	</td>
 
 </script>

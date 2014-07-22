@@ -29,13 +29,13 @@
 				<table id="consulta_tablaservicio" class="tablesorter table-striped" style="line-height: 3;">
 					<thead>
 						<tr>
-							<th>Todos <input type="checkbox"  style="margin-left:8px;"></th>
+							<th class="sorter-false">Todos <input type="checkbox" ></th>
 							<th>Nombre</th>
-							<th>Concepto</th>
-							<th>Precio</th>
-							<th>Realización</th>
-							<th>Descripción</th>						
-							<th>Opciones</th>
+							<th class="sorter-false" >Concepto</th>
+							<th class="sorter-false" >Precio</th>
+							<th class="sorter-false" >Realización</th>
+							<th class="sorter-false">Descripción</th>						
+							<th class="sorter-false">Opciones</th>
 						</tr>	
 					</thead>
 					<tbody>
@@ -51,15 +51,16 @@
 <script type="text/plantilla" id="plantilla_servicio">
 
 	<td><input type="checkbox"></td>
-	<td> <label class="oculto2 visible2"><%- nombre %></label><input type="text" name="nombre" value="<%- nombre %>" class="oculto2"> </td>
-	<td> <label class="oculto2 visible2"><%- concepto %> </label><input type="text" name="concepto" value="<%- concepto %>" class="oculto2"> </td>
-	<td> <label class="oculto2 visible2"><%- precio %> </label><input type="text" name="precio" value="<%- precio %>" class="oculto2"> </td>
-	<td> <label class="oculto2 visible2"><%- realizacion %> </label><input type="text" name="realizacion" value="<%- realizacion %>" class="oculto2"></td>
-	<td><label  class="oculto2 visible2"><%- descripcion %> </label><input type="text" name="descripcion" value="<%- descripcion %>" class="oculto2"></td>
+	<td style="width:17%"> <label class="oculto2 visible2"><%- nombre %></label><input type="text" name="nombre" value="<%- nombre %>" class="valor oculto2"> </td>
+	<td style="width:18%;"> <label class="oculto2 visible2"><%- concepto %> </label><input type="text" name="concepto" value="<%- concepto %>" class="valor oculto2"></td>
+	<td style="width:12%;"> <label class="oculto2 visible2"><%- precio %> </label><input type="text" name="precio" value="<%- precio %>" class="valor oculto2"> </td>
+	<td style="width:12%;"> <label class="oculto2 visible2"><%- realizacion %> </label><input type="text" name="realizacion" value="<%- realizacion %>" class="valor oculto2"></td>
+	<td><label  class="oculto2 visible2"><%- descripcion %> </label><input type="text" name="descripcion" value="<%- descripcion %>" class="valor oculto2"></td>
 	 <!-- <td> <label class="oculto2 visible2"><%- masiva %> </label><input type="text" name="masiva" value="<%- masiva %>" class="oculto2"> -->
-	 <td class="iconos-operaciones">
-		<div>
-	     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
+	 <td class="icon-operaciones">
+		<div >
+	     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+	     <span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
 	    </div>
 	</td> 
         

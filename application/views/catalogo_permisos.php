@@ -7,19 +7,7 @@
         </script>
 		<section id="catalogoPermisos">	   
 		  	<h3>Nuevo Permiso</h3>
-<<<<<<< HEAD
-			<hr><br>
-=======
 			<hr>
-<<<<<<< HEAD
-			<form id="registroPermiso">
-				<input id="permiso" type="text"  name="nombre" class="form-control" placeholder="Nombre del permiso" style="width:85%; display: inline-block;">
-				<div style="display: inline-block;">
-					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
-		       	</div>
-		    </form>
-=======
->>>>>>> origin/master
 			<div class="row">
 				<form id="registroPermiso">
 					<div class="col-md-11">
@@ -31,12 +19,9 @@
 				       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->		            	
 					</div>
 				 </form>
-<<<<<<< HEAD
-			</div><br>		   
-=======
+
 			</div>		   
->>>>>>> origin/master
->>>>>>> origin/master
+
 		    <h3>Lista de permisos</h3>
 			<hr>
 			<input id="buscar_permiso" type="search" class="form-control" placeholder="Busqueda" style="width:100%; ">
@@ -70,7 +55,7 @@ app.coleccionDePermisos = <?=json_encode($permisos)?>
 </script>
 <script type = "text/plantilla" id="listarPermisos">
 
-	<td ><label class="ocultoR visibleR" for="<%- id %>"><%- nombre %></label>
+	<td><label class="ocultoR visibleR" for="<%- id %>"><%- nombre %></label>
 	<input id="epermiso" type="text" class="valor ocultoR" value="<%- nombre %>">
 	</td>
 	<td class="icon-operaciones">		
