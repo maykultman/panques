@@ -1,21 +1,15 @@
-<?php 
-# Cargamos la librería dompdf.
-require_once ('dompdf/dompdf_config.inc.php');
- 
-# Contenido HTML del documento que queremos generar en PDF.
-$html='
 <!doctype html>
-<html>
+<html lang="es">
 	<head>
-	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotizacion</title>	
-		<link rel="stylesheet" href="../../css/estilo_formato_cotizacion.css" type="text/css">		
+		<link rel="stylesheet" href="../../css/estilo_formato_cotizacion.css" type="text/css">
+		<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css">	
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js">
-		
 	</head>
-<body>
+	<body>
 		<div id="contenedor_formato" >
 			<div id="cabecera" style="background: rgb(30,87,153);
 				background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 0%, rgba(32,124,202,1) 100%, rgba(125,185,232,1) 100%);
@@ -31,7 +25,10 @@ $html='
 				</div>
 				<div id="contenedor_derecho">
 					<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: 10px; margin-left: -30px;">			
-					
+					<script>
+				    var f = new Date();
+					document.write('<div id="div_fecha">'+' <font color="white">' + f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear() + '</font>' + '</div>');
+					</script>
 					<div id="lbl_cliente">
 					<label><font color="white"><b>Cliente:</b></font></label>
 				    </div>
@@ -186,22 +183,3 @@ $html='
 		</div>
 	</body>
 </html>
-';
- 
-# Instanciamos un objeto de la clase DOMPDF.
-$mipdf = new DOMPDF();
- 
-# Definimos el tamaño y orientación del papel que queremos.
-# O por defecto cogerá el que está en el fichero de configuración.
-$mipdf ->set_paper("A4", "portrait");
- 
-# Cargamos el contenido HTML.
-$mipdf ->load_html(utf8_decode($html));
- 
-# Renderizamos el documento PDF.
-$mipdf ->render();
- 
-# Enviamos el fichero PDF al navegador.
-#$mipdf ->stream('FicheroEjemplo.pdf');
-$mipdf->stream('my.pdf',array('Attachment'=>0));
-?>

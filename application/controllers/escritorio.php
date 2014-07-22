@@ -145,6 +145,11 @@ class Escritorio extends REST {
 		}
 	}
 	
+
+	public function pdf()
+	{ 	 
+		$this->load->view('pruebapdf');
+	} 
 	public function dashboard()
 	{ 	 
 		$this->area_Estatica('dashboard_gustavo');

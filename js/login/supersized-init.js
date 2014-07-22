@@ -22,7 +22,7 @@ jQuery(function($){
         slides             : [    // Slideshow Images
                                  // {image : 'img/imglogin/backgrounds/qualiumfondo.png'},
                                  // {image : 'img/imglogin/backgrounds/fondo2.jpg'},
-                                 {image : 'img/imglogin/backgrounds/fondo3.jpg'}
+                                 {image : 'img/imglogin/backgrounds/fondo.jpg'}
                              ]
 
     });

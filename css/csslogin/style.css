@@ -8,15 +8,17 @@
  */
 
 
-body {
-    background: #f8f8f8;
+body { 
+    background: url(../../img/imglogin/backgrounds/fondo.jpg) no-repeat;
+    background-size: 100%;
+   
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     text-align: center;
     color: #fff;
 }
 
 .page-container {
-    margin: 120px auto 0 auto;
+    margin: 190px auto 0 auto;
 }
 
 h1 {
