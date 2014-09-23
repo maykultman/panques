@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+<?=link_tag('css/theme.default.css')?>
 <style type="text/css" media="">
   
   .trProyecto{

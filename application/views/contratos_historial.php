@@ -1,5 +1,7 @@
-<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
-<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
+<?=
+	script_tag('js/autocompletes.js').
+	link_tag('css/estilos_modulo_contratos.css');
+?>
 <style type="text/css">
 	#posicion_infotd, #section_actualizar {
 		/*float: left;*/
@@ -319,7 +321,7 @@
 			
 		</script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=script_tag('js/backbone/app.js');?>
 <script type="text/javascript">
     var app = app || {};
     app.iva = 0.16;
@@ -331,27 +333,29 @@
     app.coleccionDePagos 				= <?=json_encode($pagos)?>;
     app.coleccionDeEmpleados			= <?=json_encode($empleados)?>;
 </script>
-<!-- Utilerias -->
-    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-    <!-- plugins -->
-    	<script type="text/javascript" src="<?=base_url().'js/plugin/jquery.jcarousel-core.min.js'?>"></script>
-<!-- Librerias Backbone -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
-<!-- modelos -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>"></script>
-<!-- colecciones -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContratos.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosContrato.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPagos.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>"></script>
+<?=
+// <!-- Utilerias -->
+    script_tag('js/funcionescrm.js').
+    // <!-- plugins -->
+    script_tag('js/plugin/jquery.jcarousel-core.min.js').
+// <!-- Librerias Backbone -->
+    script_tag('js/backbone/lib/underscore.js').
+    script_tag('js/backbone/lib/backbone.js').
+    script_tag('js/backbone/lib/backbone.localStorage.js').
+// <!-- modelos -->
+    script_tag('js/backbone/modelos/ModeloCliente.js').
+    script_tag('js/backbone/modelos/ModeloRepresentante.js').
+    script_tag('js/backbone/modelos/ModeloServicio.js').
+    script_tag('js/backbone/modelos/ModeloEmpleado.js').
+// <!-- colecciones -->
+    script_tag('js/backbone/colecciones/ColeccionClientes.js').
+    script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+    script_tag('js/backbone/colecciones/ColeccionServicios.js').
+    script_tag('js/backbone/colecciones/ColeccionContratos.js').
+    script_tag('js/backbone/colecciones/ColeccionServiciosContrato.js').
+    script_tag('js/backbone/colecciones/ColeccionPagos.js').
+    script_tag('js/backbone/colecciones/ColeccionEmpleados.js');
+?>
     <script type="text/javascript">
         app.coleccionContratos 			= new ColeccionContratos(app.coleccionDeContratos);
         app.coleccionServiciosContrato 	= new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
@@ -363,6 +367,7 @@
 		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
     </script>
 <!-- vistas -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoContrato.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaContrato.js'?>"></script>
+<?=	script('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
+	script('js/backbone/vistas/VistaNuevoContrato.js').
+	script('js/backbone/vistas/VistaConsultaContrato.js');
+?>

@@ -1,7 +1,7 @@
-    <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
-    <!-- plugin selectize css -->
-        <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
-
+    <?=
+        link_tag('css/theme.default.css').
+        // <!-- plugin selectize css -->
+        link_tag('js/plugin/selectize/selectize.default.css');?>
     <style type="text/css">
         .spin{
             width: 15px;
@@ -603,7 +603,7 @@
         <br>
     </script>
    
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=script_tag('js/backbone/app.js');?>
 <script type="text/javascript">
     app.coleccionDeClientes = <?php echo json_encode($clientes) ?>;
     // {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
@@ -619,48 +619,47 @@
     app.coleccionDeServiciosC = <?php echo json_encode($serviciosCliente) ?>;
  </script>
  <!-- Utilerias -->
-    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-    <!-- plugins -->
-        <script src="<?=base_url().'js/plugin/selectize/selectize.min.js'?>"></script>
-         
-<!-- Librerias Backbone -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-    <!-- <script type="text/javascript" src="js/backbone/lib/backbone.localStorage.js"></script> -->
+    <?=
+    script_tag('js/funcionescrm.js').
+    // <!-- plugins -->
+    script_tag('js/plugin/selectize/selectize.min.js').         
+    // <!-- Librerias Backbone -->
+    script_tag('js/backbone/lib/underscore.js').
+    script_tag('js/backbone/lib/backbone.js').
+    // <!--MV*-->
+    // <!-- modelos -->
+    script_tag('js/backbone/modelos/ModeloServicio.js').
+    script_tag('js/backbone/modelos/ModeloRepresentante.js').
+    script_tag('js/backbone/modelos/ModeloContacto.js').
+    script_tag('js/backbone/modelos/ModeloCliente.js').
+    script_tag('js/backbone/modelos/ModeloTelefono.js').
+    script_tag('js/backbone/modelos/ModeloServicioCliente.js').
+    // <!-- colecciones -->
 
-<!--MV*-->
-    <!-- modelos -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloContacto.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloTelefono.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCliente.js'?>"></script>
-    <!-- colecciones -->
+    script_tag('js/backbone/colecciones/ColeccionServicios.js').
+    script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+    script_tag('js/backbone/colecciones/ColeccionContactos.js').
+    script_tag('js/backbone/colecciones/ColeccionClientes.js').
+    script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
+    script_tag('js/backbone/colecciones/ColeccionServiciosClientes.js').
 
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContactos.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionTelefonos.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosClientes.js'?>"></script>
+    // <!-- vistas -->
+    script_tag('js/backbone/vistas/VistaServicio.js').
+    script_tag('js/backbone/vistas/VistaServicioCliente.js').
+    script_tag('js/backbone/vistas/VistaTelefono.js').
+    script_tag('js/backbone/vistas/VistaContacto.js').
+    script_tag('js/backbone/vistas/VistaCliente.js').   
+    // <!-- vista general -->
+    script_tag('js/backbone/vistas/VistaConsultaCP.js');?>
 
-    <!-- vistas -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicioCliente.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaContacto.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCliente.js'?>"></script>
-   
-    <!-- vista general -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCP.js'?>"></script>
     <script type="text/javascript">
         app.vistaConsultaProspectos = new app.VistaConsultaProspectos();
     </script>
 
      <!-- Librerias para el scroll de la tabla -->
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    
+    <?= script_tag('js/tablas/jquery-latest.min.js').
+        script_tag('js/tablas/jquery.tablesorter.js').
+        script_tag('js/tablas/jquery.tablesorter.widgets.js').
+        script_tag('js/tablas/widget-cssStickyHeaders.js').
+        script_tag('js/tablas/estilo_tabla.js');
+    ?>

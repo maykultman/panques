@@ -3,11 +3,13 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotizacion</title>	
-		<link rel="stylesheet" href="../../css/estilo_formato_cotizacion.css" type="text/css">
-		<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css">	
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js">
+		<?=
+			link_tag("../../css/estilo_formato_cotizacion.css").
+			link_tag('http://fonts.googleapis.com/css?family=Philosopher').
+			link_tag("../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css").	
+			link_tag("../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css").
+			link_tag("../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js");
+		?>
 	</head>
 	<body>
 		<div id="contenedor_formato" >

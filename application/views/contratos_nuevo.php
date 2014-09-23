@@ -1,4 +1,4 @@
-		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
+		<?=link_tag('css/estilos_modulo_contratos.css');?>
 		<!-- scrpit de prueba para la fecha y efecto de toggle para mostrar detalles del servicio -->
 		<section class="secciones1">
 			<form id="formulario">
@@ -253,7 +253,7 @@
 		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>-->
 	</script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=script_tag('js/backbone/app.js');?>
 <script type="text/javascript">
 	var app = app || {};
 	app.iva = 0.16;
@@ -261,23 +261,25 @@
 	app.coleccionDeServicios 		= <?php echo json_encode($servicios) ?>;
 	app.coleccionDeRepresentantes 	= <?php echo json_encode($representantes) ?>;
 </script>
-<!-- Utilerias -->
-	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<!-- Librerias Backbone -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
-<!-- modelos -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-<!-- colecciones -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContratos.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosContrato.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPagos.js'?>"></script>
+<?=
+// <!-- Utilerias -->
+	script_tag('js/funcionescrm.js').
+// <!-- Librerias Backbone -->
+    script_tag('js/backbone/lib/underscore.js').
+    script_tag('js/backbone/lib/backbone.js').
+    script_tag('js/backbone/lib/backbone.localStorage.js').
+// <!-- modelos -->
+	script_tag('js/backbone/modelos/ModeloCliente.js').
+	script_tag('js/backbone/modelos/ModeloRepresentante.js').
+	script_tag('js/backbone/modelos/ModeloServicio.js').
+// <!-- colecciones -->
+	script_tag('js/backbone/colecciones/ColeccionClientes.js').
+	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+	script_tag('js/backbone/colecciones/ColeccionServicios.js').
+	script_tag('js/backbone/colecciones/ColeccionContratos.js').
+	script_tag('js/backbone/colecciones/ColeccionServiciosContrato.js').
+	script_tag('js/backbone/colecciones/ColeccionPagos.js');?>
+?>
 	<script type="text/javascript">
 		app.coleccionContratos = new ColeccionContratos();
 		app.coleccionServiciosContrato = new ColeccionServiciosContrato();
@@ -331,9 +333,11 @@
 		// 	}
 		// });
 	</script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoContrato.js'?>"></script>
-	<script type="text/javascript">
-		app.vistaNuevoContrato = new app.VistaNuevoContrato();
-	</script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/routers/router.js'?>"></script>
+	<?=
+		script_tag('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
+		script_tag('js/backbone/vistas/VistaNuevoContrato.js');?>
+
+		<script type="text/javascript">
+			app.vistaNuevoContrato = new app.VistaNuevoContrato();
+		</script>
+	<?=script_tag('js/backbone/routers/router.js');?>
