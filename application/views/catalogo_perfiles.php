@@ -1,9 +1,9 @@
-        <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
-          type="text/css">
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-        </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-        </script>
+        <?=
+        	link_tag('css/estilos_modulo_usuarios.css').
+        	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+        	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
+        ?>
+       
         <section>
 	    	<h3 class="titulo">Perfiles</h3>
 	    	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Perfil
@@ -88,27 +88,29 @@
 		<center><button id="guardarEdicion" type="button" class="btn btn-primary">Guardar</button></center>
 	</div>
 </script>
-
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<?=
+	script_tag('js/funcionescrm.js').
+	script_tag('js/autocompletes.js').
+	//Librerias
+	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/backbone/lib/backbone.js');
+?>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDePerfiles = <?php echo json_encode($perfiles) ?>;
 	app.coleccionDePermisos = <?php echo json_encode($permisos) ?>;	
 	
 </script>
-<!-- MVC -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPerfil.js'?>">          		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermiso.js'?>">          		</script>
+<?=
+//<!-- MVC -->
+	script_tag('js/backbone/modelos/ModeloPerfil.js').
+	script_tag('js/backbone/modelos/ModeloPermiso.js').
+	
+	script_tag('js/backbone/colecciones/ColeccionPerfiles.js').
+	script_tag('js/backbone/colecciones/ColeccionPermisos.js').
 
-
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPerfiles.js'?>">  		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisos.js'?>">  		</script>
-
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">	        </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaPerfil.js'?>">	         		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoPerfil.js'?>">	   			</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaPerfil.js'?>">	   		</script>
+	script_tag('js/backbone/vistas/VistaRenderizaPermiso.js').	  
+	script_tag('js/backbone/vistas/VistaPerfil.js').	     
+	script_tag('js/backbone/vistas/VistaNuevoPerfil.js').	
+	script_tag('js/backbone/vistas/VistaConsultaPerfil.js');
+?>

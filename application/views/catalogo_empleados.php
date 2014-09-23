@@ -1,8 +1,9 @@
-		<link   type="text/css"rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" >
-		<script type="text/javascript" src="<?=base_url().'js/jquery-ui-1.9.2.custom.min.js'?>"          >  </script>		
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>"   >  </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>" >  </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tab.js'?>"        >  </script>
+		<?=link_tag('css/estilos_modulo_usuarios.css').
+		script_tag('js/jquery-ui-1.9.2.custom.min.js').
+		script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+		script_tag('css/bootstrap-3.1.1-dist/js/transition.js').
+		script_tag('css/bootstrap-3.1.1-dist/js/tab.js');?>
+
         <section>
 		<script>
 		  $(function() {
@@ -159,25 +160,29 @@
 		</div> 	
 </script>
 <!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<?=
+	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/backbone/lib/backbone.js');
+?>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeEmpleados = <?php echo json_encode($empleados) ?>;
 	app.coleccionDeTelefonos = <?php echo json_encode($telefonos) ?>;
 	app.coleccionDePuestos   = <?php echo json_encode($puestos)   ?>;
 </script>
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
-<!-- MVC -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">          </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloTelefono.js'?>">          </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPuesto.js'?>">			   </script>
+<?=
+	script_tag('js/funcionescrm.js').
+	script_tag('js/validaciones.js').
+	// <!-- MVC -->
+	script_tag('js/backbone/modelos/ModeloEmpleado.js').
+	script_tag('js/backbone/modelos/ModeloTelefono.js').
+	script_tag('js/backbone/modelos/ModeloPuesto.js').
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">  </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionTelefonos.js'?>">  </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPuestos.js'?>">	   </script>
+	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+	script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
+	script_tag('js/backbone/colecciones/ColeccionPuestos.js').
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoEmpleado.js'?>">    </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoEmpleado.js'?>">       </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoPuestos.js'?>">	   </script>
+	script_tag('js/backbone/vistas/VistaCatalogoEmpleado.js').
+	script_tag('js/backbone/vistas/VistaNuevoEmpleado.js').
+	script_tag('js/backbone/vistas/VistaCatalogoPuestos.js');
+?>

@@ -1,10 +1,8 @@
-		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
-          type="text/css">
-
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-        </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-        </script>
+<?=
+	link_tag('css/estilos_modulo_usuarios.css').
+	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
+?>
 		<section id="catalogoPuestos">	   
 		  	<h3>Nuevo Puesto</h3>
 			<hr><br>
@@ -35,14 +33,17 @@
 </div>
 
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=
+	script_tag('js/backbone/app.js').
+	script_tag('js/funcionescrm.js');
+?>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDePuestos = <?php echo json_encode($puestos)  ?>;
 </script>
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<script type = "text/plantilla" id="listaPuestos">
-	
+
+
+<script type = "text/plantilla" id="listaPuestos">	
 	<td>			
 		<label name="<%- nombre %>"  class="ocultoR visibleR"><%- nombre %></label>
 		<input id="epuesto" type="text" class="valor ocultoR" value="<%- nombre %>">		
@@ -54,13 +55,12 @@
 			<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>			
 		</div>
 	</td>
-
-
 </script>
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
-
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPuesto.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPuestos.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoPuestos.js'?>"></script>
+<?=
+//Librerias
+	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/backbone/lib/backbone.js').
+	script_tag('js/backbone/modelos/ModeloPuesto.js').
+	script_tag('js/backbone/colecciones/ColeccionPuestos.js').
+	script_tag('js/backbone/vistas/VistaCatalogoPuestos.js');
+?>

@@ -1,10 +1,8 @@
-		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
-          type="text/css">
-
-          <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-        </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-        </script>
+		<?=
+        	link_tag('css/estilos_modulo_usuarios.css').
+        	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+        	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
+        ?>
 		<section id="catalogoPermisos">	   
 		  	<h3>Nuevo Permiso</h3>
 			<hr>
@@ -35,19 +33,11 @@
 					</tbody>									
 				</table>
 		      </div>
-		    </div>		
-
-
-		  	<!-- <div class="panel panel-primary" style="width:100%;">
-		  		<table class="table table-hover">
-		  			<tbody id="scroll_permisos">																									
-					</tbody>									
-				</table>
-			</div>	     -->    
+		    </div>		   
 		</section>			
      </section> <!--Esta fin de sección pertenece al menú principal del contenido de esta página. -->
 </div>
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=script_tag('js/backbone/app.js');?>
 <!-- Utilerias -->
 <script type="text/javascript">
 var app = app || {};
@@ -66,14 +56,15 @@ app.coleccionDePermisos = <?=json_encode($permisos)?>
 	</td>
 
 </script>
+<?=
+	//Librerias
+	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/backbone/lib/backbone.js').  
 
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
-
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<!-- MVC -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPermiso.js'	    ?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisos.js'?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaPermiso.js'		    ?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoPermiso.js'		?>"> </script>
+	script_tag('js/funcionescrm.js').
+	//MVC
+	script_tag('js/backbone/modelos/ModeloPermiso.js').	   
+	script_tag('js/backbone/colecciones/ColeccionPermisos.js').
+	script_tag('js/backbone/vistas/VistaPermiso.js').		   
+	script_tag('js/backbone/vistas/VistaNuevoPermiso.js');
+?>		

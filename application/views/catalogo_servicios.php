@@ -1,5 +1,6 @@
-		<link rel="stylesheet" href="<?=base_url().'css/estilos_catalogo_servicios.css'?>" type="text/css">
-		<link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+		<?=	link_tag('css/estilos_catalogo_servicios.css').
+			link_tag('css/theme.default.css');
+		?>
 		<section id="catalogo_servicio">			
 			<h3>Nuevo Servicio</h3>
 			<hr><br>
@@ -66,35 +67,41 @@
 <!-- Utilerias -->
     <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>-->
 <!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/jquery.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
+<?=
+	script_tag('js/backbone/lib/jquery.js').
+	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/backbone/lib/backbone.js');
+?>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeServicios = <?php echo json_encode($servicios) ?>;
 </script>
 <!--MV*-->
    	<!-- modelos -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
+		<?=script_tag('js/backbone/modelos/ModeloServicio.js');?>
 
     <!-- colecciones -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
+		<?=script_tag('js/backbone/colecciones/ColeccionServicios.js');?>
 
      <!-- Vistas -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoServicio.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaServicios.js'?>"></script>
+	<?=
+		script_tag('js/backbone/vistas/VistaServicio.js').
+		script_tag('js/backbone/vistas/VistaCatalogoServicio.js').
+		script_tag('js/backbone/vistas/VistaConsultaServicios.js');
+	?>
 <script type="text/javascript">
 	var app = app || {};
 </script>
 <!-- <script type="text/javascript" src="js/backbone/vista_servicio.js"></script> -->
 
 <!-- Librerias para el thead fijo y  scroll de la tabla   -->
-<script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script> 
+<?=
+	script_tag('js/tablas/jquery-latest.min.js').
+	script_tag('js/tablas/jquery.tablesorter.js').
+	script_tag('js/tablas/jquery.tablesorter.widgets.js').
+	script_tag('js/tablas/widget-cssStickyHeaders.js').
+	script_tag('js/tablas/estilo_tabla.js');
+?>
 
 <!-- libreria para el theaad fijo de las tablas -->  
  
