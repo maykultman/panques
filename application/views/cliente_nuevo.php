@@ -8,6 +8,7 @@
         }*/
     </style>
     <section style="position: relative !important;">
+        <button id="toggle">Toggle</button>
         <!-- REGISTRO DEL CLIENTE -->
         <div id="formularioCliente" class="visibleR">
             <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
@@ -201,34 +202,16 @@
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 
 <!-- Plantillas -->
-    <script type="text/template" id="serviciosI">
-        <div>
-            <label for="<%- id %>"><%- nombre %></label>
-            <!--<label for="<%- id %>" class="concepto"><%- concepto %></label>-->
-            <div class='check_posicion'>
-                <input type="checkbox" class="serviciosInteres" name="nameServiciosInteres" id="<%- id %>">
-            </div>
-        </div>
-    </script>
-    <script type="text/template" id="serviciosC">
-        <div>
-            <label for="<%- 1+id %>"><%- nombre %></label>
-            <!--<label for="<%- 1+id %>" class="concepto"><%- concepto %></label>-->
-            <div class='check_posicion'>
-                <input type="checkbox" class="serviciosCuenta" name="nameServiciosCuenta" id="<%- 1+id %>">
-            </div>
-        </div>
-    </script>
     <script type="text/template" id="plantillaFormContacto">
         <div class="tab-pane active" id="<%- i %>">
             <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 60px;"><%- i %> <span class="icon-trash"></span></button>
-            <input type="text" id="contactoNombre" class="form-control form_input" placeholder="Nombre completo del contacto">
-            <input type="text" id="contactoEmail" class="form-control form_input" placeholder="Correo">
-            <input type="text" id="contactoCargo" class="form-control form_input" placeholder="Cargo">
+            <input type="text" id="contactoNombre" class="form-control form_input" value="Nombre completo del contacto">
+            <input type="text" id="contactoEmail" class="form-control form_input" value="Correo">
+            <input type="text" id="contactoCargo" class="form-control form_input" value="Cargo">
             <div class="telefonos">
                 <div class="div_telefono">
                     <div class="input-group form_input">
-                        <input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
+                        <input type="text" class="form-control telefonoContacto" name="numero" value="Teléfono" minlength="10" maxlength="20">
                         <div class="input-group-btn">
                             <select class="btn btn-default tipoTelefonoContacto" name="tipo"  style="height: 34px;">
                                 <option value="No definido" selected style="display:none;">Tipo</option>

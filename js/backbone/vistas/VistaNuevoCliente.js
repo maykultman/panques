@@ -44,9 +44,14 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			'keyup #rfc'    : 'validarRFC',
 
 
-					//Eventos para las advertencias
-							// 'click #cerrar'  : 'cerrarAlerta'
+/*ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR */
+			'click #toggle' : 'toggle'
 		},
+	toggle : function () {
+		this.$('.visibleR').toggleClass('ocultoR');
+	},
+/*ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR ELIMINAR */
+
 
 // -----initialize-------------------------------- 
 	initialize      : function () {
@@ -755,8 +760,7 @@ app.VistaContacto = Backbone.View.extend({
 			$('#pagina'+here.model.get('id')).remove();
 			app.telefonosLocal.findWhere({ idpropietario:here.model.get('id') }).destroy();
 			here.model.destroy();
-		}, function () {});
-			
+		}, function () {});	
 	}
 });
 app.VistaGeneralContactos = Backbone.View.extend({
@@ -769,7 +773,6 @@ app.VistaGeneralContactos = Backbone.View.extend({
 		this.render();
 		this.vistaContacto;
 		this.anterior;
-		
 	},
 	render      : function () {
 		if (app.contactosLocal.length == 0) {

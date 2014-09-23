@@ -1,0 +1,28 @@
+<div class="tab-pane active" id="<%- i %>">
+	<button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 60px;"><%- i %> <span class="icon-trash"></span></button>
+	<input type="text" id="contactoNombre" class="form-control form_input" placeholder="Nombre completo del contacto">
+	<input type="text" id="contactoEmail" class="form-control form_input" placeholder="Correo">
+	<input type="text" id="contactoCargo" class="form-control form_input" placeholder="Cargo">
+	<div class="telefonos">
+		<div class="div_telefono">
+			<div class="input-group form_input">
+				<input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
+				<div class="input-group-btn">
+					<select class="btn btn-default tipoTelefonoContacto" name="tipo"  style="height: 34px;">
+						<option value="No definido" selected style="display:none;">Tipo</option>
+						<option value="Casa">Casa</option>
+						<option value="Fax">Fax</option>
+						<option value="Movil">Movil</option>
+						<option value="Oficina">Oficina</option>
+						<option value="Personal">Personal</option>
+						<option value="Trabajo">Trabajo</option>
+						<option value="Otro">Otro</option>
+					</select>
+					<button type="button" class="btn btn-default eliminarCopiaC"><span class="icon-uniF477"></span></button>
+					<button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
+				</div>
+			</div>
+			<br>
+		</div> <!-- /Contenedor del form de teléfono -->
+	</div>
+</div>
