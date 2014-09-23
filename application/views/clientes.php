@@ -27,9 +27,7 @@
                   	   </div>
                   Nuevo
                     </a>
-                </li>        
-		     <!-- </ul>
-		   </li> -->
+                </li>        		     
 		    </ul>
 	    </nav>		  
 	</section>

@@ -1,12 +1,8 @@
-    <link rel="stylesheet" type="text/css" href="<?=base_url().'css/estilos_modulo_clientes_nuevo.less'?>">
-    <!-- plugin selectize css -->
-        <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
-
-    <style type="text/css">
-        /*.obligatorio{
-            color: red;
-        }*/
-    </style>
+    <?=
+        link_tag('css/estilos_modulo_clientes_nuevo.less').
+        //plugin selectize css
+        link_tag('js/plugin/selectize/selectize.default.css')
+    ?>
     <section style="position: relative !important;">
         <button id="toggle">Toggle</button>
         <!-- REGISTRO DEL CLIENTE -->
@@ -193,13 +189,16 @@
 </div>
 
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=
+    script_tag('js/backbone/app.js').
+    script_tag('js/funcionescrm.js');
+?>
 <script type="text/javascript">
     app.coleccionDeClientes = <?=json_encode($clientes)?>;
     app.coleccionDeServicios = <?php echo json_encode($servicios) ?>;
 </script>
 <!-- Utilerias -->
-    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+    
 
 <!-- Plantillas -->
     <script type="text/template" id="plantillaFormContacto">
@@ -233,32 +232,31 @@
         </div>
     </script>
 <!-- Utilerias -->
-    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-    <!-- plugins -->
-        <script src="<?=base_url().'js/plugin/selectize/selectize.min.js'?>"></script>
-<!-- Librerias Backbone -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
-<!--MV*-->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloContacto.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloTelefono.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCliente.js'?>"></script>
-    <!-- <script type="text/javascript" src="js/backbone/modelos/ModeloArchivo.js"></script> -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionTelefonos.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContactos.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosClientes.js'?>"></script>
-    <!-- <script type="text/javascript" src="js/backbone/colecciones/ColeccionArchivos.js"></script> -->
-    <!-- <script type="text/javascript" src="js/backbone/vistas/VistaContacto.js"></script> -->
-    <!-- <script type="text/javascript" src="js/backbone/vistas/VistaCliente.js"></script> -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaTelefono.js'?>"></script>
-    <!-- <script type="text/javascript" src="js/backbone/vistas/VistaArchivo.js"></script> -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoCliente.js'?>"></script>
+    <?=
+    script_tag('js/funcionescrm.js').
+    //plugins
+    script_tag('js/plugin/selectize/selectize.min.js').
+    //Librerias Backbone
+    script_tag('js/backbone/lib/underscore.js').
+    script_tag('js/backbone/lib/backbone.js').
+    script_tag('js/backbone/lib/backbone.localStorage.js').
+    //MV*
+    script_tag('js/backbone/modelos/ModeloContacto.js').
+    script_tag('js/backbone/modelos/ModeloRepresentante.js').
+    script_tag('js/backbone/modelos/ModeloCliente.js').
+    script_tag('js/backbone/modelos/ModeloTelefono.js').
+    script_tag('js/backbone/modelos/ModeloServicio.js').
+    script_tag('js/backbone/modelos/ModeloServicioCliente.js').
+   
+    script_tag('js/backbone/colecciones/ColeccionServicios.js').
+    script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
+    script_tag('js/backbone/colecciones/ColeccionContactos.js').
+    script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+    script_tag('js/backbone/colecciones/ColeccionClientes.js').
+    script_tag('js/backbone/colecciones/ColeccionServicios.js').
+    script_tag('js/backbone/colecciones/ColeccionServiciosClientes.js').
+
+    script_tag('js/backbone/vistas/VistaTelefono.js').   
+    script_tag('js/backbone/vistas/VistaServicio.js').
+    script_tag('js/backbone/vistas/VistaNuevoCliente.js');
+?>

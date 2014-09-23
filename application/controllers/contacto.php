@@ -29,6 +29,8 @@ class  Contacto extends REST {
 
     private function update()
     {
+        var_dump($this->put()); die();
+
         $query = $this->contact->save(  $this->id(), $this->put()  );
          $this->pre_response($query, 'update');        
     }

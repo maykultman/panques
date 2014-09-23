@@ -1,9 +1,8 @@
-		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
-          type="text/css">
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-        </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-        </script>
+<?=
+	link_tag('css/estilos_modulo_usuarios.css').
+	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
+?>
 		<section id="catalogo_roles">		    
 		  	<h3>Nuevo Rol</h3>
 		  	<hr><br>
@@ -34,12 +33,16 @@
 	</section>
 <div>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<?=
+	script_tag('js/backbone/app.js').
+	script_tag('js/funcionescrm.js');
+?>
+
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeRoles = <?php echo json_encode($roles)  ?>;
 </script>
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+
 <script type = "text/plantilla" id="listaRoles">
 	
 	<td>			
@@ -54,10 +57,11 @@
 	</td>
 
 </script>
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<?=//Librerias
+	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/backbone/lib/backbone.js').
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRol.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRoles.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoRol.js'?>"></script>
+	script_tag('js/backbone/modelos/ModeloRol.js').
+	script_tag('js/backbone/colecciones/ColeccionRoles.js').
+	script_tag('js/backbone/vistas/VistaCatalogoRol.js');
+?>

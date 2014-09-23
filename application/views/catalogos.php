@@ -11,14 +11,7 @@
 	                   Empleados
 	                </a>
 	            </li>
-				<!-- <li>
-					<a href="catalogo_planes">
-						<div class="icono_menu_modulo">
-							<span class="icon-resellerhosting"></span>
-					    </div>
-						Planes
-		            </a>
-				</li> -->
+				
 				 <li>
 	            	<a href="catalogo_perfiles">
 	             	   <div class="icono_menu_modulo">
