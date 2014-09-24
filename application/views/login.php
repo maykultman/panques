@@ -4,15 +4,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content=""><meta charset="utf-8">
-<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
-<link rel="stylesheet" href="<?=base_url().'css/csslogin/reset.css'?>"      type="text/css">
-<link rel="stylesheet" href="<?=base_url().'css/csslogin/supersized.css'?>" type="text/css">
-<link rel="stylesheet" href="<?=base_url().'css/csslogin/style.css'?>"      type="text/css">
+<?=
+    link_tag('http://fonts.googleapis.com/css?family=PT+Sans:400,700').
+    link_tag('css/csslogin/reset.css').
+    link_tag('css/csslogin/supersized.css').
+    link_tag('css/csslogin/style.css');
+?>
  <!-- Javascript -->
-<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>">                     </script>
-<script type="text/javascript" src="<?=base_url().'js/login/supersized.3.2.7.min.js'?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/login/supersized-init.js'?>">      </script> 
-<script type="text/javascript" src="<?=base_url().'js/login/scripts.js'?>">              </script>
+<?= script_tag('js/jquery.js').
+    script_tag('js/login/supersized.3.2.7.min.js').
+    script_tag('js/login/supersized-init.js').
+    script_tag('js/login/scripts.js');
+?>         
 </head>
 <body class="smallscreen">
 <?php

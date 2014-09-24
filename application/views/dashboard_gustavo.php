@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="<?=base_url().'css/estilo_dashboard_gustavo.css'?>" type="text/css">
-<link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
+<?=	link_tag('css/estilo_dashboard_gustavo.css').
+	link_tag('css/theme.default.css');
+?>
 <div class="contenedor_modulo">
 	<section>
 		 <!--  <h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 1; width: 100%;"> -->
@@ -741,14 +742,13 @@
 			</div>
 	    </div>
     </section> 
-</div>   
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
-</script>
-<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>">
-</script>
-<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tap.js'?>">
-</script>
+</div>  
+<?= 
+	script_tag("js/jquery-ui-1.9.2.custom.min.js").
+	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+	script_tag('css/bootstrap-3.1.1-dist/js/transition.js').
+	script_tag('css/bootstrap-3.1.1-dist/js/tap.js');
+?>
 <script>
   $(function() {
     $( ".datepicker" ).datepicker();

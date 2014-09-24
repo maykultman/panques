@@ -3,12 +3,14 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotizacion</title>	
-		<link rel="stylesheet" href="../../css/estilo_formato_cotizacion.css" type="text/css">
-		<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css">	
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js">
-		<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>"></script>
+		<?=
+			link_tag("../../css/estilo_formato_cotizacion.css").
+			link_tag('http://fonts.googleapis.com/css?family=Philosopher').
+			link_tag("../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css").
+			link_tag("../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css").
+			link_tag("../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js").
+			script_tag("<?=base_url().'js/jquery.js");
+		?>
 	</head>
 <body>
 	<div id="contenedor_formato" >
@@ -136,22 +138,24 @@
 	app.coleccionDeRepresentantes 	= <?=json_encode($representantes) ?>;
 
 </script>
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/jquery.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone.localStorage.js'?>"></script>
+<?=
+// <!-- Librerias -->
+script_tag('js/jquery.js').
+script_tag('js/backbone/lib/underscore.js').
+script_tag('js/backbone/lib/backbone.js').
+script_tag('js/backbone.localStorage.js').
 
-<!-- MVC -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script><!--  -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script><!--  -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script><!--  -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloLocalCotizacion.js'  		  ?>"> </script>
+// <!-- MVC -->
+script_tag('js/backbone/modelos/ModeloCliente.js').
+script_tag('js/backbone/modelos/ModeloRepresentante.js').
+script_tag('js/backbone/modelos/ModeloServicio.js').
+script_tag('js/backbone/modelos/ModeloLocalCotizacion.js'). 
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script><!--  -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script><!--  -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/coleccionRepresentantes.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionLocalCotizaciones.js' ?>"> </script>
+script_tag('js/backbone/colecciones/ColeccionClientes.js').
+script_tag('js/backbone/colecciones/ColeccionServicios.js').
+script_tag('js/backbone/colecciones/coleccionRepresentantes.js'
+script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js')
+?> 
 
 <script type="text/javascript">
  app = app || {};

@@ -1,6 +1,7 @@
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
-<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
-<link rel="stylesheet" type="text/css" href="<?=base_url().'css/estilos_modulo_cotizaciones.less'?>">
+<?=	script_tag('js/backbone/lib/underscore.js').
+	script_tag('js/autocompletes.js').
+	link_tag('css/estilos_modulo_cotizaciones.less');
+?>
 <style type="text/css">
 	#posicion_infotd, #section_actualizar {
 		/*float: left;*/
@@ -164,9 +165,8 @@
 		</td>	
 </script>
 
+<?=script_tag('js/backbone/app.js');?>
 
-
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type = "text/plantilla" id="tabla_Cotizacion">
 	<td><input type="checkbox" class="checkCot" name="todos"/>
 
@@ -180,9 +180,12 @@
 	</td>
 </script>
 <!-- Librerias -->
-<script src="<?=base_url().'js/plugin/Gantt/js/jquery.fn.gantt.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone.localStorage.js'?>"></script>
+<?=
+	script_tag('js/plugin/Gantt/js/jquery.fn.gantt.js').
+	script_tag('js/backbone/lib/backbone.js').
+	script_tag('js/backbone.localStorage.js');
+?>
+
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeCotizaciones   	= <?php echo json_encode($cotizaciones)   	  ?>;
@@ -192,26 +195,26 @@
 	app.coleccionDeEmpleados      	= <?php echo json_encode($empleados) 		  ?>;
 	app.coleccionServiciosCotizados = <?php echo json_encode($serviciosCotizados) ?>;
 </script>
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<!-- MVC -->
+<?=
+	script_tag('js/funcionescrm.js').
+	script_tag('js/backbone/modelos/ModeloServicio.js').
+	script_tag('js/backbone/modelos/ModeloCotizacion.js').
+	script_tag('js/backbone/modelos/ModeloCliente.js').
+	script_tag('js/backbone/modelos/ModeloEmpleado.js').
+	script_tag('js/backbone/modelos/ModeloRepresentante.js').
+	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
+	script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
 
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloServicio.js'			       ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloCotizacion.js'               ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloCliente.js'                  ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloEmpleado.js'                 ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloRepresentante.js'            ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'         ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/modelos/ModeloLocalCotizacion.js'         ?>" > </script>
+	script_tag('js/backbone/colecciones/ColeccionServicios.js').
+	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
+	script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js').
+	script_tag('js/backbone/colecciones/ColeccionClientes.js').
+	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
+	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
 
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionServicios.js'	           ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'      ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionLocalCotizaciones.js' ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionClientes.js'		   ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/coleccionServiciosCotizados.js'?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'         ?>" > </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'    ?>" > </script>
-
-<script type ="text/javascript"  src = " <?=base_url().'js/backbone/vistas/VistaServicio.js'				      ?>"> </script>
-<script type ="text/javascript"  src = " <?=base_url().'js/backbone/vistas/VistaServicioCotizacion.js'	      ?>"> </script>
-<script type ="text/javascript"  src = " <?=base_url().'js/backbone/vistas/VistaNuevaCotizacion.js'		      ?>"> </script>
-<script type = "text/javascript" src = " <?=base_url().'js/backbone/vistas/VistaConsultaCotizaciones.js'	   ?>" > </script>
+	script_tag('js/backbone/vistas/VistaServicio.js').
+	script_tag('js/backbone/vistas/VistaServicioCotizacion.js').
+	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js').
+	script_tag('js/backbone/vistas/VistaConsultaCotizaciones.js');
+?>
