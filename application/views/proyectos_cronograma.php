@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
-<!-- CSS jQuery.Gantt -->
-	<link rel="stylesheet" type="text/css" href="<?=base_url().'js/plugin/Gantt/css/style.css'?>">
+<?=link_tag('css/estilos_modulo_proyectos.css').
+// <!-- CSS jQuery.Gantt -->
+	link_tag('js/plugin/Gantt/css/style.css');?>
 	<style type="text/css">
       /* Bootstrap 3.x re-reset */
       .fn-gantt *,
@@ -80,12 +80,13 @@
 		</table>
 	</script>
 <!-- MV* -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionProyectos.js'?>"></script>
+	<?=
+		script('js/backbone/lib/underscore.js').
+		script('js/backbone/lib/backbone.js').
+		script('js/backbone/modelos/ModeloCliente.js').
+		script('js/backbone/modelos/ModeloProyecto.js').
+		script('js/backbone/colecciones/ColeccionClientes.js').
+		script('js/backbone/colecciones/ColeccionProyectos.js');?>
 
 	<script type="text/javascript">
 		app.coleccionProyectos = new ColeccionProyectos(app.colecionDeProyectos);

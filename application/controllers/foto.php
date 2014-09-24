@@ -16,11 +16,12 @@ class  Foto extends REST {
         if(array_key_exists('fotoCliente', $_FILES)) 
         {
             $carpeta="img/fotosClientes/";
-            opendir($carpeta);
+            opendir($carpeta); 
             $destino=$carpeta.$_FILES['fotoCliente']['name'];  
             if(copy($_FILES['fotoCliente']['tmp_name'], $destino))
             {
-                $this->pre_response($_FILES['fotoCliente']['name'],'create');
+                die($destino);
+                $this->pre_response($destino,'create');
                     
             }
         }

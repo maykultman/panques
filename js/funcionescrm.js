@@ -315,11 +315,7 @@ function formatearFechaUsuario (fecha) {
         });
         console.log(resp);
         if (resp.responseText != 'false'){
-            resp = resp.responseText.split('');
-            resp.pop();
-            resp.shift();
-            resp = resp.join('');
-            return 'img/fotosClientes/'+resp;   
+            return resp.responseText;   
         } else {
             return 'img/fotosClientes/sinfoto.png';
         };
