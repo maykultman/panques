@@ -24,6 +24,8 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					
 					// Eventos para registro de clientes y contactos
 				'click  #btn_crear'         : 'nuevoCliente',
+				'click  #btnCancelar_cliente'		: 'cancelarRegistro',
+				'click  #btnCancelar_contacto'		: 'cancelarRegistro',
 				'click  #btn_guardarContactos' : 'nuevoContacto',
 				'click  .otroTelefono'      : 'otroTelefono',
 				// 'click   #btn_otroContacto'  : 'otroContacto',
@@ -80,7 +82,20 @@ app.VistaNuevoCliente = Backbone.View.extend({
 // -----render------------------------------------ 
 	render          :               function () {
 		return this;
-	},  
+	},
+	cancelarRegistro		: 		function (e) {
+		var here = this;
+		e.preventDefault();
+		var cancelarQue = $(e.currentTarget).attr('id').split('_');
+		confirmar('¿Deseas cancelar el registro del '+cancelarQue[1]+'?', function () {
+			cancelarQue = here.$('.tipo_cliente:checked').attr('id');
+			if (cancelarQue) {
+				location.href = 'consulta_'+cancelarQue+'s';
+			} else {
+				location.href = 'consulta_clientes';
+			};
+		}, function () {});
+	},
 // -----agregarNuevoServ-------------------------- 
 	agregarNuevoServ    :           function (json) {
 		Backbone.emulateHTTP = true;
@@ -279,9 +294,6 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			alerta('Establezca el tipo de cliente y un nombre de cliente',function (){});
 			return;
 		}
-
-
-
 
 		this.objetoCliente.foto = urlFoto();
 		/*console.log(this.objetoCliente);*/ /* NO ELIMINAR ESTAS LINEAS */

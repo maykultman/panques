@@ -4,7 +4,7 @@
         link_tag('js/plugin/selectize/selectize.default.css')
     ?>
     <section style="position: relative !important;">
-        <!-- <button id="toggle">Toggle</button> -->
+        <button id="toggle">Toggle</button>
         <!-- REGISTRO DEL CLIENTE -->
         <div id="formularioCliente" class="visibleR">
             <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
@@ -111,7 +111,7 @@
            </div>
            <br><br>
            <button type="button" id="btn_crear" class="btn btn-primary">Guardar</button>
-           <a href="modulo_consulta_clientes" class="btn btn-default">Cancelar</a>
+           <a id="btnCancelar_cliente" href="consulta_clientes" class="btn btn-default">Cancelar</a>
            <br>
            <br>
            <br> <!-- visibleR -->
@@ -180,7 +180,7 @@
             <div class="desborde"></div>
             <br>
             <button id="btn_guardarContactos" class="btn btn-primary">Guardar Contactos</button>
-            <a href="consulta_clientes" class="btn btn-default">Cancelar</a>
+            <a id="btnCancelar_contacto" href="consulta_clientes" class="btn btn-default">Cancelar</a>
             <!-- <a href="modulo_consulta_clientes" id="btn_nuevoContacto" class="btn btn-primary" role="button">Registrar Contactos</a> -->
               <!-- visibleR ocultoR -->          
         </div>
@@ -204,13 +204,13 @@
     <script type="text/template" id="plantillaFormContacto">
         <div class="tab-pane active" id="<%- i %>">
             <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 60px;"><%- i %> <span class="icon-trash"></span></button>
-            <input type="text" id="contactoNombre" class="form-control form_input" value="Nombre completo del contacto">
-            <input type="text" id="contactoEmail" class="form-control form_input" value="Correo">
-            <input type="text" id="contactoCargo" class="form-control form_input" value="Cargo">
+            <input type="text" id="contactoNombre" class="form-control form_input" placeholder="Nombre completo del contacto">
+            <input type="text" id="contactoEmail" class="form-control form_input" placeholder="Correo">
+            <input type="text" id="contactoCargo" class="form-control form_input" placeholder="Cargo">
             <div class="telefonos">
                 <div class="div_telefono">
                     <div class="input-group form_input">
-                        <input type="text" class="form-control telefonoContacto" name="numero" value="Teléfono" minlength="10" maxlength="20">
+                        <input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
                         <div class="input-group-btn">
                             <select class="btn btn-default tipoTelefonoContacto" name="tipo"  style="height: 34px;">
                                 <option value="No definido" selected style="display:none;">Tipo</option>

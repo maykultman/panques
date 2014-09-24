@@ -104,7 +104,7 @@ class Escritorio extends REST {
 			{
 				$this->dashboard();				
 			}
-			if($this->ruta()==='cliente_nuevo'||$this->ruta()==='consulta_clientes'||$this->ruta()==='consulta_prospectos')
+			if($this->ruta()==='cliente_nuevo'||$this->ruta()==='consulta_clientes'||$this->ruta()==='consulta_prospectos'||$this->ruta()==='clientes_eliminados')
 			{
 
 				$this->clientes(); 
@@ -214,7 +214,8 @@ class Escritorio extends REST {
 		# Y simplemente lo llamamos para que nos cargue los datos y la vista.
 		
 		if($this->ruta() == 'consulta_clientes')   {	$this->datosCliente($this->ruta());	}
-		if($this->ruta() == 'consulta_prospectos') {	$this->datosCliente($this->ruta());	}	
+		if($this->ruta() == 'consulta_prospectos') {	$this->datosCliente($this->ruta());	}
+		if($this->ruta() == 'clientes_eliminados') {	$this->datosCliente($this->ruta());	}
 	
 	} # Fin del metodo clientes...
 
@@ -228,6 +229,7 @@ class Escritorio extends REST {
 		$data['serviciosCliente'] = $this->servCliente->get_servCliente();  		# servicios con los que cuenta el cliente
 		$data['contactos']		  = $this->contacto->get();					# Lista Contactos
 		$data['representantes']	  =$this->representa->get();					# List de representantes
+		// $data['eliminados']	  =$this->customer->get($this->ruta());					# List de representantes
 
 		$this->load->view($vista, $data); # Cargamos la vista
 	}
