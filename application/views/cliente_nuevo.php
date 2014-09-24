@@ -4,7 +4,7 @@
         link_tag('js/plugin/selectize/selectize.default.css')
     ?>
     <section style="position: relative !important;">
-        <button id="toggle">Toggle</button>
+        <!-- <button id="toggle">Toggle</button> -->
         <!-- REGISTRO DEL CLIENTE -->
         <div id="formularioCliente" class="visibleR">
             <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
