@@ -16,18 +16,25 @@
 
 /*-------EFECTO EN CAMBIO DE FORMULARIO---------*/
 .visibleR{
-	visibility: visible;
-	transition: transform 1s;
+	/*visibility: visible;*/
+	transition: opacity .5s;
 	/*background: red;*/
 	/*position: absolute;*/
+	/*display: block;*/
+	opacity: 1;
+	/*height: auto;*/
 }
 .ocultoR {
-	visibility: hidden;
-	/*opacity: 0;*/
-	transform: translateX(-2000px);
+	/*visibility: hidden;*/
+	/*transform: translateX(-2000px);*/
 	/*transition: transform .5s;*/
 	position: absolute;
+	/*display: none;*/
 	/*background: red;*/
+	top: 0px;
+	opacity: 0;
+	z-index: -1;
+	/*height: 0px;*/
 }
 /*-------EFECTO EN CAMBIO DE FORMULARIO---------*/
 

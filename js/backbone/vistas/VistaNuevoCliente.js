@@ -43,11 +43,8 @@ app.VistaNuevoCliente = Backbone.View.extend({
 
 			'keyup #rfc'    : 'validarRFC',
 
-
-					//Eventos para las advertencias
-							// 'click #cerrar'  : 'cerrarAlerta'
+			'click #toggle' : 'toggle'
 		},
-
 // -----initialize-------------------------------- 
 	initialize      : function () {
 	// Datos básicos
@@ -273,7 +270,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		/*Se ejecuta la funcion nuevosAtributosCliente que
 		  tras terminar devuelve un json el cual es
 		  almacenado en la variable objetoCliente*/
-		this.objetoCliente = this.limpiarJSON(this.nuevosAtributosCliente());
+		this.objetoCliente = limpiarJSON(this.nuevosAtributosCliente());
 
 		/*Nos aseguramos de que las propiedades nombreComercial y tipoCliente
 		  del objeto esten definidas. De lo contrario se alerta al usuario y
@@ -623,21 +620,11 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	validarRFC  :                   function (elem) {
 		$(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());
 	},
-// -----limpiarJSON------------------------------- 
-	limpiarJSON :                   function (objeto) {
-		/*La variable valorJson y el ciclo for eliminan los
-		valores nulos o vacios de la variable objetoCliente*/
-		var valorJson;
-		for (var x in objeto) {
-			if ( Object.prototype.hasOwnProperty.call(objeto,x)) {
-				valorJson = objeto[x];
-				if (valorJson==="null" || valorJson===null || valorJson==="" || typeof valorJson === "undefined") {
-					delete objeto[x];
-				}
 
-			}
-		}
-		return objeto;
+
+// -----Funciones para realizar pruebas-----------
+	toggle : function () {
+		this.$('.visibleR').toggleClass('ocultoR');
 	},
 });
 
@@ -755,8 +742,7 @@ app.VistaContacto = Backbone.View.extend({
 			$('#pagina'+here.model.get('id')).remove();
 			app.telefonosLocal.findWhere({ idpropietario:here.model.get('id') }).destroy();
 			here.model.destroy();
-		}, function () {});
-			
+		}, function () {});	
 	}
 });
 app.VistaGeneralContactos = Backbone.View.extend({
@@ -769,7 +755,6 @@ app.VistaGeneralContactos = Backbone.View.extend({
 		this.render();
 		this.vistaContacto;
 		this.anterior;
-		
 	},
 	render      : function () {
 		if (app.contactosLocal.length == 0) {

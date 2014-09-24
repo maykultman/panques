@@ -1100,8 +1100,12 @@ app.VistaCliente = Backbone.View.extend({
 					patch   : true,//Evitamos enviar todo el modelo
 					success : function (exito) {//Encaso del exito
 						obtenerFoto(elem);
+						alert('La foto se ha guardado');
+						console.log(exito);
 					},
 					error   : function (error) {//En caso de error
+						alert('Error al actualizar foto');
+						console.log(error);
 					}
 				}
 			);
