@@ -80,7 +80,7 @@
         <td class="contenido_prospecto"><input  type="checkbox" name="todos" value="<%- id %>"></td>
         <td>
             <% if (typeof foto != "undefined") { %>
-                <img src="<?=base_url().'<%- foto %>'?>" alt="" class="foto">
+                <img src="<?=base_url()?><%- foto %>" class="foto" >
             <%} else{%>
                 <img src="" alt="" class="foto">
             <%}; %>
@@ -129,7 +129,7 @@
                     <table style="margin-left:15px; margin-top:15px;">
                         <tr>
                             <td rowspan="3">
-                                <img class="img-rounded" id="direccion" src="<?=base_url()?>'<%- foto %>'" alt="Imagen-Cliente" width="150" height="150">
+                                <img class="img-rounded" id="direccion" src="<?=base_url()?><%- foto %>" alt="Imagen-Cliente" width="150" height="150">
                             </td>
                             <td style="padding:0px 10px 0px 10px; vertical-align: bottom;">
                                 <h3 class="editar editando"><b><%- nombreComercial %></b></h3>

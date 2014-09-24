@@ -1,5 +1,7 @@
- <link rel="stylesheet" href="<?=base_url().'css/theme.default.css'?>" type="text/css">
-<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
+<?=	
+	link_tag('css/theme.default.css').
+	link_tag('css/estilos_modulo_proyectos.css');
+?>
 <style type="text/css">
 	#color_titulos hr {
 		line-height: 10px;
@@ -557,46 +559,50 @@
 	app.coleccionDeRepresentantes = <?php echo json_encode($representantes) ?>;
 </script>
 <!-- Utilerias -->
-	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<!-- Librerias Backbone -->
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-<!-- MV* -->
-	<!-- modelos -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRol.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRolProyecto.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloArchivo.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioProyecto.js'?>"></script>
-	<!-- colecciones -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionProyectos.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRoles.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRolesProyectos.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionArchivos.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosProyecto.js'?>"></script>
+	<?=
+		script_tag('js/funcionescrm.js').
+		// <!-- Librerias Backbone -->
+		script_tag('js/backbone/lib/underscore.js').
+		script_tag('js/backbone/lib/backbone.js').
+		// <!-- MV* -->
+		// <!-- modelos -->
+		script_tag('js/backbone/modelos/ModeloCliente.js').
+		script_tag('js/backbone/modelos/ModeloRepresentante.js').
+		script_tag('js/backbone/modelos/ModeloProyecto.js').
+		script_tag('js/backbone/modelos/ModeloRol.js').
+		script_tag('js/backbone/modelos/ModeloServicio.js').
+		script_tag('js/backbone/modelos/ModeloEmpleado.js').
+		script_tag('js/backbone/modelos/ModeloRolProyecto.js').
+		script_tag('js/backbone/modelos/ModeloArchivo.js').
+		script_tag('js/backbone/modelos/ModeloServicioProyecto.js').
+		// <!-- colecciones -->
+		script_tag('js/backbone/colecciones/ColeccionClientes.js').
+		script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+		script_tag('js/backbone/colecciones/ColeccionProyectos.js').
+		script_tag('js/backbone/colecciones/ColeccionRoles.js').
+		script_tag('js/backbone/colecciones/ColeccionServicios.js').
+		script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+		script_tag('js/backbone/colecciones/ColeccionRolesProyectos.js').
+		script_tag('js/backbone/colecciones/ColeccionArchivos.js').
+		script_tag('js/backbone/colecciones/ColeccionServiciosProyecto.js');
+	?>
+		
 		<script type="text/javascript">
 			app.coleccionProyectos = new ColeccionProyectos(app.coleccionDeProyectos);
 			app.coleccionRolesProyectos = new ColeccionRolesProyectos(app.coleccionDeProyectoRoles);
 			app.coleccionServiciosProyecto = new ColeccionServiciosProyecto(app.coleccionDeServicosProyecto);
 		</script>
 	<!-- vistas -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Solo heredamos la clase -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRol.js'?>"></script> <!-- Solo heredamos la clase -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaArchivo.js'?>"></script> <!-- Utilizamos app.V_A_ConsultaProyecto -->
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaProyecto.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaProyectos.js'?>"></script>
+	<?=	script_tag('js/backbone/vistas/VistaServicio.js').// <!-- Solo heredamos la clase -->
+		script_tag('js/backbone/vistas/VistaRol.js'). //<!-- Solo heredamos la clase -->
+		script_tag('js/backbone/vistas/VistaArchivo.js').// <!-- Utilizamos app.V_A_ConsultaProyecto -->
+		script_tag('js/backbone/vistas/VistaProyecto.js').
+		script_tag('js/backbone/vistas/VistaConsultaProyectos.js').
          
-         <!-- Librerias para el scroll de la tabla -->
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery-latest.min.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/jquery.tablesorter.widgets.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/widget-cssStickyHeaders.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'js/tablas/estilo_tabla.js'?>"></script>    
+         // <!-- Librerias para el scroll de la tabla -->
+        script_tag('js/tablas/jquery-latest.min.js').
+        script_tag('js/tablas/jquery.tablesorter.js').
+        script_tag('js/tablas/jquery.tablesorter.widgets.js').
+        script_tag('js/tablas/widget-cssStickyHeaders.js').
+        script_tag('js/tablas/estilo_tabla.js');
+    ?>
