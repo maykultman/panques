@@ -77,7 +77,7 @@ class  REST extends CI_Controller {
         # Establece el contenido de respuesta en este caso devolvemos JSON
          $this->output->set_content_type('application/json');
         # Regresamos el data en formato JSON...
-        return $this->output->set_output(json_encode($data));       
+        return $this->output->set_output(json_encode($data));
     }   
 
     # Esta funcion verifica si llegaron las variables post de la manera normal $_POST['nombre'] O

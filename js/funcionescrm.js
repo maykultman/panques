@@ -264,7 +264,7 @@ function formatearFechaUsuario (fecha) {
         //queremos que esta variable sea global
         this.fileExtension = "";
             //obtenemos un array con los datos del archivo
-            var file = $("#fotoCliente")[0].files[0];
+            var file = $("#logoCliente")[0].files[0];
             //obtenemos el nombre del archivo
             var fileName = file.name;
             //obtenemos la extensión del archivo
@@ -315,9 +315,9 @@ function formatearFechaUsuario (fecha) {
         });
         console.log(resp);
         if (resp.responseText != 'false'){
-            return resp.responseText;   
+            return resp.responseJSON;   
         } else {
-            return 'img/fotosClientes/sinfoto.png';
+            return 'img/logoCliente/sinfoto.png';
         };
     };
 

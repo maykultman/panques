@@ -143,13 +143,12 @@ app.VistaNuevoUsuario = Backbone.View.extend({
         var nombreFoto = jQuery.parseJSON(resp.responseText);
         if (nombreFoto != false)
         {
-        	var foto = 'img/fotosUsuarios/'+nombreFoto+'';	
-        	this.guardar(foto);        	
+        	this.guardar(nombreFoto);        	
         	return;
         }
         else
         {        	
-        	return 'img/fotoUsuarios/sinfoto.png';
+        	return 'img/logoUsuario/sinfoto.png';
         };
 
         evento.preventDefault();

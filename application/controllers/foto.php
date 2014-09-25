@@ -13,33 +13,33 @@ class  Foto extends REST {
     
     private function create()
     {
-        if(array_key_exists('fotoCliente', $_FILES)) 
+        $foto = array_keys($_FILES); 
+        
+        switch ($foto[0]) 
         {
-            $carpeta="img/fotosClientes/";
-            opendir($carpeta); 
-            $destino=$carpeta.$_FILES['fotoCliente']['name'];  
-            if(copy($_FILES['fotoCliente']['tmp_name'], $destino))
-            {
-                die($destino);
-                $this->pre_response($destino,'create');
-                    
-            }
+            case 'logoCliente':
+                    $save = $this->saveLogo($foto[0]);
+                    $this->pre_response($save,'create');
+                break;
+            case 'logoUsuario':
+                    $save = $this->saveLogo($foto[0]);
+                    $this->pre_response($save,'create');
+                break;
+            default:
+                    $this->response(false, 200);
+                break;
         }
-        if(array_key_exists('fotoUsuario', $_FILES))
+    }
+
+    private function saveLogo($string)
+    {
+        $carpeta='img/'.$string.'/';
+        opendir($carpeta); 
+        $destino=$carpeta.$_FILES[$string]['name'];  
+        if(copy($_FILES[$string]['tmp_name'], $destino))
         {
-            $carpeta="img/fotosUsuarios/";
-            opendir($carpeta);
-            $destino=$carpeta.$_FILES['fotoUsuario']['name'];  
-            if(copy($_FILES['fotoUsuario']['tmp_name'], $destino))
-            {
-                $this->pre_response($_FILES['fotoUsuario']['name'], 'create');
-                   
-            }
-        }
-        else
-        {
-            $this->response(false, 200);
-        }        
+            return $destino; //$this->pre_response($destino,'create');                    
+        }            
     }
 
 } # Fin de la Clase archivosimedia

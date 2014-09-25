@@ -166,7 +166,7 @@
                                 <form id="formularioFoto" style="margin: 5px 0px 0px 17px;">
                                     <label class="btn btn-default btn-xs" for="fotoCliente">
                                         Actualizar logotipo
-                                        <input type="file" id="fotoCliente" name="fotoCliente" style="display:none;">
+                                        <input type="file" id="logoCliente" name="logoCliente" style="display:none;">
                                     </label>
                                 </form>
                             </td>

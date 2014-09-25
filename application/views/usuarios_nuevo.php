@@ -18,7 +18,7 @@
 				        <label class="btn btn-success fileinput-button" style="float: left;">
 			                    <span class="icon-paperclip"></span>
 			                    <span>Adjuntar Foto</span>
-			                       	<input type="file" id="input_foto" name="fotoUsuario">			                    				               
+			                       	<input type="file" id="input_foto" name="logoUsuario">			                    				               
 			                </label><br><br>	              
 				        <div id="btn_guardar">
 				        	<button id="guardar" type="button" class="btn btn-primary">Guardar</button>

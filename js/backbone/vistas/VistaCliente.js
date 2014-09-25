@@ -50,7 +50,7 @@ app.VistaCliente = Backbone.View.extend({
 		'blur #nuevoMail'   : 'validarCorreo',
 		'blur #nuevoNumero' : 'validarTelefono',
 
-		'change #fotoCliente' : 'actualizarFoto',
+		'change #logoCliente' : 'actualizarFoto',
 
 		'click #tr_btn_actualizarTipo'	: 'actualizarTipo'
 	},
