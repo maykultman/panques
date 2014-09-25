@@ -168,6 +168,7 @@
                                         Actualizar logotipo
                                         <input type="file" id="logoCliente" name="logoCliente" style="display:none;">
                                     </label>
+                                    <input type="hidden" name="oldFoto" value="<?=base_url()?><%- foto %>">
                                 </form>
                             </td>
                         </tr>

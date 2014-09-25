@@ -162,9 +162,9 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="editar">
-                                <!--BOTON PARA ACTUALIZAR FOTO DEL CLIENTE-->
+                               <!--BOTON PARA ACTUALIZAR FOTO DEL CLIENTE-->
                                 <form id="formularioFoto" style="margin: 5px 0px 0px 17px;">
-                                    <label class="btn btn-default btn-xs" for="fotoCliente">
+                                    <label class="btn btn-default btn-xs" for="logoCliente">
                                         Actualizar logotipo
                                         <input type="file" id="logoCliente" name="logoCliente" style="display:none;">
                                     </label>
@@ -554,8 +554,10 @@
     </script>
 
     <script type="text/templates" id="plantilla_telefono">
-        <b class="editar editando"><%-tipo%></b>
-        <div class="editar editando"><%-numero%></div>
+        <div class="editar editando">
+            <div class="div_tipoTelefono"><b><%-tipo%></b></div>
+            <div class="div_telefono"><%-numero%></div>
+        </div>
         <div class="editar">
             <div class="input-group">
                 <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" placeholder="<%-numero%>" minlength="10" maxlength="20">
