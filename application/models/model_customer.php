@@ -54,16 +54,33 @@
 		
 		public function get($id)
 		{
+
 			return $this->db->get_where('clientes', array('id'=>$id))->row();
+		}
+		public function tipo_cliente($ruta)
+		{			
+			if($ruta=='consulta_clientes'||$ruta=='api_cliente'||$ruta=='cliente_nuevo')
+			{
+				return 'cliente';
+			}
+			if($ruta=='consulta_prospectos')
+			{
+				return 'prospecto';
+			}
 		}
 		public function get_customers($ruta)
 		{
-			($ruta=='consulta_clientes'||$ruta=='api_cliente'||$ruta=='cliente_nuevo') ?	$tipoCliente ='cliente' : $tipoCliente = 'prospecto';
+			$where['visibilidad'] = 0;
+			if($ruta!='clientes_eliminados')
+			{
+				$where['tipoCliente'] = $this->tipo_cliente($ruta);
+				$where['visibilidad'] = 1;
+			}
 			###$cont RELLENA EL ARREGLO DATOS, $contrep RELLENA EL ARRELGO DE REPRESENTANTES y $conCont CONTACTOS###
-			$cont=0;	$contrep=0;		$contCont=0; $contTCont=0;
+			$cont=0;	$contCont=0;
 			#############################TRAEMOS A TODOS LOS CLIENTES#######################################
 			$this->db->select('*');
-			$this->db->where(array('visibilidad'=>1, 'tipoCliente'=>$tipoCliente)); # Hacemos un AND en el where...
+			$this->db->where($where); # Hacemos un AND en el where...
 			$this->db->order_by('fechaCreacion', 'desc'); # Los Ordenamos por fecha de Creación...
 			$cliente = $this->db->get('clientes');
 			#################################################ATRIBUTOS DEL CLIENTE##################################
