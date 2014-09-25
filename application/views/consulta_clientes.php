@@ -133,7 +133,7 @@
                             </td>
                             <td style="padding:0px 10px 0px 10px; vertical-align: bottom;">
                                 <h3 class="editar editando"><b><%- nombreComercial %></b></h3>
-                                <input type="text" id="nombreComercial" class="form-control input-lg editar" name="nombreComercial" value="<%- nombreComercial %>">
+                                <input type="text" id="nombreComercial" class="form-control input-lg editar" name="nombreComercial" value="<%- nombreComercial %>" style="margin-top: -20px;">
                             </td>
                             <td class="respuesta" style="vertical-align: bottom;"></td>
                         </tr>
@@ -168,7 +168,7 @@
                                         Actualizar logotipo
                                         <input type="file" id="logoCliente" name="logoCliente" style="display:none;">
                                     </label>
-                                    <input type="hidden" name="oldFoto" value="<?=base_url()?><%- foto %>">
+                                    <input type="hidden" name="oldFoto" value="<%- foto %>">
                                 </form>
                             </td>
                         </tr>

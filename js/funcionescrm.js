@@ -191,6 +191,8 @@ function formatearFechaUsuario (fecha) {
     return fechaFormateada;
 }
 
+// function fechaAmigable
+
 /*ALertas alertify.js. Código de tercero*/
     /*Recordar llamar a las librerias:
     <script type="text/javascript" src="lib/alertify.js'?>"></script>

@@ -104,7 +104,7 @@
                             <input type="file" id="logoCliente" name="logoCliente">          
                          </label>               
                     </form>
-                    <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="140" style="margin-top: 30px;">
+                    <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="160" style="margin-top: 30px;">
                     <br><br>
                      <textarea id="comentarioCliente" class="form-control" rows="6" placeholder="Comentarios sobre el nuevo cliente"></textarea>       
                 </div>             
