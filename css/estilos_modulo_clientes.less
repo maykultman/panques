@@ -67,9 +67,12 @@ margin-right: 100px;
 		width: 100%;
 		margin: 0px;
 	}
-input#nombreComercial {
+.fade input#nombreComercial {
 	/*margin: auto;*/
 	width: 320px;
+}
+.fade #nombreComercial {
+	margin-top: -20px !important;
 }
 #tbla_cliente tr{
 		&:hover{
@@ -78,10 +81,9 @@ input#nombreComercial {
 			}
 		};
 	}
-
-/*#tbla_cliente table tr td{
-	border:0px;
-}*/
+#tbla_cliente tr td {
+	padding: 0px 5px 0px 5px;
+}
 
 #tbla_cliente table tr .atributo, .tbla_contacto tr .atributo{
 	/*top: 0px;*/
@@ -163,7 +165,30 @@ input#nombreComercial {
 	margin: 0px;
 	width: 100px;
 }
-
+/*------TABLA DE CONSULTAS--------------*/
+	.spin{
+		width: 15px;
+		height: 15px;
+		background-image: url(http://crmqualium.com/img/ajax-loader.gif);
+		background-size: 100% 100%;
+	}
+	#div_fullHeight {
+		margin: 40px 0px 40px 0px !important;
+		padding: 0px 40px 0px 0px !important;
+		position: absolute !important;
+		bottom: 40px !important;
+		top: 180px !important;
+	}
+	#div_fullHeight #posicion_infotd {
+		height: 100% !important;
+	}
+	#div_fullHeight .wrapper {
+		height: 100% !important;
+		overflow: auto !important;
+	}
+	#eliminarVarios {
+		margin-top: 15px !important;
+	}
 #cerrar_consulta{
 	cursor: pointer;
 	margin-top: -30px;

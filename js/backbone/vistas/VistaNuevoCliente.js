@@ -296,7 +296,11 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			return;
 		}
 
-		this.objetoCliente.foto = urlFoto();
+		if (this.$('#logoCliente').val() != '') {
+			this.objetoCliente.foto = urlFoto();
+		} else{
+			this.objetoCliente.foto = 'img/logoCliente/sinfoto.png';
+		};
 		/*console.log(this.objetoCliente);*/ /* NO ELIMINAR ESTAS LINEAS */
 		/*Guardamos la referencia a this para poder usarla en las
 		  funciones dentro de esta función*/
