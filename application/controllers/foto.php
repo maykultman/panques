@@ -33,14 +33,29 @@ class  Foto extends REST {
 
     private function saveLogo($string)
     {
-        var_dump($this->ipost()); die();
         $carpeta='img/'.$string.'/';
+        $oldImg = $this->ipost();
+    
         opendir($carpeta); 
         $destino=$carpeta.$_FILES[$string]['name'];  
-        if(copy($_FILES[$string]['tmp_name'], $destino))
+        if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
         {
+            unlink($oldImg['oldFoto']);
+        }
+        if(copy($_FILES[$string]['tmp_name'], $destino))
+        {  
+            $config['image_library'] = 'GD';
+            $config['source_image'] = $destino;
+            $config['maintain_ratio'] = TRUE;
+            $config['width']    = 150;
+            $config['height']   = 150;
+
+            $this->load->library('image_lib', $config); 
+
+            $this->image_lib->resize();
             return $destino;                   
-        }            
+        } 
+                    
     }
 
 } # Fin de la Clase archivosimedia
