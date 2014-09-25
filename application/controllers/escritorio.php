@@ -222,7 +222,7 @@ class Escritorio extends REST {
 	private function datosCliente($vista)
 	{
 		$this->load->model('model_contact','contacto');
-		$data['clientes']		  = $this->customer->get_customers($this->ruta());	# Lista de clientes
+		$data['clientes']		  = $this->customer->get($this->ruta());	# Lista de clientes
 		$data['telefonos'] 		  = $this->telefono->get();					    # Lista de telefonos
 		$data['servicios'] 		  = $this->serv->get_sNuevoCliente();              	# Lista de Servicios
 		$data['serviciosInteres'] = $this->servInteres->get_servInteres();  		# Servicios de interes del cliente

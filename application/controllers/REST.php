@@ -18,7 +18,14 @@ class  REST extends CI_Controller {
         }
     }
     # Captura el primer segmento de la URL para cargar la vista...
-    public function ruta()  {   return $this->uri->segment(2);                }
+    public function ruta()  
+    {   
+        if(!$this->uri->segment(2))
+        {
+            return $this->uri->segment(1);
+        }
+        return $this->uri->segment(2);
+    }
     # Captura el Segundo segmento de la URL tomar el id para get, update o delete...
     public function id()
     {
