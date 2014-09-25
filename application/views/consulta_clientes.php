@@ -554,8 +554,10 @@
     </script>
 
     <script type="text/templates" id="plantilla_telefono">
-        <b class="editar editando"><%-tipo%></b>
-        <div class="editar editando"><%-numero%></div>
+        <div class="editar editando">
+            <div class="div_tipoTelefono"><b><%-tipo%></b></div>
+            <div class="div_telefono"><%-numero%></div>
+        </div>
         <div class="editar">
             <div class="input-group">
                 <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" placeholder="<%-numero%>" minlength="10" maxlength="20">
@@ -573,8 +575,8 @@
                     <button type="button" id="eliminar" class="btn btn-default"><label class="icon-uniF478"></label></button>
                 </div>
             </div>
+            <br>
         </div>
-        <br>
     </script>
 
     <script type="text/template" id="serviciosI">

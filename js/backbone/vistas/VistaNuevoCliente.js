@@ -286,6 +286,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		  tras terminar devuelve un json el cual es
 		  almacenado en la variable objetoCliente*/
 		this.objetoCliente = limpiarJSON(this.nuevosAtributosCliente());
+		console.log('Antes del elvio',this.objetoCliente);
 
 		/*Nos aseguramos de que las propiedades nombreComercial y tipoCliente
 		  del objeto esten definidas. De lo contrario se alerta al usuario y
@@ -333,7 +334,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							numero          : numero,
 							tipo            : tipo
 						});
-
+					console.log('Despues del elvio',exito);	
 					/*Guardar servicios de interes y cuenta*/
 						// Obtenemos los servicios (existentes en la o no BD)
 						var servicios       = serviciosInteres,
