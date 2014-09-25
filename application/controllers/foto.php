@@ -33,12 +33,13 @@ class  Foto extends REST {
 
     private function saveLogo($string)
     {
+        var_dump($this->ipost()); die();
         $carpeta='img/'.$string.'/';
         opendir($carpeta); 
         $destino=$carpeta.$_FILES[$string]['name'];  
         if(copy($_FILES[$string]['tmp_name'], $destino))
         {
-            return $destino; //$this->pre_response($destino,'create');                    
+            return $destino;                   
         }            
     }
 
