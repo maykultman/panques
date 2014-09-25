@@ -101,7 +101,7 @@
                          <label class="btn btn-default fileinput-button">
                             <span class="icon-paperclip"></span>
                             <span>Adjuntar Logotipo</span>
-                            <input type="file" id="fotoCliente" name="fotoCliente">          
+                            <input type="file" id="logoCliente" name="logoCliente">          
                          </label>               
                     </form>
                     <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="140" style="margin-top: 30px;">
