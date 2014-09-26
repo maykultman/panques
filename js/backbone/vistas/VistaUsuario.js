@@ -21,8 +21,8 @@ app.VistaPermiso = app.VistaRenderizaPermiso.extend({
 });
 
 app.VistaUsuario = Backbone.View.extend({
-	tagName : 'div',
-	className : 'panel panel-default',
+	tagName : 'article',
+	className : 'user-wrapper' ,//'panel panel-default',
 	plantilla : Handlebars.compile($('#usuario').html()),
 	events : {
 		'click #guardar'    : 'editar',
@@ -35,7 +35,7 @@ app.VistaUsuario = Backbone.View.extend({
 		var usuario = this.model;
 		this.cargarSelectPerfiles(function() 
 		{	/*... Se le hace selected al puesto que le pertenece al modelo y desactiva el click...*/
-			$(select_Perfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');				
+			$(select_Perfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');
 		});
 		this.cargarPermisos();
 			

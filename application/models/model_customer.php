@@ -58,15 +58,18 @@
 			$cont=0;	$contCont=0;
 			#############################TRAEMOS A TODOS LOS CLIENTES#######################################
 			$this->db->select('*');
-			// $this->db->where($where); # Hacemos un AND en el where...
+			if(is_numeric($id)) { $this->db->where('id',$id); }
+			
 			$this->db->order_by('fechaCreacion', 'desc'); # Los Ordenamos por fecha de Creación...
 			$cliente = $this->db->get('clientes');
+
 			#################################################ATRIBUTOS DEL CLIENTE##################################
 			$this->db->select('cliente_atributo.idcliente, atributo_cliente.atributo, cliente_atributo.dato');
 			$this->db->from('cliente_atributo'); # de la tabla cliente_atributo
 			$this->db->join('atributo_cliente', 'atributo_cliente.id = cliente_atributo.idatributo');
 			$atributos = $this->db->get();			
-			########Enviamos al metodo joinDinamico los campos y el nombre de las tablas que queremos consultar#####									
+			########Enviamos al metodo joinDinamico los campos y el nombre de las tablas que queremos consultar#####	
+
 			# Hay Clientes????
 			if($cliente->result())
 			{
@@ -80,6 +83,8 @@
 				 			$datos[$cont]['id'] 			 = $key->id;
 				 			$datos[$cont]['nombreComercial'] = $key->nombreComercial;
 				 			$datos[$cont]['tipoCliente'] 	 = $key->tipoCliente;
+				 			$datos[$cont]['fechaCreacion']	 = $key->fechaCreacion;
+				 			$datos[$cont]['visibilidad'] 	 = $key->visibilidad;
 				 			$datos[$cont][$value->atributo]  = $value->dato;
 											 					 			
 				 		} # Fin del If
@@ -88,12 +93,15 @@
 				 			$datos[$cont]['id'] 			 = $key->id;
 				 			$datos[$cont]['nombreComercial'] = $key->nombreComercial;
 				 			$datos[$cont]['tipoCliente'] 	 = $key->tipoCliente;
+				 			$datos[$cont]['fechaCreacion']	 = $key->fechaCreacion;
+				 			$datos[$cont]['visibilidad'] 	 = $key->visibilidad;
 				 		}
 
 				 	} # Fin del foreach() $atributos
 
 			 		$cont++;
 			    }# Fin del foreach() $clientes
+			    
 				return $datos;	
 			}
 			else{return false;}

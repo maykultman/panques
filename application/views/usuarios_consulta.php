@@ -18,7 +18,21 @@
 <script type="text/plantilla" id="Permisos">
 	<input id='permiso_{{id}}' name="idpermisos" value="{{id}}" class="chek" type="checkbox" {{palomita}}>{{ nombre }}
 </script>
-<script type="text/template" id="usuario">
+
+<script type="text/plantilla" id="usuario">
+	<center><div class="clearfix row-fluid">
+		<img class="img-circle" src="<?=base_url()?>{{foto}}" alt="Imagen-Usuario" width="80" height="80">
+		<div class="span8">
+        	<h4><b>{{usuario}} </b></h4>
+        	<small>{{perfil}}</small>
+        </div>
+        <button class="delete btn btn-danger">Delete</button>
+        <button class="edit btn">Edit</button>
+    </div>
+    </center>
+</script>
+
+<script type="text/template" id="usuario1">
 
 	<div class="panel-heading">
 		<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">

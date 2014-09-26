@@ -32,7 +32,7 @@
                 </li>
 
      			<li >
-                	<a href="clientes_eliminados">
+                	<a href="consulta_clientes_eliminados">
                  	   	<div class="icono_menu_modulo">
                     		<span class="icon-trash"></span>
                   	   	</div>

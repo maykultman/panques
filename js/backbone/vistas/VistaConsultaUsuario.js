@@ -13,8 +13,8 @@ app.VistaConsultaUsuario = Backbone.View.extend({
 
 	cargarUsuario : function(modelo)
 	{		             
-		modelo.set({ empleado : app.coleccionEmpleados.get
-			      ({ id       : modelo.get('idempleado')   }).get('nombre') });
+		modelo.set({ empleado : app.coleccionEmpleados.get({ id : modelo.get('idempleado')   }).get('nombre'),
+					 perfil	  : app.coleccionPerfiles.get({id : modelo.get('idperfil')}).get('nombre') });
 		
 		var vistaUsuario = new app.VistaUsuario({ model : modelo });
 		this.$divVistaUsuario.append(vistaUsuario.render().el);
