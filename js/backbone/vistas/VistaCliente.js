@@ -11,53 +11,57 @@ app.VistaCliente = Backbone.View.extend({
 	plantillaModalContacto : _.template($('#modalContacto').html()),
 	events  : {
 		//Es el boton de eliminar del tr del CLIENTE
-			'click #tr_btn_eliminar'        : 'visibilidad',
+			'click #tr_btn_eliminar'        			: 'eliminar',
+			'click #tr_btn_eliminar_permanente'       	: 'eliminarPermanente',
+			'click #tr_btn_restaurar'       			: 'restaurar',
+			
 		//Boton para accesar rapidamente a la edición del cliente
-					'click #tr_btn_editar'  : 'verInfo',
-						'click .verInfo'    : 'verInfo',
+			'click #tr_btn_editar'  : 'verInfo',
+			'click .verInfo'    	: 'verInfo',
 
 		//Es el boton de eliminar del modal de información del CLIENTE
-			'click #modal_btn_eliminar'     : 'visibilidad',
+			'click #modal_btn_eliminar'     : 'eliminar',
 
-		'click #alertasCliente #cancelar'   : 'cancelar',
+		// 'click #alertasCliente #cancelar'   : 'cancelar',
 		//Es el boton para editar CLIENTE en el MODAL
-				'click #modal_btn_editar'   : 'editando',
+			'click #modal_btn_editar'   : 'editando',
 		//Es el boton para ver CONTACTOS
 			'click #btn_verContactos'       : 'verContactos',
 		/*Evento para nuevo teléfono*/
-		'click #divCliente #enviarTelefono' : 'crearTelefono',
+			'click #divCliente #enviarTelefono' : 'crearTelefono',
 
 
 		/*Vaidaciones*/
-		'blur #divCliente #numeroNuevo' : 'validarTelefono',
+			'blur #divCliente #numeroNuevo' : 'validarTelefono',
 
 		/*Eventos de atributos*/
-		'keypress #nombreComercial'         : 'actualizarAtributo',
+			'keypress #nombreComercial'         : 'actualizarAtributo',
 		// 'change #nombreComercial'            : 'actualizarAtributo', /*Descomentar si desea actualizar sin la ecesidad de hacer enter*/
-		'keypress #divCliente .editando'    : 'actualizarAtributo',
-		'change #divCliente .editando'       : 'actualizarAtributo', /*Descomentar si desea actualizar sin la ecesidad de hacer enter*/
-		'keydown #divCliente #comentario'   : 'actualizarComentario',
+			'keypress #divCliente .editando'    : 'actualizarAtributo',
+			'change #divCliente .editando'       : 'actualizarAtributo', /*Descomentar si desea actualizar sin la ecesidad de hacer enter*/
+			'keydown #divCliente #comentario'   : 'actualizarComentario',
 		/*Eventos de servicios*/
-		'change .menuServicios'             : 'guardarServicio',
+			'change .menuServicios'             : 'guardarServicio',
 
-		'click #divCliente .icon-uniF470'   : 'quitarDeLista',
+			'click #divCliente .icon-uniF470'   : 'quitarDeLista',
 
 		/*Eventos para nuevo contacto o representante*/
-		'click #btn_nuevoContacto'   : 'nuevoContacto',
+			'click #btn_nuevoContacto'   : 'nuevoContacto',
 
 
 		/*Validar telefono y correo del nuevo contacto o representante*/
-		'blur #nuevoMail'   : 'validarCorreo',
-		'blur #nuevoNumero' : 'validarTelefono',
+			'blur #nuevoMail'   			: 'validarCorreo',
+			'blur #nuevoNumero' 			: 'validarTelefono',
 
-		'change #logoCliente' : 'actualizarFoto',
+			'change #logoCliente' 			: 'actualizarFoto',
 
-		'click #tr_btn_actualizarTipo'	: 'actualizarTipo'
+			'click #tr_btn_actualizarTipo'	: 'actualizarTipo'
 	},
 	initialize  : function () {
 		this.listenTo(app.coleccionServiciosClientesI, 'reset', this.agregarServciciosClienteI);
 		this.listenTo(app.coleccionServiciosClientesC, 'reset', this.agregarServciciosClienteC);
 		this.listenTo(this.model, 'change:tipoCliente', this.remove);
+		this.listenTo(this.model, 'destroy', this.remove);
 		// this.listenTo(app.coleccionServicios, 'reset', this.cargarServicios);
 		/*Listener para capturar los CAMBIOS en cada uno de
 		los ATRIBUTOS de los modelos*/
@@ -886,21 +890,38 @@ app.VistaCliente = Backbone.View.extend({
 		};
 		// });  
 	},
-	visibilidad               	: function() {
+	eliminar               	: function() {
 		var here = this;
-		confirmar('¿Está seguro de que desea eliminar al cliente <b>'+this.model.get('nombreComercial')+'<b>?',
+		confirmar('¿Está seguro de que desea eliminar al cliente <b>'+this.model.get('nombreComercial')+'<b>?<br>Se enviará a la papelera',
 			function () {
 				here.$('#cerrar_consulta').click();
 				here.model.cambiarVisibilidad();
 			},
 			function () {});
 	},
-	cancelar                  	: function (elem) {
-		$(elem.currentTarget)
-		.parents('#advertencia')
-		.children('.close')
-		.click();
+	eliminarPermanente			: function () {
+		var here = this;
+		confirmar('El cliente <b>'+this.model.get('nombreComercial')+'</b> será eliminado permanentemente',
+			function () {
+				here.model.destroy({
+					wait : true,
+					success	: function () { },
+					error	: function () {
+						alerta('Ha ocurrido un error al intentar eliminar permanentemente, inténtelo más tarde', function () {});
+					}
+				});
+			},
+			function () {});
 	},
+	restaurar					: function () {
+		this.model.cambiarVisibilidad();
+	},
+	// cancelar                  	: function (elem) {
+	// 	$(elem.currentTarget)
+	// 	.parents('#advertencia')
+	// 	.children('.close')
+	// 	.click();
+	// },
 	validarTelefono           	: function (elem) {
 		if(!(/^\d{10,20}$/.test($(elem.currentTarget).val().trim())) && $(elem.currentTarget).val().trim() != '' ) {
 			alerta('No ingrese letras u otros símbolos<br>Establezca un tipo de teléfono<br>Escriba 10 números como mínimo o 20 como máximo',function () {});

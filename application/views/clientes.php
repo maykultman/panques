@@ -36,7 +36,7 @@
                  	   	<div class="icono_menu_modulo">
                     		<span class="icon-trash"></span>
                   	   	</div>
-                  		Eliminados
+                  		Papelera
                     </a>
                 </li>        		     
 		    </ul>

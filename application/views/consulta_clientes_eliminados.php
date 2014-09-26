@@ -17,22 +17,19 @@
 								<input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
 								<span class="icon-search busqueda"></span>
 							</th>
-							<th class="sorter-false">Giro</th>
-							<th class="sorter-false">
-								Página web
-							</th>
-							<th class="sorter-false" style="text-align=center;">Ultima actividad</th>
+							<th class="sorter-false">Tipo de cliente</th>
+							<th class="sorter-false">Fue cliente desde</th>
 							<th class="sorter-false">Operaciones</th>
 						</tr>
 					</thead>
 					<tbody id="filasClientes">
 					</tbody>
-				</table>            
+				</table>
 			</div>   
+			<button id="btn_eliminarVarios" class="btn btn-primary">Eliminar varios</button>
 			<!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
 			<button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
 			<button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
-			<button class="btn btn-primary" style="margin-top: 8px;">Eliminar varios</button>
 			
 			<!------------ Enviar Correo -------- -->
 			<div id="modalCorreo" class="modal fade">
@@ -69,7 +66,7 @@
 <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
-        <td class="td_tablaPricipal"><input  type="checkbox" name="todos" value="<%- id %>"></td>
+        <td class="td_tablaPricipal"><input class="todos" type="checkbox" value="<%- id %>"></td>
         <td class="td_tablaPricipal">
             <% if (typeof foto != "undefined") { %>
                 <img src="<?=base_url()?><%- foto %>" class="foto" >
@@ -79,27 +76,30 @@
         </td>
         <td class="td_tablaPricipal"><%- nombreComercial %></td>
         
-        <% if(typeof giro != "undefined") { %>
-            <td class="td_tablaPricipal"><%- giro %></td>
+        <% if(typeof tipoCliente != "undefined") { %>
+            <td class="td_tablaPricipal"><%- tipoCliente %></td>
         <% } else { %>
             <td class="td_tablaPricipal">No especificado</td>
         <% }; %>
     
-        <% if(typeof paginaWeb != "undefined") { %>
-            <td class="td_tablaPricipal"><%- paginaWeb %></td>
-        <% } else { %>
-            <td class="td_tablaPricipal">No especificado</td>
-        <% }; %>
-
         <td class="td_tablaPricipal">
-            Módulo de actividad en construcción
+        	<% var Año_Mes_dia = fechaCreacion.split('-'); %>
+                <%- Año_Mes_dia[2] %>
+                <% for (var i = 0; i < meses.length+1; i++) { %>
+                    <% if (i == Año_Mes_dia[1]) { %>
+                        <%- meses[i-1] %>
+                        <% break; %>
+                    <% }; %>
+                <% }; %>
+            <%- Año_Mes_dia[0] %>
         </td>
         <td class="td_tablaPricipal icon-operaciones">
             
-            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
-            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
-            <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
-            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
+            <span class="icon-restore" id="tr_btn_restaurar" data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
+            <span class="icon-circledelete" id="tr_btn_eliminar_permanente" data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
+            <!-- <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span> -->
+            <!-- <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span> -->
+            <!-- <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span> -->
         </td>
     </script>
     

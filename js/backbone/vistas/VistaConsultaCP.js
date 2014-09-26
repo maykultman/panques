@@ -12,6 +12,8 @@ app.VistaConsultaCP = Backbone.View.extend({
 		buscarCliente.*/
 		'keyup #inputBuscarCliente'	: 'buscarCliente',
 		'click #todos'	    : 'marcarTodosCheck',
+
+		'click #btn_eliminarVarios'	: 'eliminarVarios',
 	},
 
 	render		: function () {
@@ -122,7 +124,15 @@ app.VistaConsultaCP = Backbone.View.extend({
 				this.agregarCliente(cp);
 			};
 		};
-	}
+	},
+	eliminarVarios 				: function () {
+		var here = this;
+		confirmar('¿Deseas elimiar a los clientes seleccionados?<br>Se enviarán a la papelera',
+			function () {
+				here.$()
+			},
+			function () {});
+	},
 });
 
 app.VistaConsultaClientes = app.VistaConsultaCP.extend({

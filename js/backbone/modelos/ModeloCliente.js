@@ -23,11 +23,11 @@ app.ModeloCliente = Backbone.Model.extend({
 	},
 
 	cambiarVisibilidad: function () {
-		this.respuesta = 'no lo pasa';
+		// this.respuesta = 'no lo pasa';
 		var esto = this;
 		this.save(
 			{
-				visibilidad: !this.get('visibilidad')
+				visibilidad: !parseInt(this.get('visibilidad'))
 			},
 			{
 				wait:true, 
