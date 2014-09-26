@@ -74,7 +74,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 		un array de clientes.*/
 		var clientes = app.coleccionClientes.where({
 			tipoCliente:tipo,
-			visibilidad:true
+			visibilidad: "1"
 		});
 		/*Pasamos la variable clientes a la función recursividadCP 
 		que a su vez pasará como parametro a cada uno de los 
@@ -94,8 +94,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 		que son clientes eliminados de manera ficticia.
 		A continuación se alacena en una variable*/
 		var clientes = app.coleccionClientes.where({
-			tipoCliente:tipo,
-			visibilidad:false
+			visibilidad:"0"
 		});
 		/*La variable "clientes" contiene a todos los
 		encontrados. Se pasa como parametro a la 
@@ -128,7 +127,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 
 app.VistaConsultaClientes = app.VistaConsultaCP.extend({
 	initialize	: function () {
-		this.$inputBuscarCliente = $('#inputBuscarCliente');
+		// this.$inputBuscarCliente = $('#inputBuscarCliente');
 		/*El selector #filasClientes es el id de la la etiqueta
 		tbody del archivo modulo_consulta_clientes.php.*/
 		this.$filasClientes = $('#filasClientes');
@@ -144,7 +143,7 @@ app.VistaConsultaClientes = app.VistaConsultaCP.extend({
 
 app.VistaConsultaProspectos = app.VistaConsultaCP.extend({
 	initialize	: function () {
-		this.$inputBuscarCliente = $('#inputBuscarCliente');
+		// this.$inputBuscarCliente = $('#inputBuscarCliente');
 		/*El selector #filasClientes es el id de la la etiqueta
 		tbody del archivo modulo_consulta_clientes.php.*/
 		this.$filasClientes = $('#filasClientes');
@@ -155,6 +154,17 @@ app.VistaConsultaProspectos = app.VistaConsultaCP.extend({
 		la función obtenerClientes(). Está fución se encargará de
 		imprimir a todos los clientes.*/
 		this.obtenerClientes(this.tipoCliente);
+	},
+});
+
+app.VistaClientesEliminados = app.VistaConsultaCP.extend({
+	initialize	: function () {
+		// this.$inputBuscarCliente = $('#inputBuscarCliente');
+		/*El selector #filasClientes es el id de la la etiqueta
+		tbody del archivo modulo_consulta_clientes.php.*/
+		this.$filasClientes = $('#filasClientes');
+
+		this.obtenerEliminados();
 	},
 });
 

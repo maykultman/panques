@@ -24,7 +24,7 @@ class  Cliente extends REST {
 
     private function get()
     {
-       $query = $this->Customer->get(); 
+       $query = $this->Customer->get($this->id()); 
        $this->pre_response($query, 'get'); 
     }
 

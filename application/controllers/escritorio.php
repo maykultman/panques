@@ -104,7 +104,7 @@ class Escritorio extends REST {
 			{
 				$this->dashboard();				
 			}
-			if($this->ruta()==='cliente_nuevo'||$this->ruta()==='consulta_clientes'||$this->ruta()==='consulta_prospectos'||$this->ruta()==='clientes_eliminados')
+			if($this->ruta()==='cliente_nuevo'||$this->ruta()==='consulta_clientes'||$this->ruta()==='consulta_prospectos'||$this->ruta()==='consulta_clientes_eliminados')
 			{
 
 				$this->clientes(); 
@@ -215,7 +215,7 @@ class Escritorio extends REST {
 		
 		if($this->ruta() == 'consulta_clientes')   {	$this->datosCliente($this->ruta());	}
 		if($this->ruta() == 'consulta_prospectos') {	$this->datosCliente($this->ruta());	}
-		if($this->ruta() == 'clientes_eliminados') {	$this->datosCliente($this->ruta());	}
+		if($this->ruta() == 'consulta_clientes_eliminados') {	$this->datosCliente($this->ruta());	}
 	
 	} # Fin del metodo clientes...
 
