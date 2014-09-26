@@ -1,3 +1,7 @@
+#form_nuevo_cliente{
+	/*margin: 0px 40px 40px 40px;*/
+	/*float: left;*/
+}
 #txtarea{
 width:400px;
 height: 83px;
@@ -11,9 +15,15 @@ margin-right: 100px;
 margin-left: 323px;
 margin-top: -26px;
 }
+#btn_agregarI, #btn_agregarC{
+/*margin-left: 322px;*/
+/*margin-top: -26px;*/
+}
 
 #inputBusquedaI, #inputBusquedaC{
 width: 320px;
+/*margin-bottom: -13px;*/
+/*margin-left: -1px;*/
 }
 
 .dato_contacto{
@@ -36,6 +46,7 @@ margin-right: 100px;
 }
 
 .dato_contacto .btn-group input{
+	/*border-radius: 4px 0px 0px 4px; */ /*No funciona*/
 	border-right: 0px;
 }
 .input_info .btn-group-justified{
@@ -57,6 +68,7 @@ margin-right: 100px;
 		margin: 0px;
 	}
 .fade input#nombreComercial {
+	/*margin: auto;*/
 	width: 320px;
 }
 .fade #nombreComercial {
@@ -74,15 +86,12 @@ margin-right: 100px;
 	/*text-align: left;*/
 }
 
-<<<<<<< HEAD
-#tbla_cliente table tr .atributo, .tbla_contacto tr .atributo{
-=======
 #tbla_cliente table tr .atributo, 
 .tbla_contacto tr .atributo {
 	/*top: 0px;*/
->>>>>>> 08a3540db2a8b3d273337b6e106f8272b8a3129b
 	text-align: left !important;
-	width: 170px !important;	
+	width: 170px !important;
+	/*padding: auto 0px auto 0px;*/
 	vertical-align: text-top !important;
 	color: #428bca !important;
 }
@@ -97,6 +106,7 @@ margin-right: 100px;
 	opacity: 1;
 }
 .icon-operaciones span:hover{
+		/*background: #d7d7d7;*/
 		background: #0494E8;
 		border-radius: 3px;
 		cursor: pointer;
@@ -208,9 +218,12 @@ margin-right: 100px;
 	 box-shadow: 1px 1px 3px #888888;
 }
 #logo_empresa_info {
-	
+	/*margin-left:20px;*/
 	display: inline-block;
-	width: 150px;
+    /*margin-left:10px;*/
+    /*margin-top:10px; */
+    /*margin: 0px 10px 20px 0px;*/
+    width: 150px;
 	height: 150px;
 	border:1px solid #ddd;
 	-webkit-border-radius: 4px;
@@ -218,11 +231,13 @@ margin-right: 100px;
 	-webkit-box-shadow: 1px 1px 3px #888888;
 	box-shadow: 1px 1px 3px #888888;
 }
-.info_cliente1 
-{	 
-	display: inline-block;
-	margin: 25px 15px 15px 15px;	 
-	position: absolute;
+.info_cliente1 {
+	 
+	 display: inline-block;
+	 margin: 25px 15px 15px 15px;
+	 /*margin-top: 3px;*/
+	 position: absolute;
+
 }
 
 #info_cliente2{
@@ -230,11 +245,17 @@ margin-right: 100px;
 	margin-left: 20px;
 }
 
+
 #icon-operaciones2{
-	
+	/* float: left; */
 	display: inline-block;
 	right: 15px;
 	margin-top: 78px;
+	/* margin-right: 1px; */
+	/*background: #333333;*/
+	/*height: 111px;*/
+	/*color: #d7d7d7;*/
+	/*padding: 7px;*/
 	position: absolute;
 	z-index: 1;
 }
@@ -243,9 +264,15 @@ margin-right: 100px;
 	cursor: pointer;
 }
 #icon-operacionesContacto{
-	
+	/* float: left; */
 	display: inline-block;
 	right: 15px;
+	/*margin-top: 100px;*/
+	/* margin-right: 1px; */
+	/*background: #333333;*/
+	/*height: 111px;*/
+	/*color: #d7d7d7;*/
+	/*padding: 7px;*/
 	margin-top: 35px;
 	position: absolute;
 	z-index: 1;
@@ -258,6 +285,53 @@ margin-right: 100px;
 .contenedorContacto{
 	margin-right: 50px;
 }
+#icon-operaciones2 button label{
+		/*font-size: 15px;*/
+		/*padding: 0px;*/
+		/*opacity: 1;*/
+		
+}
+/*#icon-operaciones2 span:hover{
+		background: #0494E8;
+		border-radius: 3px;
+		cursor: pointer;
+		color: white;
+}*/
+
+/*#icon-operaciones2 .eliminar_cliente span:hover{
+		background: red;
+		border-radius: 3px;
+		cursor: pointer;
+		color: white;
+}*/
+/*#icon-operaciones3{
+	 
+	 float:right;
+	 margin-top: -205px;
+	 margin-right: -1px;
+	 background: @colorPrimario-Menu;
+	 height:111px;
+	 width:40px;
+     color:#d7d7d7;
+     padding: 7px;
+}
+#icon-operaciones3 span{
+		font-size: 15px;
+		padding: 5px;
+		opacity: 1;
+}
+#icon-operaciones3 span:hover{
+		background: #0494E8;
+		border-radius: 3px;
+		cursor: pointer;
+		color: white;
+}
+#icon-operaciones3 .eliminar_cliente span:hover{
+		background: red;
+		border-radius: 3px;
+		cursor: pointer;
+		color: white;
+}*/
 
 .trCliente, .trContacto{
 	height: 51px;
@@ -278,7 +352,9 @@ margin-right: 100px;
 	float: left;
 	margin-left: -16px;
 	margin-top:-15px; 
-    padding: 0px 5px 0px 5px;	
+    padding: 0px 5px 0px 5px;
+	/*position: absolute;*/
+	
 }
 #menu2-lista{
 	padding: 0px 5px 0px 5px;
@@ -308,15 +384,27 @@ margin-right: 100px;
 .visible{
 	visibility: visible;
 	opacity: 1;
+	/*height: auto;*/
+	/*transform:none;*/
 	transition:visibility .45s, opacity .45s;
+	/*position: inherit;*/
 }
 .oculto {
 	visibility: hidden;
 	opacity: 0;
 	height: 0px;
-	
+	/*transform:translateX(-2000px);*/
 	transition:visibility .6s, opacity .6s, height .6s;
 	z-index: 5;
+    /*position: absolute;*/
+	/*float: left;
+	margin-left: -15px;
+	margin-top: -15px;
+	height: 550px;
+	width: 598px;
+	border: 1px outset #999999;
+	background-color: white;*/
+	/*padding: 20px;*/
 }
 
 .editar{
@@ -325,6 +413,31 @@ margin-right: 100px;
 .editando{
 	display: inline;
 }
+
+/*#divcomentarios{
+	 float: left;
+	 margin-left:20px;
+	 margin-top: -20px;
+}*/
+
+
+/*.contactos{
+
+	float: left;
+	margin-left: 20px;
+}*/
+/*
+.divDatoContacto{
+	position: relative;
+	display: inline-block;
+}
+
+.divDatoContacto .atributo{
+	position: absolute;
+	top: 0px;
+}*/
+
+
 
 .foto{
 	width: 40px;
