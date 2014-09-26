@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.VistaConsultaCP = Backbone.View.extend({
-	el	: '#clientes',
+	el	: '#div_fullHeight',
 	events		: {
 		/*Boton que debe aparecer solo si el usuario tiene
 		  permiso pa ver clientes eliminados*/
@@ -126,10 +126,18 @@ app.VistaConsultaCP = Backbone.View.extend({
 		};
 	},
 	eliminarVarios 				: function () {
-		var here = this;
-		confirmar('¿Deseas elimiar a los clientes seleccionados?<br>Se enviarán a la papelera',
+		// var here = this, mensaje;
+		// if ( app.coleccionClientes.get( this.$('.todos').val() ).visibilidad == '1' ) {
+		// 	mensaje = '¿Deseas elimiar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
+		// } else {
+		// 	mensaje = '¿Deseas elimiar a los clientes seleccionados?<br><b>Serán borrados permanentemente</b>';
+		// };
+		confirmar(mensaje,
 			function () {
-				here.$()
+				var ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
+				for (var i = 0; i < ids.length; i++) {
+					app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+				};
 			},
 			function () {});
 	},
