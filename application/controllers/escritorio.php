@@ -229,7 +229,6 @@ class Escritorio extends REST {
 		$data['serviciosCliente'] = $this->servCliente->get_servCliente();  		# servicios con los que cuenta el cliente
 		$data['contactos']		  = $this->contacto->get();					# Lista Contactos
 		$data['representantes']	  =$this->representa->get();					# List de representantes
-		// $data['eliminados']	  =$this->customer->get($this->ruta());					# List de representantes
 
 		$this->load->view($vista, $data); # Cargamos la vista
 	}

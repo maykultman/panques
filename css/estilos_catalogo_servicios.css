@@ -1,26 +1,7 @@
+td .oculto2{	display: none;	}
 
-td .oculto2{
-	
-	display: none;
-}
+td .visible2{	display: block;	}
 
-td .visible2{
-		
-	display: block;
-}
+#descripcion{	width: 100% !important;		height: 85px;	}
 
-
-#descripcion{
-
- 
- width: 100% !important;
- height: 85px;
-
-}
-
-
-input{
-
-	width: 100% !important;
-}
-
+input{	width: 100% !important;	}

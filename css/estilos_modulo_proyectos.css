@@ -1,79 +1,28 @@
 /*--------------Proyecto Nuevo---------*/
-/*#nom_proy{*/
 
-	/*float: left;*/
-	/*width: 280px;*/
-	/*height: auto;*/
-/*}*/
+#fechaEntrega, #fechaInicio {	width: 100%;	}
 
+#duracion {	width: 100%;	}
 
-#fechaEntrega, #fechaInicio {
-	
-	width: 100%;
-	/*height: 25px;*/
-}
+.tbla_apilacion{	width: auto;	}
 
-#duracion {
-	
-	/*margin-top: 4px;*/
-	/*height: 25px;*/
-	width: 100%;
-	 
-	
-}
-#divfech{
-	/*width: auto;*/
-	/*float: left;*/
-
-	
-}
-
-
-.tbla_apilacion{
-
-	width: auto;
-}
-
-.tbla_apilacion td{
-
-	
-	
-	vertical-align: middle;
-	/*margin-top: -118px;
-	margin-left: 50px;
-	*/
-	/*width: 400px;*/
-
-
-}
+.tbla_apilacion td{	vertical-align: middle;	}
 
 .cabecera_serv2{
-
-   
-    background-color: #f9f9f9;
+	background-color: #f9f9f9;
     color: #333;
     display: inline-table;
     width: 100%;
-  
-    
-
-
-}
+ }
 
 tbody.scrolltbla { 
 	display: block; /*obligado*/ 
 	height: 200px; /*la que necesites*/ 
 	overflow: auto; /*obligado*/
-	width: 100%;
-	
-	
-	}
-
-.fechas_proy{
-
-	/*float:left;*/
-	width: auto;
+	width: 100%;	
 }
+
+.fechas_proy{	width: auto;	}
 
 
 #cabecera_fija2{
@@ -144,31 +93,18 @@ tbody.scrolltbla {
 
 
 
-#botones{
+#botones{	float: right;	}
 
-	float: right;
-	/*margin-top:90px;*/
-}
+#medida_modal{	height:auto;	}
 
-#medida_modal{
-
-	height:auto;
-}
-#select_rol{
-    /*display:inline-block;*/
-    /*float:left;*/
-    
+#select_rol
+{    
 	margin-top:1px; 
 	width:100%;
 }
 
 
-#tbla_roles {
-	
-    float:left;
-	/*margin-left: 40px;*/
-	/*width: 50%;*/
-}
+#tbla_roles {	float:left;	}
 
 .table-curved > :first-child > :first-child > :first-child {
     -webkit-border-top-left-radius: 5px;
@@ -189,13 +125,6 @@ tbody.scrolltbla {
 			}
 		};
 	}
-
-#tbla_roles2{
-	
-	/*float:left;*/
-	/*margin-left: 20px;*/
-	/*width: 50%;*/
-}
 
 #tbla_roles2 tr{
 		&:hover{
@@ -233,26 +162,15 @@ tbody.scrolltbla {
 
 /*--------------Tabla proyectos-------------*/
 
-.center{
+.center{	text-align: center;	}
 
-	text-align: center;
-}
+#busca_proy{  width: 230px;  }
 
-#busca_proy{
+#busca_resp{  width: 230px;  }
 
-  width: 230px;
-  
-}
-
-#busca_resp{
-
-  width: 230px;
-  
-}
-.color_th th{
-
-   
-   	background-color: #f9f9f9;
+.color_th th
+{	
+	background-color: #f9f9f9;
 	color: black;
 }
 
@@ -343,11 +261,6 @@ tbody.scrolltbla {
 			display: none;
 			/*border: 1px solid gray;*/
 		}
-
-		/*#guardarProyecto {
-			margin-left: 0px;
-			margin-right: 0px;
-		}*/
 
 		.fileinput-button {	/*Funciona en el modulo de consulta*/
 			position: relative;

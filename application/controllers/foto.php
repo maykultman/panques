@@ -20,11 +20,17 @@ class  Foto extends REST {
             case 'logoCliente':
                     $save = $this->saveLogo($foto[0]);
                     $this->pre_response($save,'create');
-                break;
+            break;
+
             case 'logoUsuario':
                     $save = $this->saveLogo($foto[0]);
                     $this->pre_response($save,'create');
-                break;
+            break;
+
+            // case 'archivo' :
+            //         $save = $this->saveFile();
+            //         $this->pre_response($save,'create');
+            // break;
             default:
                     $this->response(false, 200);
                 break;
@@ -40,7 +46,10 @@ class  Foto extends REST {
         $destino=$carpeta.$_FILES[$string]['name'];  
         if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
         {
-            unlink($oldImg['oldFoto']);
+            if(file_exists($oldImg['oldFoto']))
+            {
+                unlink($oldImg['oldFoto']);    
+            }            
         }
         if(copy($_FILES[$string]['tmp_name'], $destino))
         {  

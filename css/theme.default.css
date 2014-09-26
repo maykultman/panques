@@ -5,7 +5,6 @@ Default Theme
 
 .wrapper {
 	position: relative;
-	/*top: 50px;*/
 	height: 320px;
 	overflow: auto;
 }	
@@ -14,21 +13,14 @@ Default Theme
 /* overall */
 .tablesorter-default  {
 	width: 100%;
-
-	/*font: 12px/18px Arial, Sans-serif;*/
-	/*color: #333;*/
-	/*background-color: #fff;*/
 	border-spacing: 0;
-	/*margin: 10px 0 15px;*/
 	text-align: left;
-	/*line-height: 4;*/
 }
 
 /* header */
 .tablesorter-default th,
 .tablesorter-default thead td {
-	/*font: bold 12px/18px Arial, Sans-serif;
-	color: #000;*/
+	
 	background-color: #f9f9f9;
 	border-collapse: collapse;
 	border-bottom: #ccc 2px solid;
@@ -63,29 +55,6 @@ Default Theme
 	cursor: default;
 	padding: 4px;
 }
-
-
-
-/* hovered row colors */
-/*.tablesorter-default tbody > tr:hover > td,
-.tablesorter-default tbody > tr.even:hover > td,
-.tablesorter-default tbody > tr.odd:hover > td {
-	background: #fff;
-	color: #000;
-}*/
-
-
-
-
-
-/* Zebra Widget - row alternating colors */
-/*.tablesorter-default tr.odd td {
-	background-color: #f9f9f9 ;
-}
-.tablesorter-default tr.even td {
-	background-color:#f1f1f1;
-}*/
-
 
 .fileinput-button {
 	position: relative;

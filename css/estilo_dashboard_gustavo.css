@@ -19,41 +19,6 @@ padding: 13px !important;
 background: #0983ff;
 }
 
-/*tbody.scroll_dominios { 
-	
-	display: block; 
-	height: 145px; 
-	overflow: auto !important; 
-	width:100% !important;
-	
-	}*/
-
-
-
-/*#prueba{
-
-	overflow: auto;
-	height: 250px;
-}
-
-*/
-
-/*tr {
-width: 100% ;
-display: inline-table ;
-}*/
-
-
-
-
-
-/*.scroll{
-  overflow-y: scroll;      
-  height: 148px;           
-  width: 90%;
-  position: absolute;
-}*/
-
 .wrapper {
 	position: relative;
 	/*top: 50px;*/

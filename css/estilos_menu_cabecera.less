@@ -119,12 +119,9 @@ li{
 /* {{{{{{{{{{{{{{{{{Estilo del menu}}}}}}}}}}}}}}}}} */
 #menu{
 	background: @colorPrimario-Menu;
-	/*height: 100%;*/
 	float: left;
-	/*padding: 0px 5px 0px 5px;*/
-	/*position: absolute;*/
 	width: 160px;
-	/*margin-left: -160px;*/
+
 	-webkit-transform: translateX(-160px);
 	-webkit-transition: width 0.4s;
 	-moz-transform: translateX(-160px);
@@ -134,13 +131,9 @@ li{
 	bottom: 0px;
 	position: fixed;
 	top: 50px;
-	/*overflow-y: auto;*/
-	/*overflow-x: hidden;*/
 	z-index: 1;
 }
-#menu-lista{
-	/*padding: 0px 5px 0px 5px;*/
-}
+
 #menu-lista li{
 border-bottom: 1px solid #4D4D4D;
 line-height: 50px;
@@ -156,8 +149,6 @@ height: 50px;
 #menu-lista li:hover{
 	background: @colorElementoDeMenuHover;
 	margin: 0 0 0px 0;
-	/*padding: 1px 10px 0px 10px;
-	padding: 5px 10px 5px 0;*/
 	border-bottom: 1px solid @colorElementoDeMenuHover;
 }
 
@@ -175,10 +166,7 @@ height: 50px;
 .icono{
 	color: @colorTextoMenu;
 	cursor: pointer;
-	/*padding-right: 25px;
-	padding-left: 2px;*/
 	font-size: 20px;
-	/*display: inline;*/
 }
 .icono:hover{
 	color: @colorTextoMenu;
@@ -199,23 +187,15 @@ height: 50px;
 	
 
 }
-/*#btn_menu:checked ~ .contenedor{
-	margin-left: 50px;
-	-webkit-transition: 0.4s;
-	-moz-transition: 0.4s;
-}*/
+
 #btn_menu:checked ~ #contenedor_dashboard{
 	/*width: 96.7%;*/
 	/*-webkit-transition: 0.4s;*/
 }
 #btn_menu:checked ~ .contenedor_modulo{
-	/*width: 110%;*/
-	/*margin-right: -110px;*/
-	/*-webkit-transform: translateX(-110px);*/
 	margin-left: -110px;
 	-webkit-transition: margin 0.4s;
 	-moz-transition: margin 0.4s;
-
 }
 
 
@@ -224,8 +204,7 @@ height: 50px;
 }
 
 #btn_menu:checked ~ #menu .anclaMenu{
-	/*opacity: 0;
-	visibility: collapse;*/
+
 	-webkit-transform: translateX(-160px);
 	-moz-transform: translateX(-160px);
 
@@ -235,7 +214,6 @@ height: 50px;
 		webkit-transform: all 100ms ease-in;
 	}
 }
-
 
 #btn_menu:not(checked) ~ #menu .anclaMenu{
 	.item-text{
@@ -255,15 +233,6 @@ height: 50px;
 
 }
 
-/*#btn_menu ~ #menu{
-	width: 160px;
-	-webkit-transition: 0.4s;
-	-moz-transition: 0.4s;
-	.anclaMenu{
-		display: inline;
-		opacity: 1;
-	}
-}*/
 /* {{{{{{{{{{{{{{{{{Estilo del menu}}}}}}}}}}}}}}}}} */
 .desborde{
 	clear: both;

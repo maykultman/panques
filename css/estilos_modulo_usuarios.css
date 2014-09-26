@@ -1,19 +1,12 @@
 /*----------------Estilo Usuarios----------------*/
 
-#btn_guardar{
-
+#btn_guardar
+{
 	float: left;	
 	margin-top: 100px;
 }
 
-
-
-.ancho_campos{
-
-       
-    width: 370px !important;
-   
-}
+.ancho_campos{	width: 370px !important;	}
 
 .fileinput-button {
 			position: relative;
@@ -43,82 +36,41 @@
 
 /*------Estilos Perfiles--------------------------*/
 
-#contenido_nuevoperfil{    
-   
-	height: 500px;
-	
-}
+#contenido_nuevoperfil{   height: 500px;	}
 
-.chek {
-    
- width: 30% !important;
+.chek {	width: 30% !important;	}
 
-}
+#btnes{	float: left;	}
 
-#btnes{
+.flecha_abajo{	float: right !important;	}
 
-	float: left;
-	
-}
-
-.flecha_abajo{
-
-	float: right !important;
-}
-
-#perfil_nuevo{
-
+#perfil_nuevo
+{
 	float: right;
 	margin-top:15px; 
-
-
 }
-
-
-/*tbody.scrollpermisos { 
-	display: block; 
-	height: 148px; 
-	overflow: auto; 
-	width: 398px;
-	
-	}*/
-
-	/*margin-left: auto; 
-     margin-right: auto; */
-
 
  /* ----------------Estilos de Permisos----------------------   */
 		
-#lista_permisos{
+#lista_permisos
+{
 	width: 400px;
 	margin-top:15px; 
 }	
 
-/*tbody#scroll_permisos{ 
-	display: block; 
-	height: 210px; 
-	overflow: auto; 
-	width: 100%;
-}*/
-
-.eliminar_permiso{
-
+.eliminar_permiso
+{
 	float:right;
 	margin-top: 5px;
 }
 
-.linea_x{
-	width: 400px !important;
-}
+.linea_x{	width: 400px !important;	}
 
 .contenido_permisos{
-    
-
 	display: inline-block;
 	float: left;
 	margin-right: 35px;
-	width: 500px;
-	
+	width: 500px;	
 }
 
 .panel-body span{
@@ -138,27 +90,14 @@ display: inline-block;
 	margin-top:15px; 
 }
 
-.titulo_empleados{
+.titulo_empleados{	color: #0492e6;	}
 
-	color: #0492e6;
+.contenedor_empleado{	width: auto !important;	}
 
-
-}
-
-.contenedor_empleado{
-	width: auto !important;
-}
-
-/*.linea_x2{
-	width: 1000px !important;
-}
-*/
-
-.ancho_campos2{
-
+.ancho_campos2
+{
 	width:350px !important;
 	display: inline-block; 
-
 }
 
     
@@ -171,13 +110,6 @@ display: inline-block;
 	
 /*-------------Catalogo ROLES---------*/
 
-/*tbody#scroll_roles{ 
-	display: block; 
-	height: 210px; 
-	overflow: auto; 
-	width: 100%!important;
-}*/
-
 #busqueda_icono{
 
 	float: right;	
@@ -187,10 +119,8 @@ display: inline-block;
 
 .valor{ 
 
-  /*display: inline-block;*/
   width: 350px;
   height: 30px;
-  /*padding: 6px 12px;*/
   font-size: 14px;
   font-family: Arial;
   line-height: 1.42857143;
@@ -205,22 +135,8 @@ display: inline-block;
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-td .ocultoR{
-	display: none;
-}
-td .visibleR{
-	display: block;
-}
-
-/*------------------catalogos puestos------------*/
-
-/*tbody#scroll_puestos{ 
-	display: block; 
-	height: 210px; 
-	overflow: auto; 
-	width: 100%;
-}
-*/
+td .ocultoR{	display: none;	}
+td .visibleR{	display: block;	}
 
 /*------------------Consulta Clientes.............*/ 
 
@@ -230,7 +146,4 @@ td .visibleR{
 	height: 120px !important;
 }
 
-.input_margen{
-
-	margin-top: -5px;
-}
+.input_margen{	margin-top: -5px;	}

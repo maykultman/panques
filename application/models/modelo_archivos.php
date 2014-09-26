@@ -3,8 +3,7 @@
     class Modelo_archivos extends Modelo_crud
     {   
         private $archivo;       
-        function obj(){  }
-
+    
       public function create($post)
       {
            if(!empty($_FILES))
