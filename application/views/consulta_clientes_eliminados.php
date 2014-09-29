@@ -26,7 +26,7 @@
 					</tbody>
 				</table>
 			</div>   
-			<button id="btn_eliminarVarios" class="btn btn-primary">Eliminar varios</button>
+			<button id="btn_eliminarVarios" class="btn btn-primary">Borrar varios</button>
 			<!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
 			<button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
 			<button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
@@ -66,7 +66,7 @@
 <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
-        <td class="td_tablaPricipal"><input class="todos" type="checkbox" value="<%- id %>"></td>
+        <td class="td_tablaPricipal"><input type="checkbox" class="todos" name="todos" value="<%- id %>"></td>
         <td class="td_tablaPricipal">
             <% if (typeof foto != "undefined") { %>
                 <img src="<?=base_url()?><%- foto %>" class="foto" >

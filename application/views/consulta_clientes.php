@@ -69,7 +69,7 @@
     <!-- PLANTILLAS -->
         <script type="text/templates" id="plantilla_td_de_cliente">
 
-            <td class="td_tablaPricipal"><input class="todos" type="checkbox" value="<%- id %>"></td>
+            <td class="td_tablaPricipal"><input type="checkbox" class="todos" name="todos" value="<%- id %>"></td>
             <td class="td_tablaPricipal">
                 <% if (typeof foto != "undefined") { %>
                     <img src="<?=base_url()?><%- foto %>" class="foto" >

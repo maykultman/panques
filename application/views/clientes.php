@@ -4,6 +4,15 @@
 		<h1 id="titulo_del_modulo"><label>Clientes</label></h1>
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
+     			<li >
+                	<a href="cliente_nuevo">
+                 	   	<div class="icono_menu_modulo">
+                    		<span class="icon-uniF476"></span>
+                  	   	</div>
+                  		Nuevo
+                    </a>
+                </li>
+
 				<li>
 					<a href="consulta_prospectos">
 						<div class="icono_menu_modulo">
@@ -21,15 +30,6 @@
 				        Clientes
 			        </a>
 				</li> 
-     			
-     			<li >
-                	<a href="cliente_nuevo">
-                 	   	<div class="icono_menu_modulo">
-                    		<span class="icon-uniF476"></span>
-                  	   	</div>
-                  		Nuevo
-                    </a>
-                </li>
 
      			<li >
                 	<a href="consulta_clientes_eliminados">
