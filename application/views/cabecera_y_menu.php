@@ -14,7 +14,8 @@
 		   script_tag('js/prefixfree.min.js').
 		   script_tag('js/menu_jquery.js');?>		
     <!-- JQuery UI -->
-    <?=script_tag('js/jquery-ui-1.10.4.custom.js')?>
+    <?=script_tag('js/jquery-ui-1.10.4.custom.js').
+    script_tag('js/backbone/lib/jquery.js');?>
 
 	<!--Bootstrap-->
 	<?php echo link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
@@ -37,14 +38,27 @@
 
 
 	<!--Less-->
-	<?=link_tag('css/estilos_menu_cabecera.less','stylesheet','text/less').
-		link_tag('css/estilos_modulo_cotizaciones.less','stylesheet','text/less').
-		link_tag('css/estilos_modulo_clientes.less','stylesheet','text/less').
-		link_tag('css/estilo_general.less','stylesheet','text/less').
-		script_tag('js/less.js');
+	<?
+		// link_tag('css/estilos_menu_cabecera.less','stylesheet','text/less').
+		// link_tag('css/estilos_modulo_cotizaciones.less','stylesheet','text/less').
+		// link_tag('css/estilos_modulo_clientes.less','stylesheet','text/less').
+		// link_tag('css/estilo_general.less','stylesheet','text/less').
+		// script_tag('js/less.js');
 	?>		
+	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_menu_cabecera.less">
+	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
+	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_clientes.less">
+	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilo_general.less">
+	<script type="text/javascript" src="<?=base_url()?>js/less.js"></script>
 	<!--Less-->
 	
+
+	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/handlebars.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
 
 	<script type="text/javascript">
 		$(document).on('ready',function(){

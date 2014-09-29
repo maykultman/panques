@@ -150,7 +150,7 @@ td .visibleR{	display: block;	}
 
 .user-wrapper {
 	/*background: #fafafa;*/
-	background: #0492e6;
+	background: #ffffff;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-o-box-sizing: border-box;
@@ -171,4 +171,20 @@ td .visibleR{	display: block;	}
 	box-shadow: inset 0 1px 0 #fff, inset 0 0 40px rgba(0,0,0,0.05), 0 0 6px rgba(0,0,0,0.1);
 
 	padding: 10px;
+}
+
+.destroyb
+{ 
+	background: #5FC7CD;
+	color:black;
+}
+.upb
+{ 
+	background: #5FC7CD;
+	color: black;
+}
+
+img{
+	border: 2px solid #ccc;
+	padding: 3px;
 }

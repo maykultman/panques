@@ -1,8 +1,4 @@
-<?=
-	link_tag('css/estilos_modulo_usuarios.css').
-	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
-?>
+
 		<section id="catalogoPuestos">	   
 		  	<h3>Nuevo Puesto</h3>
 			<hr><br>
@@ -58,8 +54,6 @@
 </script>
 <?=
 //Librerias
-	script_tag('js/backbone/lib/underscore.js').
-	script_tag('js/backbone/lib/backbone.js').
 	script_tag('js/backbone/modelos/ModeloPuesto.js').
 	script_tag('js/backbone/colecciones/ColeccionPuestos.js').
 	script_tag('js/backbone/vistas/VistaCatalogoPuestos.js');

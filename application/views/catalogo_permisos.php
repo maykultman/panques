@@ -1,8 +1,3 @@
-		<?=
-        	link_tag('css/estilos_modulo_usuarios.css').
-        	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-        	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
-        ?>
 		<section id="catalogoPermisos">	   
 		  	<h3>Nuevo Permiso</h3>
 			<hr>
@@ -57,11 +52,6 @@ app.coleccionDePermisos = <?=json_encode($permisos)?>
 
 </script>
 <?=
-	//Librerias
-	script_tag('js/backbone/lib/underscore.js').
-	script_tag('js/backbone/lib/backbone.js').  
-
-	script_tag('js/funcionescrm.js').
 	//MVC
 	script_tag('js/backbone/modelos/ModeloPermiso.js').	   
 	script_tag('js/backbone/colecciones/ColeccionPermisos.js').

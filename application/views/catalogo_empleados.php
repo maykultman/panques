@@ -1,7 +1,5 @@
-		<?=link_tag('css/estilos_modulo_usuarios.css').
+		<?=
 		script_tag('js/jquery-ui-1.9.2.custom.min.js').
-		script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-		script_tag('css/bootstrap-3.1.1-dist/js/transition.js').
 		script_tag('css/bootstrap-3.1.1-dist/js/tab.js');?>
 
         <section>
@@ -160,10 +158,6 @@
 		</div> 	
 </script>
 <!-- Librerias -->
-<?=
-	script_tag('js/backbone/lib/underscore.js').
-	script_tag('js/backbone/lib/backbone.js');
-?>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeEmpleados = <?php echo json_encode($empleados) ?>;
@@ -171,9 +165,6 @@
 	app.coleccionDePuestos   = <?php echo json_encode($puestos)   ?>;
 </script>
 <?=
-	script_tag('js/funcionescrm.js').
-	script_tag('js/validaciones.js').
-	// <!-- MVC -->
 	script_tag('js/backbone/modelos/ModeloEmpleado.js').
 	script_tag('js/backbone/modelos/ModeloTelefono.js').
 	script_tag('js/backbone/modelos/ModeloPuesto.js').

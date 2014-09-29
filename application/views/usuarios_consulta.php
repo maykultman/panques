@@ -1,8 +1,4 @@
-	 	<link   type="text/css" rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>">
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">  </script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/transition.js'?>"></script>
-        <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/tab.js'?>"        >  </script>
-	 	<section id="consultaDeUsuarios">
+	<section id="consultaDeUsuarios">
 	 	    <label><b id="cantidadDeUsuarios"></b></label>
 	 		<hr style="margin-top: 0px;">
 
@@ -11,7 +7,7 @@
 			</div>
 	 	</section>
  	</section>	
-</div> 	
+</div> 	<!-- Div General-->
 <script type="text/plantilla" id="selectperfil">
 	{{nombre}}
 </script>
@@ -22,15 +18,61 @@
 <script type="text/plantilla" id="usuario">
 	<center><div class="clearfix row-fluid">
 		<img class="img-circle" src="<?=base_url()?>{{foto}}" alt="Imagen-Usuario" width="80" height="80">
-		<div class="span8">
+		<div class="span6">
         	<h4><b>{{usuario}} </b></h4>
-        	<small>{{perfil}}</small>
+        	<h6><b>{{perfil}}</b></h6>
         </div>
-        <button class="delete btn btn-danger">Delete</button>
-        <button class="edit btn">Edit</button>
+        <button class="delete btn btn-default">Eliminar</button>
+        <button class="edit btn btn-default">Editar</button>
     </div>
     </center>
 </script>
+
+
+ <script id="userEditTemplate" type="text/plantilla">
+  <fieldset>
+  <form id="edicionUsuario{{id}}">
+    <div class="row-fluid">
+ 		<label>Usuario</label>
+		<input id="usuarioi" name="usuario" type="text" placeholder="Nombre del Usuario" value="{{usuario}}">
+		<div class="resp" style="display: table-cell"><!-- Indicador de modificación--></div>
+		<p><b>Nombre del Empleado :</b>&nbsp;{{empleado}}</p>
+		
+		<label>Perfil</label>
+		<select id="idperfil" name="idperfil">									 
+		</select>					  		 		
+		
+		</fieldset>
+    </form>
+</script>
+
+<!-- 
+<label>Contraseña</label>
+				<div style="display: table-cell">				  				
+						<input id="contrasenia" name="contrasenia" type="password" class="form-control input_margen" placeholder="Password" value="{{contrasenia}}">
+				</div>
+<form action="#">
+                <fieldset>
+                    <div class="row-fluid">
+                        <input type="file" value="{{photo}}" />
+                        <label>Name</label>
+                        <input type="text" class="name" value="{{name}}" class="span12"/>
+                        <input id="type" type="hidden" value="{{type}}" />
+                        <label>Address</label>
+                        <input type="text" class="address" value="{{address}}" class="span12"/>
+                        <label>Telephone</label>
+                        <input type="tel" class="tel" value="{{tel}}" class="span12"/>
+                        <label>Email</label>
+                        <input type="email" class="email" value="{{email}}" class="span12"/>
+                    </div>
+                    <div class="clearfix">
+                        <div class="btn-group">
+                            <button class="save btn btn-primary">Save</button>
+                            <button class="cancel btn">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form> -->
 
 <script type="text/template" id="usuario1">
 
@@ -90,12 +132,7 @@
 		<center><button id="guardar" type="button" class="btn btn-primary" > Guardar  </button></center>
 	</div>
 </script>
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/handlebars.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+
 <script type="text/javascript">
 	app.coleccionDeUsuarios  = <?=json_encode($usuarios) ?>;
 	app.coleccionDeEmpleados = <?=json_encode($empleados)?>;

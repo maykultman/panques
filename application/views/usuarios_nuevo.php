@@ -1,4 +1,3 @@
-	    <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">	
 	    <section id="datosUsuario">
 		    <h3>Nuevo Usuario</h3>
 		    <hr>	
@@ -53,13 +52,6 @@
 	{{nombre}}
 </script>
 
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
-
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/handlebars.js'?>">   </script>
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDePerfiles 	  = <?php echo json_encode( $perfiles        ) ?>;

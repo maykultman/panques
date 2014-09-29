@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">
 <div class="contenedor_modulo">  
 	<section>
 	   <h1 id="titulo_del_modulo"><label>Usuarios</label></h1>
