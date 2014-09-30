@@ -1137,11 +1137,11 @@ app.VistaCliente = Backbone.View.extend({
 					patch	: true,
 					wait 	: true,
 					success	: function (exito) {
-						console.log(exito.toJSON());
+						// console.log(exito.toJSON());
 						alerta('<b style="color:green;">El prospecto ha sido actualizado, ahora se encuentra en la sección de clientes</b>',function () {});
 					},
 					error 	: function (error) {
-						console.log(error.toJSON());
+						// console.log(error.toJSON());
 						alerta('<b style="color:fireBrick;">Ocurrio un error al actualizar al prospecto</b>',function () {});
 					}
 				});

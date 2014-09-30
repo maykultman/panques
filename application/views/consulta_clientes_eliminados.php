@@ -26,9 +26,9 @@
 					</tbody>
 				</table>
 			</div>   
-			<button id="btn_eliminarVarios" class="btn btn-primary">Borrar varios</button>
-			<!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
-			<button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
+			<button type="button" id="btn_eliminarVarios" class="btn btn-danger">Borrar varios</button>
+			<button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button> 
+			<!-- <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
 			<button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
 			
 			<!------------ Enviar Correo -------- -->

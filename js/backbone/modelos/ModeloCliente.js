@@ -33,7 +33,7 @@ app.ModeloCliente = Backbone.Model.extend({
 				wait:true, 
 				patch:true,
 				success:function (exito) {
-					console.log(exito.toJSON());
+					// console.log(exito.toJSON());
 				},
 				error:function (resp) {
 					if (resp.toJSON().visibilidad == '1') {

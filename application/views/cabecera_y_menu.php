@@ -45,11 +45,28 @@
 		// link_tag('css/estilo_general.less','stylesheet','text/less').
 		// script_tag('js/less.js');
 	?>		
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_menu_cabecera.less">
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_clientes.less">
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilo_general.less">
-	<script type="text/javascript" src="<?=base_url()?>js/less.js"></script>
+	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_menu_cabecera.less">
+	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
+	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_clientes.less">
+	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilo_general.less">
+	<script>
+	  less = {
+	    env: "development",
+	    logLevel: 2,
+	    async: false,
+	    fileAsync: false,
+	    poll: 1000,
+	    functions: {},
+	    dumpLineNumbers: "comments",
+	    relativeUrls: false,
+	    globalVars: {
+	      var1: '"string value"',
+	      var2: 'regular value'
+	    },
+	    // rootpath: "crmqualium.com/css"
+	  };
+	</script>
+	<script type="text/javascript" src="<?=base_url()?>js/less.min.js"></script>
 	<!--Less-->
 	
 

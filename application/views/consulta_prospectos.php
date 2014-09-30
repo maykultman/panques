@@ -28,7 +28,7 @@
                     </tbody>
                 </table>
             </div>   
-            <button id="btn_eliminarVarios" class="btn btn-primary">Eliminar varios</button>
+            <button id="btn_eliminarVarios" class="btn btn-danger">Eliminar varios</button>
             <!-- <button type="button" id="marcar" class="btn btn-default">Marcar todos</button> 
             <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
             <button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->

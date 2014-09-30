@@ -14,6 +14,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 		'click #todos'	    : 'marcarTodosCheck',
 
 		'click #btn_eliminarVarios'	: 'eliminarVarios',
+		'click #btn_restaurarVarios'	: 'restaurarVarios',
 	},
 
 	render		: function () {
@@ -127,29 +128,42 @@ app.VistaConsultaCP = Backbone.View.extend({
 	},
 	eliminarVarios 				: function () {
 		var here = this, mensaje, visibilidad, ids;
-		visibilidad = app.coleccionClientes.get(this.$('.todos:checked').val()).toJSON().visibilidad;
-		if ( visibilidad == '1' ) {
-			mensaje = '¿Deseas eliminar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
-		} else {
-			mensaje = '¿Deseas borrar a los clientes seleccionados?<br><b>Toda la información relacionada al cliente será borrada</b>';
-		};
-		confirmar(mensaje,
-			function () {
-				ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
-				console.log(ids);
-				if ( visibilidad == '1' ) {
-					if ($.isArray(ids)) {
-						for (var i = 0; i < ids.length; i++) {
-							app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+		/*De los checkboxs con class .todos tomamos el primero (sin importar si hay uno o vareios checheados)
+		  Si hay checheados, procedemos*/
+		if (this.$('.todos:checked').val()) {
+			/*Solo con el primer cliente seleccionado nos vasta para saber lo que queremos eliminar.*/
+			visibilidad = app.coleccionClientes.get(this.$('.todos:checked').val()).toJSON().visibilidad;
+			if ( visibilidad == '1' ) {
+				mensaje = '¿Deseas eliminar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
+			} else {
+				mensaje = '¿Deseas borrar a los clientes seleccionados?<br><b>Toda la información relacionada al cliente será borrada</b>';
+			};
+			confirmar(mensaje,
+				function () {
+					ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
+					if ( visibilidad == '1' ) {
+						if ($.isArray(ids)) {
+							for (var i = 0; i < ids.length; i++) {
+								app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+							};
+						} else{
+							app.coleccionClientes.get(ids).cambiarVisibilidad();
 						};
+							
 					} else{
-						app.coleccionClientes.get(ids).cambiarVisibilidad();
-					};
-						
-				} else{
-					if ($.isArray(ids)) {
-						for (var i = 0; i < ids.length; i++) {
-							app.coleccionClientes.get(ids[i]).destroy({
+						if ($.isArray(ids)) {
+							for (var i = 0; i < ids.length; i++) {
+								app.coleccionClientes.get(ids[i]).destroy({
+									wait : true,
+									success	: function (exito) {
+									},
+									error	: function (error) {
+										error('Error al Borrar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+									}
+								});
+							};
+						} else{
+							app.coleccionClientes.get(ids).destroy({
 								wait : true,
 								success	: function (exito) {
 								},
@@ -158,22 +172,23 @@ app.VistaConsultaCP = Backbone.View.extend({
 								}
 							});
 						};
-					} else{
-						app.coleccionClientes.get(ids).destroy({
-							wait : true,
-							success	: function (exito) {
-							},
-							error	: function (error) {
-								error('Error al Borrar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
-							}
-						});
+							
 					};
-						
-				};
-			},
-			function () {});
+				},
+				function () {});
+		};
+			
 	},
-	restaurarVarios				
+	restaurarVarios	: function () {
+		var ids = pasarAJson(this.$('.todos:checked').serializeArray()).todos;
+		if ($.isArray(ids)) {
+			for (var i = 0; i < ids.length; i++) {
+				app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+			};
+		} else{
+			app.coleccionClientes.get(ids).cambiarVisibilidad();
+		};
+	}			
 });
 
 app.VistaConsultaClientes = app.VistaConsultaCP.extend({
