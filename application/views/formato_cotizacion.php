@@ -9,7 +9,7 @@
 			link_tag("../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css").
 			link_tag("../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css").
 			link_tag("../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js").
-			script_tag("<?=base_url().'js/jquery.js");
+			script_tag('js/jquery.js');
 		?>
 	</head>
 <body>
@@ -153,8 +153,8 @@ script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
 
 script_tag('js/backbone/colecciones/ColeccionClientes.js').
 script_tag('js/backbone/colecciones/ColeccionServicios.js').
-script_tag('js/backbone/colecciones/coleccionRepresentantes.js'
-script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js')
+script_tag('js/backbone/colecciones/coleccionRepresentantes.js').
+script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js');
 ?> 
 
 <script type="text/javascript">

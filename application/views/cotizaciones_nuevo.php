@@ -1,3 +1,4 @@
+<?=script_tag('js/autocompletes.js')?>
 <section class="contenedor_principal_modulos"> 
 	<h3>Información Básica</h3>
 	<hr>

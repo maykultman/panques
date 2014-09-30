@@ -119,7 +119,7 @@ display: inline-block;
 
 .valor{ 
 
-  width: 350px;
+  width: 250px;
   height: 30px;
   font-size: 14px;
   font-family: Arial;
@@ -137,6 +137,11 @@ display: inline-block;
 
 td .ocultoR{	display: none;	}
 td .visibleR{	display: block;	}
+
+.ocultarform{	display: none;	}
+.mostrarform{	display: block;	
+	 /*style="visibility:hidden; height:5px;"*/
+}
 
 /*------------------Consulta Clientes.............*/ 
 

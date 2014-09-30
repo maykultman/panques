@@ -1,8 +1,4 @@
-    <?=
-        link_tag('css/estilos_modulo_clientes_nuevo.less').
-        //plugin selectize css
-        link_tag('js/plugin/selectize/selectize.default.css')
-    ?>
+    <?=link_tag('css/estilos_modulo_clientes_nuevo.less')?>
     <section style="position: relative !important;">
         <?php /*echo '<button id="toggle">Toggle</button>';*/ ?>
         <!-- REGISTRO DEL CLIENTE -->
@@ -188,11 +184,6 @@
 </section>
 </div>
 
-
-<?=
-    script_tag('js/backbone/app.js').
-    script_tag('js/funcionescrm.js');
-?>
 <script type="text/javascript">
     app.coleccionDeClientes = <?=json_encode($clientes)?>;
     app.coleccionDeServicios = <?php echo json_encode($servicios) ?>;
@@ -233,12 +224,7 @@
     </script>
 <!-- Utilerias -->
     <?=
-    script_tag('js/funcionescrm.js').
     //plugins
-    script_tag('js/plugin/selectize/selectize.min.js').
-    //Librerias Backbone
-    script_tag('js/backbone/lib/underscore.js').
-    script_tag('js/backbone/lib/backbone.js').
     script_tag('js/backbone/lib/backbone.localStorage.js').
     //MV*
     script_tag('js/backbone/modelos/ModeloContacto.js').
