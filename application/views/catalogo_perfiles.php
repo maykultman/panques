@@ -1,10 +1,4 @@
-        <?=
-        	link_tag('css/estilos_modulo_usuarios.css').
-        	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-        	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
-        ?>
-       
-        <section>
+         <section>
 	    	<h3 class="titulo">Perfiles</h3>
 	    	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Perfil
 			</button>
@@ -88,13 +82,7 @@
 		<center><button id="guardarEdicion" type="button" class="btn btn-primary">Guardar</button></center>
 	</div>
 </script>
-<?=
-	script_tag('js/funcionescrm.js').
-	script_tag('js/autocompletes.js').
-	//Librerias
-	script_tag('js/backbone/lib/underscore.js').
-	script_tag('js/backbone/lib/backbone.js');
-?>
+
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDePerfiles = <?php echo json_encode($perfiles) ?>;

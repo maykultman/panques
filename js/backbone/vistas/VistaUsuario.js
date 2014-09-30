@@ -24,10 +24,16 @@ app.VistaUsuario = Backbone.View.extend({
 	tagName : 'article',
 	className : 'user-wrapper' ,//'panel panel-default',
 	plantilla : Handlebars.compile($('#usuario').html()),
+	editarPlantilla : Handlebars.compile($('#userEditTemplate').html()),
 	events : {
 		'click #guardar'    : 'editar',
+		'click button.edit'	: 'feo'
 	},
+	feo : function(e){
+		e.preventDefault();
+		this.$el.html(this.editarPlantilla(this.model.toJSON()));
 
+	},
 	render : function (){
 
 		this.$el.html(this.plantilla(this.model.toJSON()));		

@@ -1,3 +1,6 @@
+<?=link_tag('css/estilos_modulo_usuarios.css').
+script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+		script_tag('css/bootstrap-3.1.1-dist/js/transition.js');?>
 <div class="contenedor_modulo">  
 	<section>
 	   <h1 id="titulo_del_modulo"><label>Catalogos</label></h1>

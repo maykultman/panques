@@ -64,14 +64,7 @@
 	    </div>
 	</td>
  </script>
-<!-- Utilerias -->
-    <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>-->
-<!-- Librerias -->
-<?=
-	script_tag('js/backbone/lib/jquery.js').
-	script_tag('js/backbone/lib/underscore.js').
-	script_tag('js/backbone/lib/backbone.js');
-?>
+
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeServicios = <?php echo json_encode($servicios) ?>;

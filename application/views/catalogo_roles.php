@@ -1,8 +1,3 @@
-<?=
-	link_tag('css/estilos_modulo_usuarios.css').
-	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-	script_tag('css/bootstrap-3.1.1-dist/js/transition.js');
-?>
 		<section id="catalogo_roles">		    
 		  	<h3>Nuevo Rol</h3>
 		  	<hr><br>
@@ -57,11 +52,7 @@
 	</td>
 
 </script>
-<?=//Librerias
-	script_tag('js/backbone/lib/underscore.js').
-	script_tag('js/backbone/lib/backbone.js').
-
-	script_tag('js/backbone/modelos/ModeloRol.js').
+<?=	script_tag('js/backbone/modelos/ModeloRol.js').
 	script_tag('js/backbone/colecciones/ColeccionRoles.js').
 	script_tag('js/backbone/vistas/VistaCatalogoRol.js');
 ?>

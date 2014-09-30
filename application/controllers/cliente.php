@@ -9,10 +9,10 @@ class  Cliente extends REST {
         $this->load->model('Model_customer', 'Customer');
     }
 
-    public function api() 
+    public function api($id=NULL) 
     {
         $metodo = $this->request();
-        $this->$metodo();
+        $this->$metodo($id);
     }
 
     private function create()
@@ -22,23 +22,22 @@ class  Cliente extends REST {
         $this->pre_response($query, 'create');                  
     }
 
-    private function get()
+    private function get($id)
     {
-       $query = $this->Customer->get($this->id()); 
+       $query = $this->Customer->get($id); 
        $this->pre_response($query, 'get'); 
     }
 
-    private function update()
+    private function update($id)
     {        
         # La función put(); Devuelve el array con los campos espicificos para actualizar              
-        $query = $this->Customer->patch_customer($this->id(), $this->put());
-             
+        $query = $this->Customer->patch_customer($id, $this->put());             
         $this->pre_response($query, 'update');         
     }
 
-    private function delete()
+    private function delete($id)
     {
-        $query = $this->Customer->delete_customer($this->id());
+        $query = $this->Customer->delete_customer($id);
         $this->pre_response($query, 'delete'); 
     }
 
