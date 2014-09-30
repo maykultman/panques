@@ -32,9 +32,15 @@ app.ModeloCliente = Backbone.Model.extend({
 			{
 				wait:true, 
 				patch:true,
-				success:function () {
+				success:function (exito) {
+					console.log(exito.toJSON());
 				},
-				error:function () {
+				error:function (resp) {
+					if (resp.toJSON().visibilidad == '1') {
+						error('Error al Eliminar a <b>'+resp.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+					} else{
+						error('Error al Restaurar a <b>'+resp.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+					};
 				}
 			}
 		);

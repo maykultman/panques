@@ -126,21 +126,54 @@ app.VistaConsultaCP = Backbone.View.extend({
 		};
 	},
 	eliminarVarios 				: function () {
-		// var here = this, mensaje;
-		// if ( app.coleccionClientes.get( this.$('.todos').val() ).visibilidad == '1' ) {
-		// 	mensaje = '¿Deseas elimiar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
-		// } else {
-		// 	mensaje = '¿Deseas elimiar a los clientes seleccionados?<br><b>Serán borrados permanentemente</b>';
-		// };
+		var here = this, mensaje, visibilidad, ids;
+		visibilidad = app.coleccionClientes.get(this.$('.todos:checked').val()).toJSON().visibilidad;
+		if ( visibilidad == '1' ) {
+			mensaje = '¿Deseas eliminar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
+		} else {
+			mensaje = '¿Deseas borrar a los clientes seleccionados?<br><b>Toda la información relacionada al cliente será borrada</b>';
+		};
 		confirmar(mensaje,
 			function () {
-				var ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
-				for (var i = 0; i < ids.length; i++) {
-					app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+				ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
+				console.log(ids);
+				if ( visibilidad == '1' ) {
+					if ($.isArray(ids)) {
+						for (var i = 0; i < ids.length; i++) {
+							app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+						};
+					} else{
+						app.coleccionClientes.get(ids).cambiarVisibilidad();
+					};
+						
+				} else{
+					if ($.isArray(ids)) {
+						for (var i = 0; i < ids.length; i++) {
+							app.coleccionClientes.get(ids[i]).destroy({
+								wait : true,
+								success	: function (exito) {
+								},
+								error	: function (error) {
+									error('Error al Borrar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+								}
+							});
+						};
+					} else{
+						app.coleccionClientes.get(ids).destroy({
+							wait : true,
+							success	: function (exito) {
+							},
+							error	: function (error) {
+								error('Error al Borrar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+							}
+						});
+					};
+						
 				};
 			},
 			function () {});
 	},
+	restaurarVarios				
 });
 
 app.VistaConsultaClientes = app.VistaConsultaCP.extend({

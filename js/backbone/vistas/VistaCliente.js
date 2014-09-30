@@ -907,7 +907,7 @@ app.VistaCliente = Backbone.View.extend({
 					wait : true,
 					success	: function () { },
 					error	: function () {
-						alerta('Ha ocurrido un error al intentar eliminar permanentemente, inténtelo más tarde', function () {});
+						alerta('Ha ocurrido un error, inténtelo más tarde', function () {});
 					}
 				});
 			},
