@@ -47,12 +47,12 @@
 	?>		
 
   
-
+	<script type="text/javascript" src="<?=base_url()?>js/less.js"></script>
 	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_menu_cabecera.less">
 	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
 	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_clientes.less">
 	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilo_general.less">
-	<script type="text/javascript" src="<?=base_url()?>js/less.js"></script>
+	
 	<!--Less-->
 	 
 	

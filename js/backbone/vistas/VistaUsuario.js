@@ -34,24 +34,26 @@ app.VistaUsuario = Backbone.View.extend({
 	feo : function(e){
 		e.preventDefault();
 		$('#formedit'+this.model.id).toggle();
-		$('#veruser').toggle();
+		$('#veruser'+this.model.id).toggle();
 	},
 
 	ocultarform : function(e)
 	{
 		e.preventDefault();
 		$('#formedit'+this.model.id).toggle();
-		$('#veruser').toggle();
+		$('#veruser'+this.model.id).toggle();
 	},
 	render : function (){
 
-		this.$el.html(this.plantilla(this.model.toJSON()));		
+		this.$el.html(this.plantilla(this.model.toJSON()));	
+
 		var select_Perfil = this.$el.find('#idperfil');
 		var usuario = this.model;
 		this.cargarSelectPerfiles(function() 
 		{	/*... Se le hace selected al puesto que le pertenece al modelo y desactiva el click...*/
 			$(select_Perfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');
 		});
+
 		this.cargarPermisos();
 			
 		if(this.model.get('idpermisos'))
@@ -83,7 +85,44 @@ app.VistaUsuario = Backbone.View.extend({
 
 	cargarPermisos : function()
 	{
-		app.coleccionPermisos.each(this.cargarPermiso, this);
+		var list = '<% _.each(servicios, function(servicio) { %> <option id="<%- servicio.id %>" value="<%- servicio.id %>"> <%- servicio.nombre %></option><% }); %>';
+		
+		this.$('.menuServicios').
+		append(_.template(list, 
+			{ servicios : app.coleccionPermisos.toJSON() }
+		));
+
+
+		var lista = this.$('.menuServicios').find('option');
+		var misPermisos = jQuery.parseJSON(this.model.toJSON().idpermisos).idpermisos;
+		for (var i = 0; i < misPermisos.length; i++) {
+			for (var j = 0; j < lista.length; j++) {
+				if ($(lista[j]).val() == misPermisos[i]) {
+					$(lista[i]).attr('selected','selected');
+				};
+			};
+		};
+		this.$('.menuServicios').selectize({
+			// create: true,
+			// maxItems: 1
+			delimiter: ',',
+			persist: false,
+			create: function(input) {
+			    return {
+			        value: input,
+			        text: input
+			    }
+			}
+		});
+
+		// if(this.model.get('idpermisos'))
+		// {
+		// 	marcarPermiso(	JSON.parse(this.model.get('idpermisos')).idpermisos, 
+		// 					this.$el.find('.chek').children(), 
+		// 					this.$el
+		// 				 );	
+		// }
+
 	},
 
 	editar : function(events)
