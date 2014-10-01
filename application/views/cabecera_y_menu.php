@@ -68,14 +68,15 @@
 	</script>
 	<script type="text/javascript" src="<?=base_url()?>js/less.min.js"></script>
 	<!--Less-->
+	 
 	
-
 	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/validaciones.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/autocompletes.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/handlebars.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<?=
+script_tag('js/backbone/lib/handlebars.js').
+script_tag('js/backbone/lib/underscore.js').
+    script_tag('js/backbone/lib/backbone.js')?>
 
 	<script type="text/javascript">
 		$(document).on('ready',function(){

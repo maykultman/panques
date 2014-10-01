@@ -1,15 +1,15 @@
 	<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
 	<!-- plugin selectize css -->
-        <link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
+		<link rel="stylesheet" href="<?=base_url().'js/plugin/selectize/selectize.default.css'?>">
 
-        <style type="text/css">
-        .spin{
-            width: 25px;
-            height: 25px;
-            background-image: url(http://crmqualium.com/img/ajax-loader25x25.gif);
-            background-size: 100% 100%;
-        }
-    </style>
+	<style type="text/css">
+		.spin{
+			width: 25px;
+			height: 25px;
+			background-image: url(http://crmqualium.com/img/ajax-loader25x25.gif);
+			background-size: 100% 100%;
+		}
+	</style>
 
 	<div id="divSecciones">
 		<section id="paso1" class="section_Visible"><!-- section_Oculto -->
@@ -28,7 +28,7 @@
 								<div class="row" style="margin-top: -8px;">
 									<div class="col-md-4">
 										<div style="margin: 23px 0px 21px 0px;"><b>Inicio</b></div>
-							    		<input id="fechaInicio" class="form-control datepicker" type="text" name="fechainicio">
+										<input id="fechaInicio" class="form-control datepicker" type="text" name="fechainicio">
 									</div>
 									<div class="col-md-4">
 										<div style="margin: 23px 0px 21px 0px;"><b>Termino</b></div>
@@ -49,16 +49,22 @@
 						<div class="row">
 							<div class="col-md-5">
 								<div  class="panel panel-default">
-							        <!-- Default panel contents -->
-							        <div class="panel-heading color">Servicios</div>
-							        <!-- Table -->
-							        <div class="panel-body" style="overflow: auto; height: 177px;">
-								        <table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
-								        <tbody id="tbody_servicios">
-								        	<!-- PLANTILLAS DE SERVICIOS -->
+									<!-- Default panel contents -->
+									<!-- <div class="panel-heading color">Servicios</div> -->
+									<!-- Table -->
+									<div class="panel-body" style="overflow: auto; height: 177px;">
+										<table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
+										<thead>
+											<th>
+												<input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
+    											<span class="icon-search busqueda"></span>
+											</th>
+										</thead>
+										<tbody id="tbody_servicios">
+											<!-- PLANTILLAS DE SERVICIOS -->
 										</tbody>
-								      </table>
-							    	</div>
+									  </table>
+									</div>
 								</div>
 							</div>	
 							<div class="col-md-7">
@@ -69,23 +75,23 @@
 											<th>Servicios seleccionados</th>
 											<th>&nbsp;&nbsp;&nbsp;</th>
 										</tr>
-								    </thead>
-								    <tbody id="tbody_servicios_seleccionados">
-								    	<!-- PLANTILLA SERVICIOS SELECCIONADOS -->
-								    </tbody>
-								    <tfoot>
-								    	<tr>
-									    	<td colspan="4">
-									    		<!-- <button type="button" id="checkboxServicios" class="btn_marcarTodos">Marcar todos</button> -->
+									</thead>
+									<tbody id="tbody_servicios_seleccionados">
+										<!-- PLANTILLA SERVICIOS SELECCIONADOS -->
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="4">
+												<!-- <button type="button" id="checkboxServicios" class="btn_marcarTodos">Marcar todos</button> -->
 												<div class="btn-group" data-toggle="buttons">
 													<label class="btn btn-default btn-xs">
 														<input type="checkbox" id="checkboxServicios" class="btn_marcarTodos"> Marcar todos
 													</label>
 												</div>
 												<button type="button" class="btn btn-danger btn-xs checkboxServicios btn_eliminarMarcados">Eliminar marcados</button>
-									    	</td>
-									    </tr>
-								    </tfoot>		
+											</td>
+										</tr>
+									</tfoot>		
 								</table>
 							</div>
 						</div> <!-- Fin class row -->
@@ -106,16 +112,16 @@
 					<div class="row">
 						<div class="col-md-5">
 							<div  class="panel panel-default">
-						        <!-- Default panel contents -->
-						        <div class="panel-heading color">Empleados</div>
-						        <!-- Table -->
-						        <div class="panel-body" style="overflow: auto; height: 177px;">
-							        <table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
-							        <tbody id="tbody_empleados">
-							        	<!-- PLANTILLAS DE SERVICIOS -->
+								<!-- Default panel contents -->
+								<div class="panel-heading color">Empleados</div>
+								<!-- Table -->
+								<div class="panel-body" style="overflow: auto; height: 177px;">
+									<table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
+									<tbody id="tbody_empleados">
+										<!-- PLANTILLAS DE SERVICIOS -->
 									</tbody>
-							      </table>
-						    	</div> 								
+								  </table>
+								</div> 								
 							</div>
 						</div>
 						<div class="col-md-7">
@@ -127,23 +133,23 @@
 										<th style="width: 400px;">Roles (<small>Establesca un responsable para el nuevo proyecto</small>)</th>
 										<th></th>
 									</tr>
-							    </thead>
-							    <tbody id="tbody_empleados_seleccionados">
-							    	<!-- PLANTILLA EMPLEADOS SELECCIONADOS -->
-							    </tbody>
-							    <tfoot>
-							    	<tr>
-								    	<td colspan="4">
-								    		<button id="checkboxEmpleados" class="btn_marcarTodos"></button>
+								</thead>
+								<tbody id="tbody_empleados_seleccionados">
+									<!-- PLANTILLA EMPLEADOS SELECCIONADOS -->
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="4">
+											<button id="checkboxEmpleados" class="btn_marcarTodos"></button>
 											<div class="btn-group" data-toggle="buttons">
 												<label class="btn btn-default btn-xs">
 													<input type="checkbox" id="checkboxEmpleados" class="btn_marcarTodos"> Marcar todos
 												</label>
 											</div>
 											<button type="button" class="btn btn-danger btn-xs checkboxEmpleados btn_eliminarMarcados">Eliminar marcados</button>
-								    	</td>
-								    </tr>
-							    </tfoot>
+										</td>
+									</tr>
+								</tfoot>
 							</table>
 						</div>
 					</div>
@@ -163,24 +169,24 @@
 						</div>
 					</div>
 					<label class="btn btn-success fileinput-button">
-	                    <span class="icon-paperclip"></span>
-	                    <span>Adjuntar archivos</span>
-	                    <input type="file" id="inputArchivos" multiple name="archivo[]">
-	                </label>
-	                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start" style="display:none;">
-	                    <i class="glyphicon glyphicon-upload"></i>
-	                    <span>Subir</span>
-	                </button>
-	                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
-	                    <i class="glyphicon glyphicon-ban-circle"></i>
-	                    <span>Borrar lista</span>
-	                </button>
+						<span class="icon-paperclip"></span>
+						<span>Adjuntar archivos</span>
+						<input type="file" id="inputArchivos" multiple name="archivo[]">
+					</label>
+					<button type="submit" id="btn_subirArchivo" class="btn btn-primary start" style="display:none;">
+						<i class="glyphicon glyphicon-upload"></i>
+						<span>Subir</span>
+					</button>
+					<button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
+						<i class="glyphicon glyphicon-ban-circle"></i>
+						<span>Borrar lista</span>
+					</button>
 					<form id="form_subirArchivos">
-		                <input type="hidden" id="idpropietario" name="idpropietario">
-		                <input type="hidden" id="tabla" name="tabla" value="proyectos">
-		                <input type="hidden" id="fecha_creacion" name="fecha_creacion">
-				    </form>
-				    <br>
+						<input type="hidden" id="idpropietario" name="idpropietario">
+						<input type="hidden" id="tabla" name="tabla" value="proyectos">
+						<input type="hidden" id="fecha_creacion" name="fecha_creacion">
+					</form>
+					<br>
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -205,33 +211,33 @@
 <!-- plantillas -->
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
-			<label class="label_servicio" for="servicio_<%- id %>"><%- nombre %></label>
+			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
 			<div class="check_posicion"><!---->
-	        	<input type="checkbox" id="servicio_<%- id %>" class="checkbox_servicio">
-	        <div>
+				<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
+			<div>
 		</td>
 	</script>
 
 	<script type="text/template" id="tds_servicio_seleccionado">
 		<tr>
-    		<td>
-    			<input type="checkbox" class="checkbox_servicios" name="checkboxServicios"></td>
-		    <td>
-		    	<%- nombre %>
-		    	<input type="hidden" name="servicios" value="<%- id %>">
-		    </td>
-		    <td class="icon-eliminar">
-		    	<label id="servicio_<%- id %>" class="icon-circledelete eliminarDeTabla_servicios" title="Eliminar"></label>
-		    </td>
-        </tr>
+			<td>
+				<input type="checkbox" class="checkbox_servicios" name="checkboxServicios"></td>
+			<td>
+				<%= nombre %>
+				<input type="hidden" name="servicios" value="<%= id %>">
+			</td>
+			<td class="icon-eliminar">
+				<label id="servicio_<%= id %>" class="icon-circledelete eliminarDeTabla_servicios" title="Eliminar"></label>
+			</td>
+		</tr>
 	</script>
 
 	<script type="text/template" id="tds_empleado">
 		<td style="padding:0px">
-			<label class="label_empleado" for="empleado_<%- id %>"><%- nombre %></label>
+			<label class="label_empleado" for="empleado_<%= id %>"><%= nombre %></label>
 			<div class="check_posicion"><!---->
-	        	<input type="checkbox" id="empleado_<%- id %>" class="checkbox_empleado">
-	        <div>
+				<input type="checkbox" id="empleado_<%= id %>" class="checkbox_empleado">
+			<div>
 		</td>
 	</script>
 
@@ -239,16 +245,16 @@
 		<td>
 			<input type="checkbox" class="checkbox_empleados" name="checkboxEmpleados">
 		</td>
-	    <td>
-	    	<%- nombre %>
-	    </td>
-	    <td class="td_roles">
-		    	<div>
-		    		<div class="row">
+		<td>
+			<%= nombre %>
+		</td>
+		<td class="td_roles">
+				<div>
+					<div class="row">
 						<div class="col-md-6">
 							<select class="form-control input-sm select_rol" style="width:auto;margin:0;">
 								<option selected disabled>Seleccione un rol...</option>
-					  	   		<!-- PLANTILLA DE ROL -->
+								<!-- PLANTILLA DE ROL -->
 							</select>
 						</div>
 						<div class="col-md-6">
@@ -261,42 +267,42 @@
 						</div>
 					</div>
 				</div>
-	    		<form class="form_participante">
-	    			<input type="hidden" name="idproyecto" value="">
-	    			<input type="hidden" name="idpersonal" value="<%- id %>">
+				<form class="form_participante">
+					<input type="hidden" name="idproyecto" value="">
+					<input type="hidden" name="idpersonal" value="<%= id %>">
 				</form>
-	    </td>
-	    <td class="icon-eliminar">
-	    	<label id="empleado_<%- id %>" class="icon-circledelete eliminarDeTabla_empleados" data-toggle="tooltip" data-placement="top" title="Eliminar"></label>
-	    </td>
+		</td>
+		<td class="icon-eliminar">
+			<label id="empleado_<%= id %>" class="icon-circledelete eliminarDeTabla_empleados" data-toggle="tooltip" data-placement="top" title="Eliminar"></label>
+		</td>
 	</script>
 
 	<script type="text/template" id="option_rol">
-		<%- nombre %>
+		<%= nombre %>
 	</script>
 
 	<script type="text/template" id="input_rol">
 		<div class="tag_rol">
 			<div class="btn-group btn-group-xs">
-				<button class="btn btn-default btn_eliminarRol" value="<%- id %>">
+				<button class="btn btn-default btn_eliminarRol" value="<%= id %>">
 					<span class="icon-circledelete"></span>
 				</button>
 				<button type="button" class="btn btn-default" disabled="disabled">
-					<%- nombre %>
+					<%= nombre %>
 				</button>
 			</div>
-			<input type="hidden" class="rol" name="<%- name %>" value="<%- id %>">
+			<input type="hidden" class="rol" name="<%= name %>" value="<%= id %>">
 		</div>
 	</script>
 
 	<script type="text/template" id="tr_archivo">
-		<tr class="<%- i %>">
-			<td><%- nombre %></td>
-			<td><%- tipo %></td>
-			<td><%- tamaño %></td>
+		<tr class="<%= i %>">
+			<td><%= nombre %></td>
+			<td><%= tipo %></td>
+			<td><%= tamaño %></td>
 			<td class="icon-eliminar">
-		    	<label id="<%- i %>" class="icon-circledelete eliminarArchivo"></label>
-		    </td>
+				<label id="<%= i %>" class="icon-circledelete eliminarArchivo"></label>
+			</td>
 		</tr>
 	</script>
 <script type="text/javascript">
@@ -307,13 +313,13 @@
 	app.coleccionDeRoles 	 = <?php echo json_encode($roles)?>;
 </script>
 <!-- Utilerias -->
-    <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 	<!-- plugin jquery -->
 		<!-- <script type="text/javascript" src="js/plugin/jquery.easing.min.js"></script> -->
 		<script src="<?=base_url().'js/plugin/selectize/selectize.min.js'?>"></script>
 <!-- Librerias Backbone -->
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
 
 <!-- MV* -->
 	<!-- modelos -->

@@ -1,3 +1,19 @@
+<!-- //plugin selectize css -->
+ <!-- Librerias para el scroll de la tabla -->
+    <?= script_tag('js/tablas/jquery-latest.min.js').
+        script_tag('js/tablas/jquery.tablesorter.js').
+        script_tag('js/tablas/jquery.tablesorter.widgets.js').
+        script_tag('js/tablas/widget-cssStickyHeaders.js').
+        script_tag('js/tablas/estilo_tabla.js');
+    ?> 
+    <?=link_tag('js/plugin/selectize/selectize.default.css').
+ 		script_tag('js/plugin/selectize/selectize.min.js').
+ 		link_tag('css/theme.default.css').
+        //plugin selectize css
+        link_tag('js/plugin/selectize/selectize.default.css');?>
+  <?=script_tag('js/backbone/lib/backbone.js')?>
+  
+      
 <div class="contenedor_modulo"> 
 <!-- <div id="contenedor"> -->
 	<section>

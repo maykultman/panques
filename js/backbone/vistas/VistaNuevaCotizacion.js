@@ -128,6 +128,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
                 clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;
             };
             /*...EL array obtenido lo usamos para un autocomplete..*/
+            console.log(clientes);
             $('#cliente').autocomplete({ source: clientes});
             var esto = this;
             /*...Ahora obtenemos el nombre del cliente que seleccionamos de la lista y lo pasamos 

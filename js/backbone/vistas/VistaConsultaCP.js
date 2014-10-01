@@ -131,7 +131,8 @@ app.VistaConsultaCP = Backbone.View.extend({
 		/*De los checkboxs con class .todos tomamos el primero (sin importar si hay uno o vareios checheados)
 		  Si hay checheados, procedemos*/
 		if (this.$('.todos:checked').val()) {
-			/*Solo con el primer cliente seleccionado nos vasta para saber lo que queremos eliminar.*/
+			/*Solo con el primer cliente seleccionado nos vasta para saber
+			  lo que queremos eliminar (clientes o prospectos).*/
 			visibilidad = app.coleccionClientes.get(this.$('.todos:checked').val()).toJSON().visibilidad;
 			if ( visibilidad == '1' ) {
 				mensaje = '¿Deseas eliminar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
@@ -141,17 +142,17 @@ app.VistaConsultaCP = Backbone.View.extend({
 			confirmar(mensaje,
 				function () {
 					ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
-					if ( visibilidad == '1' ) {
-						if ($.isArray(ids)) {
+					if ( visibilidad == '1' ) { /*Si visibilidad es 1, queremos enviar clientes a la papelera*/
+						if ($.isArray(ids)) { /*Si es verdadero, eliminaremos varios clientes*/
 							for (var i = 0; i < ids.length; i++) {
 								app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
 							};
-						} else{
+						} else{/*De lo contrario, solo un cliente será eliminado*/
 							app.coleccionClientes.get(ids).cambiarVisibilidad();
 						};
-							
-					} else{
-						if ($.isArray(ids)) {
+					} else{ /*Si la visibilidad no es 1, entonces su valor es 0, el los clientes seran
+						      eliminados permanentemente*/
+						if ($.isArray(ids)) { /*Si es verdadero, borraremos varios clientes*/
 							for (var i = 0; i < ids.length; i++) {
 								app.coleccionClientes.get(ids[i]).destroy({
 									wait : true,
@@ -162,7 +163,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 									}
 								});
 							};
-						} else{
+						} else{/*De lo contrario, solo un cliente será borrado*/
 							app.coleccionClientes.get(ids).destroy({
 								wait : true,
 								success	: function (exito) {
@@ -180,13 +181,15 @@ app.VistaConsultaCP = Backbone.View.extend({
 			
 	},
 	restaurarVarios	: function () {
-		var ids = pasarAJson(this.$('.todos:checked').serializeArray()).todos;
-		if ($.isArray(ids)) {
-			for (var i = 0; i < ids.length; i++) {
-				app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+		if (this.$('.todos:checked').val()) { /*Por lo menos un cliente seleccionado*/
+			var ids = pasarAJson(this.$('.todos:checked').serializeArray()).todos;
+			if ($.isArray(ids)) { /*Sol varios clientes ha restaurar*/
+				for (var i = 0; i < ids.length; i++) {
+					app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
+				};
+			} else{/*Solo se quiere restaurar un cliente*/
+				app.coleccionClientes.get(ids).cambiarVisibilidad();
 			};
-		} else{
-			app.coleccionClientes.get(ids).cambiarVisibilidad();
 		};
 	}			
 });

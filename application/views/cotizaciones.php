@@ -1,3 +1,4 @@
+<?=script_tag('js/jquery-ui-1.10.4.custom.js');?>
 	<div class="contenedor_modulo">
 		<section id="cabecera_modulo">
 			<h1 id="titulo_del_modulo"><label>Cotizaciones</label></h1>

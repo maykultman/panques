@@ -8,6 +8,7 @@
 	 	</section>
  	</section>	
 </div> 	<!-- Div General-->
+
 <script type="text/plantilla" id="selectperfil">
 	{{nombre}}
 </script>
@@ -16,17 +17,71 @@
 </script>
 
 <script type="text/plantilla" id="usuario">
-	<center><div class="clearfix row-fluid">
+	<div class="clearfix row-fluid">
+	<center>
 		<img class="img-circle" src="<?=base_url()?>{{foto}}" alt="Imagen-Usuario" width="80" height="80">
-		<div class="span6">
+		<div id="veruser" class="span6 mostrarform">
         	<h4><b>{{usuario}} </b></h4>
-        	<h6><b>{{perfil}}</b></h6>
+        	<h6><b>{{perfil}}</b></h6>        	
+        	<button class="delete btn btn-default">Eliminar</button>
+        	<button class="edit btn btn-default">Editar</button>
         </div>
-        <button class="delete btn btn-default">Eliminar</button>
-        <button class="edit btn btn-default">Editar</button>
+
+    	<div id="formedit{{id}}" class="row-fluid ocultarform">
+    	<form id="edicionUsuario{{id}}">
+	 		<label>Editar</label>
+			<input id="usuarioi" class="valor" name="usuario" type="text" placeholder="Nombre del Usuario" value="{{usuario}}">
+			<div class="resp" style="display: table-cell"><!-- Indicador de modificación--></div>
+			<label>Nombre: </label>&nbsp;{{empleado}}</p>
+		
+			<label>Perfil</label>
+			<select id="idperfil" name="idperfil" class="valor">									 
+			</select>	
+			<div class="clearfix">
+	            <div class="btn-group">
+	                <button class="save btn btn-primary">Save</button>
+	                <button class="cancel btn">Cancel</button>
+	            </div>
+        	</div>				  		 		
+		
+			</fieldset>
+    	</form>
+        </div>
     </div>
-    </center>
+    
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  <script id="userEditTemplate" type="text/plantilla">
@@ -39,8 +94,14 @@
 		<p><b>Nombre del Empleado :</b>&nbsp;{{empleado}}</p>
 		
 		<label>Perfil</label>
-		<select id="idperfil" name="idperfil">									 
-		</select>					  		 		
+		<select id="idperfil" name="idperfil" class=".valor" style="width : 150px;">									 
+		</select>	
+		<div class="clearfix">
+            <div class="btn-group">
+                <button class="save btn btn-primary">Save</button>
+                <button class="cancel btn">Cancel</button>
+            </div>
+        </div>				  		 		
 		
 		</fieldset>
     </form>
@@ -74,7 +135,7 @@
                 </fieldset>
             </form> -->
 
-<script type="text/template" id="usuario1">
+<script type="text/template" id="usuarioq">
 
 	<div class="panel-heading">
 		<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
