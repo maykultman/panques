@@ -6,8 +6,7 @@
         script_tag('js/tablas/widget-cssStickyHeaders.js').
         script_tag('js/tablas/estilo_tabla.js');
     ?> 
-    <?=link_tag('js/plugin/selectize/selectize.default.css').
- 		script_tag('js/plugin/selectize/selectize.min.js').
+    <?=script_tag('js/plugin/selectize/selectize.min.js').
  		link_tag('css/theme.default.css').
         //plugin selectize css
         link_tag('js/plugin/selectize/selectize.default.css');?>
