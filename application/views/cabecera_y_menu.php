@@ -45,7 +45,7 @@
 		// link_tag('css/estilo_general.less','stylesheet','text/less').
 		// script_tag('js/less.js');
 	?>		
-<<<<<<< HEAD
+	
 	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_menu_cabecera.less">
 	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
 	<link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_clientes.less">
@@ -68,16 +68,6 @@
 	  };
 	</script>
 	<script type="text/javascript" src="<?=base_url()?>js/less.min.js"></script>
-=======
-
-  
-	<script type="text/javascript" src="<?=base_url()?>js/less.js"></script>
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_menu_cabecera.less">
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilos_modulo_clientes.less">
-	<link rel="stylesheet" type="text/less" href="<?=base_url()?>css/estilo_general.less">
-	
->>>>>>> b01998be0a1d1396a5a1a98b2cab6b496371be8e
 	<!--Less-->
 	 
 	
