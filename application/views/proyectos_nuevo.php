@@ -38,7 +38,7 @@
 										<div style="margin: 23px 0px 21px 0px;"><b>Duración en días</b></div>
 										<div class="row">
 											<div class="col-md-6"><input type="number" id="duracion" class="form-control" min="1" style="margin:0px;"></div>
-											<div class="col-md-6" style="margin: 5px 0px 21px 0px;"><small>días habiles</small></div>
+											<div class="col-md-6" style="margin: 0px 0px 21px -20px;"><h5><span class="label label-info">días habiles</span></h5></div>
 										</div>
 									</div>
 								</div>								
@@ -48,23 +48,19 @@
 						<legend> <h5><b>Seleccionar los servicios que integrarán el proyecto</b></h5> </legend>
 						<div class="row">
 							<div class="col-md-5">
-								<div  class="panel panel-default">
-									<!-- Default panel contents -->
-									<!-- <div class="panel-heading color">Servicios</div> -->
-									<!-- Table -->
-									<div class="panel-body" style="overflow: auto; height: 177px;">
-										<table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
-										<thead>
-											<th>
-												<input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
-    											<span class="icon-search busqueda"></span>
-											</th>
+								<div class="div_table_proyecto">
+									<table id="table_servicios" class="table table-hover table_proyecto">
+										<thead class="thead_proyecto">
+											<tr>
+												<th class="sorter-false">
+													<input class="form-control input-sm search-services" type="search" data-column="all" placeholder="Servicios">
+												</th>
+											</tr>
 										</thead>
 										<tbody id="tbody_servicios">
 											<!-- PLANTILLAS DE SERVICIOS -->
 										</tbody>
-									  </table>
-									</div>
+								  	</table>
 								</div>
 							</div>	
 							<div class="col-md-7">
@@ -111,17 +107,19 @@
 					<legend><h5><b>Establecer participantes en el proyecto con sus respectivos roles</b></h5></legend>							
 					<div class="row">
 						<div class="col-md-5">
-							<div  class="panel panel-default">
-								<!-- Default panel contents -->
-								<div class="panel-heading color">Empleados</div>
-								<!-- Table -->
-								<div class="panel-body" style="overflow: auto; height: 177px;">
-									<table class="table table-hover table-curved" style="margin-left: -14px; margin-top: -16px;">
+							<div class="div_table_proyecto">
+								<table id="table_empleados" class="table table-hover table_proyecto">
+									<thead class="thead_proyecto">
+										<tr>
+											<th class="sorter-false">
+												<input class="form-control input-sm search-employees" type="search" data-column="all" placeholder="Empleados">
+											</th>
+										</tr>
+									</thead>
 									<tbody id="tbody_empleados">
 										<!-- PLANTILLAS DE SERVICIOS -->
 									</tbody>
-								  </table>
-								</div> 								
+								</table>
 							</div>
 						</div>
 						<div class="col-md-7">

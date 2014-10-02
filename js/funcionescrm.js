@@ -191,7 +191,22 @@ function formatearFechaUsuario (fecha) {
     return fechaFormateada;
 }
 
-// function fechaAmigable
+function fechaAmigable (fecha) {
+
+    var fechaFormateada = '';
+    if ((fecha.getDate()) < 10 )
+        fechaFormateada = '0'+(fecha.getDate()); 
+    else
+        fechaFormateada = (fecha.getDate()+1);
+    // if ((fecha.getMonth() +1) < 10 )
+    fechaFormateada += '/'+meses[fecha.getMonth()];
+    // else
+        // fechaFormateada +=  '/'+mes[fecha.getMonth()];
+
+    fechaFormateada +=  '/'+fecha.getFullYear();
+    console.log(fechaFormateada);
+    return fechaFormateada;
+}
 
 /*ALertas alertify.js. Código de tercero*/
     /*Recordar llamar a las librerias:
