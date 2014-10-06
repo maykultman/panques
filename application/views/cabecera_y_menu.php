@@ -15,13 +15,12 @@
 		   script_tag('js/menu_jquery.js');?>	
 
 	<!--Bootstrap-->
-	<?php echo link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
+	<?= link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
 			   link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').
 			   link_tag('css/bootstrap-3.1.1-dist/js/bootstrap.min.js').
 			   script_tag('css/bootstrap-3.1.1-dist/js/dropdown.js').
 			   script_tag('css/bootstrap-3.1.1-dist/js/tab.js').
 			   script_tag('css/bootstrap-3.1.1-dist/js/button.js').
-			   script_tag('css/bootstrap-3.1.1-dist/js/modal.js').
 			   script_tag('css/bootstrap-3.1.1-dist/js/tooltip.js').
 			   script_tag('css/bootstrap-3.1.1-dist/js/alert.js');
 	?>	
@@ -31,7 +30,7 @@
 		<?=link_tag('css/style.css');?>
 	<!--Iconos-->
 	<!-- Css -->
-		<?=link_tag('css/style_menuServicios.css').link_tag('css/jquery-ui-1.10.4.custom.css');?>
+		<?=link_tag('css/jquery-ui-1.10.4.custom.css');?>
 
 
 	<!--Less-->

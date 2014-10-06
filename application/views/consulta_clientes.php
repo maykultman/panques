@@ -18,6 +18,7 @@
     						</th>
     						<th class="sorter-false" style="text-align=center;">Ultima actividad</th>
     						<th class="sorter-false">Operaciones</th>
+                            <th class="sorter-false"></th>
     					</tr>
     				</thead>
     				<tbody id="filasClientes">
@@ -91,12 +92,12 @@
                 Módulo de actividad en construcción
             </td>
             <td class="td_tablaPricipal icon-operaciones">
-                
                 <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
                 <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
                 <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
                 <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
             </td>
+            <td class="td_modal"></td>
         </script>
         
         <script type="text/template" id="modalCliente">
@@ -165,7 +166,6 @@
 
                         <div class="panel-body">
                             <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar<br><br></div>
-                            
                             <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                             <div class="visible" id="divCliente">
                                 <table class="table table-striped">
@@ -196,12 +196,12 @@
                                                 <label class="editar editando">
                                                     <%- rfc %>
                                                 </label>
-                                                <input type="text" class="form-control editar" name="rfc" value="<%- rfc %>">
+                                                <input type="text" id="rfc" class="form-control editar" name="rfc" value="<%- rfc %>">
                                             <% } else{ %>
                                                 <label class="editar editando">
                                                     No especificado
                                                 </label>
-                                                <input type="text" class="form-control editar" name="rfc">
+                                                <input type="text" id="rfc" class="form-control editar" name="rfc">
                                             <% }; %>
                                         </td>
                                         <td class="respuesta">
@@ -383,8 +383,9 @@
                             </div>
                             <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                             <!-- -------SEGUNDA PAGINA DE INFORMACION DEL CLIENTE------- --> 
-                            <div class="visible oculto">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
+                            <div id="div_seccionContactos" class="visible oculto">
+                                <button type="button" id="btn_nuevoContacto" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
+                                <br>
                                 <div id="divContactos">
                                     <!--AQUÍ VAN LOS CONTACTOS-->
                                 </div>
@@ -406,13 +407,29 @@
                         </div>
                         <div class="modal-body">
                             <form id="formNuevoContacto" role="form">
-                                <div class="form-group">
-                                    <select name="persona" class="form-control">
-                                        <option value="representante">Representante</option>
-                                        <option value="contacto">Contacto</option>
-                                        <option selected disabled value="">¿Qué desea registar?</option>
-                                    </select>
-                                </div>
+                                Tipo de contacto
+                                <!--Revisar los comentarios de la funcion verContactos() 
+                                    del archivo VistaCliente.js para aclarar dudas-->
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="persona" value="representante" style="width:auto;margin: 4px 0 0;margin-left: -20px;"
+                                            <% if (existeRepr) { %>
+                                                disabled
+                                            <% } %>
+                                            > Representante
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="persona" value="contacto" style="width:auto;margin: 4px 0 0;margin-left: -20px;" 
+                                            <% if (existeRepr) { %>
+                                                checked
+                                            <% } %>
+                                            > Contacto
+                                        </label>
+                                    </div>
+                                <!--/fin comentario-->
+                                <br>
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="nombre" placeholder="Nombre">
                                 </div>
@@ -443,7 +460,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn_nuevoContacto">Guardar contacto</button>
+                            <button type="submit" class="btn btn-primary" id="btn_guardarContacto">Guardar</button>
                             <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
@@ -458,10 +475,12 @@
                     <button type="button" class="btn btn-primary" id="btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
                 </div>
             </div>
+
             <h3><%- etiqueta %></h3>
+            
             <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar</div>
             <br>
-            <br>
+
             <table class="table table-striped tbla_contacto">
                 <tr class="trContacto">
                     <td class="atributo"><b>Nombre:</b></td>

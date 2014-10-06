@@ -23,13 +23,13 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					 'click #btn_agregarC'  : 'agregarNuevoServBoton',
 					
 					// Eventos para registro de clientes y contactos
-				'click  #btn_crear'         : 'nuevoCliente',
-				'click  #btnCancelar_cliente'		: 'cancelarRegistro',
-				'click  #btnCancelar_contacto'		: 'cancelarRegistro',
-				'click  #btn_guardarContactos' : 'nuevoContacto',
-				'click  .otroTelefono'      : 'otroTelefono',
+				'click  #btn_crear'         	: 'nuevoCliente',
+				'click  #btnCancelar_cliente'	: 'cancelarRegistro',
+				'click  #btnCancelar_contacto'	: 'cancelarRegistro',
+				'click  #btn_guardarContactos' 	: 'nuevoContacto',
+				'click  .otroTelefono'      	: 'otroTelefono',
 				// 'click   #btn_otroContacto'  : 'otroContacto',
-				'change #formularioFoto'       : 'obtenerFoto',
+				'change #formularioFoto'       	: 'obtenerFoto',
 
 					/*Las funciones para validar se ejecutan cuando 
 					se hace blur a los elementos html con el id o class 
@@ -299,7 +299,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		if (this.$('#logoCliente').val() != '') {
 			this.objetoCliente.foto = urlFoto();
 		} else{
-			this.objetoCliente.foto = 'img/logoCliente/sinfoto.png';
+			this.objetoCliente.foto = 'img/sinfoto.png';
 		};
 		/*console.log(this.objetoCliente);*/ /* NO ELIMINAR ESTAS LINEAS */
 		/*Guardamos la referencia a this para poder usarla en las
@@ -538,7 +538,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		Este elemento DOM sirve como referencia para
 		obtener html y encajarla en nuevo html. Al final
 		el nuevo html se imprime el una lista de teléfonos.*/
-		this.$(elemento.currentTarget).parents('.telefonos').prepend('<div class="div_telefono">'+this.$(elemento.currentTarget).parent().parent().parent().html()+'</div>');
+		this.$(elemento.currentTarget).parents('.telefonos').prepend('<div class="div_telefono">'+this.$(elemento.currentTarget).parent().parent().parent().parent().html()+'</div>');
 		/*Se añade en el atributo class un nuevo nombre donde 
 		apunta el selector*/
 		$('.copia .icon-uniF476').removeClass().addClass('icon-uniF477 eliminarCopia'); 
@@ -635,7 +635,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	// },
 // -----validarRFC-------------------------------- 
 	validarRFC  :                   function (elem) {
-		$(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());
+		validarRFC(elem);
 	},
 
 

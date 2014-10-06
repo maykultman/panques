@@ -218,6 +218,7 @@ tbody.scrolltbla {
 			/*width:457px;*/
 			/*height:100%;*/
 		}
+		
 		.tag_rol {
 			margin: 3px;
 			display: inline;
@@ -231,40 +232,6 @@ tbody.scrolltbla {
 			border-radius: 3px;
 			cursor: pointer;
 			color: white;
-		}
-	/*--Tabla de la seccion nuevo proyecto-----------*/
-		.div_table_proyecto {
-			overflow: auto;
-			height: 250px;
-			/* position: relative; */
-			margin-top: 47px;
-		}
-		.table_proyecto {
-			/*margin-top: 51px;*/
-		}
-		.thead_proyecto {
-			position: absolute;
-			top: 0px;
-			right: 15px;
-			left: 15px;
-			background: #f9f9f9;
-		}
-		.thead_proyecto * {
-			display: block;
-		}
-		.thead_proyecto input {
-			margin: 0px;
-			width: 100%;
-		}
-		/*Si esta media query, las tablas de servicios y empleasos
-		  se desacomodaria*/
-		@media only screen and (max-width: 991px) {
-			.div_table_proyecto {
-				margin-bottom: 20px;
-			}
-			.thead_proyecto {
-				top: -47px;
-			}
 		}
 	/*estilos de la ficha de información del proyecto*/
 		.exito2{
