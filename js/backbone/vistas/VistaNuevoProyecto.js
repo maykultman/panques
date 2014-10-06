@@ -43,6 +43,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		'change #fechaInicio'				: 'calcularEntrega',
 		'change #duracion'					: 'calcularEntrega',
 		'keyup #duracion'					: 'calcularEntrega',
+		'mousewheel #duracion'				: 'calcularEntrega',
 
 		'click #btn_guardarProyecto'		: 'guardarProyecto',
 		'click #btn_cancelarProyecto'		: 'cancelarProyecto',
@@ -81,7 +82,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// this.$section_resp_Paso3 = $('#paso3 .panel-info .panel-body');
 		this.$tbody_archivos	= $('#tbody_archivos');
 		this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
-		this.$tablaProyecto = $('#form_subirArchivos #tabla');
+		this.$tablaProyecto 	= $('#form_subirArchivos #tabla');
 		
 		this.cargarClientes();
 
@@ -116,6 +117,27 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				'Noviembre',
 				'Diciembre'
 			]
+		});
+
+		this.$('#table_servicios').tablesorter({
+			theme: 'blue',
+		    widgets: ["zebra", "filter"],
+		    widgetOptions : {
+		      filter_external : '.search-services',
+		      filter_columnFilters: false,
+		      filter_saveFilters : true,
+		      filter_reset: '.reset'
+		    }
+		});
+		this.$('#table_empleados').tablesorter({
+			theme: 'blue',
+		    widgets: ["zebra", "filter"],
+		    widgetOptions : {
+		      filter_external : '.search-employees',
+		      filter_columnFilters: false,
+		      filter_saveFilters : true,
+		      filter_reset: '.reset'
+		    }
 		});
 	},
 	render				: function () {
@@ -166,20 +188,21 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	calcularEntrega 	: function () {
 		var fecha = this.$fechaInicio.val().split('/'),
 			valorFechaInicio = new Date(fecha[2]+'-'+fecha[1]+'-'+fecha[0]).valueOf(),
-			valorFechaTermino = valorFechaInicio + ( parseInt(this.$duracion.val())*24*60*60*1000 ),
-			fF = new Date(valorFechaTermino),
+			valorFechaEntrega = valorFechaInicio + ( parseInt(this.$duracion.val())*24*60*60*1000 ),
 			fechaEntrega;
 
-		if ((fF.getDate()) < 10 )
-			fechaEntrega = '0'+(fF.getDate());
-		else
-			fechaEntrega = (fF.getDate());
-		if ((fF.getMonth() +1) < 10 )
-			fechaEntrega += '/0'+(fF.getMonth() +1);
-		else
-			fechaEntrega +=  '/'+(fF.getMonth() +1);
+		fechaEntrega = formatearFechaUsuario(new Date(valorFechaEntrega));
 
-		fechaEntrega +=  '/'+fF.getFullYear();
+		// if ((fF.getDate()) < 10 )
+		// 	fechaEntrega = '0'+(fF.getDate());
+		// else
+		// 	fechaEntrega = (fF.getDate());
+		// if ((fF.getMonth() +1) < 10 )
+		// 	fechaEntrega += '/0'+(fF.getMonth() +1);
+		// else
+		// 	fechaEntrega +=  '/'+(fF.getMonth() +1);
+
+		// fechaEntrega +=  '/'+fF.getFullYear();
 
 		if (fechaEntrega != 'NaN/NaN/NaN') {
 			this.$fechaEntrega.val( fechaEntrega );

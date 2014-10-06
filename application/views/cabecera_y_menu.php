@@ -6,16 +6,13 @@
 		
 		<?=script_tag('js/jquery.js');?>
 
-		<!-- Alertas alertify.js -->
+	<!-- Alertas alertify.js -->
 		<?=script_tag('js/plugin/alertify/lib/alertify.js').
 		   script_tag('js/plugin/alertify/lib/alertify.js').
 		   link_tag('js/plugin/alertify/themes/alertify.core.css').
 		   link_tag('js/plugin/alertify/themes/alertify.default.css').
 		   script_tag('js/prefixfree.min.js').
-		   script_tag('js/menu_jquery.js');?>		
-    <!-- JQuery UI -->
-    <?=script_tag('js/jquery-ui-1.10.4.custom.js').
-    script_tag('js/backbone/lib/jquery.js');?>
+		   script_tag('js/menu_jquery.js');?>	
 
 	<!--Bootstrap-->
 	<?php echo link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').

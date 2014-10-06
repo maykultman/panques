@@ -1,3 +1,10 @@
+<?= script_tag('js/tablas/jquery-latest.min.js').
+    script_tag('js/tablas/jquery.tablesorter.js').
+    script_tag('js/tablas/jquery.tablesorter.widgets.js').
+    script_tag('js/tablas/widget-cssStickyHeaders.js').
+    script_tag('js/tablas/estilo_tabla.js');
+?>
+<?=script_tag('js/jquery-ui-1.10.4.custom.js');?>
 <div class="contenedor_modulo"> 
 <!-- <div id="contenedor"> -->
 	<section>
