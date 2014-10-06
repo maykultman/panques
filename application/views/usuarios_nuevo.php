@@ -1,10 +1,11 @@
-	    <section id="datosUsuario">
+   <section id="datosUsuario">
 		    <h3>Nuevo Usuario</h3>
 		    <hr>	
 		 	<div class="row">
 		 		<form id="registroUsuario">	 		
 				    <div class="col-md-4">		  		
-					  	<input type="search" id="empleado" class="form-control ancho_campos" placeholder="Nombre empleado">
+					  	<select class="semp" name="menunombres" placeholder="Nombre">
+                   		</select>  
 					  	<input type="hidden" id="hempleado" name="idempleado" value="">
 					  	
 					  	<select id="idperfil" name="idperfil" class="form-control ancho_campos">
@@ -17,26 +18,26 @@
 				        <label class="btn btn-success fileinput-button" style="float: left;">
 			                    <span class="icon-paperclip"></span>
 			                    <span>Adjuntar Foto</span>
-			                       	<input type="file" id="input_foto" name="logoUsuario">			                    				               
+			                       	<input type="file" id="foto" name="logoUsuario">			                    				               
 			                </label><br><br>	              
 				        <div id="btn_guardar">
-				        	<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
-					    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				        	<button id="guardar" type="button" class="btn btn-default">Guardar</button>
+					    	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		        		</div>
-				    </div>			  
-				    <div class="col-md-8">	
-					  	<div style="margin-top:15px;" class="panel panel-primary">	     
-				            <div class="panel-heading">Asignar Permisos</div>	           
-				        	<div id="ListaPermisos" class="row" style="margin-left:15px; margin-top:10px; margin-bottom:10px;">							  						  	
-							  <!-- Lista de permisos -->
-							</div>							   
-				        </div>
-		                <div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-default btn-xs">
-								<input type="checkbox" id="idpermisos" class="btn_marcarTodos"> Marcar todos
-							</label>
-						</div>			
 				    </div>
+
+				    <div class="col-md-8" style="background:#eaeaea; border:1px solid #eee; border-radius:4px; height:300px;">
+				    	
+				        <ul id="moduloss" class="nav nav-tabs" role="tablist">
+				          <!--Menu de opciones-->
+				        </ul>
+
+				        <div id="submodulos" class="tab-content">
+
+				        </div>
+		      	
+				    </div>	  
+				  
 				    
 				</form>			    
 	        </div>      
@@ -44,12 +45,27 @@
     </section>
 </div>
 
-<script type="text/plantilla" id="Permisos">
+<script type="text/plantilla" id="Permiasos">
 	<input id='permiso_<%-id%>' name="idpermisos" value="<%-id%>" class="chek" type="checkbox" ><%- nombre %>	
 </script>
 
 <script type="text/plantilla" id="selectperfil">
 	{{nombre}}
+</script>
+
+<script type="text/plantilla" id="permisos">
+
+	<a href="#<%-modulo%>" role="tab" data-toggle="tab">  <%- modulo %>	</a>
+</script>
+
+
+<script type="text/plantilla" id="permisozs">
+	
+		<div id="togle" class="ui-widget-header"><h4><%- modulo %></h4></div>					  	
+		<div id="effect" class="ui-widget-content" style="display:none;">
+		dde
+		</div>
+	
 </script>
 
 <script type="text/javascript">
@@ -70,5 +86,5 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionUsuarios.js'?>">        </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">       </script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">	 			</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoUsuario.js'?>">	   		    </script>

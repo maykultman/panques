@@ -38,7 +38,16 @@
 
 #contenido_nuevoperfil{   height: 500px;	}
 
-.chek {	width: 30% !important;	}
+.cheka * 
+{	
+	text-align: left;
+	/*width: auto;*/
+	/*display: inline-block;*/
+	display: block;
+}
+
+
+
 
 #btnes{	float: left;	}
 
@@ -120,7 +129,7 @@ display: inline-block;
 .valor{ 
 
   width: 250px;
-  height: 30px;
+  height: 32px;
   font-size: 14px;
   font-family: Arial;
   line-height: 1.42857143;
@@ -193,3 +202,47 @@ img{
 	border: 2px solid #ccc;
 	padding: 3px;
 }
+
+
+ #togle{
+  	border-radius:4px 4px 0px 0px; 
+  	text-align: center;
+  	width: 240px;
+  	/*margin-left: 50px;*/
+  	margin: auto;
+  	margin-top: 20px;
+  	cursor: pointer;
+  }
+
+ 
+
+  #modulos a{
+  	font-size: 14px!important;
+  	padding: 8px 5px!important;
+
+  }
+
+.chek 
+{	
+	padding: 10px;
+	width: 50px;
+}
+
+.tohead{
+	background-color: #0492e6;
+	color: #fff;
+	font-size: 18px;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.contenido{
+	position: relative;
+    width: 240px;
+    /*height: 50px;*/
+    padding: 15px;/*0.4em;*/
+    border-radius: 0px 0px 4px 4px;
+    margin: auto; 
+}
+
+/*ui-widget-content*/

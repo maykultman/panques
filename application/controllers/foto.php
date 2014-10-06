@@ -10,47 +10,47 @@ class  Foto extends REST {
         $metodo = $this->request(); # El metodo request() hace un switch al metodo de petición
         $this->$metodo();           # y la variable $metod según la respuesta del switch es create, get, update, delete
     }
-    
+    # Esta función guarda el logo del cliente y el del usuario
     private function create()
     {
-        $foto = array_keys($_FILES); 
-        
-        switch ($foto[0]) 
+        $foto = array_keys($_FILES); #Obtenemos el indice del array
+
+        # Si en la varible no hay logo retornamos un nombre de 
+        # logo por default para no devolver un error
+        if(empty($_FILES[$foto[0]]["name"]))
         {
-            case 'logoCliente':
-                    $save = $this->saveLogo($foto[0]);
-                    $this->pre_response($save,'create');
-            break;
-
-            case 'logoUsuario':
-                    $save = $this->saveLogo($foto[0]);
-                    $this->pre_response($save,'create');
-            break;
-
-            // case 'archivo' :
-            //         $save = $this->saveFile();
-            //         $this->pre_response($save,'create');
-            // break;
-            default:
-                    $this->response(false, 200);
-                break;
+            return $this->response('img/sinfoto.png',201); 
         }
+        else
+        {
+            $save = $this->saveLogo($foto[0]); 
+            return $this->response($save, 201);
+        }        
     }
 
     private function saveLogo($string)
     {
         $carpeta='img/'.$string.'/';
-        $oldImg = $this->ipost();
-    
+        # Obtenemos el nombre antigüo de la foto para poder eliminarlo y guardar la nueva
+        $oldImg = $this->ipost(); # con esta función capturamos las variables post...
+
+        # Abrimos el directorio...
         opendir($carpeta); 
-        $destino=$carpeta.$_FILES[$string]['name'];  
-        if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
+        # Concatenamos el directorio destino con el nombre del archivo.
+        $destino=$carpeta.$_FILES[$string]['name']; 
+
+        # Esta condición se ejecuta cuando el usuario va a actualizar una foto.
+        if(array_key_exists('oldFoto', $oldImg))
         {
-            if(file_exists($oldImg['oldFoto']))
+            if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
             {
-                unlink($oldImg['oldFoto']);    
-            }            
+                if(file_exists($oldImg['oldFoto']))
+                {
+                    unlink($oldImg['oldFoto']); # Borramos la foto antigüa
+                }            
+            }    
         }
+        # Ahora guardamos la nueva foto
         if(copy($_FILES[$string]['tmp_name'], $destino))
         {  
             $config['image_library'] = 'GD';

@@ -2,7 +2,8 @@
 
 <?=script_tag('js/plugin/selectize/selectize.min.js').
  		link_tag('css/theme.default.css').
-        //plugin selectize css
+ 		script_tag('js/jqueryui.js').
+ 		//plugin selectize css
         link_tag('js/plugin/selectize/selectize.default.css');?>
 <div class="contenedor_modulo">  
 	<section>
