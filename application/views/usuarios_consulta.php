@@ -32,9 +32,9 @@
 	</center>
     
 </script>
-
-<script type="text/plantilla" id="edicion">
 <!-- Modal -->
+<script type="text/plantilla" id="edicion">
+
 <div  class="modal fade" id="myModal{{id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

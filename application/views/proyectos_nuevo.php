@@ -20,7 +20,7 @@
 						<div class="row">
 							<div class="col-md-5">								
 								<legend><h5><b>Cliente y nombre del proyecto</b></h5> </legend>
-								<select id="busqueda" name="idcliente" placeholder="Buscar cliente" style="width: 100%;"></select>
+								<select id="busqueda" name="idcliente" placeholder="Buscar cliente"></select>
 								<input type="text" class="form-control" placeholder="Nombre del proyecto" style="width:100%" name="nombre">						
 							</div>
 							<div class="col-md-7">								

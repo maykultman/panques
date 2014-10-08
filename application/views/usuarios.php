@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">
+<!--plugin selectize css-->
+<?= script_tag('js/plugin/selectize/selectize.min.js').
 
-<?=script_tag('js/plugin/selectize/selectize.min.js').
- 		link_tag('css/theme.default.css').
- 		script_tag('js/jqueryui.js').
- 		//plugin selectize css
-        link_tag('js/plugin/selectize/selectize.default.css');?>
+	link_tag('css/theme.default.css').
+	link_tag('js/plugin/selectize/selectize.default.css');?>
+
 <div class="contenedor_modulo">  
 	<section>
 	   <h1 id="titulo_del_modulo"><label>Usuarios</label></h1>

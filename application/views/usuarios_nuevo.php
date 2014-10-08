@@ -1,12 +1,13 @@
+   <?=script_tag('js/jquery-ui-1.10.4.custom.js');?>
    <section id="datosUsuario">
 		    <h3>Nuevo Usuario</h3>
-		    <hr>	
+		    <hr>			    
 		 	<div class="row">
 		 		<form id="registroUsuario">	 		
 				    <div class="col-md-4">		  		
-					  	<select class="semp" name="menunombres" placeholder="Nombre">
+					  	<select id="semp" class="selectized" name="menunombres">
                    		</select>  
-					  	<input type="hidden" id="hempleado" name="idempleado" value="">
+					  	<!-- <input type="hidden" id="hempleado" name="idempleado" value=""> -->
 					  	
 					  	<select id="idperfil" name="idperfil" class="form-control ancho_campos">
 						  <!-- Lista de Opciones de perfil  -->
@@ -26,10 +27,10 @@
 		        		</div>
 				    </div>
 
-				    <div class="col-md-8" style="background:#eaeaea; border:1px solid #eee; border-radius:4px; height:300px;">
+				    <div class="col-md-8" style="background:#eaeaea; border:1px solid #eee; width:600px; border-radius:4px; height:auto;">
 				    	
-				        <ul id="moduloss" class="nav nav-tabs" role="tablist">
-				          <!--Menu de opciones-->
+				        <ul id="modulos" class="nav nav-tabs" role="tablist">
+				          <!-- Menu de opciones-->
 				        </ul>
 
 				        <div id="submodulos" class="tab-content">
@@ -45,28 +46,58 @@
     </section>
 </div>
 
+<script type="text/plantilla" id="tsubmodulos">	
+	
+	<div class="tab-pane <% if(active!=undefined){ %> <%- active %> <% } %>" id="<%-modulo %>">
+		
+			<% for(i in submodulos){ %>
+				<div id="toggle">
+					<div class="tohead"><%- submodulos[i] %></div>
+					<div id="<%-modulo%><%- submodulos[i] %>" class="ui-widget-content ui-corner-all conf" style="display:none;">
+						<% if(submodulos[i]=='Nuevo'||submodulos[i]=='Cronograma'){%>
+							<input name="idpermisos" value="" class="chek" type="checkbox" >Acceso
+						<%}else{%>
+
+							<% if(submodulos[i]=='Papelera'){%>
+								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Restaurar</p>
+							<%}%>
+
+							<% if(submodulos[i]=='Prospectos'){%>								
+								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Pasar a Cliente</p>															
+							<%}%>
+														
+						<%}%>
+						<% if(	submodulos[i]=='Prospectos'||submodulos[i]=='Clientes'||
+								submodulos[i]=='Proyectos'||submodulos[i]=='Cotizaciones'||
+								submodulos[i]=='Contratos'
+						){ %>
+								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Consultar</p>
+								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Editar</p>
+								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Eliminar</p>
+						<%}%>
+
+
+					</div>
+				</div>
+			<% } %>			
+		
+	</div>		
+
+</script>
+
+<!-- <input name="idpermisos" value="" class="chek" type="checkbox" ><p>Imprimir</p>
+							<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Consultar</p>
+							<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Editar</p>
+							<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Eliminar</p> -->
+
 <script type="text/plantilla" id="Permiasos">
 	<input id='permiso_<%-id%>' name="idpermisos" value="<%-id%>" class="chek" type="checkbox" ><%- nombre %>	
 </script>
 
-<script type="text/plantilla" id="selectperfil">
-	{{nombre}}
-</script>
-
 <script type="text/plantilla" id="permisos">
-
 	<a href="#<%-modulo%>" role="tab" data-toggle="tab">  <%- modulo %>	</a>
 </script>
 
-
-<script type="text/plantilla" id="permisozs">
-	
-		<div id="togle" class="ui-widget-header"><h4><%- modulo %></h4></div>					  	
-		<div id="effect" class="ui-widget-content" style="display:none;">
-		dde
-		</div>
-	
-</script>
 
 <script type="text/javascript">
 	var app = app || {};
@@ -86,5 +117,4 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionUsuarios.js'?>">        </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">       </script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoUsuario.js'?>">	   		    </script>

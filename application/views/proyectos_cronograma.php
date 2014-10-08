@@ -81,12 +81,12 @@
 	</script>
 <!-- MV* -->
 	<?=
-		script('js/backbone/lib/underscore.js').
-		script('js/backbone/lib/backbone.js').
-		script('js/backbone/modelos/ModeloCliente.js').
-		script('js/backbone/modelos/ModeloProyecto.js').
-		script('js/backbone/colecciones/ColeccionClientes.js').
-		script('js/backbone/colecciones/ColeccionProyectos.js');?>
+		script_tag('js/backbone/lib/underscore.js').
+		script_tag('js/backbone/lib/backbone.js').
+		script_tag('js/backbone/modelos/ModeloCliente.js').
+		script_tag('js/backbone/modelos/ModeloProyecto.js').
+		script_tag('js/backbone/colecciones/ColeccionClientes.js').
+		script_tag('js/backbone/colecciones/ColeccionProyectos.js');?>
 
 	<script type="text/javascript">
 		app.coleccionProyectos = new ColeccionProyectos(app.colecionDeProyectos);
