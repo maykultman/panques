@@ -39,3 +39,7 @@
              return false;
          }
     }
+    // -----validarRFC-------------------------------- 
+    function validarRFC (elem) {
+        $(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());
+    }

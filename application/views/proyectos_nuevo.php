@@ -48,9 +48,9 @@
 						<legend> <h5><b>Seleccionar los servicios que integrarán el proyecto</b></h5> </legend>
 						<div class="row">
 							<div class="col-md-5">
-								<div class="div_table_proyecto">
-									<table id="table_servicios" class="table table-hover table_proyecto">
-										<thead class="thead_proyecto">
+								<div class="div_table_overflow">
+									<table id="table_servicios" class="table table-hover table_overflow">
+										<thead class="thead_overflow">
 											<tr>
 												<th class="sorter-false">
 													<input class="form-control input-sm search-services" type="search" data-column="all" placeholder="Servicios">
@@ -107,9 +107,9 @@
 					<legend><h5><b>Establecer participantes en el proyecto con sus respectivos roles</b></h5></legend>							
 					<div class="row">
 						<div class="col-md-5">
-							<div class="div_table_proyecto">
-								<table id="table_empleados" class="table table-hover table_proyecto">
-									<thead class="thead_proyecto">
+							<div class="div_table_overflow">
+								<table id="table_empleados" class="table table-hover table_overflow">
+									<thead class="thead_overflow">
 										<tr>
 											<th class="sorter-false">
 												<input class="form-control input-sm search-employees" type="search" data-column="all" placeholder="Empleados">

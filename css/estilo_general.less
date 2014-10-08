@@ -155,6 +155,44 @@ hr{
 
 .arriba{	cursor: pointer;	}
 
+
+/*--Tabla para tablas overflow-----------*/
+	.div_table_overflow {
+		overflow: auto;
+		height: 250px;
+		/* position: relative; */
+		margin-top: 47px;
+	}
+	.table_overflow {
+		/*margin-top: 51px;*/
+	}
+	.thead_overflow {
+		position: absolute;
+		top: 0px;
+		right: 15px;
+		left: 15px;
+		background: #f9f9f9;
+	}
+	.thead_overflow * {
+		display: block;
+	}
+	.thead_overflow input {
+		margin: 0px;
+		width: 100%;
+	}
+	/*Si esta media query, las tablas de servicios y empleasos
+	  se desacomodaria*/
+	@media only screen and (max-width: 991px) {
+		.div_table_overflow {
+			margin-bottom: 20px;
+		}
+		.thead_overflow {
+			top: -47px;
+		}
+	}
+	.check_posicion {
+		display: none;
+	}
 /*CSS el fomulario de nuevo telefono*/
-.input-group select{	height: 34px;	}
-.input-group button{	height: 34px;	}
+/*.input-group select{	height: 34px;	}*/
+/*.input-group button{	height: 34px;	}*/

@@ -46,12 +46,13 @@ app.VistaCliente = Backbone.View.extend({
 			'click #divCliente .icon-uniF470'   : 'quitarDeLista',
 
 		/*Eventos para nuevo contacto o representante*/
-			'click #btn_nuevoContacto'   : 'nuevoContacto',
+			'click #btn_guardarContacto'   : 'nuevoContacto',
 
 
 		/*Validar telefono y correo del nuevo contacto o representante*/
 			'blur #nuevoMail'   			: 'validarCorreo',
 			'blur #nuevoNumero' 			: 'validarTelefono',
+			'keyup #rfc'    				: 'validarRFC',
 
 			'change #logoCliente' 			: 'actualizarFoto',
 
@@ -68,8 +69,9 @@ app.VistaCliente = Backbone.View.extend({
 		this.listenTo(this.model, 'change:visibilidad', this.remove);
 		
 		//Otras variables
-		this.pasarFiltro = 0;
 		this.esperar;
+
+
 	},
 	render  : function () {
 		/*Cargar los datos del cliente en la plantilla de underscore
@@ -87,7 +89,7 @@ app.VistaCliente = Backbone.View.extend({
 		/*Cuando los clientes se cargan en la tabla, no se carga el
 		modal sino hasta que el usuario quiera verlo. Es en esta
 		función donde se crea el modal*/
-		this.$el.append(this.plantillaModalCliente( this.model.toJSON() ));
+		this.$el.children('.td_modal').append(this.plantillaModalCliente( this.model.toJSON() ));
 
 		/*guardamos los selectores del los botones eliminar y editar
 		de la ficha de información del cliente.*/
@@ -114,26 +116,30 @@ app.VistaCliente = Backbone.View.extend({
 
 		/*La variable modal guarda el elem DOM del modal junto
 		después de creado en el DOM general*/
-		var modal = this.$el.find('#modal'+this.model.get('id'));
-		/*Escuchamos el evento que hace que se esconda el modal
-		para luego eliminarlo*/
-		modal.on('hidden.bs.modal', function(){
-			/*this es la variable modal. removemos el elem DOM
-			de todo el documento (DOM general)*/
-			$(this).remove();
-			here.render();
-		});
-		modal.modal({
+		var modalCliente = this.$el.find('#modal'+this.model.get('id'));
+		modalCliente.modal({
 			keyboard : false,
 			backdrop : false
+		});
+		/*Escuchamos el evento que hace que se esconda el modal
+		para luego eliminarlo*/
+		modalCliente.on('hidden.bs.modal', function(){
+			/*this es la variable modal. removemos el elem DOM
+			de todo el documento (DOM general)*/
+			this.remove();
+			here.render();
 		});
 
 		if ($(elem.currentTarget).attr('id') == 'tr_btn_editar') {
 			this.editando();
 		};
 	},
+	// modalito	: function () {}
 	nuevoContacto             	: function (submit) {
 		var serializado = this.$formNuevoContacto.serializeArray();
+		// console.log(pasarAJson(serializado));
+		// submit.preventDefault();
+		// return;
 
 		for (var i = 0; i < serializado.length; i++) {
 			if (serializado[i].value == '') {
@@ -962,6 +968,9 @@ app.VistaCliente = Backbone.View.extend({
 			return true;
 		};
 	},
+	validarRFC 					: function (elem) {
+		validarRFC(elem);
+	},
 	verContactos              	: function () {
 		/*Si existe, eliminamos el modal que contiene el formulario
 		para nuevo contacto o representante. Debe realizarse debido a 
@@ -1000,19 +1009,42 @@ app.VistaCliente = Backbone.View.extend({
 			  regresar al conenedor del cliente*/
 			this.$panelBody.children().toggleClass('oculto');
 		};
+
+		var here = this, existeRepr;
+
+		/*En el sistema solo se permite registrar un solo representante.
+		  Para desabilitar la opcion en el modal de resgistro de contacto
+		  buscamos si existe representante del cliente y enviamos la respuesta
+		  a la plantilla de #modalContacto*/
+		if (_.find(app.coleccionRepresentantes.toJSON(),function(obj){ 
+				return obj.idcliente == here.model.get('id') 
+			})
+		) {
+			existeRepr = true;
+		} else{
+			existeRepr = false;
+		};
 		
-		this.$el.append( this.plantillaModalContacto( {id:this.model.get('id')} ) );
+		this.$el.append( this.plantillaModalContacto( {
+			id 			:this.model.get('id'), 
+			existeRepr 	:existeRepr
+		} ) );
 
 		/*Formulario para nuevo contacto. Hacemos referencia al
 		elemento mediante su selector*/
 		this.$formNuevoContacto = this.$('#formNuevoContacto');
-
-		var here = this;
-
+		/*Hacemos que el modal nuevo contacto se cierre solo con el boton cerrar--------*/
+		var modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
+		modalContacto.modal({
+			keyboard : false,
+			backdrop : false
+		});
+		/*Para que el modal no se muestre cuando se hace clic en el boton mostrar contactos*/
+		modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
+		modalContacto.modal('hide');
 		/*Las siguientes lineas resetean el formulario cuando el
 		usuario cierra el modal*/
-		var modal = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
-		modal.on('hidden.bs.modal', function () {
+		modalContacto.on('hidden.bs.modal', function () {
 			here.$formNuevoContacto[0].reset();
 		});
 	},

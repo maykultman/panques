@@ -25,124 +25,44 @@ width: 320px;
 /*margin-bottom: -13px;*/
 /*margin-left: -1px;*/
 }
-
 .dato_contacto{
 float: left;
 display:inline;
 margin-right: 100px;
 }
-
-.input-group{
-	width: 400px;
-}
-
-.input-group input,.input-group select {
-	margin-top: 0px;
-}
-
-.otroArchivo button, .otroTelefono button, .eliminarCopia button{
-	border-radius: 0px 4px 4px 0px;
-	margin-left: -1px;
-}
-
-.dato_contacto .btn-group input{
-	/*border-radius: 4px 0px 0px 4px; */ /*No funciona*/
-	border-right: 0px;
-}
-.input_info .btn-group-justified{
-	width: 400px;
-}
-.input_info{
-	display: inline-block;
-	padding-right: 100px;
-	float: left;
-}
-/*----------Css tabla de cosulta---*/
-.contenedor_principal_modulos #tbla_cliente{
+/*------------------------------------------*/
+	#tbla_cliente .input-group{
 		width: 100%;
-		webkit-transition: 0.2s;
 	}
 
-#tbla_cliente input{
-		width: 100%;
-		margin: 0px;
-	}
-.fade input#nombreComercial {
-	/*margin: auto;*/
-	width: 320px;
-}
-.fade #nombreComercial {
-	margin-top: -20px !important;
-}
-#tbla_cliente tr{
-		&:hover{
-			.icon-operaciones span{
-				opacity: 1;
-			}
-		};
-	}
-#tbla_cliente .td_tablaPricipal {
-	padding: 0px 5px 0px 5px;
-	/*text-align: left;*/
-}
-
-#tbla_cliente table tr .atributo, 
-.tbla_contacto tr .atributo {
-	/*top: 0px;*/
-	text-align: left !important;
-	width: 170px !important;
-	/*padding: auto 0px auto 0px;*/
-	vertical-align: text-top !important;
-	color: #428bca !important;
-}
-
-.icon-operaciones span{
-		font-size: 15px;
-		padding: 5px;
-		opacity: 1;
-	}
-.panel-body span{
-	padding: 0px;
-	opacity: 1;
-}
-.icon-operaciones span:hover{
-		/*background: #d7d7d7;*/
-		background: #0494E8;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
+	.input-group input,.input-group select {
+		margin-top: 0px;
 	}
 
-.eliminar_cliente{
-	display: inline-block;
+	.otroArchivo button, .otroTelefono button, .eliminarCopia button{
+		/*border-radius: 0px 4px 4px 0px;*/
+		/*margin: 0px 0px 0px -1px;*/
+	}
+	button.otroTelefono, 
+	button.eliminarCopia {
+		float: none !important;
+	}
+	.tipoTelefonoCliente {
+		font-size: 13px;
+		padding: 0px !important;
+		width: 100px !important; /*Sin esta propiedad no, en chrome se desacomoda*/
+		line-height: 2.5 !important;
+		max-height: 34px;
+	}
+	.input_info .btn-group-justified{
+		width: 400px;
+	}
+	.input_info{
+		display: inline-block;
+		padding-right: 100px;
+		float: left;
+	}
 
-}
-
-.icon-operaciones .icon-trash:hover,
-.icon-operaciones .icon-circledelete:hover{ //ES EL ICONO DE ELIMINAR CLIENTE
-		
-		background: red;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
-}
-
-#posicion_infotd td {
-	/*text-align: justify !important;*/
-	vertical-align: middle !important;
-}
-
-.copia {
-	margin-bottom: 15px !important;
-}
-
-
-.busqueda{
-
-    float:right;
-    margin-top: -23px !important;
-    margin-right: 8px !important;
-}
 /*----------------Css efecto ver info clientes-----*/
 .img-rounded {
 	border: 1px solid #CCC;
@@ -154,11 +74,13 @@ margin-right: 100px;
 	.div_tipoTelefono {
 		display: inline-block;
 	}
-	#telefonos .divTelefono {
-		/*border-bottom: 1px solid #d6d6d6;*/
+	.divTelefono {
 		padding-left: 10px;
-		margin-bottom: 10px;
 		margin-left: -10px;
+	}
+	.div_tipoTelefono, 
+	.div_telefono {
+		margin-bottom: 10px;
 	}
 .div_tipoTelefono {
 	margin: 0px;
@@ -189,6 +111,88 @@ margin-right: 100px;
 	#btn_restaurarVarios {
 		margin-top: 15px !important;
 	}
+
+	.contenedor_principal_modulos #tbla_cliente{
+			width: 100%;
+			webkit-transition: 0.2s;
+		}
+	#tbla_cliente thead{
+	}
+	#tbla_cliente input{
+			width: 100%;
+			margin: 0px;
+		}
+	.fade input#nombreComercial {
+		width: 320px;
+	}
+	.fade #nombreComercial {
+		margin-top: -20px !important;
+	}
+	#tbla_cliente tr{
+		&:hover{
+			.icon-operaciones span{
+				opacity: 1;
+			}
+		};
+	}
+	#tbla_cliente .td_tablaPricipal {
+		padding: 0px 5px 0px 5px;
+	}
+
+	#tbla_cliente table tr .atributo, 
+	.tbla_contacto tr .atributo {
+		/*top: 0px;*/
+		text-align: left !important;
+		width: 170px !important;
+		/*padding: auto 0px auto 0px;*/
+		vertical-align: text-top !important;
+		color: #428bca !important;
+	}
+	.icon-operaciones span{
+			font-size: 15px;
+			padding: 5px;
+			opacity: 1;
+		}
+	.panel-body span{
+		padding: 0px;
+		opacity: 1;
+	}
+	.icon-operaciones span:hover{
+			background: #0494E8;
+			border-radius: 3px;
+			cursor: pointer;
+			color: white;
+		}
+
+	.eliminar_cliente{
+		display: inline-block;
+
+	}
+
+	.icon-operaciones .icon-trash:hover,
+	.icon-operaciones .icon-circledelete:hover{ //ES EL ICONO DE ELIMINAR CLIENTE
+			
+			background: red;
+			border-radius: 3px;
+			cursor: pointer;
+			color: white;
+	}
+
+	#posicion_infotd td {
+		vertical-align: middle !important;
+	}
+
+	.copia {
+		margin-bottom: 15px !important;
+	}
+
+
+	.busqueda{
+
+	    float:right;
+	    margin-top: -23px !important;
+	    margin-right: 8px !important;
+	}
 #cerrar_consulta{
 	cursor: pointer;
 	margin-top: -30px;
@@ -199,14 +203,11 @@ margin-right: 100px;
 
 #contenido_cliente{
 	width:600px;
-	/*height:550px;*/
 }
 
 #color_hr{
 	background-color: #BFDFFF; 
 	margin-top:25px;
-
-
 }
 
 .logo_empresa{
@@ -219,11 +220,7 @@ margin-right: 100px;
 	 box-shadow: 1px 1px 3px #888888;
 }
 #logo_empresa_info {
-	/*margin-left:20px;*/
 	display: inline-block;
-    /*margin-left:10px;*/
-    /*margin-top:10px; */
-    /*margin: 0px 10px 20px 0px;*/
     width: 150px;
 	height: 150px;
 	border:1px solid #ddd;
@@ -236,7 +233,6 @@ margin-right: 100px;
 	 
 	 display: inline-block;
 	 margin: 25px 15px 15px 15px;
-	 /*margin-top: 3px;*/
 	 position: absolute;
 
 }
@@ -248,15 +244,9 @@ margin-right: 100px;
 
 
 #icon-operaciones2{
-	/* float: left; */
 	display: inline-block;
-	right: 15px;
+	right: 16px;
 	margin-top: 78px;
-	/* margin-right: 1px; */
-	/*background: #333333;*/
-	/*height: 111px;*/
-	/*color: #d7d7d7;*/
-	/*padding: 7px;*/
 	position: absolute;
 	z-index: 1;
 }
@@ -265,16 +255,9 @@ margin-right: 100px;
 	cursor: pointer;
 }
 #icon-operacionesContacto{
-	/* float: left; */
 	display: inline-block;
-	right: 15px;
-	/*margin-top: 100px;*/
-	/* margin-right: 1px; */
-	/*background: #333333;*/
-	/*height: 111px;*/
-	/*color: #d7d7d7;*/
-	/*padding: 7px;*/
-	margin-top: 35px;
+	right: 16px;
+	margin-top: 56px;
 	position: absolute;
 	z-index: 1;
 }
@@ -286,53 +269,6 @@ margin-right: 100px;
 .contenedorContacto{
 	margin-right: 50px;
 }
-#icon-operaciones2 button label{
-		/*font-size: 15px;*/
-		/*padding: 0px;*/
-		/*opacity: 1;*/
-		
-}
-/*#icon-operaciones2 span:hover{
-		background: #0494E8;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
-}*/
-
-/*#icon-operaciones2 .eliminar_cliente span:hover{
-		background: red;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
-}*/
-/*#icon-operaciones3{
-	 
-	 float:right;
-	 margin-top: -205px;
-	 margin-right: -1px;
-	 background: @colorPrimario-Menu;
-	 height:111px;
-	 width:40px;
-     color:#d7d7d7;
-     padding: 7px;
-}
-#icon-operaciones3 span{
-		font-size: 15px;
-		padding: 5px;
-		opacity: 1;
-}
-#icon-operaciones3 span:hover{
-		background: #0494E8;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
-}
-#icon-operaciones3 .eliminar_cliente span:hover{
-		background: red;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
-}*/
 
 .trCliente, .trContacto{
 	height: 51px;
@@ -449,25 +385,30 @@ margin-right: 100px;
 }
 
 /*estilos de la ficha de información del cliente*/
-.exito{
-	-webkit-animation:efectoOpacidad 3s;
-	color: green;
-	opacity:.4;
+	#btn_nuevoContacto {
+		position: absolute;
+		top: 240px;
+		right: 16px;
+	}
+	.exito{
+		-webkit-animation:efectoOpacidad 3s;
+		color: green;
+		opacity:.4;
 
-}
-.error{
-	-webkit-animation:efectoOpacidad 3s;
-	color: red;
-	opacity:.4;
+	}
+	.error{
+		-webkit-animation:efectoOpacidad 3s;
+		color: red;
+		opacity:.4;
 
-}
+	}
 
-@-webkit-keyframes efectoOpacidad
-{
-0%   {opacity:1;}
-50%   {opacity:1;}
-100% {opacity:.4;}
-}
+	@-webkit-keyframes efectoOpacidad
+	{
+	0%   {opacity:1;}
+	50%   {opacity:1;}
+	100% {opacity:.4;}
+	}
 
 
 /*estilo modal correo */
@@ -508,4 +449,3 @@ display: inline-block;
 	height: 250px;
 	outline: 0;
 }
-

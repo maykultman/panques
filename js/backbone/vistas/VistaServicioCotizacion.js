@@ -1,3 +1,5 @@
+/*ELIMINAR ESTE ARCHIVO. YA NO SIRVE PARA COTIZACIONES*/
+
 var app = app || {};
 
 app.VistaServicioCotizacion =app.VistaServicio.extend({

@@ -18,6 +18,7 @@
                             </th>
                             <th class="sorter-false" style="text-align=center;">Ultima actividad</th>
                             <th class="sorter-false">Operaciones</th>
+                            <th class="sorter-false"></th>
                         </tr>
                     </thead>
                     <tbody id="filasClientes">
@@ -98,6 +99,7 @@
             <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
             <span class="icon-shortcut" id="tr_btn_actualizarTipo" title="Actualizar a cliente"></span>
         </td>
+        <td class="td_modal"></td>
     </script>
     
     <script type="text/template" id="modalCliente">
