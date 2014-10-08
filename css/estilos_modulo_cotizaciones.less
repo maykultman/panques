@@ -1,8 +1,8 @@
 /* {{{{{{{{{{{Sección consulta cotizacion}}}}}}}}}}} */
 /*Para que los componente se ajusten a la tabla*/
-	#trServicio .form-control {
+	.table .form-control {
+		margin: 0px !important;
 		width: 100%;
-		margin: 0px;
 	}
 /**/
 
@@ -23,13 +23,13 @@
 	
 	}
 
-	#mostrarTabla tr{
+	/*#mostrarTabla tr{
 		&:hover{
 			.iconos-operaciones span{
 				opacity: 1;
 			}
 		};
-	}
+	}*/
 
 
 	#tabla_cotizaciones tr{
@@ -55,7 +55,9 @@
 		background:blue;
 		color: white;
 	}
-	.iconos-operaciones span.span_eliminar:hover{
+	/*Estilos para los botones eliminar de la tabla de servicios que se están cotizando*/
+	.iconos-operaciones span.span_eliminar_servicio:hover,
+	.iconos-operaciones span.span_eliminar_seccion:hover {
 		background:red;
 		color: white;
 	}
@@ -82,7 +84,7 @@
 /*input{	width: 100%; }*/
 
 /* {{{{{{{{{{{Sección nuEva cotizacion}}}}}}}}}}} */
-#mostrarTabla{  width: 100%;	}
+/*#mostrarTabla{  width: 100%;	}*/
 
 #tablaServicios{ 	display: inline-block; 	float:left;   width:300px; }
 

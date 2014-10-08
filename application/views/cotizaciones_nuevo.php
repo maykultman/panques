@@ -41,7 +41,7 @@
 		      </div>
 		    </div>	 -->
 			<div class="div_table_overflow">
-				<table id="table_servicios" class="table table-hover table_proyecto">
+				<table id="table_servicios" class="table table-hover"><!-- table_proyecto -->
 					<thead class="thead_overflow">
 						<tr>
 							<th class="sorter-false">
@@ -56,19 +56,23 @@
 			</div>
 		</div>
 		<div class="col-md-8">
-			<table id="mostrarTabla" class="table">
+			<table class="table"> <!-- id="mostrarTabla" -->
 				<thead style="background : #F9F9F9;">
 					<tr>
 						<th><input id="todos" type="checkbox"></th>
-						<th>Servicios a cotizar</th>
-						<th></th>
-						<th></th>
-						<th></th>
+						<th style="min-width:150px;">Servicios a cotizar</th>
+						<th><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
+						<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
+						<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
 						<th>Importe</th>
-						<th></th>
+						<th class="iconos-operaciones">
+							<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
+							<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
+							<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+						</th>
 					</tr>
 				</thead>
-				<tbody id="trServicio">
+				<tbody id="tbody_servicios_seleccionados">
 					<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
 				</tbody>
 					<!-- <tr class="info"> 
@@ -77,7 +81,14 @@
 						<td><p id="total">0.00</p></td>
 						<td></td>
 					</tr> -->			
-				<tfoot>
+				<tfoot style="background : #F9F9F9;">					
+					<tr>
+						<th class="iconos-operaciones" colspan="7">
+							<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
+							<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
+							<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+						</th>
+					</tr>
 					<!-- <tr>
 					    <td><button id="delete"  type="button" class="btn btn-danger">Eliminar varios 			</button>
 					    <td>
@@ -158,77 +169,61 @@
 		</tr>
 	</script>-->
 	<script type="text/template" id="tds_servicio_seleccionado">
-		<!--<tr class="active">
-			<td>
-				<input id="" type="checkbox">
-			</td>
-			<td>
-				Medallón
-			</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>
-				<input type="text" class="form-control input-sm" />
-			</td>
-			<td class="iconos-operaciones">
-				<span class="icon-circledown" id="span_verMas"></span>
-				<span class="icon-circledelete span_eliminar"></span>
-			</td>
-		</tr>-->
-		<tr class="active">
-			<td>
-				<input id="" type="checkbox">
-			</td>
-			<td>
-				<%= nombre %>
-			</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>
-				<input type="text" class="form-control input-sm" value="<%= precio %>" />
-			</td>
-			<td class="iconos-operaciones">
-				<span class="icon-circleup" id="span_verMenos"></span>
-				<span class="icon-circledelete span_eliminar"></span>
-			</td>
-		</tr>
-		<tr class="seccion<%=id%>">
-			<td></td>
-			<td>Sección</td>
-			<td>Observaciones</td>
-			<td>Horas</td>
-			<td>Precio/H</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr class="seccion<%=id%>">
+		<td colspan="7" style="padding:0px;">
+			<table id="table_servicio_<%= id %>" class="table" style="margin-bottom:0px;">
+				<thead>
+					<tr class="active">
+						<td>
+							<input type="checkbox" class="todos" name="todos" value="servicio_<%= id %>/toggleSee_<%= id %>">
+						</td>
+						<td style="min-width:150px;"><%= nombre %></td>
+						<td><textarea class="form-control" rows="1" style="min-width:150px; visibility: hidden;" disabled></textarea></td>
+						<td><input type="text" class="form-control input-sm" style="visibility: hidden;" disabled></td>
+						<td><input type="text" class="form-control input-sm" style="visibility: hidden;" disabled></td>
+						<td>
+							<input type="text" class="form-control input-sm" value="<%= precio %>">
+						</td>
+						<td class="iconos-operaciones">
+							<span class="icon-circleup icon-circledown span_toggleSee" id="toggleSee_<%= id %>"></span>
+							<span class="icon-circledelete span_eliminar_servicio" id="servicio_<%= id %>"></span>
+						</td>
+					</tr>
+					<tr id="tr_titulos_secciones">
+						<td></td>
+						<td>Sección</td>
+						<td>Observaciones</td>
+						<td>Horas</td>
+						<td>Precio/H</td>
+						<td></td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- tr secciones - #tr_seccion-->
+				</tbody>
+				<tfoot>
+					<tr>
+						<td style="border:0px;padding:0px 8px 8px 0px;"></td>
+						<td style="border:0px;padding:0px 8px 8px 0px;" class="iconos-operaciones" colspan="6"><span id="span_otraSeccion" class="icon-circleadd"></span></td>
+					</tr>
+				</tfoot>
+			</table>
+		</td>
+	</script>
+	<script type="text/template" id="tr_seccion">
+		<tr class="tr_seccion">
 			<td style="border:0px;"></td>
-			<td><input type="text" class="form-control input-sm" /></td>
-			<td><textarea class="form-control" rows="3"></textarea></td>
-			<td><input type="text" class="form-control input-sm" /></td>
-			<td><input type="text" class="form-control input-sm" /></td>
-			<td><input type="text" class="form-control input-sm" /></td>
-			<td class="iconos-operaciones" style="border:0px;">
-				<span class="icon-circledelete span_eliminar"></span>
-			</td>
-		</tr>
-		<tr class="seccion<%=id%>">
-			<td style="border:0px;padding:0px 8px;"></td>
-			<td style="border:0px;padding:0px 8px;" class="iconos-operaciones"><span class="icon-circleadd"></span></td>
-			<td style="border:0px;padding:0px 8px;"></td>
-			<td style="border:0px;padding:0px 8px;"></td>
-			<td style="border:0px;padding:0px 8px;"></td>
-			<td style="border:0px;padding:0px 8px;"></td>
-			<td style="border:0px;padding:0px 8px;"></td>
+			<td><input type="text" class="form-control input-sm" style="min-width:150px;"></td>
+			<td><textarea class="form-control" rows="3" style="min-width:150px;"></textarea></td>
+			<td><input type="number" class="form-control input-sm number" min="1"></td>
+			<td><input type="number" class="form-control input-sm number" min="1"></td>
+			<td><input type="text" class="form-control input-sm"></td>
+			<td class="iconos-operaciones" style="border:0px;"><span class="icon-circledelete span_eliminar_seccion"></span></td>
 		</tr>
 	</script>
 
 <!-- Librerias -->
-<?=script_tag('js/backbone/lib/underscore.js').
-script_tag('js/backbone/lib/backbone.js').
-script_tag('js/backbone.localStorage.js');?>
+<?=script_tag('js/backbone.localStorage.js');?>
 
 <script type="text/javascript">
 	var app = app || {};
@@ -237,22 +232,22 @@ script_tag('js/backbone.localStorage.js');?>
 	app.coleccionDeRepresentantes 	  = <?php echo json_encode($representantes) 	?>;
 </script>
 <?=
-script_tag('js/funcionescrm.js').
-// <!-- MVC -->
-script_tag('js/backbone/modelos/ModeloServicio.js').
-script_tag('js/backbone/modelos/ModeloCotizacion.js').
-script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
-script_tag('js/backbone/modelos/ModeloCliente.js').
-script_tag('js/backbone/modelos/ModeloRepresentante.js').
-script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
+	script_tag('js/funcionescrm.js').
+	// <!-- MVC -->
+	script_tag('js/backbone/modelos/ModeloServicio.js').
+	script_tag('js/backbone/modelos/ModeloCotizacion.js').
+	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
+	script_tag('js/backbone/modelos/ModeloCliente.js').
+	script_tag('js/backbone/modelos/ModeloRepresentante.js').
+	script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
 
-script_tag('js/backbone/colecciones/ColeccionServicios.js').
-script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
-script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
-script_tag('js/backbone/colecciones/ColeccionClientes.js').
-script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
-script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js').
+	script_tag('js/backbone/colecciones/ColeccionServicios.js').
+	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
+	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
+	script_tag('js/backbone/colecciones/ColeccionClientes.js').
+	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+	script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js').
 
-script_tag('js/backbone/vistas/VistaServicio.js').
-script_tag('js/backbone/vistas/VistaNuevaCotizacion.js');
+	script_tag('js/backbone/vistas/VistaServicio.js').
+	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js');
 ?>

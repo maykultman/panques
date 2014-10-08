@@ -1,6 +1,6 @@
 var app = app || {};
 /* {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} */
-app.VistaServicioProyecto = app.TrServicio.extend({
+app.VistaServicioProyecto = app.VistaTrServicio.extend({
 	tagName	: 'tr',
 	plantillaDefault	: _.template($('#tds_servicio').html()),
 	events  : {

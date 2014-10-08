@@ -1,6 +1,6 @@
 var app = app || {};
 
-app.Servicio = Backbone.View.extend({
+app.VistaServicio = Backbone.View.extend({
 	tagName		: 'li',
 	events	: {
 	},
@@ -11,24 +11,24 @@ app.Servicio = Backbone.View.extend({
 	}
 });
 
-/*--CLASE TR SERVICIO PARA LOS MODULOS DE PROYECTO Y CONTIZACION--*/
-app.TrServicio = app.Servicio.extend({
 
-  plantillaSeleccionado : _.template( $('#tds_servicio_seleccionado').html() ),
+app.VistaTrServicio = app.VistaServicio.extend({
 
-  initialize  : function () {
-    this.$tbody_servicios_seleccionados 
-    = $('#tbody_servicios_seleccionados');
-  },
+	plantillaSeleccionado : _.template( $('#tds_servicio_seleccionado').html() ),
 
-  apilarServicio  : function (elem) {
-    /*Desabilitar la seleccion del servicio*/
-    $(elem.currentTarget).attr('disabled',true);
-    this.$tbody_servicios_seleccionados.append(
-      this.plantillaSeleccionado(this.model.toJSON())
-    );
-    this.$el.css('color','#CCC');
-  }
+	initialize  : function () {
+		this.$tbody_servicios_seleccionados 
+		= $('#tbody_servicios_seleccionados');
+	},
+
+	apilarServicio  : function (elem) {
+		/*Desabilitar la seleccion del servicio*/
+		$(elem.currentTarget).attr('disabled',true);
+			this.$tbody_servicios_seleccionados.append(
+			this.plantillaSeleccionado(this.model.toJSON())
+		);
+		this.$el.css('color','#CCC');
+	}
 });
 //RECORDAR ELIMINACION DE ESTA CLASE HIJA
 	// app.VistaServicioInteres = app.VistaServicio.extend({

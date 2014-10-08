@@ -43,3 +43,27 @@
     function validarRFC (elem) {
         $(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());
     }
+    // validaciones jQuery
+    // $(document).on('ready',function () {
+    //     $('input[type=number]').on('click', function () {
+    //         alert(2);
+    //     });
+    // });
+    function validarInput (inputType, valor, e) {
+        var respuesta;
+        switch(inputType) {
+            case 'number':
+                if(!(/^\d{10,20}$/.test(valor)) ) {
+                    alerta('Solo números porfavor',function () {});
+
+                    $(e.currentTarget).css('border-color','#a94442');
+
+                    respuesta = false;
+                } else{
+                    $(e.currentTarget).css('border-color','#CCC');
+                    respuesta = true;
+                }
+            break;
+        }
+        return respuesta;
+    }
