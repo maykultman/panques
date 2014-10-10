@@ -32,23 +32,26 @@ class  Foto extends REST {
     {
         $carpeta='img/'.$string.'/';
         # Obtenemos el nombre antigüo de la foto para poder eliminarlo y guardar la nueva
-        $oldImg = $this->ipost(); # con esta función capturamos las variables post...
-
+        #$oldImg = $this->ipost(); # con esta función capturamos las variables post...
+        
+        if($this->input->post()) { $oldImg = $this->ipost(); }
         # Abrimos el directorio...
         opendir($carpeta); 
         # Concatenamos el directorio destino con el nombre del archivo.
         $destino=$carpeta.$_FILES[$string]['name']; 
-
-        # Esta condición se ejecuta cuando el usuario va a actualizar una foto.
-        if(array_key_exists('oldFoto', $oldImg))
+        if(isset($oldImg))
         {
-            if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
+            # Esta condición se ejecuta cuando el usuario va a actualizar una foto.
+            if(array_key_exists('oldFoto', $oldImg))
             {
-                if(file_exists($oldImg['oldFoto']))
+                if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
                 {
-                    unlink($oldImg['oldFoto']); # Borramos la foto antigüa
-                }            
-            }    
+                    if(file_exists($oldImg['oldFoto']))
+                    {
+                        unlink($oldImg['oldFoto']); # Borramos la foto antigüa
+                    }            
+                }    
+            }
         }
         # Ahora guardamos la nueva foto
         if(copy($_FILES[$string]['tmp_name'], $destino))

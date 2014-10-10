@@ -1,6 +1,6 @@
     <?=link_tag('css/estilos_modulo_clientes_nuevo.less')?>
     <section style="position: relative !important;">
-        <?php /*echo '<button id="toggle">Toggle</button>';*/ ?>
+        <?php echo '<button id="toggle">Toggle</button>'; ?>
         <!-- REGISTRO DEL CLIENTE -->
         <div id="formularioCliente" class="visibleR">
             <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
@@ -11,7 +11,7 @@
             Tipo de cliente <!-- <small><span class="icon-asterisk2 obligatorio"></span></small> --> 
             <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-primary">
-                    <input type="radio" class="tipo_cliente" name="tipo_cliente" id="prospecto" value="prospecto"> Prospecto
+                    <input type="radio" class="tipo_cliente" name="tipo_cliente" id="prospecto" value="prospecto" checked> Prospecto
                 </label>
                 <label class="btn btn-primary">
                     <input type="radio" class="tipo_cliente" name="tipo_cliente" id="cliente" value="cliente"> Cliente
@@ -22,16 +22,16 @@
             <div class="row">
                 <div class="col-md-6">                
                     <!-- <div class="input_info"> -->
-                        <input type="text" id="nombreComercial"  class="form-control form_input" placeholder="Nombre comercial / Persona">
-                         <input type="text" id="nombreFiscal" class="form-control form_input" placeholder="Nombre fiscal">                    
-                        <input type="text" id="rfc" class="form-control form_input" placeholder="RFC">
+                        <input type="text" id="nombreComercial"  class="form-control form_input" placeholder="Nombre comercial / Persona" value="Mario Moreno">
+                        <input type="text" id="nombreFiscal" class="form-control form_input" placeholder="Nombre fiscal" value="Tec de Mérida">
+                        <input type="text" id="rfc" class="form-control form_input" placeholder="RFC" value="SDFFSDFSDF879879">
                          <select id="giro" class= "form-control form_input" > 
                             <option value="" disabled style='display:none;'>Giro</option> 
                             <option> Manufacturera </option> 
                             <option> Agropecuaria </option> 
                             <option> Comercial </option> 
                             <option> Transporte </option> 
-                            <option> Educación </option> 
+                            <option selected> Educación </option> 
                             <option> Servicios públicos </option>
                             <option> Salud </option> 
                             <option> Comunicación </option> 
@@ -42,13 +42,14 @@
                 </div>          
                 <div class="col-md-6">
                     <!-- <div class="input_info"> -->
-                    <input type="email" id="email" class="form-control form_input" placeholder="Email">
-                    <input type="text" id="paginaCliente"  class="form-control form_input" placeholder="Página web">         
-                    <textarea id="txtareaDireccion" class="form-control form_input" rows="3" placeholder="Dirección" style="height: 34px !important;"></textarea>
+                    <input type="email" id="email" class="form-control form_input" placeholder="Email" value="mario_m@itmerida.com">
+                    <input type="text" id="paginaCliente"  class="form-control form_input" placeholder="Página web" value="itmerida.com">
+                    <textarea id="txtareaDireccion" class="form-control form_input" rows="3" placeholder="Dirección" style="height: 34px !important;">Calle 60 norte</textarea>
+                    
                     <div class="telefonos">
                         <div class="div_telefono">
                             <div class="input-group">
-                                <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
+                                <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10" maxlength="20" value="9238472938">
                                 <span class="input-group-btn">
                                     <div class="btn-group">
                                         <select class="form-control input-lg tipoTelefonoCliente" name="tipo">
@@ -56,7 +57,7 @@
                                             <option value="Casa">Casa</option>
                                             <option value="Fax">Fax</option>
                                             <option value="Movil">Movil</option>
-                                            <option value="Oficina">Oficina</option>
+                                            <option value="Oficina" selected>Oficina</option>
                                             <option value="Personal">Personal</option>
                                             <option value="Trabajo">Trabajo</option>
                                             <option value="Otro">Otro</option>
@@ -105,7 +106,7 @@
                     </form>
                     <img id="direccion" alt="foto del cliente" class="img-thumbnail" width="160" style="margin-top: 30px;">
                     <br><br>
-                     <textarea id="comentarioCliente" class="form-control" rows="6" placeholder="Comentarios sobre el nuevo cliente"></textarea>       
+                     <textarea id="comentarioCliente" class="form-control" rows="6" placeholder="Comentarios sobre el nuevo cliente">comentario sobre el cliente</textarea>       
                 </div>             
            </div>
            <br><br>
@@ -139,7 +140,7 @@
                                     <input type="text" class="form-control telefonoRepresentante" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
                                     <span class="input-group-btn">
                                         <div class="btn-group">
-                                            <select class="form-control input-lg tipoTelefonoCliente" name="tipo">
+                                            <select class="form-control input-lg tipoTelefonoRepresentante" name="tipo">
                                                 <option value="No definido" selected style="display:none;">Tipo</option>
                                                 <option value="Casa">Casa</option>
                                                 <option value="Fax">Fax</option>
@@ -208,10 +209,10 @@
             <div class="telefonos">
                 <div class="div_telefono">
                     <div class="input-group">
-                        <input type="text" class="form-control tipoTelefonoContacto" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
+                        <input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
                         <span class="input-group-btn">
                             <div class="btn-group">
-                                <select class="form-control input-lg tipoTelefonoCliente" name="tipo">
+                                <select class="form-control input-lg tipoTelefonoContacto" name="tipo">
                                     <option value="No definido" selected style="display:none;">Tipo</option>
                                     <option value="Casa">Casa</option>
                                     <option value="Fax">Fax</option>

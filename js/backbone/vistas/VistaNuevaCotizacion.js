@@ -1,37 +1,72 @@
 var app = app || {};
 
+app.VistaSeccion = Backbone.View.extend({
+	tagName	: 'tr',
+	// className : 'tr_seccion',
+	plantillas : {
+		plantillaTrSeccion :  _.template( $('#td_seccion').html() )
+	},
+	events 	: {
+		'click .span_eliminar_seccion' : 'eliminarTr',
+
+		'change .number'					: 'calcularSeccion',
+		'keyup .number'						: 'calcularSeccion',
+		'mousewheel .number'				: 'calcularSeccion',
+		'click .number'				: 'calcularSeccion',
+		'focus .number'				: 'calcularSeccion',
+	},
+	initialize 	: function () { },
+	render: function (id) {
+		/*El parametro id, es la clave del servicio que se está cotizando*/
+		this.$el.html( this.plantillas.plantillaTrSeccion({ id:id }) );
+		this.calcularSeccion();
+		return this;
+	},
+	eliminarTr 		: function () {
+		this.$el.remove();
+	},
+	calcularSeccion : function () {
+		var horas 		= this.$('#horas').val(),
+			precio_hora = this.$('#precio_hora').val();
+
+		/*Mostramos el costo total de la seccion*/
+		this.$('.costoSeccion').val( horas * precio_hora ).trigger('change');
+		
+		/*Los campos visibles al usuario no serán sirven dido que se encuentrar
+		  en tds de tabla, para que se puede generar un json por casa sección 
+		  del servicio que se encuantra cotizando, debemos pasar esos valores
+		  a unos input hidden que si se encuentran en formularios.*/
+		this.$('input[name="seccion"]')		.val(this.$('#seccion')		.val());
+		this.$('input[name="descripcion"]')	.val(this.$('#descripcion')	.val());
+		this.$('input[name="precio_hora"]')	.val(horas);
+		this.$('input[name="horas"]')		.val(precio_hora);
+	},
+});
+
 app.VistaCotizarServicio = Backbone.View.extend({
 	tagName 	: 'tr',
 	plantillas 	: {
-		plantillaDelModelo :  _.template( $('#tds_servicio_seleccionado').html() ),
-		plantillaTrSeccion :  _.template( $('#tr_seccion').html() )
+		plantillaDelModelo :  _.template( $('#tds_servicio_seleccionado').html() )
 	},
 	events 		: {
 		'click #span_otraSeccion'	: 'apilarSeccion',
 		'click .span_toggleSee' : 'conmutarVista',
 		'click .span_eliminar_servicio' : 'eliminarVista',
-		'click .span_eliminar_seccion' : 'eliminarTr',
 
-		// validaciones
-		'change .number'					: 'validarTypeNumber',
-		'keyup .number'						: 'validarTypeNumber',
-		// 'keydown .number'						: 'validarTypeNumber',
-		'mousewheel .number'				: 'validarTypeNumber',
+		'change .costoSeccion' : 'carlcularImporte',
 	},
  	initialize 	: function () {
-		
-	},
+ 		this.indice = 0;
+ 	},
 	render 		: function () {
 		this.$el.html(this.plantillas.plantillaDelModelo(this.model.toJSON()));
 		this.apilarSeccion();
 		return this;
 	},
 	apilarSeccion 	: function () {
-		this.$el.find('tbody').append( this.plantillas.plantillaTrSeccion() );
-	},
-	eliminarTr 		: function (e) {
-		console.log($(e.currentTarget));
-		this.$(e.currentTarget).parents('.tr_seccion').remove();
+		var vistaSeccion = new app.VistaSeccion();
+		this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );
+		this.indice++;
 	},
 	conmutarVista 	: function (e) {
 		/*Cambiamos el icono del boton, arriba o abajo segun sea el caso*/
@@ -41,7 +76,7 @@ app.VistaCotizarServicio = Backbone.View.extend({
 			selector += '#table_servicio_'+this.model.get('id')+' tbody tr td,';
 			selector += '#table_servicio_'+this.model.get('id')+' tfoot tr td';
 		/*La función slideToggle solo funciona con td, no con table, tr, thead, tbody no tfoot*/
-		this.$(selector).slideToggle(200);
+		this.$(selector).slideToggle('fast');
 	},
 	eliminarVista 	: function (e) {
 
@@ -58,9 +93,22 @@ app.VistaCotizarServicio = Backbone.View.extend({
 
 		this.$el.remove();
 	},
+	carlcularImporte 	: function () {
+		/*Cada seccion tiene un imput con class ".costoSeccion."
+		  tomando en cuenta que cualquier servicio puede tener
+		  varias secciones, tenemos que obtener todos los valires
+		  de los precios de cada sección, sumarlos y colocar el
+		  resultado en el campo importe.*/
+		var costoSecciones = this.$('.costoSeccion'),
+			importe = 0;
+		for (var i = 0; i < costoSecciones.length; i++) {
+			importe += parseInt(this.$(costoSecciones[i]).val());
+		};
+		this.$('.importe').val(importe);
+	},
 	validarTypeNumber	: function (e) {
-		console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
-		validarInput(e.currentTarget.type, $(e.currentTarget).val(), e);
+		// console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
+		// validarInput(e.currentTarget.type, $(e.currentTarget).val(), e);
 	}
 });
 
@@ -174,52 +222,52 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	// 	 $(elemento.currentTarget).parents('tr').remove();
 	// },
 
-	eleminiarServicios : function(event)
-	{
-		 var ides = document.getElementsByName('todos');
-		 var array = new Array();
-		 for (var i = 0; i < ides.length; i++) 
-		 {
-				if ($(ides[i]).is(':checked')) {
-					 array.push(ides[i]);
-				};
-		 };
+	// eleminiarServicios : function(event)
+	// {
+	// 	 var ides = document.getElementsByName('todos');
+	// 	 var array = new Array();
+	// 	 for (var i = 0; i < ides.length; i++) 
+	// 	 {
+	// 			if ($(ides[i]).is(':checked')) {
+	// 				 array.push(ides[i]);
+	// 			};
+	// 	 };
 
-		 for (var i = 0; i < array.length; i++) 
-		 {
-				$(array[i])
-				.parents('tr')
-				.children('.iconos-operaciones')
-				.children('.btndelete')
-				.click();
-		 };
+	// 	 for (var i = 0; i < array.length; i++) 
+	// 	 {
+	// 			$(array[i])
+	// 			.parents('tr')
+	// 			.children('.iconos-operaciones')
+	// 			.children('.btndelete')
+	// 			.click();
+	// 	 };
 
-		 $('#todos').attr('checked', false);
-		 event.preventDefault(); 
-	},
+	// 	 $('#todos').attr('checked', false);
+	// 	 event.preventDefault(); 
+	// },
 
-	establecerTotal : function (elemento)
-	{
-		var total = 0;
-		/*...Cada que se levante una tecla recuperaremos todos los importes y lo pasamos a un array...*/          
-		var array = pasarAJson($('.importes').serializeArray());
-		/*...¿Es un array de importes?...*/
-		if($.isArray(array.importes))
-		{    
-			/*...Si es cierto iteramos sobre los importes....*/
-			for(i in array.importes)
-				{	
-				/*....Cada posicion la convertimos a número y lo adicionamos al total....*/
-						total+=Number(array.importes[i]);
-				}
-				/*...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..*/
-				$('#total').text(total);
-		}
-		else
-		{	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
-			$('#total').text(array.importes);	
-		}	            	
-	},
+	// establecerTotal : function (elemento)
+	// {
+	// 	var total = 0;
+	// 	// ...Cada que se levante una tecla recuperaremos todos los importes y lo pasamos a un array...          
+	// 	var array = pasarAJson($('.importe').serializeArray());
+	// 	/*...¿Es un array de importes?...*/
+	// 	if($.isArray(array.importes))
+	// 	{    
+	// 		// ...Si es cierto iteramos sobre los importes....
+	// 		for(i in array.importes)
+	// 			{	
+	// 			// ....Cada posicion la convertimos a número y lo adicionamos al total....
+	// 					total+=Number(array.importes[i]);
+	// 			}
+	// 			// ...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..
+	// 			$('#total').text(total);
+	// 	}
+	// 	else
+	// 	// {	..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....
+	// 		$('#total').text(array.importes);	
+	// 	}	            	
+	// },
 	marcarTodosCheck : function(elemento)
 	{        
 			marcarCheck(elemento);
@@ -372,7 +420,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		/*..Una vez que tenemos lista la cotizacion nos toca el turno de guardala en la base de datos :D ...*/
 		guardarCotizacion : function (elemento)
-		{    
+		{
+			
+			var forms = this.$('.form_servicio');
+			for (var i = 0; i < forms.length; i++) {
+				console.log(pasarAJson($(forms[i]).serializeArray()));
+			};
+			return;
 			var f = new Date();
 			var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
 
@@ -468,21 +522,30 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	/*Funciones creadas por geyser*/
 		conmutarVistas 	: function () {
 			var spans = $('.todos:checked'); /*Obtenemos todos los checkbox activados*/
-			for (var i = 0; i < spans.length; i++) {
-				/*Hacemos clic en los span correspondientes a los trs checkeados.
-				  la vista de cada tr recibirá el evento clic y ejecutará la 
-				  funcion correspondiente*/
-				this.$('.iconos-operaciones #'+$(spans[i]).val().split('/')[1]).click();
+			if (spans) {
+				for (var i = 0; i < spans.length; i++) {
+					/*Hacemos clic en los span correspondientes a los trs checkeados.
+					  la vista de cada tr recibirá el evento clic y ejecutará la 
+					  funcion correspondiente*/
+					this.$('.iconos-operaciones #'+$(spans[i]).val().split('/')[1]).click();
+				};
 			};
 			// this.$('.span_toggleSee').click();
 		},
 		eliminarVistas 	: function () {
 			var spans = $('.todos:checked'); /*Obtenemos todos los checkbox activados*/
-			for (var i = 0; i < spans.length; i++) {
-				/*Hacemos clic en los span correspondientes a los trs checkeados.
-				  la vista de cada tr recibirá el evento clic y ejecutará la 
-				  funcion correspondiente*/
-				this.$('.iconos-operaciones #'+$(spans[i]).val().split('/')[0]).click();
+			if (spans.length) { /*Solo si hay servicios marcados*/
+				var here = this;
+				confirmar('¿Los servicios marcados están siendo cotizados, estás seguro de eliminarlos?',
+					function () {
+						for (var i = 0; i < spans.length; i++) {
+							/*Hacemos clic en los span correspondientes a los trs checkeados.
+							  la vista de cada tr recibirá el evento clic y ejecutará la 
+							  funcion correspondiente*/
+							here.$('.iconos-operaciones #'+$(spans[i]).val().split('/')[0]).click();
+						};
+					},
+					function () {});
 			};
 			// this.$('.span_eliminar_servicio').click();
 		}

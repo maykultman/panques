@@ -51,9 +51,10 @@
     // });
     function validarInput (inputType, valor, e) {
         var respuesta;
+        console.log(isNaN(valor));return;
         switch(inputType) {
             case 'number':
-                if(!(/^\d{10,20}$/.test(valor)) ) {
+                if( isNaN(valor) ) {
                     alerta('Solo números porfavor',function () {});
 
                     $(e.currentTarget).css('border-color','#a94442');

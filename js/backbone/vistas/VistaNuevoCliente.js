@@ -8,7 +8,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					//Eventos de consulta
 					'keyup #inputBusquedaI' : 'buscarServicioI',
 					'keyup #inputBusquedaC' : 'buscarServicioC',
-					 'change .tipo_cliente' : 'obtenerTipoCliente',
+					 // 'change .tipo_cliente' : 'obtenerTipoCliente',
 
 					//Eventos de eliminación
 					'click  #btn_eliminar'  : 'eliminarTodos_Prueba',
@@ -50,7 +50,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 // -----initialize-------------------------------- 
 	initialize      : function () {
 	// Datos básicos
-		this.tipoCliente          = '';
+		// this.$tipoCliente         = $('.tipo_cliente');
 		this.$nombreFiscal        = $('#nombreComercial');
 		this.$nombreComercial     = $('#nombreFiscal');
 		this.$email               = $('#email');
@@ -225,7 +225,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			},this);
 		};
 	},
-	guardarC    :                   function (jsonC,iT) {
+	guardarC    :                   function (jsonC,iT) { /*iT: es el id del contacto para buscar sus telefonos*/
 		var here = this;
 		/*console.log(jsonC,iT);*/ /* NO ELIMINAR ESTAS LINEAS */
 		Backbone.emulateHTTP = true;
@@ -287,6 +287,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		  almacenado en la variable objetoCliente*/
 		this.objetoCliente = limpiarJSON(this.nuevosAtributosCliente());
 		console.log('Antes del elvio',this.objetoCliente);
+		// return;
 
 		/*Nos aseguramos de que las propiedades nombreComercial y tipoCliente
 		  del objeto esten definidas. De lo contrario se alerta al usuario y
@@ -338,7 +339,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							numero          : numero,
 							tipo            : tipo
 						});
-					console.log('Despues del elvio',exito);	
+					console.log('Despues del envio',exito);	
 					/*Guardar servicios de interes y cuenta*/
 						// Obtenemos los servicios (existentes en la o no BD)
 						var servicios       = serviciosInteres,
@@ -501,18 +502,19 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	},
 // -----nuevosAtributosCliente-------------------- 
 	nuevosAtributosCliente  :       function () {
+		var here = this;
 		/*Los valores de cada propiedad se obtienen directamente
 		de los campos del html donde los selectores apuntan.*/
 		return {
 			 nombreComercial : this.$nombreFiscal.val().trim(),
 				nombreFiscal : this.$nombreComercial.val().trim(),
-					  email  : this.$email.val().trim(),
+					   email : this.$email.val().trim(),
 						 rfc : this.$rfc.val().trim(),
 				   paginaWeb : this.$paginaWeb.val().trim(),
 						giro : this.$giro.val(),
 		   comentarioCliente : this.$comentarioCliente.val().trim(),
 				   direccion : this.$direccion.val().trim(),
-				 tipoCliente : this.tipoCliente,
+				 tipoCliente : this.$('.tipo_cliente:checked').val() /*No pudo ser de otra manera*/
 				   // telefonos : this.recursividadTelefonos(document.getElementsByName('telefonoCliente'),document.getElementsByName('tipoTelefonoCliente')),
 			// serviciosInteres : this.obtenerServicios(document.getElementsByName('serviciosInteres')),
 			 // serviciosCuenta : this.obtenerServicios(document.getElementsByName('serviciosCuenta')),
@@ -525,7 +527,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		  este se utiliza como selector para obtener
 		  el valor del elemento seleccionado; en este
 		  caso el TIPO de cliente a registrar*/
-		this.tipoCliente = $(elemento.currentTarget).val();
+		// this.$tipoCliente = $(elemento.currentTarget).val();
 	},
 // -----obtenerFoto------------------------------- 
 	obtenerFoto :                   function (e) {

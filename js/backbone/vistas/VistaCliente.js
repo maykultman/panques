@@ -126,7 +126,6 @@ app.VistaCliente = Backbone.View.extend({
 		modalCliente.on('hidden.bs.modal', function(){
 			/*this es la variable modal. removemos el elem DOM
 			de todo el documento (DOM general)*/
-			this.remove();
 			here.render();
 		});
 
@@ -259,7 +258,6 @@ app.VistaCliente = Backbone.View.extend({
 		Backbone.emulateJSON = false;
 
 		// window.location.href = "modulo_consulta_clientes";
-
 		submit.preventDefault();
 	},
 	actualizarAtributo        	: function (elem) {
@@ -1033,20 +1031,32 @@ app.VistaCliente = Backbone.View.extend({
 		/*Formulario para nuevo contacto. Hacemos referencia al
 		elemento mediante su selector*/
 		this.$formNuevoContacto = this.$('#formNuevoContacto');
+
 		/*Hacemos que el modal nuevo contacto se cierre solo con el boton cerrar--------*/
-		var modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
-		modalContacto.modal({
-			keyboard : false,
-			backdrop : false
-		});
+			var modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
+			modalContacto.modal({
+				keyboard : false,
+				backdrop : false
+			});
+
 		/*Para que el modal no se muestre cuando se hace clic en el boton mostrar contactos*/
 		modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
 		modalContacto.modal('hide');
 		/*Las siguientes lineas resetean el formulario cuando el
 		usuario cierra el modal*/
 		modalContacto.on('hidden.bs.modal', function () {
-			here.$formNuevoContacto[0].reset();
+			// here.$formNuevoContacto[0].reset();
+			/*Eliminamos el modal*/
+			this.remove();
+			/*Disparamos dos eventos clic, uno para salir de la vista de contactos,
+			el segundo para volverlo a abrir. El usuario no se da cuenta de lo ocurrido*/
+			// here.$divContactos.html();
+			here.$('#btn_verContactos').click().click(); 
 		});
+		
+		// modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
+		// modalContacto.on('hidden.bs.modal', function () {
+		// });
 	},
 	agregarContacto           	: function (tipo, esDe) {
 		var vista = new app.VistaContacto({model:tipo});

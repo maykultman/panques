@@ -400,57 +400,73 @@
     
     <script type="text/template" id="modalContacto">
         <div class="modal fade" id="modalNuevoContacto<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Nuevo representante o contacto</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="formNuevoContacto" role="form">
-                            <div class="form-group">
-                                <select name="persona" class="form-control">
-                                    <option value="representante">Representante</option>
-                                    <option value="contacto">Contacto</option>
-                                    <option selected disabled value="">¿Qué desea registar?</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="nombre" placeholder="Nombre">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="nuevoMail" class="form-control" name="correo" placeholder="Correo">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="cargo" placeholder="Cargo">
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" id="nuevoNumero" class="form-control" name="numero" placeholder="Número telefónico" minlength="10" maxlength="20">
-                                    <div class="input-group-btn">
-                                        <select id="tipo" class="btn btn-default" name="tipo">
-                                            <option value="No definido" selected style="display:none;">Tipo</option>
-                                            <option value="Casa">Casa</option>
-                                            <option value="Fax">Fax</option>
-                                            <option value="Movil">Movil</option>
-                                            <option value="Oficina">Oficina</option>
-                                            <option value="Personal">Personal</option>
-                                            <option value="Trabajo">Trabajo</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-                                        <!--<button id="otroTelefono" class="btn btn-default"><label class="icon-uniF476"></label></button>-->
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Nuevo representante o contacto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formNuevoContacto" role="form">
+                                Tipo de contacto
+                                <!--Revisar los comentarios de la funcion verContactos() 
+                                    del archivo VistaCliente.js para aclarar dudas-->
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="persona" value="representante" style="width:auto;margin: 4px 0 0;margin-left: -20px;"
+                                            <% if (existeRepr) { %>
+                                                disabled
+                                            <% } %>
+                                            > Representante
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="persona" value="contacto" style="width:auto;margin: 4px 0 0;margin-left: -20px;" 
+                                            <% if (existeRepr) { %>
+                                                checked
+                                            <% } %>
+                                            > Contacto
+                                        </label>
+                                    </div>
+                                <!--/fin comentario-->
+                                <br>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="nuevoMail" class="form-control" name="correo" placeholder="Correo">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="cargo" placeholder="Cargo">
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" id="nuevoNumero" class="form-control" name="numero" placeholder="Número telefónico" minlength="10" maxlength="20">
+                                        <div class="input-group-btn">
+                                            <select id="tipo" class="btn btn-default" name="tipo">
+                                                <option value="No definido" selected style="display:none;">Tipo</option>
+                                                <option value="Casa">Casa</option>
+                                                <option value="Fax">Fax</option>
+                                                <option value="Movil">Movil</option>
+                                                <option value="Oficina">Oficina</option>
+                                                <option value="Personal">Personal</option>
+                                                <option value="Trabajo">Trabajo</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
+                                            <!--<button id="otroTelefono" class="btn btn-default"><label class="icon-uniF476"></label></button>-->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btn_nuevoContacto">Guardar contacto</button>
-                        <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="btn_guardarContacto">Guardar</button>
+                            <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </script>
 
     <script type="text/templates" id="plantilla_contactos">

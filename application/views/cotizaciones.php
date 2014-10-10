@@ -1,4 +1,4 @@
-<?= script_tag('js/tablas/jquery-latest.min.js').
+<?=script_tag('js/tablas/jquery-latest.min.js').
     script_tag('js/tablas/jquery.tablesorter.js').
     script_tag('js/tablas/jquery.tablesorter.widgets.js').
     script_tag('js/tablas/widget-cssStickyHeaders.js').

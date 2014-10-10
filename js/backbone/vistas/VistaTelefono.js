@@ -27,6 +27,7 @@ app.VistaTelefono = Backbone.View.extend({
 	},
 
 	crear 	: function (json) {
+		console.log(json);
 		if (json.numero != '') {
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;

@@ -102,7 +102,7 @@
 			 		$cont++;
 			    }# Fin del foreach() $clientes
 			    
-				return $datos;	
+				return (is_numeric($id)) ? $datos[0] : $datos;
 			}
 			else{return false;}
 		}

@@ -24,7 +24,7 @@ var ColeccionClientes = Backbone.Collection.extend({
 	},
 
 	// parse	: function (response) {
-	// 	return response;
+	// 	return response.results;
 	// },
 
 	obtenerUltimo	: function () {
