@@ -23,14 +23,14 @@ script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
 	                   Perfiles
 	                </a>
 	            </li>
-				 <li>
+				 <!-- <li>
 	            	<a href="catalogo_permisos">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-unlock"></span>
 	              	   </div>
 	                   Permisos
 	                </a>
-	            </li>
+	            </li> -->
 	            <li>
 	            	<a href="catalogo_puestos">
 	             	   <div class="icono_menu_modulo">

@@ -2,14 +2,19 @@ var app = app || {};
 app.VistaConsultaPerfil = Backbone.View.extend
 ({
 	el : '#accordion',
-	
+	plantilla : _.template($('#divperfil').html()),
+
+	events : 
+	{
+		'click .delete' : 'eliminar',
+		'click .edit' : 'editar',
+	},
+
 	initialize : function()
 	{
-		this.$ConsultaPerfil = this.$('#unperfil');
-		this.cargarPerfiles();
 		this.listenTo( app.coleccionPerfiles, 'add',   this.cargarPerfil );
-        this.listenTo( app.coleccionPerfiles, 'reset', this.cargarPerfil ); 
-        
+  		this.listenTo( app.coleccionPerfiles, 'reset', this.cargarPerfil ); 
+  		this.cargarPerfil();        
 	}, 
 
 	render : function()
@@ -17,21 +22,30 @@ app.VistaConsultaPerfil = Backbone.View.extend
 		return this;
 	},
 
-	cargarPerfil : function(perfil)
+	editar : function(elemento)
 	{
-		var vistaPerfil = new app.VistaPerfil({ model : perfil });
-		this.$ConsultaPerfil.append(vistaPerfil.render().el);
+		var id = $(elemento.currentTarget).attr('id');		
+		var nombre = app.coleccionPerfiles.findWhere({'id': id }).toJSON();
+		$('#verpermisos'+id).toggle();
+		
 	},
 
-	cargarPerfiles : function()
+	cargarPerfil : function()
 	{
-		app.coleccionPerfiles.each(this.cargarPerfil, this);	
-	},
-
-	eliminar : function()
-	{
-		this.model.destroy();
+		app.coleccionPerfiles.each
+		(
+			function(perfil){
+				this.$('#unperfil').append(this.plantilla(perfil.toJSON()));
+			}
+			,this
+		);
 	}
+
+
+	// eliminar : function()
+	// {
+	// 	this.model.destroy();
+	// }
 
 });
 

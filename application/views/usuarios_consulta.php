@@ -1,4 +1,4 @@
-	<section id="consultaDeUsuarios">
+<section id="consultaDeUsuarios">
 	 	    <label><b id="cantidadDeUsuarios"></b></label>
 	 		<hr style="margin-top: 0px;">
 
@@ -49,7 +49,7 @@
 					<div class="resp" style="display: table-cell"><!-- Indicador de modificación--></div>
 							
 					<label>Perfil</label>
-					<select id="idperfil" name="idperfil" class="valor" value="">									 
+					<select id="idperfil{{id}}" name="idperfil" class="valor" value="">									 
 					</select>   
 
 					<br>
@@ -102,7 +102,6 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPermisos.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">  </script>
 
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRenderizaPermiso.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaUsuario.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaUsuario.js'?>">  </script>
 

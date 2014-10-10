@@ -54,13 +54,14 @@
 		          <!--Menu de opciones-->
 		        </ul>
 
-		        <div class="tab-content">
-		            <div  class="tab-pane active" id="rA">		            	
+		        <div id="empleados" class="tab-content">
+<!-- 		            <div  class="tab-pane active" id="rA">		            	
 						<div  class="panel-group" id="accordion"><br>
-						<!--     -->						
+											
 						</div>
-					</div>						
+					</div>		 -->				
       			</div>
+      			<!-- <div id="empleados"></div> -->
       		</div>			     
 		</section>
 	</section>
@@ -86,8 +87,33 @@
 	
 </script>
 
+<script type="text/plantilla" id="empleado">
+<article style="float:left; position:relative;">
+<div class="user-wrapper">
+	<center id="carnet<%-id%>" style="display:block;">
+		<img class="img-circle" src="<?=base_url()?>/img/sinfoto.png" alt="Imagen-Usuario" width="65" height="65"><br>
+		<b><%-nombre%></b><br>
+		<small><%-puesto%></small><br>
+	    <div class="btn-group">       	
+	      	<button id="<%-id%>" class="delete btn btn-default">Eliminar</button>
+	       	<button id="<%-id%>" class="edit btn btn-default">Editar</button>
+	    </div>	    
+	</center>
+	<div id="verinfo<%-id%>" style="display:none;">
+		<label>Nombre</label>				<input type="text" name="" value="<%-nombre%>"><br>
+		<label>Puesto</label>				<input type="text" name="" value="<%-puesto%>"><br>
+		<!--<label>Teléfono</label>			<input type="text" name="" value="<%-telefono%><br">>-->
+		<label>Domicilio</label>			<input type="text" name="" value="<%-direccion%>"><br>
+		<label>Fecha de nacimiento</label>	<input type="text" name="" value="<%-fecha_nacimiento%>"><br>
+		<button id="<%-id%>" class="guardar btn btn-default">Guardar</button>
+		<button id="<%-id%>" class="cancel btn btn-default">Cancelar</button>
+	</div>
+</div>
 
-<script type = "text/plantilla" id="datosEmpleado">
+</article>
+</script>
+
+<script type = "text/plantilla" id="datosEmpleadoz">
 	
 		<div class="panel-heading">
 		    <h4 class="panel-title">

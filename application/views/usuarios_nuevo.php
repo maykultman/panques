@@ -5,10 +5,9 @@
 		 	<div class="row">
 		 		<form id="registroUsuario">	 		
 				    <div class="col-md-4">		  		
-					  	<select id="semp" class="selectized" name="menunombres">
+					  	<select id="idempleado" class="selectized" name="idempleado">
                    		</select>  
-					  	<!-- <input type="hidden" id="hempleado" name="idempleado" value=""> -->
-					  	
+
 					  	<select id="idperfil" name="idperfil" class="form-control ancho_campos">
 						  <!-- Lista de Opciones de perfil  -->
 						  <option selected disabled>--Seleccione su Perfil--</option>
@@ -26,21 +25,24 @@
 					    	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		        		</div>
 				    </div>
-
+				    </form>	
 				    <div class="col-md-8" style="background:#eaeaea; border:1px solid #eee; width:600px; border-radius:4px; height:auto;">
 				    	
 				        <ul id="modulos" class="nav nav-tabs" role="tablist">
 				          <!-- Menu de opciones-->
 				        </ul>
 
+				     <form id="arraypermisos">
 				        <div id="submodulos" class="tab-content">
-
+				        	
+				        	
 				        </div>
-		      	
+				    </form>
+		      			
 				    </div>	  
 				  
 				    
-				</form>			    
+						    
 	        </div>      
         </section> 
     </section>
@@ -49,21 +51,22 @@
 <script type="text/plantilla" id="tsubmodulos">	
 	
 	<div class="tab-pane <% if(active!=undefined){ %> <%- active %> <% } %>" id="<%-modulo %>">
-		
-			<% for(i in submodulos){ %>
-				<div id="toggle">
+	<% var cont=0; for(i in submodulos){  cont++; %>
+		<div id="toggle">
 					<div class="tohead"><%- submodulos[i] %></div>
 					<div id="<%-modulo%><%- submodulos[i] %>" class="ui-widget-content ui-corner-all conf" style="display:none;">
-						<% if(submodulos[i]=='Nuevo'||submodulos[i]=='Cronograma'){%>
-							<input name="idpermisos" value="" class="chek" type="checkbox" >Acceso
+					
+						<% if(submodulos[i]=='Nuevo'||submodulos[i]=='Cronograma'||submodulos[i]=='Usuarios'){%>
+							<input name="<%-modulo%><%-submodulos[i]%>" value="1" class="chek" type="checkbox" >Acceso
 						<%}else{%>
 
 							<% if(submodulos[i]=='Papelera'){%>
-								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Restaurar</p>
+								<input name="<%-modulo%><%-submodulos[i]%>" value="6" class="chek" type="checkbox" ><p>Restaurar</p>
+								<input name="<%-modulo%><%-submodulos[i]%>" value="4" class="chek" type="checkbox" ><p>Eliminar</p>
 							<%}%>
 
 							<% if(submodulos[i]=='Prospectos'){%>								
-								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Pasar a Cliente</p>															
+								<input name="<%-modulo%><%-submodulos[i]%>" value="5" class="chek" type="checkbox" ><p>Pasar a Cliente</p>															
 							<%}%>
 														
 						<%}%>
@@ -71,17 +74,17 @@
 								submodulos[i]=='Proyectos'||submodulos[i]=='Cotizaciones'||
 								submodulos[i]=='Contratos'
 						){ %>
-								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Consultar</p>
-								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Editar</p>
-								<input name="idpermisos" value="" class="chek" type="checkbox" ><p>Eliminar</p>
+								<input name="<%-modulo%><%-submodulos[i]%>" value="2" class="chek" type="checkbox" ><p>Consultar</p>
+								<input name="<%-modulo%><%-submodulos[i]%>" value="3" class="chek" type="checkbox" ><p>Editar</p>
+								<input name="<%-modulo%><%-submodulos[i]%>" value="4" class="chek" type="checkbox" ><p>Eliminar</p>
 						<%}%>
 
-
+					
 					</div>
 				</div>
-			<% } %>			
-		
-	</div>		
+			<% } %>	
+	
+	</div>
 
 </script>
 
@@ -97,7 +100,6 @@
 <script type="text/plantilla" id="permisos">
 	<a href="#<%-modulo%>" role="tab" data-toggle="tab">  <%- modulo %>	</a>
 </script>
-
 
 <script type="text/javascript">
 	var app = app || {};

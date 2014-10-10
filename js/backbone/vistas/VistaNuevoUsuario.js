@@ -13,15 +13,16 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		// 'change #idpermisos' : 'marcarTodos'
 		// 'click .ui-corner-all' : 'resize',
 		'click .tohead' : 'resize',
+		'change #idperfil' : 'mispermisos'
 
 	},
 
 	initialize : function ()
 	{	
-		this.cargarSelectPerfiles();
 		this.cargarModulo();	
 		this.selectEmpleados();
 		this.cargarSubmodulo();
+		select_Perfil();
 	},
 
 	resize : function(elemento)
@@ -33,11 +34,11 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	selectEmpleados : function()
     {
     	var list = '<% _.each(empleados, function(empleado) { %> <option disabled id="<%- empleado.id %>" value="<%- empleado.id %>"><%- empleado.nombre %></option> <% }); %>';
-		this.$('#semp').
+		this.$('#idempleado').
 		append(_.template(list, 
 			{ empleados : app.coleccionEmpleados.toJSON() }
 		));
-		this.$('#semp').selectize({
+		this.$('#idempleado').selectize({
 			create: true,
 			maxItems: 1
 		});
@@ -52,97 +53,121 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	cargarSubmodulo : function()
 	{
-		submodulos = app.coleccionPermisos.toJSON();
-			
-		var json={};
-		var array=[];	
-		var array2=[];
-		var seccion ={};
-		var divp=[]; 
-		var divc;
-		var active="";
-		var cont=0;
-		var cont2=0;
+		submodulos = app.coleccionPermisos.toJSON();			
+		var json={};		
 		for(var x=0; x < submodulos.length;x++)
 		{			
-			if(cont==0)
-			{
-				active="active";
-				cont++;
-			};
-			
-			json.active = active;
-			active="";
-
+			json.active = (x==0) ? "active" : "";
+			// json.id = submodulos[x].id;			
 			json.modulo = submodulos[x].modulo;
 			
 			json.submodulos = submodulos[x].permisos.split(",");			
-			this.$("#submodulos").append(this.plantilla(json));	
-			
-		}			
+			this.$("#submodulos").append(this.plantilla(json));				
+		}				
 	},
 	
-	cargarSelectPerfiles : function ()
-	{	
-		var list = '<% _.each(perfiles, function(perfil) { %> <option value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
-		this.$('#idperfil').
-		append(_.template(list, 
-			{ perfiles : app.coleccionPerfiles.toJSON() }
-		));
-		// this.$('#idperfil').selectize({
-		// 	create: true,
-		// 	maxItems: 1
-		// });
+	mispermisos : function(idperfil)
+	{
+		idperfil = $(idperfil.currentTarget).val();
+		var nombre = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
+		console.log(nombre);
+		// this.cargarPermisos();
+		// if(nombre)
+		// {
+		// 	marcarPermiso(JSON.parse(nombre).idpermisos, this.$el.find('.chek').children(), this.$el);	
+		// }		
 	},
-
-	// mostrarPermisos : function(idperfil)
-	// {
-	// 	var nombre = app.coleccionPerfiles.findWhere({id : $(idperfil.currentTarget).val() }).get('idpermisos');
-	// 	this.cargarPermisos();
-	// 	if(nombre)
-	// 	{
-	// 		marcarPermiso(JSON.parse(nombre).idpermisos, this.$el.find('.chek').children(), this.$el);	
-	// 	}		
-	// },
 
 	marcarTodos : function(elemento)
 	{
 		marcarCheck(elemento);      
 	},
 
-	guardar	 : function ()
-	{		
-		// var formData = new FormData($("#registroUsuario")[0]);
-		console.log(this.$('#foto').val());
-		// var foto = this.urlFoto(formData); 
-
-		// var modeloUsuario = pasarAJson($('#registroUsuario').serializeArray());
-		// modeloUsuario.foto = foto;
-		// modeloUsuario = limpiarJSON(modeloUsuario);
+	jsonpermisos : function()
+	{
+		var permisos = pasarAJson( this.$("#arraypermisos").serializeArray() ) ;		
+		var mispermisos ={};
+		mispermisos = {
+			clientes : 
+			{
+				Nuevo : permisos.clientesNuevo,
+				Clientes : permisos.clientesClientes,
+				Prospecto : permisos.clientesProspectos,
+				Papelera : permisos.clientesPapelera
+			},
+			proyectos : 
+			{
+				Nuevo : permisos.proyectosNuevo,
+				Cronograma : permisos.proyectosCronograma,
+				Proyectos : permisos.proyectosProyectos
+			},
+			contratos :
+			{
+				Nuevo 	  : permisos.contratosNuevo,
+				Contratos : permisos.contratosContratos,
+				Papelera  : permisos.contratosPapelera
+			},
+			cotizaciones :
+			{
+				Nuevo 		 : permisos.cotizacionesNuevo,
+				Cotizaciones : permisos.cotizacionesCotizaciones,
+				Papelera 	 : permisos.cotizacionesPapelera
+			},
+			catalogos :
+			{
+				Empleados : permisos.empleados,
+				perfiles  : permisos.perfiles,
+				roles     : permisos.roles,
+				puestos   : permisos.puestos 				
+			},
+			usuarios :
+			{
+				Nuevo 	 : permisos.usuariosNuevo,
+				Usuarios : permisos.usuariosUsuarios
+			}
+		};
 		
+		for(x in mispermisos)
+		{
+			mispermisos[x] = limpiarJSON(mispermisos[x]);	
+		}
+		
+		return JSON.stringify(mispermisos);
+	},
 
-		// modeloUsuario.idpermisos = JSON.stringify({idpermisos:modeloUsuario.idpermisos});
-		// $('#registroUsuario')[0].reset();
-		// Backbone.emulateHTTP = true;
-		// Backbone.emulateJSON = true;
-		// app.coleccionUsuarios.create
-		// (
-		// 	{
-		// 		idempleado  : modeloUsuario.idempleado,
-		// 		idperfil    : modeloUsuario.idperfil,
-		// 		usuario     : modeloUsuario.usuario,
-		// 		contrasenia : modeloUsuario.contrasenia,
-		// 		foto        : foto,
-		// 		idpermisos  : modeloUsuario.idpermisos
-		// 	},
-		// 	{
-		// 		wait	: true,
-		// 		success : function (exito) { location.href='usuarios_consulta'; },
-		// 		error 	: function (error) {}
-		// 	}
-		// );
-		// Backbone.emulateHTTP = false;
-		// Backbone.emulateJSON = false;
+	guardar	 : function ()
+	{	
+		/*--- si el campo foto del formulario tiene una url de carpeta que contenga un archivo img entonces 
+			  invocamos a la función urlFoto, y le enviamos de parametro formData---*/
+		var foto = ( this.$('#foto').val() ) ? this.urlFoto( new FormData( $("#registroUsuario")[0]) ) : 'img/sinfoto.png';
+		
+		/*-- Si el usuario es un empleado se le asigna su idempleado en caso de que sea un usuario que no es empleado su id=0--*/
+		var ide = ($("#idempleado").val()) ? $("#idempleado").val() : 0;
+		
+		var modeloUsuario 		= pasarAJson($('#registroUsuario').serializeArray());
+		modeloUsuario 			= limpiarJSON(modeloUsuario); 
+
+		/*--- asignamos atributos ---*/
+		modeloUsuario.idempleado = ide;
+		modeloUsuario.foto 		 = foto;
+		/*--- la funcion jsonpermisos(); devuelve una cadena de todos los permisos asignados ---*/
+		modeloUsuario.permisos 	= this.jsonpermisos();
+		
+		$('#registroUsuario')[0].reset();
+
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		app.coleccionUsuarios.create
+		(
+			modeloUsuario,
+			{
+				wait	: true,
+				success : function (exito) { location.href='usuarios_consulta'; },
+				error 	: function (error) {}
+			}
+		);
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
 		
 	}, /*... Fin de la función guardar ...*/
 

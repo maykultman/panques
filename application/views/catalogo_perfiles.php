@@ -1,11 +1,12 @@
-         <section>
+<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">
+    <section>
 	    	<h3 class="titulo">Perfiles</h3>
 	    	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Perfil
 			</button>
 			<hr style="margin-top: 0px !important">
 
 
-			<div style="margin-top:15px;" class="panel-group" id="accordion">
+			<div style="margin-top:15px;" id="accordion">
 				<div id="unperfil">
 					<!-- EN ESTA SECCION SE UBICA LA LISTA DE PERFILES -->
 				</div> 
@@ -54,34 +55,28 @@
     </section>
 </div>
 
+<!-- <button id="<%-id%>" class="edit btn btn-default" data-toggle="modal" data-target="#myModal<%-id%>">Editar</button> -->
+<script type="text/plantilla" id="divperfil">
+<article style="float:left;">
+<div class="user-wrapper">
+	<center>
+		<img class="img-circle" src="<?=base_url()?>/img/sinfoto.png" alt="Imagen-Usuario" width="85" height="85">
+		<h4><b><%-nombre%> </b></h4>
+	    <div class="btn-group">       	
+	      	<button id="<%-id%>" class="delete btn btn-default">Eliminar</button>
+	       	<button id="<%-id%>" class="edit btn btn-default">Editar</button>
+	    </div>	    
+	</center>
+	<div id="verpermisos<%-id%>" style="display:none;">holaadsfasdfsdf</div>
+</div>
 
+</article>
+</script>
 
 <script type="text/plantilla" id="Permisos">		
 	<input id='permiso_<%- id %>' name="idpermisos" value="<%-id%>" class="chek" type="checkbox"><%- nombre %>	
 </script>
 
-<script type="text/plantilla" id="Perfil">
-
-	<div class="panel-heading">
-	 	<a data-toggle="collapse" data-parent="#accordion" href="#collapse5<%-id%>">
-		    <h4 class="panel-title">
-	    		<b id="hperfil"> <%-nombre%></b>
-				<span class=" icon-uniF48B flecha_abajo"></span> 
-			</h4>	
-		</a>
-	</div>
-
-	<div id="collapse5<%-id%>" class="panel-body panel-collapse collapse">
-		<h4>Permisos</h4>
-		<span id="<%-id%>" class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
-		<form id="idpermisos<%-id%>"> 
-	   	<div id="ListaPermisos" class="row"> 
-	   			<!--lista de permisos	 --> 
-	   	</div>	
-	   	</form></br>
-		<center><button id="guardarEdicion" type="button" class="btn btn-primary">Guardar</button></center>
-	</div>
-</script>
 
 <script type="text/javascript">
 	var app = app || {};

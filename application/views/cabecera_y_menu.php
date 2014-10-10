@@ -73,7 +73,7 @@
 <?=
 script_tag('js/backbone/lib/handlebars.js').
 script_tag('js/backbone/lib/underscore.js').
-    script_tag('js/backbone/lib/backbone.js')?>
+    script_tag('js/backbone/lib/backbone.js');?>
 
 	<script type="text/javascript">
 		$(document).on('ready',function(){
@@ -99,7 +99,7 @@ script_tag('js/backbone/lib/underscore.js').
     });
 </script>
 	<title></title>
+	<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/modal.js'?>"></script>
 </head>
 <body id="cuerpo">
-</body>
-</html>
+

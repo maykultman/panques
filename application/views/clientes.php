@@ -6,7 +6,7 @@
         script_tag('js/tablas/widget-cssStickyHeaders.js').
         script_tag('js/tablas/estilo_tabla.js');
     ?>
-    <?= script_tag('css/bootstrap-3.1.1-dist/js/modal.js'); ?>
+    
     <?=script_tag('js/plugin/selectize/selectize.min.js').
  		link_tag('css/theme.default.css').
         //plugin selectize css

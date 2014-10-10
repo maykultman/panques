@@ -373,3 +373,13 @@ function fechaAmigable (fecha) {
         // console.log('Sin trabajar: '+contador);
         return contador;
     };
+
+    // Esta función carga al select de perfiles para los modulos de:
+    // #Perfiles #Nuevo Usuario #Consulta Usuario
+    function select_Perfil(id)
+    {
+        id = (id) ? id:'';
+
+        var list = '<% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
+        this.$('#idperfil'+id).html(_.template(list, { perfiles : app.coleccionPerfiles.toJSON() }));
+    }

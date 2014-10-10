@@ -1,58 +1,95 @@
 var app = app || {};
-
-// app.VistaPermiso = app.VistaRenderizaPermiso.extend({
-	
-// 	plantilla : Handlebars.compile($('#Permisos').html()),
-// 	events : {
-// 		'change .chek' : 'resalta'
-// 	},
-
-// 	resalta : function()
-// 	{
-// 		if(this.$el.children().is(':checked'))
-// 		{
-// 			this.$el.css('background','#ddffdd');
-// 			this.$el.css('border-radius','5px');
-// 		}else
-// 		{
-// 			this.$el.css('background','#fff');
-// 		}		
-// 	}
-// });
-
 app.VistaUsuario = Backbone.View.extend({
 	tagName : 'article',
 	className : 'user-wrapper',//'panel panel-default',
 	plantilla : Handlebars.compile($('#usuario').html()),
-	modal  : Handlebars.compile($('#edicion').html()),
+	modalu  : Handlebars.compile($('#edicion').html()),
 	
 	events : {
 		'click button.edit'	    : 'modaledit', // Abre el modal para la edición del usuario
 		'click button.guardar'  : 'editar',		
 		// 'click button.cancelar' : 'editar',
-		'change #idperfil'	    : 'getpermisos',
+		// 'change #idperfil'	    : 'getpermisos',
 		// 'click .close' 			: 'editar'
 	},
 
 	render : function (){
 
 		this.$el.html(this.plantilla(this.model.toJSON()));	
-
-		// this.cargarPermisos(this.model.toJSON().idpermisos);
 		return this;
 	},
 
-	cargarSelectPerfil : function (perfil)
+	perfils : function()
 	{
-		var vistaPerfil = new app.VistaSelectPerfil({ model : perfil });
-		this.$('#idperfil').append(vistaPerfil.render().el);	
+		var list = '<% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
+        this.$('#idperfil'+this.model.get('id')).
+        html(_.template(list, 
+            { perfiles : app.coleccionPerfiles.toJSON() }
+        ));
 	},
 
-	cargarSelectPerfiles : function (callback) 
-	{ 
-		this.$("#idperfil").html('');
-		app.coleccionPerfiles.each(this.cargarSelectPerfil, this); callback(); 
+	modaledit :function()
+	{
+		// Pasamos el modelo a formato json para poder representarlo en la plantilla
+		var	mimodal = this.$('#myModal'+this.model.get('id')).attr('id');
+		
+		if(!mimodal)
+		{
+			this.$el.append(this.modalu(this.model.toJSON()));
+			select_Perfil(this.model.get('id'));							
+		}
+		
+		// Buscamos un nodo en el DOM que tenga el id ideperfil
+		// var nodo_sperfil = this.$el.find('#idperfil').children('#'+this.model.get('idperfil'));
+		// nodo_sperfil.attr('disabled',true).attr('select', 'selected');
+		
+		// select_Perfil(function() 
+		// {	//... Se le hace selected al puesto que le pertenece al modelo y desactiva el click...
+		// 	$(nodo_sperfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');
+		// });
+		
+		// var selecciona = nodo_sperfil.children().attr('id');
+		// selecciona.attr('disabled', true).attr('selected', 'selected');
+		// select_Perfil(function() 
+		// {	//... Se le hace selected al puesto que le pertenece al modelo y desactiva el click...
+		// 	$(nodo_sperfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');
+		// });
+
+		// this.chekea_permisos(JSON.parse(this.model.get('idpermisos')).idpermisos);
+		// console.log(this.model.get('id'));
+		// var mimodal = this.$el.find('#myModal'+this.model.get('id'));
+		
+		
+		// mimodal.modal({
+		// 	keybooard :false,
+		// 	backdrop  :false
+		// });
+
+		// var here = this;
+		// mimodal = this.$el.find('#myModal'+this.model.get('id'));
+		// mimodal.on('hidden.bs.modal', function()
+		// {
+		//  	this.remove();
+		//  	here.render();
+		// });
+
+		
+		
 	},
+
+});
+
+	// cargarSelectPerfil : function (perfil)
+	// {
+	// 	var vistaPerfil = new app.VistaSelectPerfil({ model : perfil });
+	// 	this.$('#idperfil').append(vistaPerfil.render().el);	
+	// },
+
+	// cargarSelectPerfiles : function (callback) 
+	// { 
+	// 	this.$("#idperfil").html('');
+	// 	app.coleccionPerfiles.each(this.cargarSelectPerfil, this); callback(); 
+	// },
 
 	// cargarPermiso : function(permiso)
 	// {
@@ -100,48 +137,6 @@ app.VistaUsuario = Backbone.View.extend({
 	// 	}
 	// },
 
-	modaledit :function()
-	{
-		// Pasamos el modelo a formato json para poder representarlo en la plantilla
-		this.$el.append(this.modal(this.model.toJSON()));
-
-		// Buscamos un nodo en el DOM que tenga el id ideperfil
-		var select_Perfil = this.$el.find('#idperfil');
-		var usuario = this.model;
-		this.cargarSelectPerfiles(function() 
-		{	/*... Se le hace selected al puesto que le pertenece al modelo y desactiva el click...*/
-			$(select_Perfil).children('#per'+usuario.get('idperfil')).attr('disabled', true).attr('selected', 'selected');
-		});
-
-		this.chekea_permisos(JSON.parse(this.model.get('idpermisos')).idpermisos);
-
-		var mimodal = this.$el.find('#myModal'+this.model.get('id'));
-		
-		var here = this;
-		mimodal.on('hidden.bs.modal', function()
-		{
-		 	this.remove();
-		 	here.render();
-		});
-
-		mimodal = this.$el.find('#myModal'+this.model.get('id'));
-		mimodal.modal({
-			keybooard :false,
-			backdrop  :false
-		});
-
-		function runEffect() 
-	    {
-	    	var options = { to: { width: 200, height: 60 }};
-		      	// run the effect
-		 	this.$( "#effect" ).toggle( 'blind', options, 500 );
-	    };
-	 
-	    // set effect from select menu value
-	    this.$('#togle').click(function() {  runEffect(); });
-		
-	},
-
 	// editar : function(events)
 	// {	
 	// 	var mimodal = this.$el.find('#myModal'+this.model.get('id'));
@@ -176,7 +171,29 @@ app.VistaUsuario = Backbone.View.extend({
 	// 	// );
 				
 	// }
-});
+
+
+
+// app.VistaPermiso = app.VistaRenderizaPermiso.extend({
+	
+// 	plantilla : Handlebars.compile($('#Permisos').html()),
+// 	events : {
+// 		'change .chek' : 'resalta'
+// 	},
+
+// 	resalta : function()
+// 	{
+// 		if(this.$el.children().is(':checked'))
+// 		{
+// 			this.$el.css('background','#ddffdd');
+// 			this.$el.css('border-radius','5px');
+// 		}else
+// 		{
+// 			this.$el.css('background','#fff');
+// 		}		
+// 	}
+// });
+
 
 
 // app.VistaUsuario = Backbone.View.extend({
