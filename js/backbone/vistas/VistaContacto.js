@@ -353,7 +353,7 @@ app.VistaRepresentante = app.VistaContacto.extend({
 			var json2 = pasarAJson(this.$tipoNuevo.serializeArray());
 			json1.tipo = json2.tipo;
 			json1.idpropietario = this.model.get('id');
-			json1.tabla = 'contactos';
+			json1.tabla = 'representantes';
 			
 			var here = this;
 

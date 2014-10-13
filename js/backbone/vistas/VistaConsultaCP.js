@@ -137,7 +137,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 			if ( visibilidad == '1' ) {
 				mensaje = '¿Deseas eliminar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
 			} else {
-				mensaje = '¿Deseas borrar a los clientes seleccionados?<br><b>Toda la información relacionada al cliente será borrada</b>';
+				mensaje = '¿Deseas borrar a los clientes seleccionados?<br><b>Toda la información relacionada con los clientes será borrada</b>';
 			};
 			confirmar(mensaje,
 				function () {

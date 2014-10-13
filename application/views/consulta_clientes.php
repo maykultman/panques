@@ -630,32 +630,32 @@
  </script>
  <!-- Utilerias -->
     <?=
-    // MV*
-    // modelos
-    script_tag('js/backbone/modelos/ModeloServicio.js').
-    script_tag('js/backbone/modelos/ModeloRepresentante.js').
-    script_tag('js/backbone/modelos/ModeloContacto.js').
-    script_tag('js/backbone/modelos/ModeloCliente.js').
-    script_tag('js/backbone/modelos/ModeloTelefono.js').
-    script_tag('js/backbone/modelos/ModeloServicioCliente.js').
-    //colecciones
+        // MV*
+        // modelos
+        script_tag('js/backbone/modelos/ModeloServicio.js').
+        script_tag('js/backbone/modelos/ModeloRepresentante.js').
+        script_tag('js/backbone/modelos/ModeloContacto.js').
+        script_tag('js/backbone/modelos/ModeloCliente.js').
+        script_tag('js/backbone/modelos/ModeloTelefono.js').
+        script_tag('js/backbone/modelos/ModeloServicioCliente.js').
+        //colecciones
 
-    script_tag('js/backbone/colecciones/ColeccionServicios.js').
-    script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
-    script_tag('js/backbone/colecciones/ColeccionContactos.js').
-    script_tag('js/backbone/colecciones/ColeccionClientes.js').
-    script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
-    script_tag('js/backbone/colecciones/ColeccionServiciosClientes.js').
+        script_tag('js/backbone/colecciones/ColeccionServicios.js').
+        script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+        script_tag('js/backbone/colecciones/ColeccionContactos.js').
+        script_tag('js/backbone/colecciones/ColeccionClientes.js').
+        script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
+        script_tag('js/backbone/colecciones/ColeccionServiciosClientes.js').
 
-    // vistas -->
-    script_tag('js/backbone/vistas/VistaServicio.js').
-    script_tag('js/backbone/vistas/VistaServicioCliente.js').
-    script_tag('js/backbone/vistas/VistaTelefono.js').
-    script_tag('js/backbone/vistas/VistaContacto.js').
-    script_tag('js/backbone/vistas/VistaCliente.js').
-   
-    // vista general -->
-    script_tag('js/backbone/vistas/VistaConsultaCP.js');
+        // vistas -->
+        script_tag('js/backbone/vistas/VistaServicio.js').
+        script_tag('js/backbone/vistas/VistaServicioCliente.js').
+        script_tag('js/backbone/vistas/VistaTelefono.js').
+        script_tag('js/backbone/vistas/VistaContacto.js').
+        script_tag('js/backbone/vistas/VistaCliente.js').
+       
+        // vista general -->
+        script_tag('js/backbone/vistas/VistaConsultaCP.js');
     ?>
     <script type="text/javascript">
         app.vistaConsultaClientes = new app.VistaConsultaClientes();

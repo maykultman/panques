@@ -99,7 +99,7 @@ script_tag('js/backbone/lib/underscore.js').
     });
 </script>
 	<title></title>
-	<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/modal.js'?>"></script>
+	<!--<script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/modal.js'?>"></script>-->
 </head>
 <body id="cuerpo">
 

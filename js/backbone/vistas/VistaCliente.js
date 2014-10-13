@@ -56,7 +56,7 @@ app.VistaCliente = Backbone.View.extend({
 
 			'change #logoCliente' 			: 'actualizarFoto',
 
-			'click #tr_btn_actualizarTipo'	: 'actualizarTipo'
+			'click #tr_btn_actualizarTipo'	: 'actualizarTipo',
 	},
 	initialize  : function () {
 		this.listenTo(app.coleccionServiciosClientesI, 'reset', this.agregarServciciosClienteI);
@@ -67,11 +67,13 @@ app.VistaCliente = Backbone.View.extend({
 		/*Listener para capturar los CAMBIOS en cada uno de
 		los ATRIBUTOS de los modelos*/
 		this.listenTo(this.model, 'change:visibilidad', this.remove);
+		/*Cuando la coleccion de contactos o representantes, recargaremos la visualizacion
+		  de de contactos y representantes.*/
+			this.listenTo(app.coleccionRepresentantes, 'destroy', this.recargarContactos);
+			this.listenTo(app.coleccionContactos, 'destroy', this.recargarContactos);
 		
 		//Otras variables
 		this.esperar;
-
-
 	},
 	render  : function () {
 		/*Cargar los datos del cliente en la plantilla de underscore
@@ -114,16 +116,17 @@ app.VistaCliente = Backbone.View.extend({
 
 		this.$editarAtributo = this.$('.editar');
 
-		/*La variable modal guarda el elem DOM del modal junto
-		después de creado en el DOM general*/
-		var modalCliente = this.$el.find('#modal'+this.model.get('id'));
-		modalCliente.modal({
+		/*En cuanto la ficha del la info del cliente (modal) se
+		  cargue aplicamos las propiedades personalizadas. El 
+		  usuario solo puede salir de la ficha con el botón x
+		  de la parte superior, además preparamos un listener
+		  para que cuando el modal sea escondido sea eliminado
+		  del DOM*/
+		$(this.$el.find('#modal'+this.model.get('id')))
+		.modal({
 			keyboard : false,
 			backdrop : false
-		});
-		/*Escuchamos el evento que hace que se esconda el modal
-		para luego eliminarlo*/
-		modalCliente.on('hidden.bs.modal', function(){
+		}).on('hidden.bs.modal', function(){
 			/*this es la variable modal. removemos el elem DOM
 			de todo el documento (DOM general)*/
 			here.render();
@@ -183,10 +186,6 @@ app.VistaCliente = Backbone.View.extend({
 				{
 					wait:true,
 					success:function(exito){
-						here.$('#alertasCliente #exito #comentario')
-							.html('Se creo el nuevo <strong>representante</strong>');
-						here.$('#alertasCliente #exito').removeClass('oculto');
-
 						Backbone.emulateHTTP = true;
 						Backbone.emulateJSON = true;
 						app.coleccionTelefonos.create(
@@ -200,17 +199,23 @@ app.VistaCliente = Backbone.View.extend({
 						);
 						Backbone.emulateHTTP = false;
 						Backbone.emulateJSON = false;
+						/*En cuanto sea creado, cerramos el modal
+						  para nuevo representante*/
 						here.$('#btn_cerrarNuevoContacto').click();
-						setTimeout(
-							function () {
-								here.agregarRepresentante(exito, here.model.get('id'), 'Nuevo representante');
-							},
-							500);
+						/*Hacemos que el navegador haga clic en el
+						  boton de ver contacto para cerrar la sección
+						  de contactos y luego que vuelva a hacer
+						  clic en el mismo boton para ver los cambios.
+						  De esto nose da cuenta el usuario.
+						  Esto sirve también para que cargue correctamente
+						  el teléfono registrado devido a que va a otra api.
+						  Si no se llegara a cargar el teléfono basta con
+						  cerrar la vista del contacto y abrirla de nuevo*/
+						  setTimeout(function() {here.$("#btn_verContactos").click().click()}, 500);
+						
 					},
 					error:function(){
-						here.$('#alertasCliente #error #comentario')
-							.html('Ocurrio un erro al intentar crear al <strong>representante</strong>');
-						here.$('#alertasCliente #error').removeClass('oculto');
+						alerta('Ocurrio un erro al intentar crear al <strong>representante</strong>. Intente más tarde', function () {});
 					}
 				}
 			);
@@ -221,10 +226,6 @@ app.VistaCliente = Backbone.View.extend({
 				{
 					wait:true,
 					success:function(exito){
-						here.$('#alertasCliente #exito #comentario')
-							.html('Se creo el nuevo <strong>contacto</strong>');
-						here.$('#alertasCliente #exito').removeClass('oculto');
-
 						Backbone.emulateHTTP = true;
 						Backbone.emulateJSON = true;
 						app.coleccionTelefonos.create(
@@ -238,17 +239,23 @@ app.VistaCliente = Backbone.View.extend({
 						);
 						Backbone.emulateHTTP = false;
 						Backbone.emulateJSON = false;
+						/*En cuanto sea creado, cerramos el modal
+						  para nuevo contacto*/
 						here.$('#btn_cerrarNuevoContacto').click();
-						setTimeout(
-							function () {
-								here.agregarContacto(exito, here.model.get('id'), 'Nuevo contacto');
-							},
-							500);
+						/*Hacemos que el navegador haga clic en el
+						  boton de ver contacto para cerrar la sección
+						  de contactos y luego que vuelva a hacer
+						  clic en el mismo boton para ver los cambios.
+						  De esto nose da cuenta el usuario.
+						  Esto sirve también para que cargue correctamente
+						  el teléfono registrado devido a que va a otra api.
+						  Si no se llegara a cargar el teléfono basta con
+						  cerrar la vista del contacto y abrirla de nuevo*/
+						  setTimeout(function() {here.$("#btn_verContactos").click().click()}, 500);
+						
 					},
 					error:function(){
-						here.$('#alertasCliente #error #comentario')
-							.html('Ocurrio un erro al intentar crear al <strong>contacto</strong>');
-						here.$('#alertasCliente #error').removeClass('oculto');
+						alerta('Ocurrio un erro al intentar crear al <strong>contacto</strong>. Intente más tarde', function () {});
 					}
 				}
 			);
@@ -970,12 +977,13 @@ app.VistaCliente = Backbone.View.extend({
 		validarRFC(elem);
 	},
 	verContactos              	: function () {
+		// this.$('#divContactos').html('');
 		/*Si existe, eliminamos el modal que contiene el formulario
 		para nuevo contacto o representante. Debe realizarse debido a 
 		que dicho modal no se encuentra dentro del divContactos que sí
 		se limpia cada vez que se preciona el boton para ver contactos
 		*/
-		this.$el.children('#modalNuevoContacto'+this.model.get('id')).remove();
+		this.$el.find('#modalNuevoContacto'+this.model.get('id')).remove();
 		/*Desabilitamos los botones de eliminar y editar
 		  para que el usuario entienda que ahora solo 
 		  podrá editar a los contactos*/
@@ -985,7 +993,7 @@ app.VistaCliente = Backbone.View.extend({
 		if (this.$divContactos.parent().attr('class') == 
 			'visible oculto'
 		) {
-			// this.$divContactos.html(''); //Para el boton
+			this.$divContactos.html(''); //Para el boton
 			//CAMBIA LA IMAGEN DEL BOTON
 			this.$btn_contactos.children().toggleClass('MO icon-back');
 			/*Cargamos el dentro del contenedor mediante la
@@ -1007,56 +1015,41 @@ app.VistaCliente = Backbone.View.extend({
 			  regresar al conenedor del cliente*/
 			this.$panelBody.children().toggleClass('oculto');
 		};
-
+		
 		var here = this, existeRepr;
 
 		/*En el sistema solo se permite registrar un solo representante.
 		  Para desabilitar la opcion en el modal de resgistro de contacto
 		  buscamos si existe representante del cliente y enviamos la respuesta
 		  a la plantilla de #modalContacto*/
-		if (_.find(app.coleccionRepresentantes.toJSON(),function(obj){ 
-				return obj.idcliente == here.model.get('id') 
-			})
-		) {
+		if (app.coleccionRepresentantes.findWhere({idcliente:this.model.get('id')})) {
 			existeRepr = true;
 		} else{
 			existeRepr = false;
 		};
-		
-		this.$el.append( this.plantillaModalContacto( {
+		// console.log(existeRepr);
+		this.$el.children('.td_modal').append( this.plantillaModalContacto( {
 			id 			:this.model.get('id'), 
 			existeRepr 	:existeRepr
 		} ) );
 
 		/*Formulario para nuevo contacto. Hacemos referencia al
-		elemento mediante su selector*/
+		  elemento mediante su selector. Sirve para la funcion
+		  nuevoContacto*/
 		this.$formNuevoContacto = this.$('#formNuevoContacto');
-
-		/*Hacemos que el modal nuevo contacto se cierre solo con el boton cerrar--------*/
-			var modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
-			modalContacto.modal({
-				keyboard : false,
-				backdrop : false
-			});
-
-		/*Para que el modal no se muestre cuando se hace clic en el boton mostrar contactos*/
-		modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
-		modalContacto.modal('hide');
-		/*Las siguientes lineas resetean el formulario cuando el
-		usuario cierra el modal*/
-		modalContacto.on('hidden.bs.modal', function () {
-			// here.$formNuevoContacto[0].reset();
-			/*Eliminamos el modal*/
-			this.remove();
-			/*Disparamos dos eventos clic, uno para salir de la vista de contactos,
-			el segundo para volverlo a abrir. El usuario no se da cuenta de lo ocurrido*/
-			// here.$divContactos.html();
-			here.$('#btn_verContactos').click().click(); 
-		});
 		
-		// modalContacto = this.$el.find('#modalNuevoContacto'+this.model.get('id'));
-		// modalContacto.on('hidden.bs.modal', function () {
-		// });
+		/*Hacemos que el modal nuevo contacto se cierre solo con el boton cerrar--------*/
+		this.$el.find('#modalNuevoContacto'+this.model.get('id')).modal({
+			keyboard : false,
+			backdrop : false
+		})
+		.on('hidden.bs.modal', function () {
+			here.$('#formNuevoContacto')[0].reset();
+		})
+		.modal('hide');
+	},
+	recargarContactos 			: function () {
+		this.$("#btn_verContactos").click().click();
 	},
 	agregarContacto           	: function (tipo, esDe) {
 		var vista = new app.VistaContacto({model:tipo});
