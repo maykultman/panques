@@ -216,7 +216,7 @@ img{
 .tohead
 {
 	color: #fff;
-	text-align: center;
+	/*text-align: center;*/
 	font-size: 18px;
 	font-family: sans-serif;
 	font-weight: bold;
@@ -249,8 +249,13 @@ img{
 /*ui-widget-content*/
   #modulos a{
   	font-size: 14px!important;
-  	padding: 8px 5px!important;
+  	padding: 10px 8px!important;
 
+  }
+
+  #submodulos {
+  	padding: 20px;
+  	margin-left: 120px;
   }
 
 .chek 
@@ -258,4 +263,13 @@ img{
 	padding: 10px;
 	width: 50px;
 	float: left;
+}
+
+.posiciontab
+{
+	margin-top: 50px;
+	background:#fff; 
+	width:650px; 
+	border:1px solid #eee; 	
+	border-radius:4px; height:auto;
 }

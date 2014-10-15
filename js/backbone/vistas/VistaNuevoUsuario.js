@@ -4,19 +4,19 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	el : '#datosUsuario',
 	plantilla : _.template($('#tsubmodulos').html()),
 
-	events : {
-		'click #guardar'    : 'guardar',
-		// 'click #empleado'   : 'buscarEmpleado',
-		// 'blur  #empleado'   : 'Aidempleado',
-		// 'keypress #empleado': 'soloLetras',
-		// 'change #idperfil'  : 'mostrarPermisos',
-		// 'change #idpermisos' : 'marcarTodos'
-		// 'click .ui-corner-all' : 'resize',
-		'click .tohead' : 'resize',
-		'change #idperfil' : 'mispermisos'
-
+	events : 
+	{
+		'click #guardar'   : 'jsonpermisos',			
+		'keypress #empleado': 'soloLetras',
+		'click .tohead'    : 'resize',
+		'change #idperfil' : 'mispermisos',
+		'change #registroUsuario' : 'obtenerFoto1'
 	},
 
+	obtenerFoto1 : function(e)
+	{
+		obtenerFoto2(e, 'fotou');
+	},
 	initialize : function ()
 	{	
 		this.cargarModulo();	
@@ -29,6 +29,16 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	{
 		var efect = $(elemento.currentTarget).parent().children('.conf').attr('id');	
 		$('#'+efect).slideToggle( 500 );
+		if( $(elemento.currentTarget).children('#fl').children().attr('class') == 'icon-circledown' )
+		{
+			$(elemento.currentTarget).children('#fl').children().removeClass();
+			$(elemento.currentTarget).children('#fl').children().addClass('icon-circleup');
+		}
+		else
+		{
+			$(elemento.currentTarget).children('#fl').children().removeClass();
+			$(elemento.currentTarget).children('#fl').children().addClass('icon-circledown');	
+		}
 	},
 
 	selectEmpleados : function()
@@ -58,7 +68,6 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		for(var x=0; x < submodulos.length;x++)
 		{			
 			json.active = (x==0) ? "active" : "";
-			// json.id = submodulos[x].id;			
 			json.modulo = submodulos[x].modulo;
 			
 			json.submodulos = submodulos[x].permisos.split(",");			
@@ -69,13 +78,29 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	mispermisos : function(idperfil)
 	{
 		idperfil = $(idperfil.currentTarget).val();
-		var nombre = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
-		console.log(nombre);
-		// this.cargarPermisos();
-		// if(nombre)
-		// {
-		// 	marcarPermiso(JSON.parse(nombre).idpermisos, this.$el.find('.chek').children(), this.$el);	
-		// }		
+		var permisos = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
+		var mispermisos = jQuery.parseJSON(permisos);
+		var inputchek;
+		$('.check').attr('checked', false);
+		for(i in mispermisos)
+		{
+			if(
+				  mispermisos[i].nombre=='Clientes' ||mispermisos[i].nombre=='Proyectos'
+				||mispermisos[i].nombre=='Contratos'||mispermisos[i].nombre=='Cotizaciones'
+				||mispermisos[i].nombre=='Proyectos'||mispermisos[i].nombre=='Actividades'
+				||mispermisos[i].nombre=='Catálogos'||mispermisos[i].nombre=='Usuarios'
+			  )
+			{
+				for(x in mispermisos[i].submodulos)
+				{
+					for(y in mispermisos[i].submodulos[x].permisos)
+					{
+						inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+' #'+mispermisos[i].submodulos[x].permisos[y]);
+						$(inputchek).attr('checked',true);												
+					}					
+				}
+			}			
+		}		
 	},
 
 	marcarTodos : function(elemento)
@@ -86,52 +111,85 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	jsonpermisos : function()
 	{
 		var permisos = pasarAJson( this.$("#arraypermisos").serializeArray() ) ;		
-		var mispermisos ={};
-		mispermisos = {
-			clientes : 
-			{
-				Nuevo : permisos.clientesNuevo,
-				Clientes : permisos.clientesClientes,
-				Prospecto : permisos.clientesProspectos,
-				Papelera : permisos.clientesPapelera
-			},
-			proyectos : 
-			{
-				Nuevo : permisos.proyectosNuevo,
-				Cronograma : permisos.proyectosCronograma,
-				Proyectos : permisos.proyectosProyectos
-			},
-			contratos :
-			{
-				Nuevo 	  : permisos.contratosNuevo,
-				Contratos : permisos.contratosContratos,
-				Papelera  : permisos.contratosPapelera
-			},
-			cotizaciones :
-			{
-				Nuevo 		 : permisos.cotizacionesNuevo,
-				Cotizaciones : permisos.cotizacionesCotizaciones,
-				Papelera 	 : permisos.cotizacionesPapelera
-			},
-			catalogos :
-			{
-				Empleados : permisos.empleados,
-				perfiles  : permisos.perfiles,
-				roles     : permisos.roles,
-				puestos   : permisos.puestos 				
-			},
-			usuarios :
-			{
-				Nuevo 	 : permisos.usuariosNuevo,
-				Usuarios : permisos.usuariosUsuarios
-			}
-		};
+		var mispermisos = 
+			[
+				{
+					nombre:"Clientes", 	
+					submodulos:
+					[
+						{ nombre:"Nuevo",      permisos : permisos.ClientesNuevo	   },
+						{ nombre:"Prospectos", permisos : permisos.ClientesProspectos  },
+						{ nombre:"Clientes",   permisos : permisos.ClientesClientes  },
+						{ nombre:"Papelera",   permisos : permisos.ClientesPapelera  },
+					]
+				},
+
+				{
+					nombre:"Proyectos", 	
+					submodulos:
+					[
+						{ nombre:"nuevo",	   permisos: permisos.ProyectosNuevo      },
+						{ nombre:"Proyectos",  permisos: permisos.ProyectosProyectos  },
+						{ nombre:"Cronograma", permisos: permisos.ProyectosCronograma },
+					]
+				},
+
+				{
+					nombre:"Contratos", 	
+					submodulos:
+					[
+						{ nombre : "nuevo",     permisos: permisos.ContratosNuevo  		 },
+						{ nombre : "Contratos", permisos: permisos.ContratosCotizaciones },
+						{ nombre : "Papelera",  permisos: permisos.ContratosPapelera     }
+					]
+				},
+
+				{
+					nombre:"Cotizaciones", 
+					submodulos:
+					[
+						{ nombre : "Nuevo",        permisos: permisos.CotizacionesNuevo  		},
+						{ nombre : "Cotizaciones", permisos: permisos.CotizacionesCotizaciones },
+						{ nombre : "Papelera",     permisos: permisos.CotizacionesPapelera     }
+					]
+				},
+
+				// {
+				// 	nombre:"Actividades", 	
+				// 	submodulos:
+				// 	[
+				// 		{nombre:"nuevo",permisos:[1]},
+				// 		{nombre:"Proyectos",permisos:[2,3,4]}
+				// 	]
+				// },
+
+				{
+					nombre:"Catálogos",
+					submodulos:
+					[
+						{ nombre:"Empleados", permisos: permisos.Empleados 	},
+						{ nombre:"Perfiles",  permisos: permisos.Perfiles 	},
+						{ nombre:"Puestos",   permisos: permisos.Puestos 	},
+						{ nombre:"Roles",     permisos: permisos.Roles 		},
+						{ nombre:"Servicios", permisos: permisos.Servicios	}
+					]
+				},
+
+				{
+					nombre:"Usuarios",
+					submodulos:
+					[
+						{nombre:"Nuevo",permisos: permisos.UsuariosNuevo},
+						{nombre:"Usuarios",permisos: permisos.UsuariosUsuarios}
+					]
+				}
+			];	
+		
 		
 		for(x in mispermisos)
 		{
 			mispermisos[x] = limpiarJSON(mispermisos[x]);	
 		}
-		
 		return JSON.stringify(mispermisos);
 	},
 
