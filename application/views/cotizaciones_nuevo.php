@@ -60,8 +60,8 @@
 				<thead style="background : #F9F9F9;">
 					<tr>
 						<th><input id="todos" type="checkbox"></th>
-						<th style="min-width:150px;">Servicios a cotizar</th>
-						<th><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
+						<th style="min-width:170px;">Servicios a cotizar</th>
+						<th style="min-width:170px;"><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
 						<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
 						<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
 						<th>Importe</th>
@@ -81,12 +81,74 @@
 						<td><p id="total">0.00</p></td>
 						<td></td>
 					</tr> -->			
-				<tfoot style="background : #F9F9F9;">					
+				<tfoot style="background : #F9F9F9;">
+					<!-- <tr>
+						<th colspan="7">
+						</th>
+					</tr> -->
 					<tr>
-						<th class="iconos-operaciones" colspan="7">
+						<th></th>
+						<th></th>
+						<th style="text-align: right;">Total horas</th>
+						<th><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></th>
+						<th></th>
+						<th></th>
+						<th class="iconos-operaciones">
 							<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 							<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
 							<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+						</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th style="text-align: right;">Precio/Hora</th>
+						<th>
+							<input type="number" class="form-control input-sm" id="precio_hora" value="300" min="1">
+						</th>
+						<th></th>
+						<th> Subtotal </th>
+						<th>
+							<label id="label_subtotal">$0</label>
+							<input type="text" class="form-control input-sm input-tfoot" id="subtotal" style="display:none;" value="0">
+						</th>
+						<th> </th>
+					</tr>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th> Descuento </th>
+						<th style="position: relative;">
+							<input type="number" name="descuento" class="form-control input-sm input-tfoot" value="0">
+							<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
+						</th>
+						<th>
+						</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th> I.V.A. </th>
+						<th style="position: relative;">
+							<input type="number" class="form-control input-sm input-tfoot" value="16" disabled>
+							<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
+						</th>
+						<th>
+						</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th> Total </th>
+						<th>
+							<label id="label_total">$0</label>
+						</th>
+						<th>
 						</th>
 					</tr>
 					<!-- <tr>
@@ -169,7 +231,7 @@
 		</tr>
 	</script>-->
 	<script type="text/template" id="tds_servicio_seleccionado">
-		<td colspan="7" style="padding:0px;">
+		<td class="td_servicio" colspan="7" style="padding:0px;">
 				<table id="table_servicio_<%= id %>" class="table" style="margin-bottom:0px;">
 					<thead>
 						<tr class="active">
@@ -187,7 +249,7 @@
 								<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 							</td>
 							<td>
-								<input type="text" class="form-control input-sm importe" placeholder="300" disabled>
+								<input type="text" class="form-control input-sm importe" name="importes" disabled>
 							</td>
 							<td class="iconos-operaciones">
 								<span class="icon-circleup icon-circledown span_toggleSee" id="toggleSee_<%= id %>"></span>
@@ -199,8 +261,8 @@
 							<td>Sección</td>
 							<td>Observaciones</td>
 							<td>Horas</td>
-							<td>Precio/H</td>
 							<td></td>
+							<td>Costo</td>
 							<td></td>
 						</tr>
 					</thead>
@@ -223,14 +285,16 @@
 				<input type="hidden" name="seccion">
 				<input type="hidden" name="descripcion">
 				<input type="hidden" name="horas" 		value="1">
-				<input type="hidden" name="precio_hora" value="300">
+				<input type="hidden" name="precio_hora">
 			</form>
 		</td>
 		<td><input type="text" 		id="seccion"		class="form-control input-sm" 			 	style="min-width:150px;"></td>
 		<td><textarea 				id="descripcion"	class="form-control" rows="3" 			 	style="min-width:150px;"></textarea></td>
-		<td><input type="number" 	id="horas"			class="form-control input-sm number" 	 	min="1" value="1"></td>
-		<td><input type="number" 	id="precio_hora"	class="form-control input-sm number" 	 	min="1" value="300"></td>
-		<td><input type="text" 							class="form-control input-sm costoSeccion" disabled></td>
+		<td><input type="number" 	id=""				class="form-control input-sm number horas" 	 	min="1" value="1"></td>
+		<td><input type="number" 	id=""				class="form-control input-sm number precio_hora" style="visibility:hidden;"	 	min="1"></td>
+		<td>
+			<input type="text" 							class="form-control input-sm costoSeccion"	disabled>
+		</td>
 		<td class="iconos-operaciones" style="border:0px;">
 			<span class="icon-circledelete span_eliminar_seccion"></span>
 		</td>

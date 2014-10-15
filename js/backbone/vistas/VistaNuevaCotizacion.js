@@ -1,5 +1,28 @@
 var app = app || {};
 
+function conComas(valor) {
+    var nums = new Array();
+    var simb = ","; //Éste es el separador
+    valor = valor.toString();
+    valor = valor.replace(/\D/g, "");   //Ésta expresión regular solo permitira ingresar números
+    nums = valor.split(""); //Se vacia el valor en un arreglo
+    var long = nums.length - 1; // Se saca la longitud del arreglo
+    var patron = 3; //Indica cada cuanto se ponen las comas
+    var prox = 2; // Indica en que lugar se debe insertar la siguiente coma
+    var res = "";
+ 
+    while (long > prox) {
+        nums.splice((long - prox),0,simb); //Se agrega la coma
+        prox += patron; //Se incrementa la posición próxima para colocar la coma
+    }
+ 
+    for (var i = 0; i <= nums.length-1; i++) {
+        res += nums[i]; //Se crea la nueva cadena para devolver el valor formateado
+    }
+ 
+    return res;
+}
+
 app.VistaSeccion = Backbone.View.extend({
 	tagName	: 'tr',
 	// className : 'tr_seccion',
@@ -7,7 +30,7 @@ app.VistaSeccion = Backbone.View.extend({
 		plantillaTrSeccion :  _.template( $('#td_seccion').html() )
 	},
 	events 	: {
-		'click .span_eliminar_seccion' : 'eliminarTr',
+		// 'click .span_eliminar_seccion' : 'eliminarTr',
 
 		'change .number'					: 'calcularSeccion',
 		'keyup .number'						: 'calcularSeccion',
@@ -19,15 +42,15 @@ app.VistaSeccion = Backbone.View.extend({
 	render: function (id) {
 		/*El parametro id, es la clave del servicio que se está cotizando*/
 		this.$el.html( this.plantillas.plantillaTrSeccion({ id:id }) );
+		/*Establecer el precio en el input escondido para calcular el precio
+		  de la sección*/
+		this.$('.precio_hora').val($('#precio_hora').val());
 		this.calcularSeccion();
 		return this;
 	},
-	eliminarTr 		: function () {
-		this.$el.remove();
-	},
 	calcularSeccion : function () {
-		var horas 		= this.$('#horas').val(),
-			precio_hora = this.$('#precio_hora').val();
+		var horas 		= this.$('.horas').val(),
+			precio_hora = this.$('.precio_hora').val();
 
 		/*Mostramos el costo total de la seccion*/
 		this.$('.costoSeccion').val( horas * precio_hora ).trigger('change');
@@ -46,27 +69,30 @@ app.VistaSeccion = Backbone.View.extend({
 app.VistaCotizarServicio = Backbone.View.extend({
 	tagName 	: 'tr',
 	plantillas 	: {
-		plantillaDelModelo :  _.template( $('#tds_servicio_seleccionado').html() )
+		plantillaSeleccionado :  _.template( $('#tds_servicio_seleccionado').html() )
 	},
 	events 		: {
 		'click #span_otraSeccion'	: 'apilarSeccion',
 		'click .span_toggleSee' : 'conmutarVista',
-		'click .span_eliminar_servicio' : 'eliminarVista',
 
 		'change .costoSeccion' : 'carlcularImporte',
+		'click .span_eliminar_seccion' : 'eliminarSeccion',
 	},
  	initialize 	: function () {
- 		this.indice = 0;
  	},
 	render 		: function () {
-		this.$el.html(this.plantillas.plantillaDelModelo(this.model.toJSON()));
+		this.$el.html(this.plantillas.plantillaSeleccionado(this.model.toJSON()));
+		var here = this;
 		this.apilarSeccion();
+		
 		return this;
 	},
 	apilarSeccion 	: function () {
 		var vistaSeccion = new app.VistaSeccion();
 		this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );
-		this.indice++;
+		/*Despues de que el se ha apilado el servicio a cotizar,
+		  calculamos instantaneamente el importe del servicio*/
+		this.carlcularImporte();
 	},
 	conmutarVista 	: function (e) {
 		/*Cambiamos el icono del boton, arriba o abajo segun sea el caso*/
@@ -78,20 +104,13 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		/*La función slideToggle solo funciona con td, no con table, tr, thead, tbody no tfoot*/
 		this.$(selector).slideToggle('fast');
 	},
-	eliminarVista 	: function (e) {
-
-		/*Antes de eliminar la vista buscamos el servicio correspondiente en la lista de servicios*/
-		$(
-			'#table_servicios #'
-			+this.$(e.currentTarget)
-			.attr('id')
-		)							/*Obtenemos el imput checkbox*/
-		.attr('disabled',false) 	/*Desmarcamos el checkbox*/
-		.attr('checked',false) 		/*Activamos el checkbox*/
-		.parents('tr')				/*Buscamos tr que contiene el checkbox*/
-		.css('color','#333'); 		/*Reestablecemos el color original del texto*/
-
-		this.$el.remove();
+	eliminarSeccion 		: function (e) {
+		/*El argumento e, es el span para elliminar
+		  la sección. Recorremos las tags padres hasta
+		  encontrar el tr se la sección, por eso
+		  son las dos funciones parent.*/
+		this.$(e.currentTarget).parent().parent().remove();
+		this.carlcularImporte();
 	},
 	carlcularImporte 	: function () {
 		/*Cada seccion tiene un imput con class ".costoSeccion."
@@ -100,11 +119,19 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		  de los precios de cada sección, sumarlos y colocar el
 		  resultado en el campo importe.*/
 		var costoSecciones = this.$('.costoSeccion'),
-			importe = 0;
+			importe = 0,
+			here = this;
 		for (var i = 0; i < costoSecciones.length; i++) {
 			importe += parseInt(this.$(costoSecciones[i]).val());
 		};
-		this.$('.importe').val(importe);
+		/*Establecemos el valor del importe, y justo despues
+		  disparamos un evento change para que la vista general
+		  realice el cálculo del subtotal. Utilizamos la funcion
+		  setTimeout*/
+		setTimeout(function() {
+			here.$('.importe').val(importe).trigger(jQuery.Event('change'));
+		}, 10);
+		
 	},
 	validarTypeNumber	: function (e) {
 		// console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
@@ -161,12 +188,25 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			/*'click     .span_eliminar'   : 'eliminarServicio',*/  //Elimina un servicio de la tabla servicios cotizando
 
 			
-			'keyup     .valor'       : 'establecerTotal',   //Escucha los cambios en los inputs numericos y actualiza el total
-			
+			'change     .importe'       : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
+
+
+			'change 	#precio_hora' : 'dispararCambio',
+			'keyup 		#precio_hora' : 'dispararCambio',
+			'mousewheel #precio_hora' : 'dispararCambio',
+			'click 		#precio_hora' : 'dispararCambio',
+			'focus 		#precio_hora' : 'dispararCambio',
+
+			'change 	.input-tfoot' : 'calcularTotal',
+			'keyup 		.input-tfoot' : 'calcularTotal',
+			'mousewheel .input-tfoot' : 'calcularTotal',
+			'click 		.input-tfoot' : 'calcularTotal',
+			'focus 		.input-tfoot' : 'calcularTotal',
+
+			'click .span_eliminar_servicio' : 'eliminarVista',	
 	},
 
-	initialize : function () 
-	{
+	initialize : function () {
 		var fecha = new Date();   var dia=0;       var mes=0;
 		/* Le damos formato a la fecha para que lo muestre en el campo fecha*/
 		(fecha.getDate()<10) ? dia = '0'+fecha.getDate()      : dia = fecha.getDate();
@@ -205,8 +245,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				this.$('#tbody_servicios').append( vistaTrServ.render().el );
 	},
 
-	cargarServiciosCo : function ()
-	{
+	cargarServiciosCo : function () {
 		/*....hacemos un ciclo each a la colección pasandole cada modelo de servicio para poder pintarlo en la tabla......*/
 			this.$('#tbody_servicios').html('');
 			app.coleccionServicios.each(this.cargarServicioCo, this);
@@ -246,35 +285,92 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	// 	 event.preventDefault(); 
 	// },
 
-	// establecerTotal : function (elemento)
-	// {
-	// 	var total = 0;
-	// 	// ...Cada que se levante una tecla recuperaremos todos los importes y lo pasamos a un array...          
-	// 	var array = pasarAJson($('.importe').serializeArray());
-	// 	/*...¿Es un array de importes?...*/
-	// 	if($.isArray(array.importes))
-	// 	{    
-	// 		// ...Si es cierto iteramos sobre los importes....
-	// 		for(i in array.importes)
-	// 			{	
-	// 			// ....Cada posicion la convertimos a número y lo adicionamos al total....
-	// 					total+=Number(array.importes[i]);
-	// 			}
-	// 			// ...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..
-	// 			$('#total').text(total);
-	// 	}
-	// 	else
-	// 	// {	..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....
-	// 		$('#total').text(array.importes);	
-	// 	}	            	
-	// },
-	marcarTodosCheck : function(elemento)
-	{        
+	calcularSubtotal : function () {
+		var total = 0,
+			decimales;
+		/*Cada cambio en cualquiera de los importes activará los campos,
+		  para que la función serializeArray pueda obtener sus valores,
+		  de lo contrario no funcionará*/          
+		var array = pasarAJson(this.$('.importe').attr('disabled',false).serializeArray());
+		/*Despues de haber obtenido los importes desactivamos nuevamente
+		  los campos*/
+		this.$('.importe').attr('disabled',true);
+		console.log();
+		/*...¿Es un array de importes?...*/
+		if($.isArray(array.importes)) {    
+			// ...Si es cierto iteramos sobre los importes....
+			for(i in array.importes)
+				{	
+				// ....Cada posicion la convertimos a número y lo adicionamos al total....
+						total+=Number(array.importes[i]);
+				}
+				// ...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..
+				this.$('#subtotal').val(total.toFixed(2));
+
+				/*Formateamos subtotal para mostrarlo*/
+				total = '' + total.toFixed(2);
+				total = total.split('.');
+				decimales = total[1];
+				total = conComas(total[0].split(''));
+				
+				this.$('#label_subtotal').text( '$'+total+'.'+decimales );
+		} else {	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
+			/*Evaluamos si hay algun valor en el objeto.
+			  Si no lo hay colocamos un cero, puesto que
+			  no hay importe que sumar*/
+			if ( _.isUndefined(array.importes) ) {
+				this.$('#label_subtotal').text('$0');
+				this.$('#subtotal').val(0);
+			} else{
+				/*Si hay almenos un importe lo imprimimos
+				  en pantalla en su campo correspondiente*/
+				this.$('#subtotal').val(Number(array.importes).toFixed(2));
+
+				/*Formateamos subtotal para mostrarlo*/
+				total = '' + Number(array.importes).toFixed(2);
+				total = total.split('.');
+				decimales = total[1];
+				total = conComas(total[0].split(''));
+				
+				/*Formateamos subtotal para mostrarlo*/
+				this.$('#label_subtotal').text( '$'+total+'.'+decimales );
+			};
+			
+		}
+		this.calcularTotal();
+	},
+	calcularTotal : function () {
+		var valores = this.$('.input-tfoot'),
+			total = Number($(valores[0]).val()),
+			desc  = Number($(valores[1]).val()) / 100,
+			iva   = Number($(valores[2]).val()) / 100,
+			decimales;
+
+		total = total - total * desc;
+		total = total + total * iva;
+		total = '' + total.toFixed(2);
+		total = total.split('.');
+		decimales = total[1];
+		total = conComas(total[0].split(''));
+		this.$('#label_total').text( '$'+total+'.'+decimales );
+
+		this.calcularTotalHoras();
+	},
+	calcularTotalHoras	: function (argument) {
+		var horas = this.$('.horas'),
+			total = 0;
+		this.$('#totalHoras').val(function () {
+			for (var i = 0; i < horas.length; i++) {
+				total += Number( $(horas[i]).val() );
+			};
+			return total;
+		}());
+	},
+	marcarTodosCheck : function(elemento) {        
 			marcarCheck(elemento);
 	},
 
-	buscarCliente : function (elemento)
-	{
+	buscarCliente : function (elemento) {
 		/*..Establecemos global el array de clientes por que nos servira en el metodo buscarRepresentante...*/
 		clientes = new Array();  var cont  = 0;
 		/*..Iteramos la coleccionDeClientes y Obtenemos a todos los clientes en un array...*/
@@ -293,8 +389,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			});
 	},
 
-	completarServicio : function()
-	{
+	completarServicio : function() {
 		var completar=new Array();
 		
 		for(i in app.coleccionDeServicios)
@@ -306,16 +401,14 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		$( "#bserv" ).on( "autocompleteselect", function( event, ui ) { esto.buscarServicio(ui.item.value); });
 
 	},
-	buscarServicio : function(elemento)
-	{
+	buscarServicio : function(elemento) {
 			var modeloServicio = app.coleccionServicios.where({ nombre : elemento});
 			var vistaServicioCotizacion = new app.VistaServicioCotizacion( { model: modeloServicio[0] } );
 			this.$tablaServicios.html('');
 			this.$tablaServicios.append( vistaServicioCotizacion.render().el );
 	},
 
-	sinCoincidencias  : function (e) 
-	{
+	sinCoincidencias  : function (e) {
 		if(e.keyCode===8)
 		{
 			this.cargarServiciosCo();
@@ -323,8 +416,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	},
 
 	// Validamos que el campo #cliente solo contenga letras
-		soloLetras : function(e)
-		{
+		soloLetras : function(e) {
 			key = e.keyCode || e.which;
 			tecla = String.fromCharCode(key).toLowerCase();
 			letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
@@ -344,8 +436,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			 }         
 		},
 
-		borrar : function(e)
-		{
+		borrar : function(e) {
 			if(e.keyCode===8)
 			{          
 				$('#idcliente')       . val( '' );
@@ -354,8 +445,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			}          
 		},
 
-		buscarRepresentante : function(pcliente)
-		{
+		buscarRepresentante : function(pcliente) {
 				var idcliente     = ( ( app.coleccionClientes.findWhere       ( { 'nombreComercial' : pcliente  } ) ).toJSON() ).id ;
 				var representante = ( ( app.coleccionRepresentantes.findWhere ( { 'idcliente'       : idcliente } ) ).toJSON() )    ;
 				if(representante)  
@@ -366,8 +456,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				}
 		},
 
-		vistaPrevia : function(elemento)
-		{
+		vistaPrevia : function(elemento) {
 				localStorage.clear(); 
 				var modeloservicios = pasarAJson($('.filas').serializeArray());
 				var longitud = modeloservicios.id;
@@ -419,8 +508,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		},
 
 		/*..Una vez que tenemos lista la cotizacion nos toca el turno de guardala en la base de datos :D ...*/
-		guardarCotizacion : function (elemento)
-		{
+		guardarCotizacion : function (elemento) {
 			
 			var forms = this.$('.form_servicio');
 			for (var i = 0; i < forms.length; i++) {
@@ -515,8 +603,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 	}, //Fin del metodo guardarCotizacion
 
-	aumentarContador : function()
-	{
+	aumentarContador : function() {
 		return this.contadorAlerta++;
 	},
 	/*Funciones creadas por geyser*/
@@ -531,6 +618,26 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				};
 			};
 			// this.$('.span_toggleSee').click();
+		},	
+		eliminarVista 	: function (e) {
+
+			/*Antes de eliminar la vista buscamos el servicio correspondiente en la lista de servicios*/
+			this.$(
+				'#table_servicios #'
+				+this.$(e.currentTarget)
+				.attr('id')
+			)							/*Obtenemos el imput checkbox*/
+			.attr('disabled',false) 	/*Desmarcamos el checkbox*/
+			.attr('checked',false) 		/*Activamos el checkbox*/
+			.parents('tr')				/*Buscamos tr que contiene el checkbox*/
+			.css('color','#333'); 		/*Reestablecemos el color original del texto*/
+
+			/*En vez de eliminar la vista del servicio que se está cotizando
+			  lo hacemos en esta clase y no en su propia clase, debido a que
+			  necesitamos ejecutar la función calcularSubtotal que se encuentra
+			  en esta clase.*/
+			this.$(e.currentTarget).parents('.td_servicio').remove();
+			this.calcularSubtotal();
 		},
 		eliminarVistas 	: function () {
 			var spans = $('.todos:checked'); /*Obtenemos todos los checkbox activados*/
@@ -548,6 +655,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					function () {});
 			};
 			// this.$('.span_eliminar_servicio').click();
+		},	
+		dispararCambio	: function (e) {
+			var precioHora = $(e.currentTarget).val();
+			// $('input[name="precio_hora"]').val(precioHora);
+			this.$('.precio_hora').val(precioHora).trigger('change');
+			// this.$('.importe').trigger('change');
+			// this.$('.number').trigger('change');
 		}
 
 
