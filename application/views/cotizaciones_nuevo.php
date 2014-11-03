@@ -10,47 +10,7 @@
 			</form>
 		</div>
 	</div>	
-</section><!-- /.contenedor_principal_modulos -->
-
-
-<!-- <script type = "text/plantilla" id="plantilla_Cotizacion"></script> -->
-
-<!-- plantillas -->
-	<!-- <script type = "text/plantilla" id="PCservicios">
-		<td   class="icon-operaciones">
-			<span id="infoSC" class="icon-info" ></span>
-
-			<label id="input_td" for="<%- id %>"><%- nombre %></label>
-			<ul class="ocultoI">		
-				<li> Concepto    : &nbsp;&nbsp; <%- concepto    %>  </li>   
-				<li> Precio      : &nbsp;&nbsp; <%- precio      %>  </li>    
-				<li> +Iva        : &nbsp;&nbsp; <%- masiva      %>  </li>   
-				<li> Realización : &nbsp;&nbsp; <%- realizacion %>  </li>
-			</ul>
-	        <input type="checkbox" class="serviciosCotizar" id="<%- id %>">  	  
-		</td>
-	</script>
-	<script type = "text/plantilla" id="serviciosAgregado">	
-
-			<td><input type="checkbox" id="<%- id %>" name="todos"></td><td><%-nombre %></td>
-			<td><input type="text" id="duracion"  name="duracion"  value="<%-realizacion%>"  class="valor">   </td>
-			<td><input type="text" id="cantidad"  name="cantidad"  value="1"				 class="valor">   </td>
-			<td><input type="text" id="precio"    name="precio"    value="<%-precio     %>"  class="valor">   </td>
-			<td><input type="text" id="descuento" name="descuento" value="0" 				 class="valor">   </td>		
-			<td><input 			   id="importe"   name="importes" 						     class="importe">
-			<form class="filas">
-				  <input type="hidden"   				 name="id" 		  value="<%-id%>"		   >
-			      <input type="hidden"  id="hduracion"   name="duracion"  value="<%-realizacion%>" >
-			      <input type="hidden"  id="hcantidad"   name="cantidad"  value="1"                > 
-			      <input type="hidden"  id="hprecio"     name="precio" 	  value="<%-precio     %>" >
-			      <input type="hidden"  id="hdescuento"  name="descuento" value="0"                >
-			</form>
-			</td>
-
-			<td class="iconos-operaciones">			
-				<span class="icon-circledelete btndelete"  data-toggle="tooltip" title="Eliminar" id="<%- id %>" style="vertical-align: middle;"></span>
-			</td>	
-	</script> -->
+</section>
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
 			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
@@ -272,7 +232,6 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/funcionescrm.js').
 	// <!-- MVC -->
 	script_tag('js/backbone/modelos/ModeloServicio.js').
-	script_tag('js/backbone/modelos/ModeloCotizacion.js').
 	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
