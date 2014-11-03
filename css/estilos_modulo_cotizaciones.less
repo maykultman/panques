@@ -6,6 +6,10 @@
 	}
 /**/
 
+#h4_folio {
+	color: red !important;
+}
+
 	#tabla_cotizaciones td{
 		
 		vertical-align: middle;
@@ -16,12 +20,12 @@
 		float: left;
 	}
 
-	#tabla_cotizaciones input{
+	/*#tabla_cotizaciones input{
 		width: 100%;
 		margin: 0px;
 
 	
-	}
+	}*/
 
 	/*#mostrarTabla tr{
 		&:hover{
@@ -57,7 +61,8 @@
 	}
 	/*Estilos para los botones eliminar de la tabla de servicios que se están cotizando*/
 	.iconos-operaciones span.span_eliminar_servicio:hover,
-	.iconos-operaciones span.span_eliminar_seccion:hover {
+	.iconos-operaciones span.span_eliminar_seccion:hover,
+	.iconos-operaciones span.span_deleteAll:hover {
 		background:red;
 		color: white;
 	}
@@ -193,3 +198,8 @@ td .ocultoI2 { display: none;  }
 				/*width:457px;*/
 				/*height:100%;*/
 			}
+
+/*Modificaciones tablesorter*/
+	input.tablesorter-filter.disabled {
+		display: none;
+	}

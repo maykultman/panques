@@ -1,15 +1,15 @@
     <div id="div_fullHeight">    
         <div id="posicion_infotd">
     		<div id="clientes" class="wrapper">                            
-    			<table id="tbla_cliente" class="tablesorter table-striped">
+    			<table id="tbla_cliente" class="table table-striped tablesorter">
     				<!-- BOTON PARA PRUEBAS -->
     				<!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
     				<thead>
     					<tr>
-    						<th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
+    						<th class="sorter-false"><input id="todos" type="checkbox" name="todos"></th>
     						<th class="sorter-false"></th>
     						<th class="sorter-false">
-    							<input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
+    							<input class="form-control input-sm search" type="search" placeholder="Nombre comercial" data-column="all">
     							<span class="icon-search busqueda"></span>
     						</th>
     						<th class="sorter-false">Giro</th>

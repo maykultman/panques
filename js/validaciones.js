@@ -49,22 +49,22 @@
     //         alert(2);
     //     });
     // });
-    function validarInput (inputType, valor, e) {
-        var respuesta;
-        console.log(isNaN(valor));return;
-        switch(inputType) {
-            case 'number':
-                if( isNaN(valor) ) {
-                    alerta('Solo números porfavor',function () {});
+    // function validarNumero (inputType, valor, e) {
+    //     var respuesta;
+    //     console.log(isNaN(valor));return;
+    //     switch(inputType) {
+    //         case 'number':
+    //             if( isNaN(valor) ) {
+    //                 alerta('Solo números porfavor',function () {});
 
-                    $(e.currentTarget).css('border-color','#a94442');
+    //                 $(e.currentTarget).css('border-color','#a94442');
 
-                    respuesta = false;
-                } else{
-                    $(e.currentTarget).css('border-color','#CCC');
-                    respuesta = true;
-                }
-            break;
-        }
-        return respuesta;
-    }
+    //                 respuesta = false;
+    //             } else{
+    //                 $(e.currentTarget).css('border-color','#CCC');
+    //                 respuesta = true;
+    //             }
+    //         break;
+    //     }
+    //     return respuesta;
+    // }

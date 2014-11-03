@@ -117,7 +117,7 @@ class Escritorio extends REST {
 			{
 				$this->contratos();				
 			}
-			if($this->ruta()==='cotizaciones_nuevo'||$this->ruta()==='cotizaciones_consulta')
+			if($this->ruta()==='cotizaciones_nuevo'||$this->ruta()==='cotizaciones_consulta'||$this->ruta()==='cotizaciones_papelera')
 			{
 				$this->cotizaciones();				
 			}
@@ -275,6 +275,11 @@ class Escritorio extends REST {
 			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'cotizaciones_consulta')
+		{   
+			$data['cotizaciones'] = $this->budget->get();
+			$this->load->view($this->ruta(), $data);
+		}
+		if($this->ruta() == 'cotizaciones_papelera')
 		{   
 			$data['cotizaciones'] = $this->budget->get();
 			$this->load->view($this->ruta(), $data);

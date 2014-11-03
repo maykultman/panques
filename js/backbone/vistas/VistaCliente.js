@@ -593,9 +593,7 @@ app.VistaCliente = Backbone.View.extend({
 	cargarServicios           	: function () {
 		var list = '<% _.each(servicios, function(servicio) { %> <option disabled id="<%- servicio.id %>" value="<%- servicio.id %>"><%- servicio.nombre %></option> <% }); %>';
 		this.$('.menuServicios').
-		append(_.template(list, 
-			{ servicios : app.coleccionServicios.toJSON() }
-		));
+		append(_.template(list)({ servicios : app.coleccionServicios.toJSON() }));
 		this.$('.menuServicios').selectize({
 			create: true,
 			maxItems: 1

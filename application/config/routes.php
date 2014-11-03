@@ -21,6 +21,7 @@ $route[ 'escritorio/contratos_historial'  	] = 'escritorio/modulo';
 $route[ 'escritorio/formatoContrato'        ] = 'escritorio/modulo';
 $route[ 'escritorio/cotizaciones_nuevo'     ] = 'escritorio/modulo';
 $route[ 'escritorio/cotizaciones_consulta'  ] = 'escritorio/modulo';
+$route[ 'escritorio/cotizaciones_papelera'  ] = 'escritorio/modulo';
 $route[ 'escritorio/formatoCotizacion'      ] = 'escritorio/modulo';
 $route[ 'escritorio/actividades' 		    ] = 'escritorio/modulo';
 $route[ 'escritorio/pruebapdf'          	] = 'escritorio/pdf';

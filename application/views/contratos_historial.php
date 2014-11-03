@@ -367,7 +367,7 @@
 		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
     </script>
 <!-- vistas -->
-<?=	script('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
-	script('js/backbone/vistas/VistaNuevoContrato.js').
-	script('js/backbone/vistas/VistaConsultaContrato.js');
+<?=	script_tag('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
+	script_tag('js/backbone/vistas/VistaNuevoContrato.js').
+	script_tag('js/backbone/vistas/VistaConsultaContrato.js');
 ?>

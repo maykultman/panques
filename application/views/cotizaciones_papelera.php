@@ -32,56 +32,33 @@
 									<th class="filter-false">Total</th>
 									<th class="sorter-false">Operaciones</th>
 								</tr>
-							</thead>					
+							</thead>
 							<tbody id="tbody_cotizaciones">
 								<!-- Lista de las ultimas cotizaciones-->
 							</tbody>		
 						</table>
 					</div>
-					<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
+					<button  type="button" id="btn_eliminarVarios" class="btn btn-danger">  Borrar varios </button>
+					<button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button> 
 				</div>
 			</div>
 		</section>
-		<section id="section_actualizar" class="row">
-			<div class="col-md-12">
-				<button type="button" class="btn btn-default btn_toggle">Regresar</button>
-				<div class="row">
-					<div class="col-md-10"><h3>Información Básica</h3></div>
-					<div class="col-md-2"><h3 id="h4_folio"></h3></div>
-				</div>
-				<form id="registroCotizacion">
-					
-				</form>
-			</div>
-		</section><!-- /.row -->
 	</section><!-- /.contenedor_principal_modulos -->
 </div>
 
 	<script type = "text/plantilla" id="tds_Cotizacion">
 		<td><input type="checkbox" class="todos" name="todos" value="<%= id %>" />
-		<td>	<%=titulo%>									</td>
 		<td>	<%=cliente%>								</td>
+		<td>	<%=titulo%>								</td>
 		<td>	<%=empleado%>								</td>
 		<td>	<%=formatearFechaUsuario(new Date(fecha))%>	</td>
 		<td>   $<%=total%>									</td>
 		<td class="icon-operaciones">
-			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
-			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver cotización"></span>
-			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
-			<span class="icon-edit2 span_editar"    	data-toggle="tooltip" data-placement="top" title="Editar"><input type="hidden" value="<%= id %>"></span>
-			<!--<span class="icon-uniF5E2"  				data-toggle="tooltip" data-placement="top" title="Realizar contrato"></span>-->
-			<form>
-				<div class="dropdown">
-					<span class="icon-uniF73E dropdown-toggle versione" id="versiones"		data-toggle="dropdown" data-placement="top" title="Versiones"></span>
-					<ul id="ul-versiones" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="versiones">
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Vacío</a></li>
-						<!--<li role="presentation" class="divider"></li>-->
-					</ul>
-				</div>
-			</form>
+			<span class="icon-restore span_restaurar"		data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
+			<span class="icon-circledelete span_borrar"	data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
+		
 		</td>
 	</script>
-
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
 			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
@@ -94,8 +71,7 @@
 		<div class="row">
 			<div class="col-md-4">
 				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título de la cotización">
-				<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
-				<input type="hidden" name="idcliente">
+				<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
 				<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			
 				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
@@ -131,7 +107,8 @@
 				<table class="table"> <!-- id="mostrarTabla" -->
 					<thead style="background : #F9F9F9;">
 						<tr>
-							<th colspan="2" style="min-width:200px;"><label><input id="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label></th>
+							<th><input id="todos" type="checkbox"></th>
+							<th style="min-width:170px;">Servicios a cotizar</th>
 							<th style="min-width:170px;"><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
 							<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
 							<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
@@ -218,7 +195,7 @@
 		</div>		
 		<br><br> 
 		<button id="guardar"   type="button" class="btn btn-primary"> Guardar  </button>		    
-		<button type="button" class="btn btn-default btn_toggle"> Cancelar </button>
+		<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>
 		<button id="vista-previa"  type="button" class="btn btn-default"> Vista previa </button>		
 	</script>
 	<script type="text/template" id="tds_servicio_seleccionado">
@@ -262,8 +239,8 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td style="border:0px;"></td>
-							<td colspan="6" style="border:0px;"><button type="button" id="span_otraSeccion" class="btn btn-primary btn-xs"><span class="icon-circleadd"></span> sección</button></td>
+							<td style="border:0px;padding:0px 8px 8px 0px;"></td>
+							<td style="border:0px;padding:0px 8px 8px 0px;" class="iconos-operaciones" colspan="6"><span id="span_otraSeccion" class="icon-circleadd"></span></td>
 						</tr>
 					</tfoot>
 				</table>
@@ -307,32 +284,6 @@
 			<span class="icon-circledelete span_eliminar_seccion"></span>
 		</td>
 	</script>
-	<script type="text/template" id="li_version">
-		<% _.each(versiones, function(version) { %>
-			<% if (actual == version.version) { %>
-				<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="#">
-							<input type="radio" name="status" style="width:auto;" checked disabled>
-							<b>Versión <%= version.version %></b> <small class="label label-info">Actual</small>
-						<!--<span id="<%= version.id %>" class="icon-trash span_papeleraVersion"	data-toggle="tooltip" data-placement="top" title="Papelera" style="font-size:13px;"></span>-->
-						<!--<span id="<%= version.id %>" class="icon-preview span_vistaPreviaVersion"	data-toggle="tooltip" data-placement="top" title="Ver cotización" style="font-size:13px;"></span>-->
-					</a>
-				</li>
-			<% } else{ %>
-				<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="#">
-						<label for="cotizacion<%= version.id %>" style="margin:0px;">
-							<input type="radio" class="label_statusVersion" id="cotizacion<%= version.id %>" name="status" value="<%= version.id %>" style="width:auto;">
-							Versión <%= version.version %>
-						</label>
-						<span id="<%= version.id %>" class="icon-trash span_papeleraVersion"	data-toggle="tooltip" data-placement="top" title="Papelera" style="font-size:13px;"></span>
-						<span id="<%= version.id %>" class="icon-preview span_vistaPreviaVersion"	data-toggle="tooltip" data-placement="top" title="Ver cotización" style="font-size:13px;"></span>
-					</a>
-				</li>
-			<% }; %>
-		 <% }); %>
-	</script>
-
 <!-- Librerias -->
 <?=
 script_tag('js/backbone/app.js').
@@ -371,5 +322,5 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/vistas/VistaConsultaCotizaciones.js');
 ?>
 <script>
-	app.cotizaciones = new app.CotizacionesVisibles();
+	app.cotizaciones = new app.CotizacionesEliminadas();
 </script>

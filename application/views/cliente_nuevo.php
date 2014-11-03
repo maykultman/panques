@@ -1,6 +1,6 @@
     <?=link_tag('css/estilos_modulo_clientes_nuevo.less')?>
     <section style="position: relative !important;">
-        <?php /*echo '<button id="toggle">Toggle</button>';*/ ?>
+        <?php echo '<button id="toggle">Toggle</button>'; ?>
         <!-- REGISTRO DEL CLIENTE -->
         <div id="formularioCliente" class="visibleR">
             <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->

@@ -191,7 +191,31 @@ app.VistaConsultaCP = Backbone.View.extend({
 				app.coleccionClientes.get(ids).cambiarVisibilidad();
 			};
 		};
-	}			
+	},
+	cargarPlugin 	: function () {
+		var options = {
+			widthFixed : true,
+			showProcessing: true,
+			headerTemplate: '{content} {icon}', // Add icon for jui theme; new in v2.7!
+
+			widgets: [ 'zebra', 'cssStickyHeaders', 'filter' ],
+
+			widgetOptions: {
+				filter_columnFilters   : false,
+				filter_external : '.search',
+				cssStickyHeaders_offset        : 0,
+				cssStickyHeaders_addCaption    : true,
+				cssStickyHeaders_attachTo      : null,
+				cssStickyHeaders_filteredToTop : true,
+				cssStickyHeaders_zIndex        : 10
+			}
+
+		};
+		/* make second table scroll within its wrapper */
+		options.widgetOptions.cssStickyHeaders_attachTo = '.wrapper'; // or $('.wrapper')
+			this.$("#tbla_cliente").tablesorter(options);
+
+	}		
 });
 
 app.VistaConsultaClientes = app.VistaConsultaCP.extend({
@@ -207,6 +231,7 @@ app.VistaConsultaClientes = app.VistaConsultaCP.extend({
 		la función obtenerClientes(). Está fución se encargará de
 		imprimir a todos los clientes.*/
 		this.obtenerClientes(this.tipoCliente);
+		this.cargarPlugin();
 	},
 });
 
@@ -223,6 +248,7 @@ app.VistaConsultaProspectos = app.VistaConsultaCP.extend({
 		la función obtenerClientes(). Está fución se encargará de
 		imprimir a todos los clientes.*/
 		this.obtenerClientes(this.tipoCliente);
+		this.cargarPlugin();
 	},
 });
 
@@ -234,6 +260,7 @@ app.VistaClientesEliminados = app.VistaConsultaCP.extend({
 		this.$filasClientes = $('#filasClientes');
 
 		this.obtenerEliminados();
+		this.cargarPlugin();
 	},
 });
 

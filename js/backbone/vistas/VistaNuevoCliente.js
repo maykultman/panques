@@ -116,9 +116,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	cargarServicios     :           function () {
 		var list = '<% _.each(servicios, function(servicio) { %> <option id="<%- servicio.id %>" value="<%- servicio.id %>"><%- servicio.nombre %></option> <% }); %>';
 		this.$menuServicios.
-		append(_.template(list, 
-			{ servicios : app.coleccionServicios.toJSON() }
-		));
+		append(_.template(list)({ servicios : app.coleccionServicios.toJSON() }));
 		this.$menuServicios.selectize({
 			// persist: false,
 			createOnBlur: true,
@@ -286,7 +284,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		  tras terminar devuelve un json el cual es
 		  almacenado en la variable objetoCliente*/
 		this.objetoCliente = limpiarJSON(this.nuevosAtributosCliente());
-		console.log('Antes del elvio',this.objetoCliente);
+		// console.log('Antes del elvio',this.objetoCliente);
 		// return;
 
 		/*Nos aseguramos de que las propiedades nombreComercial y tipoCliente
@@ -339,7 +337,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 							numero          : numero,
 							tipo            : tipo
 						});
-					console.log('Despues del envio',exito);	
+					// console.log('Despues del envio',exito);	
 					/*Guardar servicios de interes y cuenta*/
 						// Obtenemos los servicios (existentes en la o no BD)
 						var servicios       = serviciosInteres,
@@ -412,7 +410,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 						};
 						
 					confirmar(
-						'<p>¡El cliente ha sido guardado con exito!</p><p><b>¿Deseas registrar al <b>representante</b> o <b>contactos</b> del cliente?</b></p>',
+						'¡El cliente ha sido guardado con exito!<br><b>¿Deseas registrar al <b>representante</b> o <b>contactos</b> del cliente?</b>',
 						function (){
 							here.$('.visibleR').toggleClass('ocultoR');
 							window.scrollTo(0,0);
