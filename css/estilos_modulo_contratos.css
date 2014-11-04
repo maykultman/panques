@@ -17,9 +17,15 @@
 	display: none;
 }
 
-.input_largo{	width: 100%!important;	}
-.input_renta, .bloqueado{	width: 35%!important;	}
+/*.input_largo{	width: 100%!important;	}*/
+/*.input_renta, .bloqueado{	width: 35%!important;	}*/
 
+/*---------------------------------------*/
+/*---------tabla de servicios------------*/
+/*---------------------------------------*/
+	.div_table_overflow {
+		/*margin-top: 0px;*/
+	}
 
 .icon_detalles{
 

@@ -204,7 +204,7 @@ class Escritorio extends REST {
 
 	public function clientes()
 	{
-		$this->area_Estatica('Clientes');  # Carga la vista por default + la vista del modulo
+		$this->area_Estatica('clientes');  # Carga la vista por default + la vista del modulo
 
 		if($this->ruta() == 'cliente_nuevo')
 		{

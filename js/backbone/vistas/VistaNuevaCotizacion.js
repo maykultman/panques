@@ -181,10 +181,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 	initialize : function () {
 
+		this.listenTo(app.coleccionCotizaciones, 'reset', this.obtenerFolio);
 		this.render();
 		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
 		// // this.$tablaServicios = this.$('#listaServicios');
-		this.listenTo(app.coleccionCotizaciones, 'reset', this.obtenerFolio);
 		this.contadorAlerta = 1;
 
 		localStorage.clear();
@@ -219,15 +219,22 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		return this;
 	},
 	obtenerFolio		: function () {
-		var coleccion = _.values(_.indexBy(app.coleccionCotizaciones.toJSON(),'id')),
-			folio = '' + (parseInt(_.last(coleccion).folio) +1);
-			folio = folio.split('');
+		try {
+			var coleccion = _.values(_.indexBy(app.coleccionCotizaciones.toJSON(),'id')),
+				folio = '' + (parseInt(_.last(coleccion).folio) +1),
+				folio = folio.split(''),
+				length = folio.length;
 
-		for (var i = 5; i >= folio.length -1; i--) {
-			folio.unshift('0');
-		};
-		this.folio = folio.join('')
-		this.$('#h4_folio').text('Folio: '+this.folio);
+			for (var i = 5; i > length; i--) {
+				folio.unshift('0');
+			};
+			this.folio = folio.join('');
+			this.$('#h4_folio').text('Folio: '+this.folio);
+		}
+		catch(err) {
+			this.folio = '00001';
+			this.$('#h4_folio').text('Folio: 00001');
+		}
 	},
 	cargarServicioCo	: function (serviciosCotizacion) {
 		/*....................Instanciamos un modelo servicios y le pasamos el modelo.............*/
@@ -511,14 +518,17 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		};
 	},
 	cotizacionGuardada		: function () {
+		var self = this;
 		$('input,select,button,textarea').attr('disabled',false);
-		confirmar('¡Cotización guardada!<br>¿Deseas crear otra cotización?', function () {
-			$('#registroCotizacion')[0].reset();
-			this.$('.span_eliminar_servicio').click();
-			this.render();
-			this.resetearContador();
-		}, function () {
-			location.href = 'cotizaciones_consulta';
+		alerta('¡Cotización guardada!', function () {
+			confirmar('<b>¿Deseas crear otra cotización?</b>', function () {
+				$('#registroCotizacion')[0].reset();
+				$('.span_eliminar_servicio').click();
+				self.initialize();
+				app.coleccionCotizaciones.fetch({reset:true});
+			}, function () {
+				location.href = 'cotizaciones_consulta';
+			});
 		});
 	},
 	cotizacionNoGuardada	: function () {
