@@ -198,23 +198,40 @@ hr{
 /*.input-group button{	height: 34px;	}*/
 
 /*Full height table*/
-#div_fullHeight {
-  margin: 40px 0px 40px 0px !important;
-  padding: 0px 40px 0px 0px !important;
-  position: absolute !important;
-  bottom: 40px !important;
-  top: 180px !important;
+  #div_fullHeight {
+    margin: 40px 0px 40px 0px !important;
+    padding: 0px 40px 0px 0px !important;
+    position: absolute !important;
+    bottom: 40px !important;
+    top: 180px !important;
+  }
+  #div_fullHeight #posicion_infotd {
+    height: 100% !important;
+  }
+  #div_fullHeight .wrapper {
+    height: 100% !important;
+    overflow: auto !important;
+  }
+  #posicion_infotd td {
+    vertical-align: middle !important;
+  }
+  element.style {
 }
-#div_fullHeight #posicion_infotd {
-  height: 100% !important;
-}
-#div_fullHeight .wrapper {
-  height: 100% !important;
-  overflow: auto !important;
-}
-#posicion_infotd td {
-  vertical-align: middle !important;
-}
+  .table>thead>tr>td.info,
+  .table>tbody>tr>td.info,
+  .table>tfoot>tr>td.info,
+  .table>thead>tr>th.info,
+  .table>tbody>tr>th.info,
+  .table>tfoot>tr>th.info,
+  .table>thead>tr.info>td,
+  .table>tbody>tr.info>td,
+  .table>tfoot>tr.info>td,
+  .table>thead>tr.info>th,
+  .table>tbody>tr.info>th,
+  .table>tfoot>tr.info>th {
+    background-color: #006ad5;
+    color: white;
+  }
 
 /*#tbla_cliente tr{
   &:hover{

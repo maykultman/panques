@@ -12,11 +12,6 @@
 	display: none;
 }
 
-.planes{
-
-	display: none;
-}
-
 /*.input_largo{	width: 100%!important;	}*/
 /*.input_renta, .bloqueado{	width: 35%!important;	}*/
 
@@ -32,15 +27,18 @@
 	float: right;
 	margin-top: 5px;
 }
-.inputs_planIguala{	width: 100%;	}
+/*.inputs_planIguala{	width: 100%;	}*/
 
-.inputs_planEvento	{	width: 100%;	}
+/*.inputs_planEvento	{	width: 100%;	}*/
 
-#span_buscar{
+/*#span_buscar{
 	float:right;
 	margin-top: -38px;
 	margin-right:10px; 
 	
+}*/
+.selectize-control {
+	margin: 15px 0px;
 }
 
 .color_cabecera  { background-color: #f9f9f9;  color: #333;	}
@@ -68,14 +66,6 @@
 #tabla_servicios{     width: 100%!important;	}
 
 #tabla_contrato {	width: 100%;	}
-
-tbody#tbody_servicios { 
-	display: block; /*obligado*/ 
-	height: 165px; /*la que necesites*/ 
-	overflow: auto; /*obligado*/
-	width: 100%!important;
-	
-	}
 
 .input_precio {
 	width: 78px;

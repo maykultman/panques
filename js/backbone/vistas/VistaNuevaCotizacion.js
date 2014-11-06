@@ -32,7 +32,7 @@ app.VistaSeccion = Backbone.View.extend({
 		/*El capo Horas es un input number, por lo que cuando se escribe
 		  un número con letras, el campo lo rechaza y adopta el valor ''*/
 		if (horas == '') {
-			alerta('El campo Horas solo acepta números', function () {});
+			alerta('El campo <b>Horas</b> solo acepta números', function () {});
 			this.$('.horas').val('1');
 			return;
 		};
@@ -193,8 +193,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		this.$('#registroCotizacion').html( $('#plantilla-formulario').html() );
 		// Invocamos el metodo para cargar y pintar los servicios
 		this.cargarServiciosCo();
-		this.$busqueda = this.$('#busqueda');
-		this.cargarClientes();
+		loadSelectize_Client('#busqueda',app.coleccionClientes.toJSON());
 
 		this.$('#table_servicios').tablesorter({
 			theme: 'blue',
@@ -316,6 +315,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		total = total - total * desc;
 		total = total + total * iva;
+		this.total = total.toFixed(2); // Sirve para la clase contrato
 		total = '' + total.toFixed(2);
 		total = total.split('.');
 		decimales = total[1];
@@ -346,40 +346,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		} else{
 			alerta('El cliente seleccionado no tiene representante (<b>Requerido</b>)', function () {});
 		};
-	},
-	cargarClientes		: function () {
-		// Aplicamos el plugin al select con sus propiedades
-		var $select = this.$busqueda.selectize({
-			maxItems	: null,
-			valueField	: 'id',
-			labelField	: 'title',
-			searchField	: 'title',
-			maxItems	: 1,
-			create 		: false
-		});
-		// Respaldamos las poripiedades del plugin
-		var control = $select[0].selectize;
-		// Borramos todas las opciones que tenga el select
-		// Aplica cuando se hace una cotizacion después de
-		// haber creado una sin salir de la sección.
-		control.clearOptions();
-		// Añadimos los options
-		control.addOption(function () {
-			var array = [], // El plugin requiere un array de objetos
-				// Respaldamos el array de clientes
-				clientes = app.coleccionClientes.toJSON();
-			for (var i = 0; i < clientes.length; i++) {
-				// Por cada iteración cargamos el array con
-				// un objeto json
-				array.push({
-					id 		: clientes[i].id,
-					title 	: clientes[i].nombreComercial
-				});
-			};
-			// Devolvemos el array de objetos que son
-			// los options
-			return array;
-		}(/*Los parentesis para ejecutar la función*/));
 	},
 	vistaPrevia 		: function(e) {
 		localStorage.clear();
@@ -599,7 +565,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		/*El capo Precio/Horas es un input number, por lo que cuando se escribe
 		  un número con letras, el campo lo rechaza y adopta el valor ''*/
 		if (precioHora == '') {
-			alerta('El campo Precio/Horas solo acepta números', function () {});
+			alerta('El campo <b>Precio/Horas</b> solo acepta números', function () {});
 			$(e.currentTarget).val('300');
 		};
 		/*Los campo con class .precio_hora están ocultos pero son

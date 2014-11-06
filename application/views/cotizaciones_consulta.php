@@ -240,7 +240,10 @@
 								<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 							</td>
 							<td>
-								<input type="text" class="form-control input-sm importe" name="importes" disabled>
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon">$</span>
+									<input type="text" class="form-control importe" name="importes" disabled>
+								</div>
 							</td>
 							<td class="iconos-operaciones">
 								<span class="icon-circleup icon-circledown span_toggleSee" id="toggleSee_<%= id %>"></span>
@@ -283,7 +286,12 @@
 		<td><textarea 				id="descripcion"	class="form-control" rows="3" 			 	style="min-width:150px;"></textarea>		</td>
 		<td><input type="number" 	id=""				class="form-control input-sm number horas" 	 	min="1" value="1">						</td>
 		<td><input type="number" 	id=""				class="form-control input-sm number precio_hora" style="visibility:hidden;"	 	min="1"></td>
-		<td><input type="text" 							class="form-control input-sm costoSeccion"	disabled>									</td>
+		<td>
+			<div class="input-group input-group-sm">
+				<span class="input-group-addon">$</span>
+				<input type="text" class="form-control costoSeccion" disabled>
+			</div>
+		</td>
 		<td class="iconos-operaciones" style="border:0px;">
 			<span class="icon-circledelete span_eliminar_seccion"></span>
 		</td>
@@ -302,7 +310,12 @@
 		<td><textarea 				id="descripcion"	class="form-control" rows="3" 			 			style="min-width:150px;"><%= descripcion %></textarea>			</td>
 		<td><input type="number" 	class="form-control input-sm number horas" 								min="1" 							value="<%= horas %>">		</td>
 		<td><input type="number" 	class="form-control input-sm number precio_hora" 						style="visibility:hidden;" min="1" 	value="<%= preciohora %>">	</td>
-		<td><input type="text" 							class="form-control input-sm costoSeccion"	disabled>																</td>
+		<td>
+			<div class="input-group input-group-sm">
+				<span class="input-group-addon">$</span>
+				<input type="text" class="form-control costoSeccion" disabled>
+			</div>
+		</td>
 		<td class="iconos-operaciones" style="border:0px;">
 			<span class="icon-circledelete span_eliminar_seccion"></span>
 		</td>
@@ -348,7 +361,6 @@ script_tag('js/backbone.localStorage.js');?>
 	app.coleccionServiciosCotizados = <?php echo json_encode($serviciosCotizados) ?>;
 </script>
 <?=
-	script_tag('js/funcionescrm.js').
 	script_tag('js/backbone/modelos/ModeloServicio.js').
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloEmpleado.js').

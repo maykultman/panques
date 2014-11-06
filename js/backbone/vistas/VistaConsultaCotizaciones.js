@@ -179,7 +179,7 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 			json 			= {},
 			preciohora 		= this.model.get('preciohora'),
 			vSeccion,
-			$select = this.$busqueda[0].selectize;
+			$select = this.$('#busqueda')[0].selectize;
 
 		this.obtenerFolio();
 

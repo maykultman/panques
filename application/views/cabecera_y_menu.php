@@ -13,6 +13,15 @@
         link_tag('js/plugin/alertify/themes/alertify.bootstrap.css');
     ?>
 
+
+    <!--Bootstrap. Debe cargarse antes que las libs de tablesorter
+        crea conflicto con jquery-latest.min.js-->
+    <?=
+        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
+        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').
+        script_tag('css/bootstrap-3.1.1-dist/js/bootstrap.min.js');
+    ?>
+
     <!-- plugin selectize css -->
     <?= script_tag('js/tablas/jquery-latest.min.js').
         script_tag('js/tablas/jquery.tablesorter.js').
@@ -26,20 +35,6 @@
     <?= link_tag('css/theme.default.css').
         link_tag('js/plugin/selectize/selectize.default.css').
         script_tag('js/plugin/selectize/selectize.min.js');
-    ?>
-
-
-    <!--Bootstrap-->
-    <?=
-        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
-        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').
-        script_tag('css/bootstrap-3.1.1-dist/js/tooltip.js').
-        //script_tag('css/bootstrap-3.1.1-dist/js/dropdown.js'). Si  se incluye, los accesos directos no funcionarán
-        script_tag('css/bootstrap-3.1.1-dist/js/button.js').
-        script_tag('css/bootstrap-3.1.1-dist/js/alert.js').
-        script_tag('css/bootstrap-3.1.1-dist/js/tab.js').
-        script_tag('css/bootstrap-3.1.1-dist/js/modal.js').
-        script_tag('css/bootstrap-3.1.1-dist/js/bootstrap.min.js');
     ?>
 
  

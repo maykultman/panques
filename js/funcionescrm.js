@@ -3,46 +3,6 @@ var app = app || {};
 var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 var dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'];
 
-/*app.busquedaServicio.servicio = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = servicios.filter(function (element) {
- var nombre = element.nombre;
- // console.log(nombre);
- // console.log(searchKey);
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
- servicios = app.coleccionDeServicios;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }());*/
-
-/*app.busquedaCliente.cliente = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = clientes.filter(function (element) {
- var nombre = element.nombreComercial;
- // console.log(nombre);
- // console.log(searchKey);
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
- clientes = app.coleccionDeClientes;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }());*/
-
 function pasarAJson (objSerializado) {
     var json = {};
     $.each(objSerializado, function () {
@@ -57,104 +17,6 @@ function pasarAJson (objSerializado) {
     });
     return json;
 }
-
-//Para la Busqueda de Roles en el modulo catalogo Roles
-/*app.busquedaRol.rol = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = roles.filter(function (element) {
- var nombre = element.nombre;
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
-
- roles = app.coleccionDeRoles;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }());*/
-
-//Para la Busqueda de Roles en el modulo catalogo Roles
-/*app.busquedaPermiso.permiso = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = permisos.filter(function (element) {
- var nombre = element.nombre;
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
- permisos = app.coleccionDePermisos;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }()); */
-
-
-//Puestos
-/*app.busquedaPuesto.puesto = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = puestos.filter(function (element) {
- var nombre = element.nombre;
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
- puestos = app.coleccionDePuestos;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }()); */
-
-
-//Cotizaciones...
-/*app.busquedaCotizacion.cotizacion = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = cotizaciones.filter(function (element) {
- var nombre = element.idcliente;
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
- cotizaciones = app.coleccionDeCotizaciones;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }());*/
-
-/*app.busquedaCotizacion2.cotizacion2 = (function () {
- buscarPorNombre = function (searchKey) {
- var deferred = $.Deferred();
- var results = cotizaciones2.filter(function (element) {
- var nombre = element.idempleado;
- return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
- });
- deferred.resolve(results);
- return deferred.promise();
- },
- cotizaciones2 = app.coleccionDeCotizaciones;
-
- // The public API
- return {
- buscarPorNombre: buscarPorNombre
- };
- }()); */
-
 
 // -----limpiarJSON-------------------------------
 function  limpiarJSON (objeto) {
@@ -449,4 +311,68 @@ function conComas(valor) {
     }
 
     return res;
+}
+
+function loadSelectize_Client (selector,options) {
+    // Aplicamos el plugin al select con sus propiedades
+    var $select = $(selector).selectize({
+        maxItems    : null,
+        valueField  : 'id',
+        labelField  : 'title',
+        searchField : 'title',
+        maxItems    : 1,
+        create      : false
+    });
+    // Respaldamos las poripiedades del plugin
+    var control = $select[0].selectize;
+    // Borramos todas las opciones que tenga el select
+    // Aplica cuando se hace una cotizacion después de
+    // haber creado una sin salir de la sección.
+    control.clearOptions();
+    // Añadimos los options
+    control.addOption(function () {
+        var array = [], // El plugin requiere un array de objetos
+            // Respaldamos el array de clientes
+            clientes = options;
+        for (var i = 0; i < clientes.length; i++) {
+            // Por cada iteración cargamos el array con
+            // un objeto json
+            array.push({
+                id      : clientes[i].id,
+                title   : clientes[i].nombreComercial
+            });
+        };
+        // Devolvemos el array de objetos que son
+        // los options
+        return array;
+    }(/*Los parentesis para ejecutar la función*/));
+}
+
+function loadDatepicker (selector) {
+    $(selector).datepicker({ 
+        dateFormat:'d MM, yy',  
+        dayNamesMin:[
+            'Do',
+            'Lu',
+            'Ma',
+            'Mi',
+            'Ju',
+            'Vi',
+            'Sá'
+        ],
+        monthNames:[
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ]
+    });
 }

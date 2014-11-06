@@ -1,149 +1,243 @@
 <!doctype html>
 <html>
 	<head>
+		<style type="text/css">
+			* {
+				font-family: Open Sans;
+			}
+			body {
+				margin: 0px;
+			}
+			section {
+				background: white;
+				width: 664.8188976378px;
+				height: 931.51181102362px; /*1056px = 27.94cm*/
+				padding: 94.48818897638px 2cm 0px 2cm;
+				position: relative;
+				margin: auto;
+				border-bottom: 30px solid rgba(64, 64, 64, 1);
+				-webkit-box-shadow: 0px 20px 50px gray;
+				box-shadow: 0px 20px 50px gray;
+			}
+
+			header {
+				padding: auto;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				background: rgba(64, 64, 64, 1);
+				color: white;
+				height: 150px;
+			}
+
+			header table {
+				width: 100%;
+				height: 100%;
+			}
+			header table tr td {
+				width: 214.9396325459333px;
+			}
+			header table tr td h1 {
+				margin-left: 2cm;
+				text-shadow: 0px 3px 20px black;
+				font-size: x-large;
+				text-transform: uppercase;
+			}
+			header table tr td address {
+				margin-right: 2cm;
+				font-size: 10px;
+				font-style: normal;
+				line-height: 120%;
+			}
+			.td_logo {
+				text-align: center;
+			}
+			header img {
+				height: auto;
+				width: 30%;
+			}
+
+			article {
+				margin-top: 2cm;
+			}
+			article,
+			article h2,
+			footer,
+			footer h2 {
+				font-size: 13px;
+			}
+			footer {
+				position: absolute;
+				bottom: 30px;
+				width: 17.59cm;
+			}
+
+			article table {
+				border-spacing: 0px;
+				width: 100%;
+			}
+			article table thead {
+				background: rgba(192, 192, 192, 1);
+			}
+			article table tbody,
+			article table tfoot {
+				background: rgba(235, 235, 235, 1);
+			}
+			article table tbody tr td ul li:before
+			{
+				content: '-';
+			    /*content: '\2713';*/ /*Palomita*/
+			    margin: 0 5px;    /* any design */
+			}
+			article table tfoot tr td {
+				text-align: center;
+			}
+			article table tr td,
+			article table tr th {
+				padding: 5px 5px;
+				text-align: left;
+			}
+			article table tbody tr td {
+				padding-bottom: 15px;
+			}
+
+			article table tr td,
+			footer ul,
+			h2 {
+				color: #555;
+			}
+
+			article table tr td ul,
+			footer ul {
+				padding: 0px;
+				list-style-type: none;
+				margin: 0px;
+				line-height: 110%;
+			}
+		</style>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotizacion</title>	
 		<?=
 			script_tag('js/jquery.js').
-			script_tag('js/plugin/jsPDF/jspdf.min.js').
-			link_tag("css/estilo_formato_cotizacion.css").
-			link_tag('http://fonts.googleapis.com/css?family=Philosopher').
-			link_tag("css/bootstrap-3.1.1-dist/css/bootstrap.min.css").
-			link_tag("css/bootstrap-3.1.1-dist/css/bootstrap-theme.css").
-			script_tag("css/bootstrap-3.1.1-dist/js/bootstrap.min.js");
+			script_tag('js/plugin/jsPDF/jspdf.min.js');
 		?>
 	</head>
 	<body>
-		<div id="contenedor_formato">
-			<!-- <button type="button" id="imprimir" class="btn btn-default" onclick="print()">Inprimir</button> -->
+		<section id="contenedor_formato">
 			<button type="button" id="imprimir" class="btn btn-default">Inprimir</button>
-			<div id="previaCotizacion">
-			</div>
-			<div class="desborde"></div>
-
-			<table class="table table-condensed">			
-				<thead>
-				    <tr>
-						<th width="200">Servicio</th>
-						<th width="430">Descripción</th>
-						<th width="50">Horas</th>
-						<th width="100" style="text-align: right;">Precio</th>
+			<header>
+				<table>
+					<tr>
+						<td><h1></h1></td>
+						<td class="td_logo"><img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="logo qualium"></td>
+						<td>
+							<address>
+								<b>Qualium Puplicidad y Marqueting</b><br>
+								<b>RFC:QPM1201103S5</b><br>
+								Email: <u>contacto@qualium.mx</u><br>
+								Teléfono: (999)2852274<br>
+								Dirección: Calle 22 #52 x 7 y 9 México Norte, C.P. 97128. Mérida, Yucatán.
+							</address>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-				<tfoot>
-				</tfoot>
-			</table>
-			<div id="div_terminos">
-				<p style="margin: 0 38px;"><b>Términos y condiciones</b></p>
-					<ul>
-					    <li>Para iniciar el trabajo se requiere un brief, la información solicitada completa y haber cubierto el monto del anticipo.
-					    </li>
-					    <li>Al aprobar la cotización, enviaremos un cronograma de actividades con fechas de revisión y entrega.
-						 </li>
-						 <li>Se entregará una propuesta gráﬁca para su aprobación, una vez aprobada cualquier cambio generará
-						  costo adicional.
-					     </li>
-						 <li>Los precios NO incluyen IVA.</li>
-						 <li>Anticipo del 50% y saldo contra entrega del 50%. Anticipo no reembolsable.</li>
-						 <li>El archivo ﬁnal es propiedad del cliente, el proyecto no.</li>
-						 <li>El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
-					</ul>	
-			</div>	
-			<div id="pie" style=" ">    	
-			</div>
-		</div>	
-		<!-- <td><%-importe%></td> -->
+				</table>
+			</header>
+			<article>
+				<p id="detalles"></p>
+				<br>
+				<table>
+					<thead>
+						<tr>
+							<th style="width:55%;">Servicios</th>
+							<th style="text-align: center; width:15%;">Horas</th>
+							<th style="text-align: center; width:15%;">P/por hora</th>
+							<th style="text-align: center; width:15%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</article>
+			<footer>
+				<br>
+				<h2>Términos y condiciones</h2>
+				<ul>
+					<li>· Para iniciar el trabajo se requiere un brief, la información solicitada completa y haber cubierto el monto del anticipo. </li>
+					<li>· Al aprobar la cotización, enviaremos un cronograma de actividades con fechas de revisión y entrega. </li>
+					<li>· Se entregará una propuesta gráfica para su aprobación, una vez aprobada cualquier cambio generará costo adicional. </li>
+					<li>· Los precios incluyen IVA. </li>
+					<li>· Anticipo del 50% y saldo contra entrega del 50%. Anticipo no reembolsable.</li>
+					<li>· El archivo final es propiedad del cliente, el proyecto no. </li>
+					<li>· El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
+				</ul>
+			</footer>
+		</section>
 	</body>
 </html>
-<!-- Plantilla -->
-<script type="text/template" id="datosCliente">
-	<div id="cabecera">
-		<div id="contenedor_izq">
-			<label id="p_titulo" >PRESUPUESTO</label>
-			<div class="desborde"></div>
-			<label  id="label_nomcotizacion"><%- titulo %></label>
-		</div>
 
-		<div id="contenedor_derecho">
-			<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: 10px; margin-left: -30px;">
-			<div id="div_fecha">
-				<label><b class="white"><%-fecha%></b></label>
-			</div>
-			<div id="lbl_cliente">
-				<label><font color="white"><b class="white">Cliente:</b></font></label>
-		    </div>
-		    <div id="lbl_nomcliente">
-		    <label  class="white"><%- nombreComercial %></label>
-		    </div>
-		    <div id="lbl_representante">
-		    <label  class="white">Representante: </label>
-		    </div>
-		    <div id="lbl_nombrerepresentante">
-		    <label  class="white"><%- nombre%> </label>
-		    </div>
-		</div>    
-	    				
-	</div>
-	<div class="desborde"></div>
-	<div id="barra">
-	</div>
-	<div id="detalles">	
-		<div>
-			<p style="margin-top: -1px;"><b>Detalle</b></p>					
-				<p style="color:gray !important;"><%- detalles %></p>					
-		</div>
-		<div id="caract">
-			<p style="margin-top: -1px;"><b>Características:</b></p>
-		    <p style="color:gray !important;">	<%- caracteristicas%></p>
-		</div>		    
-	</div>
-
-	<div id="info_contacto">
-		<p style="margin-left:15px; margin-top: 10px;" class="white"><b class="white">Contacto</b><br>
-		Email: contacto@qualium.mx<br>
-		Teléfono: (999)2852274<br>
-		Dirección: Calle 22 x 7 y 9
-		Col.México, C.P. 97113. Mérida, Yucatán.<br>
-	    <a href="http://qualium.mx/" target="_blank" >www.qualium.mx</a><br><br>
-        <b  class="white">Horario de  atención</b><br>
-		Lunes  a viernes 9am - 6pm</font></p>
-	</div>
-	<div class="desborde"></div>
-	<div id="redes_sociales">
-		<img  src="<?=base_url().'img/formatoCotizacion/face.png'?>" alt="" class="img_redesociales">
-		<img src="<?=base_url().'img/formatoCotizacion/twitter.png'?>" alt="" class="img_redesociales">
-		<img src="<?=base_url().'img/formatoCotizacion/google.png'?>" alt="" class="img_redesociales">
-		<img src="<?=base_url().'img/formatoCotizacion/in.png'?>" alt="" class="img_redesociales">
-		<img src="<?=base_url().'img/formatoCotizacion/be.png'?>" alt="" class="img_redesociales">
-		<img src="<?=base_url().'img/formatoCotizacion/vine.png'?>" alt="" class="img_redesociales">
-	</div>
+<script type="text/template" id="template-detalles">
+	<h2>Detalle</h2>
+	<%- detalles %><br>
+	<%- caracteristicas %>
 </script>
-<script type="text/template" id="filaServicio">
-	<td><%= servicio	%></td>
-	<td> <ul style="margin:0px; padding-left:20px;"><%= descripcion	%></ul>  </td>
-	<td style="text-align: left;"> <%= horas 	%>	</td>						
-	<td class="importe" style="text-align: right;"> <%= importe %>	</td>
-</script>
-<script id="tfoot">
+<script type="text/template" id="template-filaServicio">
 	<tr>
-		<td colspan="3" style="text-align: right;">Subtotal: </td>
-		<td style="text-align: right;"><%= subtotal %></td>					
+		<td>
+			<b><%= servicio %></b>
+			<ul><%= descripcion %></ul>
+		</td>
+		<td style="text-align: center;">
+			<%= horas %>
+		</td>
+		<td style="text-align: center;"><%= preciohora %></td>						
+		<td class="importe" style="text-align: center;"> <%= importe %>	</td>
+	<tr>
+</script>
+<script type="text/template" id="template-tfoot">
+	<tr>
+		<td></td>
+		<td></td>
+		<td>
+			<b>Total: </b>
+		</td>
+		<td>
+			<b><%= subtotal %></b>
+		</td>
 	</tr>
 	<% if (descuento > 1) { %>
 		<tr>
-			<td colspan="3" style="text-align: right;">Descuento (<%= descuento %>%): </td>
-			<td style="text-align: right;"><%= valordescuento %></td>					
+			<td></td>
+			<td></td>
+			<td>
+				<b>Descuento (<%= descuento %>%): </b>
+			</td>
+			<td>
+				<b><%= valordescuento %></b>
+			</td>
 		</tr>
 	<% }; %>
 	<tr>
-		<td colspan="3" style="text-align: right;">I.V.A. (16%): </td>
-		<td style="text-align: right;"><%= iva %></td>					
+		<td></td>
+		<td></td>
+		<td>
+			<b>IVA: </b>
+		</td>
+		<td>
+			<b><%= iva %></b>
+		</td>
 	</tr>
 	<tr>
-		<td colspan="3" style="text-align: right;">Total: </td>
-		<td style="text-align: right;"><%= total %></td>					
+		<td></td>
+		<td></td>
+		<td>
+			<b>Precio Neto: </b>
+		</td>
+		<td>
+			<b><%= total %></b>
+		</td>
 	</tr>
 </script>
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
@@ -179,9 +273,9 @@
  var VistaPrevia = Backbone.View.extend({
  	el : 'body',
  	plantillas	: {
- 		datos 		: _.template($('#datosCliente').html()),
- 		servicio 	: _.template($('#filaServicio').html()),
- 		totales 	: _.template($('#tfoot').html()),
+ 		detalles 		: _.template($('#template-detalles').html()),
+ 		servicio 	: _.template($('#template-filaServicio').html()),
+ 		totales 	: _.template($('#template-tfoot').html()),
  	},
  	events : {
  		'click #imprimir' : 'descargar'
@@ -216,13 +310,13 @@
 			, font, size, lines
 			, margin = 0.5 // inches on a 8.5 x 11 inch sheet.
 			, verticalOffset = margin
-			, loremipsum = this.$el.html();
+			, loremipsum = $('html').html();
 
 			// Margins:
-			doc.setDrawColor(0, 255, 0)
-				.setLineWidth(1/72)
-				.line(margin, margin, margin, 11 - margin)
-				.line(8.5 - margin, margin, 8.5-margin, 11-margin);
+			// doc.setDrawColor(0, 255, 0)
+			// 	.setLineWidth(1/72)
+			// 	.line(margin, margin, margin, 11 - margin)
+			// 	.line(8.5 - margin, margin, 8.5-margin, 11-margin);
 
 			// the 3 blocks of text
 			for (var i in fonts){
@@ -232,7 +326,7 @@
 
 					lines = doc.setFont(font[0], font[1])
 								.setFontSize(size)
-								.splitTextToSize(loremipsum, 7.5);
+								.splitTextToSize('<!doctype html><html>'+loremipsum+'</html>', 7.5);
 					// Don't want to preset font, size to calculate the lines?
 					// .splitTextToSize(text, maxsize, options)
 					// allows you to pass an object with any of the following:
@@ -246,6 +340,8 @@
 					doc.text(0.5, verticalOffset + size / 72, lines);
 
 					verticalOffset += (lines.length + 0.5) * size / 72;
+
+					console.log('<!doctype html><html>'+loremipsum+'</html>');
 				}
 			}
 
@@ -255,11 +351,11 @@
 
  		var json = app.coleccionLocalCotizaciones.toJSON()[0];
 
- 		json.fecha = formatearFechaUsuario(new Date(json.fecha));
-		json.nombreComercial = app.coleccionClientes.get({id:json.idcliente}).get('nombreComercial');
-		json.nombre = app.coleccionRepresentantes.get({id:json.idrepresentante}).get('nombre');
-
- 		this.$('#previaCotizacion').html( this.plantillas.datos(json) );
+ 		// json.fecha = formatearFechaUsuario(new Date(json.fecha));
+		// json.nombreComercial = app.coleccionClientes.get({id:json.idcliente}).get('nombreComercial');
+		// json.nombre = app.coleccionRepresentantes.get({id:json.idrepresentante}).get('nombre');
+		this.$('h1').text(json.titulo);
+ 		this.$('#detalles').html( this.plantillas.detalles(json) );
  		this.preciohora = Number(json.preciohora);
  		this.descuento = Number(json.descuento);
  	},
@@ -271,7 +367,7 @@
 
  		for (var i = 0; i < idservicios.length; i++) {
  			// vista = new Servicios({ model: modelo});
-	 		this.$('tbody').append( '<tr>'+this.plantillas.servicio(this.obtenerServicio(idservicios[i]))+'</tr>' );
+	 		this.$('article table tbody').append( this.plantillas.servicio(this.obtenerServicio(idservicios[i])) );
  		};
 
  		this.totales();
@@ -282,6 +378,7 @@
  				idservicio 	: '',
  				descripcion : '',
  				horas 		: 0,
+ 				preciohora  : ''
  			},
  			modelos,
  			importe = 0;
@@ -293,6 +390,7 @@
  			json.horas += Number(modelos[i].get('horas'));
  		};
  		json.servicio = app.coleccionServicios.get(idservicio).get('nombre');
+ 		json.preciohora = this.preciohora;
  		json.importe = json.horas * this.preciohora;
 
  		/*Variables globales*/
