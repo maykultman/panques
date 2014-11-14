@@ -11,15 +11,31 @@
          
         public function create($post)
         {   
+            // var_dump($post); die();
             $this->db->insert('cotizaciones', $post);
-            return $this->get($this->db->insert_id());     
+            $dataCot = $this->get($this->db->insert_id(), TRUE);
+            $data = array(
+                    'folio' => $post['folio'],
+                    'cotizacion' => true,
+                    'contrato' => false
+                );
+            $this->db->insert('folios', $data);
+            return $dataCot;
         }
         
-        public function get ( $id = FALSE ) 
-        {  
-           $reply = $this->where( $id );  # Ejecutamos el metodo where...   
-           $this->db->order_by('fecha', 'desc');    
-           return $this->db->get  ( 'cotizaciones' )->$reply();  # Este metodo ejecuta get con y sin ID...
+        public function get ( $id = FALSE, $soloCot = FALSE) 
+        {   
+            if ($soloCot) {
+                $reply = $this->where( $id );
+                return $this->db->get( 'cotizaciones' )->$reply();
+            } else {
+                $reply = $this->where( $id );
+                $this->db->order_by('fechacreacion', 'desc');  
+                $datos['cotizaciones'] = $this->db->get  ( 'cotizaciones' )->$reply();
+                $this->db->order_by('id', 'desc');
+                $datos['folio'] = $this->db->get  ( 'folios' )->row();
+                return $datos;
+            }           
         }
 
         public function save (  $id,  $put ) 

@@ -1,7 +1,5 @@
 <?=
-	link_tag('css/estilos_modulo_contratos.css').
-	link_tag('css/jquery-ui.min.css').
-	script_tag('js/jquery-ui.min.js');
+	link_tag('css/estilos_modulo_contratos.css');
 ?>
 <div class="contenedor_modulo"> 
  <!-- <div id="contenedor"> -->

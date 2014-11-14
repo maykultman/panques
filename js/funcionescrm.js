@@ -53,6 +53,12 @@ function formatearFechaUsuario (fecha) {
     return fechaFormateada;
 }
 
+function formatearFechaDB (objDate) {
+      return objDate.getFullYear() 
+       + "-" + (objDate.getMonth() +1) 
+       + "-" + (objDate.getDate());
+}
+
 function fechaAmigable (fecha) {
 
     var fechaFormateada = '';
@@ -122,22 +128,23 @@ function error(mensaje){
     alertify.error(mensaje); //"Usuario o constraseña incorrecto/a."
     return false;
 }
-function marcarCheck(elemento, checkboxTabla)
+function marcarCheck(e, ambito)
 {
-    if(!checkboxTabla)
-    {
-        var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
-    }
+    // console.log(ambito);
+    // if(!checkboxTabla)
+    // {
+        var checkboxs = $(ambito+' input[name="'+$(e.currentTarget).attr('class')+'"]');
+    // }
 
-    if ($(elemento.currentTarget).is(':checked'))
+    if ($(e.currentTarget).is(':checked'))
     {
-        for (var i = 0; i < checkboxTabla.length; i++) {
-            checkboxTabla[i].checked = true;
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = true;
         }
     }
     else{
-        for (var i = 0; i < checkboxTabla.length; i++) {
-            checkboxTabla[i].checked = false;
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = false;
         }
     }
 }
@@ -293,9 +300,10 @@ function obtenerFoto2 (e, seletor) {
 function conComas(valor) {
     var nums = new Array();
     var simb = ","; //Éste es el separador
-    valor = valor.toString();
-    valor = valor.replace(/\D/g, "");   //Ésta expresión regular solo permitira ingresar números
-    nums = valor.split(""); //Se vacia el valor en un arreglo
+    valor = valor.split('.');
+    valor[0] = valor[0].toString();
+    valor[0] = valor[0].replace(/\D/g, "");   //Ésta expresión regular solo permitira ingresar números
+    nums = valor[0].split(""); //Se vacia el valor en un arreglo
     var long = nums.length - 1; // Se saca la longitud del arreglo
     var patron = 3; //Indica cada cuanto se ponen las comas
     var prox = 2; // Indica en que lugar se debe insertar la siguiente coma
@@ -310,6 +318,7 @@ function conComas(valor) {
         res += nums[i]; //Se crea la nueva cadena para devolver el valor formateado
     }
 
+    res += '.' + valor[1];
     return res;
 }
 

@@ -2,12 +2,15 @@
 	z-index: 0 !important;
 	 margin-top: -5px;
 }
-.tabla_visible{
+.thead_visible {/* */}
 
-	display: inline-grid;
+.thead_oculto {
+
+	display: none;
 }
+.tbody_visible {/* */}
 
-.tabla_oculto{
+.tbody_oculto {
 
 	display: none;
 }

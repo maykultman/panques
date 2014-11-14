@@ -1,7 +1,6 @@
 
 		<section class="secciones1 container-fluid">
 			<form id="registroContrato">
-    
 		   	</form>
 		</section> 
 		<section class="secciones2" style="display:none">
@@ -25,9 +24,17 @@
 		</script>
 		<script type="text/template" id="plantilla-formulario">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-lg-10 col-md-9 col-xs-8">
 					<h3>Datos básicos</h3>
 					<hr>
+				</div>
+				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
+					<h3 id="h4_folio"></h3>
+    				<input type="hidden" name="folio">
+					<hr>
+				</div>
+				<div class="col-md-12">
+					<span class="label label-info">Todos los campos son requeridos</span>
 				</div>
 				<div class="col-md-8">
 					<input type="text" id="titulo" class="form-control" name="titulocontrato" placeholder="Nombre para el contrato">			
@@ -44,17 +51,15 @@
 					<input type="hidden" id="idrepresentante" name="idrepresentante">
 				</div>
 				<div class="col-md-4">
-					<div class="radios">
-						<h5>Tipo de plan:</h5>
-						<label class="radio-inline">
-							<input type="radio" id="porEvento" name="plan" class="btn_plan" value="evento">
-							Por Evento
+					<div class="btn-group input-group" data-toggle="buttons">
+						<span class="input-group-addon">Tipo de plan </span>
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
 						</label>
-						<label class="radio-inline">
-							<input type="radio" id="iguala" name="plan" class="btn_plan" value="iguala">
-							Iguala Mensual
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
 						</label>
-					</div>			
+					</div>
 				</div>
 				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->
 			</div><!-- /.row -->
@@ -62,7 +67,7 @@
 			<h3>Inversión & Tiempo</h3>
 			<hr>		
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="div_table_overflow">
 						<table id="table_servicios" class="table table-hover"><!-- table_proyecto -->
 							<thead class="thead_overflow">
@@ -78,84 +83,87 @@
 					  	</table>
 					</div>
 				</div>
-				<div class="col-md-9" id="">
+				<div class="col-md-8" id="">
 					<table class="table"> <!-- id="mostrarTabla" -->
-						<thead style="background : #F9F9F9;">
+						<thead style="background : #F9F9F9;"><!--comutadores-->
 							<tr>
-								<th colspan="2" style="min-width:200px;"><label><input id="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label></th>
-								<th style="min-width:170px;"><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
-								<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
-								<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
-								<th>Importe</th>
-								<th class="iconos-operaciones">
-									<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
-									<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
-									<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
-								</th>
-							</tr>
+							<th colspan="6" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label> <label style="float:right; margin-bottom: 0px;">Importe</label></th>
+							<th class="iconos-operaciones">
+								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
+								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
+								<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+							</th>
+						</tr>
 						</thead>
 						<tbody id="tbody_servicios_seleccionados">
 							<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
 						</tbody>
-						<tbody style="background : #F9F9F9;">
+						<tbody style="background : #F9F9F9;"><!--comutadores-->
 							<tr>
-								<th></th>
-								<th></th>
-								<th style="text-align: right;">Total horas</th>
-								<th><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></th>
-								<th></th>
-								<th></th>
-								<th class="iconos-operaciones">
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td style="text-align: right;">Total horas</td>
+								<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td class="iconos-operaciones">
 									<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 									<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
 									<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
-								</th>
+								</td>
 							</tr>
 						</tbody>
 						<tbody> <!-- Separacion -->
 							<tr>
-								<td colspan="7">Separación</td>
+								<td colspan="7"></td>
 							</tr>
 						</tbody>
-						<thead id="tbody_evento" class="tabla_oculto" style="background-color: #f9f9f9!important;">
+						<thead id="thead_evento" class="thead_oculto" style="background-color: #f9f9f9!important;">
 					    	<tr>
-								<td colspan="8">
+					    		<td colspan="7"><i>Datos para el contrato <b>por evento</b></i></td>
+					    	</tr>
+					    	<tr>
+								<td colspan="7">
 									<div class="row">
 										<div class="col-md-3">
-											<input id="fechainicioEvento" class="form-control input-sm datepicker" type="text"  placeholder="Inicio" value="5 Noviembre, 2014">
-											<input type="hidden" name="fechainicio">
+											<input id="fechaInicioEvento" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos" value="5 Noviembre, 2014">
+											<!--<input type="hidden" class="fehcaInicioEvento" name="fechainicio">-->
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-3">
 											<input type="number" id="plazo"  class="form-control input-sm" name="plazo" min="1" max="" placeholder="Plazo en días" value="5">	
 										</div>
-										<div class="col-md-2">
-											<input type="number" class="form-control input-sm n_pagos" name="nPlazos" min="1" max="" placeholder="Núm. de plazos">	
+										<div class="col-md-3">
+											<input type="number" class="form-control input-sm n_pagos" name="nplazos" min="1" max="" placeholder="Núm. de plazos">	
 										</div>
 										<div class="col-md-3">
 											<input id="vencimientoPlanEvento" class="form-control input-sm datepicker" disabled type="text" placeholder="Vencimiento">
-											<input id="fechafinalEvento" type="hidden" id="" name="fechafinal">
-										</div>
-										<div class="col-md-2">
-											<button type="button" id="btn_recargarPagos" class="btn btn-default btn-sm"><span class="icon-refresh"></span> Recargar</button>
-										</div>								
+											<input id="fechafinalEvento" type="hidden">
+										</div>							
 									</div>
 								</td>
 					        </tr>
 					        <tr>
-					        	<td colspan="2"><b>No. de Pago</b></td>
-					        	<td colspan="3"><b>Fecha de pago</b></td>
-					        	<td colspan="3"><b>Pago por plazo</b></td>
+					        	<td colspan="2">No. de Pago</td>
+					        	<td colspan="2">Fecha de pago</td>
+					        	<td colspan="2">Pago por plazo</td>
+					        	<td style="text-align:right;">
+					        		<button type="button" id="btn_recargarPagos" class="btn btn-default btn-sm"><span class="icon-refresh"></span></button>
+					        	</td>
 					        </tr>
 						</thead>
-						<thead id="tbody_iguala" class="tabla_oculto" style="background-color: #f9f9f9!important;">
+						<thead id="thead_iguala" class="thead_oculto" style="background-color: #f9f9f9!important;">
 					    	<tr>
-								<td colspan="8">
+					    		<td colspan="7"><i>Datos para el contrato <b>iguala mensual</b></i></td>
+					    	</tr>
+					    	<tr>
+								<td colspan="7">
 									<div class="row">
 										<div class="col-md-4">
-											<input id="fechainicioIguala" class="form-control input-sm datepicker" type="text"  placeholder="Inicio">
+											<input id="fechaInicioIguala" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos">
+											<!--<input type="hidden" class="fehcaInicioIguala" name="fechainicio">-->
 										</div>
 										<div class="col-md-4">
-											<select class="form-control input-sm n_pagos" name="mensualidades">
+											<select class="form-control input-sm n_pagos" name="nplazos" placeholder="Mensualidades...">
 											  <option value="1">1 Mes</option>
 											  <option value="3">3 Meses</option>
 											  <option value="6">6 Meses</option>
@@ -163,89 +171,85 @@
 											  <option value="18">18 meses</option>
 											  <option value="24">24 meses</option>
 											  <option value="48">48 meses</option>
-											  <option selected value="">Seleccione duración de contrato</option>
+											  <option style="display:none;" selected>Mensualidades...</option>
 											</select>	
 										</div>
 										<div class="col-md-4">
 											<input id="vencimientoPlanIguala" class="form-control input-sm datepicker" disabled type="text" placeholder="Vencimiento">
-											<input id="fechafinalIguala" type="hidden" id="" name="fechafinal">
+											<input id="fechafinalIguala" type="hidden">
 										</div>									
 									</div>
 								</td>	       									          			         
 					        </tr>
 					        <tr>
-								<td colspan="2"><b>No. de Pago</b></td>
+								<td colspan="1"><b>No. de Pago</b></td>
 								<td colspan="3"><b>Fecha de pago</b></td>
 								<td colspan="3">
 									<b>Renta Mensual</b>
-									<input type="texto" class="form-control input-sm" name="mensualidadletras" placeholder="Pago mensual en letras">
 								</td>
 					        </tr>
 						</thead>
-						<tbody id="tbody_pagos">					
-						</tbody>
-						<tbody>
-							<tr>
-								<td colspan="8" id="margen" style="text-align:right">$0.00</td>
-							</tr>
-						</tbody>
+						<tbody id="tbody_pagos_evento" class="tbody_oculto"></tbody>
+						<tbody id="tbody_pagos_iguala" class="tbody_oculto"></tbody>
 						<tbody> <!-- Separacion -->
 							<tr>
-								<td colspan="7">Separación</td>
+								<td colspan="7">
+									<!-- -->
+								</td>
 							</tr>
 						</tbody>		
-						<tfoot style="background : #F9F9F9;">
+						<tfoot style="background : #F9F9F9;"><!--Precio/Hora - Subtotal-->
 							<tr>
-								<th></th>
-								<th style="text-align: right;">Precio/Hora</th>
-								<th>
+								<td></td>
+								<td></td>
+								<td style="text-align: right;">Precio/Hora</td>
+								<td>
 									<input type="number" class="form-control input-sm" id="precio_hora" name="preciohora" value="300" min="1">
-								</th>
-								<th></th>
-								<th> Subtotal </th>
-								<th>
+								</td>
+								<td> Subtotal </td>
+								<td>
 									<label id="label_subtotal">$0</label>
 									<input type="text" class="form-control input-sm input-tfoot" id="subtotal" style="display:none;" value="0">
-								</th>
-								<th> </th>
+								</td>
+								<td> </td>
 							</tr>
 							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th> Descuento </th>
-								<th style="position: relative;">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td> Descuento </td>
+								<td style="position: relative;">
 									<input type="number" name="descuento" class="form-control input-sm input-tfoot" value="0" min="0" max="100">
 									<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
-								</th>
-								<th>
-								</th>
+								</td>
+								<td>
+								</td>
 							</tr>
 							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th> I.V.A. </th>
-								<th style="position: relative;">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td> I.V.A. </td>
+								<td style="position: relative;">
 									<input type="number" class="form-control input-sm input-tfoot" value="16" disabled>
 									<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
-								</th>
-								<th>
-								</th>
+								</td>
+								<td>
+								</td>
 							</tr>
 							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th> Total </th>
-								<th>
+								<td></td>
+								<td><!--Descomentar para desarrollo. suma: <label id="suma">--></label></td>
+								<td><!--Descomentar para desarrollo. totalReal: <label id="total">--></label></td>
+								<td><!--Descomentar para desarrollo. diferencia: <label id="diferencia">--></label></td>
+								<td> Total </td>
+								<td>
 									<label id="label_total">$0</label>
-								</th>
-								<th>
-								</th>
+								</td>
+								<td>
+								</td>
 							</tr>
 						</tfoot>
 					</table>
@@ -262,7 +266,7 @@
 					<thead>
 						<tr class="info">
 							<td>
-								<input type="checkbox" class="todos" name="todos" id="servicio_<%= id %>/toggleSee_<%= id %>">
+								<input type="checkbox" name="todos" id="servicio_<%= id %>/toggleSee_<%= id %>">
 							</td>
 							<td style="min-width:150px;"><%= nombre %></td>
 							<td>
@@ -301,7 +305,7 @@
 					<tfoot>
 						<tr>
 							<td style="border:0px;"></td>
-							<td colspan="6" style="border:0px;"><button type="button" id="span_otraSeccion" class="btn btn-primary btn-xs"><span class="icon-circleadd"></span> sección</button></td>
+							<td colspan="6" style="border:0px;"><button type="button" id="span_otraSeccion" class="btn btn-default btn-xs"><span class="icon-circleadd"></span> sección</button></td>
 						</tr>
 					</tfoot>
 				</table>
@@ -346,17 +350,17 @@
 	</script> -->
 	<script type="text/template" id="tr_pagos">
 			<td colspan="2"><%- n %></td>
-			<td colspan="3">
+			<td colspan="2">
 				<%- fecha %>
 				<input type="hidden" name="fechapago" value="<%- fecha2 %>">
 			</td>
 			<td colspan="3">
 				<div class="input-group input-group-sm">
 					<span class="input-group-addon">$</span>
-					<input type="number" id="<%- id %>" min="1" max="" value="<%- pago %>" class="form-control <%- atrClase %>" <%- disabled %>>
+					<input type="number" id="<%- id %>" min="1" value="<%- pago %>" class="form-control <%- atrClase %>" <%- disabled %>>
 					<input type="hidden" class="hidden_renta" name="pago" value="<%- pago %>">
 					<span class="input-group-btn">
-						<button class="btn btn-default <%= active %> <%- candado %>" type="button" <%- disabled %>></button>
+						<button class="btn btn-default <%= active %> <%= candado %>" type="button" <%- disabled %>></button>
 					</span>
 				</div>
 			</td>
@@ -390,6 +394,7 @@
 <?=
 // <!-- Utilerias -->
     script_tag('js/backbone/lib/backbone.localStorage.js').
+    script_tag('js/numero-a-letras.js').
 // <!-- modelos -->
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').

@@ -5,22 +5,27 @@
  {
  	public function __construct(){}
 
- 	public function create($post)
- 	{
- 		for ($i=0; $i <count($post['idservicio']) ; $i++) { 
+ 	// public function create($post)
+ 	// {
+ 	// 	for ($i=0; $i <count($post['idservicio']) ; $i++) { 
  			
- 			$this->db->insert('servicios_contrato', 
- 								array('idcontrato'=>$post['idcontrato'],
- 									  'idservicio'=>$post['idservicio'][$i],
- 									  'cantidad'  =>$post['cantidad'][$i],
- 									  'descuento' =>$post['descuento'][$i],
- 									  'precio'    =>$post['precio'][$i],
- 									)
- 				);
- 		}
+ 	// 		$this->db->insert('servicios_contrato', 
+ 	// 							array('idcontrato'=>$post['idcontrato'],
+ 	// 								  'idservicio'=>$post['idservicio'][$i],
+ 	// 								  'cantidad'  =>$post['cantidad'][$i],
+ 	// 								  'descuento' =>$post['descuento'][$i],
+ 	// 								  'precio'    =>$post['precio'][$i],
+ 	// 								)
+ 	// 			);
+ 	// 	}
  		
-		return $this->get();
- 	}
+		// return $this->get();
+ 	// }
+ 	public function create($post) 
+        {  
+          $this->db->insert('servicios_contrato', $post);
+          return $this->get($this->db->insert_id());  
+        }# Fin del metodo insert_mcontact()...
 
  	public function get ()
  	{

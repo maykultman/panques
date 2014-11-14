@@ -9,17 +9,43 @@
   { 
       public function __construct(){}
       
+      // public function create($post) 
+      // {   
+      //   $this->db->insert('contratos', $post);
+      //   return $this->get($this->db->insert_id());  
+      // }
+
       public function create($post) 
-      {   
+      {  
         $this->db->insert('contratos', $post);
-        return $this->get($this->db->insert_id());  
+        $dataCont = $this->get($this->db->insert_id(), TRUE);
+        $this->db->where( 'folio', $post['folio'] );
+        $this->db->update( 'folios', array('contrato' => true) );
+        return $dataCont;
       }
 
-      public function get ( $id = FALSE ) 
+      public function get ( $id = FALSE, $soloCont = FALSE ) 
       {  
-        $reply = $this->where($id);
-        $this->db->order_by('fechacreacion', 'desc'); 
-        return $this->db->get  ( 'contratos' )->$reply();
+        if ($soloCont) {
+          $reply = $this->where( $id );
+          return $this->db->get( 'contratos' )->$reply();
+        } else {
+          $reply = $this->where($id);
+          $this->db->order_by('fechacreacion', 'desc'); 
+          $data['contratos'] = $this->db->get  ( 'contratos' )->$reply();
+          $data['folio'] = $this->folios();
+          return $data;
+        }
+        
+          
+      }
+
+      public function folios () {
+        $this->db->select('*');
+        $this->db->where('cotizacion','1');
+        $this->db->where('contrato','0');
+        // $this->db->order_by('id', 'desc'); 
+        return $this->db->get  ( 'folios' )->row();
       }
 
       public function save (  $id,  $put ) 

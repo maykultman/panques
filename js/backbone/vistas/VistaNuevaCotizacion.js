@@ -10,10 +10,10 @@ app.VistaSeccion = Backbone.View.extend({
 		// 'click .span_eliminar_seccion' : 'eliminarTr',
 
 		'change .number'					: 'calcularSeccion',
-		'keyup .number'						: 'calcularSeccion',
+		// 'keyup .number'						: 'calcularSeccion',
 		'mousewheel .number'				: 'calcularSeccion',
-		'click .number'				: 'calcularSeccion',
-		// 'focus .number'				: 'calcularSeccion',
+		// 'click .number'				: 'calcularSeccion',
+		'blur .number'				: 'calcularSeccion',
 	},
 	initialize 	: function () { },
 	render: function (id) {
@@ -83,11 +83,11 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		/*Cambiamos el icono del boton, arriba o abajo segun sea el caso*/
 		this.$(e.currentTarget).toggleClass('icon-circleup');
 		/*Guardamos todos los td que seran afectados.*/
-		var selector = '#table_servicio_'+this.model.get('id')+' thead #tr_titulos_secciones td,';
-			selector += '#table_servicio_'+this.model.get('id')+' tbody tr td,';
-			selector += '#table_servicio_'+this.model.get('id')+' tfoot tr td';
+		var selector = '#table_servicio_'+this.model.get('id')+' thead #tr_titulos_secciones,';
+			selector += '#table_servicio_'+this.model.get('id')+' tbody,';
+			selector += '#table_servicio_'+this.model.get('id')+' tfoot';
 		/*La función slideToggle solo funciona con td, no con table, tr, thead, tbody no tfoot*/
-		this.$(selector).slideToggle('fast');
+		this.$(selector).fadeToggle('fast');
 	},
 	eliminarSeccion 		: function (e) {
 		/*El argumento e, es el span para elliminar
@@ -117,10 +117,10 @@ app.VistaCotizarServicio = Backbone.View.extend({
 			here.$('.importe').val(importe).trigger(jQuery.Event('change'));
 		}, 10);		
 	},
-	validarTypeNumber	: function (e) {
-		// console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
-		// validarInput(e.currentTarget.type, $(e.currentTarget).val(), e);
-	}
+	// validarTypeNumber	: function (e) {
+	// 	// console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
+	// 	// validarInput(e.currentTarget.type, $(e.currentTarget).val(), e);
+	// }
 });
 
 app.VistaTrServ = app.VistaTrServicio.extend({
@@ -153,8 +153,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 	events : {
 		'change     #busqueda'     	: 'buscarRepresentante',     //Cuando escribes una letra, despliega un menu de sugerencias
-		'click 	   #guardar'	   	: 'guardarCotizacion', //Guarda la cotización
-		'click     #todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
+		'click 	   #guardar'	   	: 'guardar', //Guarda la cotización
+		'click     .todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
 		'click     #vista-previa' 	: 'vistaPrevia',
 
 		/*Botones del thead los servicios que se están cotizando*/
@@ -165,23 +165,28 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		'change     .importe'     : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
 
 		'change 	#precio_hora' : 'dispararCambio',
-		'keyup 		#precio_hora' : 'dispararCambio',
 		'mousewheel #precio_hora' : 'dispararCambio',
-		'click 		#precio_hora' : 'dispararCambio',
-		'focus 		#precio_hora' : 'dispararCambio',
+		'blur 		#precio_hora' : 'dispararCambio',
+		// 'keyup 		#precio_hora' : 'dispararCambio',
+		// 'click 		#precio_hora' : 'dispararCambio',
+		// 'focus 		#precio_hora' : 'dispararCambio',
 
 		'change 	.input-tfoot' : 'calcularTotal',
-		'keyup 		.input-tfoot' : 'calcularTotal',
 		'mousewheel .input-tfoot' : 'calcularTotal',
-		'click 		.input-tfoot' : 'calcularTotal',
-		'focus 		.input-tfoot' : 'calcularTotal',
+		'blur 		.input-tfoot' : 'calcularTotal',
+		// 'keyup 		.input-tfoot' : 'calcularTotal',
+		// 'click 		.input-tfoot' : 'calcularTotal',
+		// 'focus 		.input-tfoot' : 'calcularTotal',
 
 		'click #cancelar'	: 'cancelar'
 	},
 
 	initialize : function () {
-
-		this.listenTo(app.coleccionCotizaciones, 'reset', this.obtenerFolio);
+		this.listenTo(app.coleccionCotizaciones, 'reset', function () {
+			var folio = app.coleccionCotizaciones.establecerFolio();
+			this.$('input[name="folio"]').val(folio);
+			this.$('#h4_folio').text('Folio: '+ folio);
+		});
 		this.render();
 		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
 		// // this.$tablaServicios = this.$('#listaServicios');
@@ -209,31 +214,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		this.$('#fecha').val( formatearFechaUsuario(new Date()) );
 		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#titulo').val('Cotizaicón No. '+(Math.random()).toFixed(3) *1000);
 
-		/*FOLIO. El la cración de una cotización ocurrira el getch,
+		/*FOLIO. En la cración de una cotización ocurrira el fetch,
 		  pero cuando se edite una cotización no se realizará*/
 		if (app.coleccionCotizaciones.length == 0) {
 			app.coleccionCotizaciones.fetch({reset:true});
 		};
 
 		return this;
-	},
-	obtenerFolio		: function () {
-		try {
-			var coleccion = _.values(_.indexBy(app.coleccionCotizaciones.toJSON(),'id')),
-				folio = '' + (parseInt(_.last(coleccion).folio) +1),
-				folio = folio.split(''),
-				length = folio.length;
-
-			for (var i = 5; i > length; i--) {
-				folio.unshift('0');
-			};
-			this.folio = folio.join('');
-			this.$('#h4_folio').text('Folio: '+this.folio);
-		}
-		catch(err) {
-			this.folio = '00001';
-			this.$('#h4_folio').text('Folio: 00001');
-		}
 	},
 	cargarServicioCo	: function (serviciosCotizacion) {
 		/*....................Instanciamos un modelo servicios y le pasamos el modelo.............*/
@@ -256,7 +243,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		/*Despues de haber obtenido los importes desactivamos nuevamente
 		  los campos*/
 		this.$('.importe').attr('disabled',true);
-		console.log();
+		
 		/*...¿Es un array de importes?...*/
 		if($.isArray(array.importes)) {    
 			// ...Si es cierto iteramos sobre los importes....
@@ -269,12 +256,12 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				this.$('#subtotal').val(total.toFixed(2));
 
 				/*Formateamos subtotal para mostrarlo*/
-				total = '' + total.toFixed(2);
-				total = total.split('.');
-				decimales = total[1];
-				total = conComas(total[0].split(''));
+				// total = '' + total.toFixed(2);
+				// total = total.split('.');
+				// decimales = total[1];
+				// total = conComas(total[0].split(''));
 				
-				this.$('#label_subtotal').text( '$'+total+'.'+decimales );
+				this.$('#label_subtotal').text( '$'+conComas(total.toFixed(2)) );
 		} else {	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
 			/*Evaluamos si hay algun valor en el objeto.
 			  Si no lo hay colocamos un cero, puesto que
@@ -288,13 +275,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				this.$('#subtotal').val(Number(array.importes).toFixed(2));
 
 				/*Formateamos subtotal para mostrarlo*/
-				total = '' + Number(array.importes).toFixed(2);
-				total = total.split('.');
-				decimales = total[1];
-				total = conComas(total[0].split(''));
+				// total = '' + Number(array.importes).toFixed(2);
+				// total = total.split('.');
+				// decimales = total[1];
+				// total = conComas(total[0].split(''));
 				
 				/*Formateamos subtotal para mostrarlo*/
-				this.$('#label_subtotal').text( '$'+total+'.'+decimales );
+				this.$('#label_subtotal').text( '$'+conComas(Number(array.importes).toFixed(2)) );
 			};
 			
 		}
@@ -316,11 +303,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		total = total - total * desc;
 		total = total + total * iva;
 		this.total = total.toFixed(2); // Sirve para la clase contrato
-		total = '' + total.toFixed(2);
-		total = total.split('.');
-		decimales = total[1];
-		total = conComas(total[0].split(''));
-		this.$('#label_total').text( '$'+total+'.'+decimales );
+		// total = '' + total.toFixed(2);
+		// total = total.split('.');
+		// decimales = total[1];
+		// total = conComas(total[0].split(''));
+		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
 
 		this.calcularTotalHoras();
 	},
@@ -335,7 +322,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		}());
 	},
 	marcarTodosCheck 	: function(e) {        
-			marcarCheck(e);
+			marcarCheck(e, '#tbody_servicios_seleccionados');
 	},
 	buscarRepresentante 		: function (e) {
 		var here = this,
@@ -386,7 +373,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	cancelar			: function () {
 		location.href = 'cotizaciones_consulta';
 	},
-	guardarCotizacion 	: function (e) {
+	guardar 	: function (e) {
 		var json = this.obtenerDatos(),
 			self = this;
 
@@ -403,8 +390,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		};
 		json.datos.status = true;
 		json.datos.visibilidad = true;
-		json.datos.folio = this.folio;
-
+		
 		$('input,select,button,textarea').attr('disabled',true);
 		 Backbone.emulateHTTP = true;
 		 Backbone.emulateJSON = true; 
@@ -412,7 +398,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		 app.coleccionCotizaciones.create(json.datos, {
 			wait:true,
 			success:function(exito){
-				// console.log('se guardo', exito);
+				console.log('se guardo', exito);
 				self.guardarSeccion(exito.get('id'), json.secciones);
 			},
 			error:function(error){
@@ -437,7 +423,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		json = { secciones : [], datos : '' };
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#registroCotizacion').serializeArray());
-			json.datos.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1);
+			json.datos.fechacreacion = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1);
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 
 		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
@@ -468,13 +454,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				wait	: true,
 				success	: function (exito) {
 					if (self.aumentarContador() == secciones.length) {
-						self.cotizacionGuardada();
+						self.guardado();
 					};
 					// ok('La seccion: <b>'+exito.toJSON().seccion+'</b> ha sido guardada');
 				},
 				error	: function (error) {
 					if (self.aumentarContador() == secciones.length) {
-						self.cotizacionNoGuardada();
+						self.noGuardada();
 					};
 					// error('Error al guardar seccion: <b>'+error.toJSON().seccion+'</b>');
 				}
@@ -483,21 +469,29 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			Backbone.emulateJSON = false;
 		};
 	},
-	cotizacionGuardada		: function () {
+	guardado		: function () {
 		var self = this;
+		// Desbloqueamos todos los botones
 		$('input,select,button,textarea').attr('disabled',false);
 		alerta('¡Cotización guardada!', function () {
 			confirmar('<b>¿Deseas crear otra cotización?</b>', function () {
-				$('#registroCotizacion')[0].reset();
-				$('.span_eliminar_servicio').click();
+				// Necesitamos resetear la coleccion para,
+				// traer nuevamento todos los datos junto
+				// con el folio más actual. Debemos terminar
+				// el listener del evento reset que se encuentra
+				// en la función initialize para poder usar la
+				// funcion reset() que elimina todo los modelo
+				// en la coleccion.
+				app.coleccionCotizaciones.off().reset();
+				// Inicializamos todo nuevamente para otra
+				// cotizacion
 				self.initialize();
-				app.coleccionCotizaciones.fetch({reset:true});
 			}, function () {
 				location.href = 'cotizaciones_consulta';
 			});
 		});
 	},
-	cotizacionNoGuardada	: function () {
+	noGuardada	: function () {
 		$('input,select,button,textarea').attr('disabled',false);
 		alerta('La cotización ha sido guardada, pero ocurrieron algunos errores<br>Recomendamos que revice la cotización en la consulta de cotizaciones', function () {
 			location.href = 'cotizaciones_consulta';
@@ -511,13 +505,12 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		this.contadorAlerta = 1;
 	},
 	conmutarServicios 		: function () {
-		var spans = this.$('.todos:checked'); /*Obtenemos todos los checkbox activados*/
+		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
 		if (spans) {
 			for (var i = 0; i < spans.length; i++) {
 				/*Hacemos clic en los span correspondientes a los trs checkeados.
 				  la vista de cada tr recibirá el evento clic y ejecutará la 
 				  funcion correspondiente*/
-				  console.log($(spans[i]).attr('id'));
 				this.$('.iconos-operaciones #'+$(spans[i]).attr('id').split('/')[1]).click();
 			};
 		};
@@ -544,7 +537,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		this.calcularSubtotal();
 	},
 	eliminarServicios 		: function () {
-		var spans = this.$('.todos:checked'); /*Obtenemos todos los checkbox activados*/
+		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
 		if (spans.length) { /*Solo si hay servicios marcados*/
 			var here = this;
 			confirmar('¿Los servicios marcados están siendo cotizados, estás seguro de eliminarlos?',

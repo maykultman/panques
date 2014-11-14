@@ -119,7 +119,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotizacion</title>	
 		<?=
-			script_tag('js/jquery.js').
+			script_tag('js/jquery-1.11.1.min.js').
 			script_tag('js/plugin/jsPDF/jspdf.min.js');
 		?>
 	</head>
@@ -390,8 +390,8 @@
  			json.horas += Number(modelos[i].get('horas'));
  		};
  		json.servicio = app.coleccionServicios.get(idservicio).get('nombre');
- 		json.preciohora = this.preciohora;
- 		json.importe = json.horas * this.preciohora;
+ 		json.preciohora = '$'+conComas(this.preciohora.toFixed(2));
+ 		json.importe = '$'+conComas((json.horas * this.preciohora).toFixed(2));
 
  		/*Variables globales*/
  		this.horas += json.horas;
@@ -402,17 +402,17 @@
  		var total = 0,
  			json = {};
  		total = this.horas * this.preciohora;
- 				json.subtotal = ''+total.toFixed(2);
+ 				json.subtotal = '$'+conComas(total.toFixed(2));
 				json.descuento = this.descuento;
-				json.valordescuento = ''+(total * this.descuento/100).toFixed(2);
+				json.valordescuento = '$'+(total * this.descuento/100).toFixed(2);
 		total = total - total * (this.descuento/100).toFixed(2);
-				json.iva = ''+(total * 0.16).toFixed(2);
+				json.iva = '$'+(total * 0.16).toFixed(2);
 		total = total + total * 0.16;
-		total = '' + total.toFixed(2);
-		total = total.split('.');
-		decimales = total[1];
-		total = conComas(total[0].split(''));
-				json.total = '$'+total+'.'+decimales;
+		// total = '' + total.toFixed(2);
+		// total = total.split('.');
+		// decimales = total[1];
+		total = conComas(total.toFixed(2));
+				json.total = '$'+total;
 		
 		this.$('tfoot').html( this.plantillas.totales(json) );
  	}

@@ -2,8 +2,14 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row">
-				<div class="col-md-10"><h3>Información Básica</h3></div>
-				<div class="col-md-2"><h3 id="h4_folio"></h3></div>
+				<div class="col-lg-10 col-md-9 col-xs-8">
+					<h3>Información Básica</h3>
+					<hr>
+				</div>
+				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
+					<h3 id="h4_folio"></h3>
+					<hr>
+				</div>
 			</div>
 			<form id="registroCotizacion">
 				
@@ -26,6 +32,7 @@
 				<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
 				<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			
 				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">
+				<input type="hidden" name="folio">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
 			</div>
 			<div class="col-md-4">
@@ -59,11 +66,7 @@
 				<table class="table"> <!-- id="mostrarTabla" -->
 					<thead style="background : #F9F9F9;">
 						<tr>
-							<th colspan="2" style="min-width:200px;"><label><input id="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label></th>
-							<th style="min-width:170px;"><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
-							<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
-							<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
-							<th>Importe</th>
+							<th colspan="6" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label> <label style="float:right; margin-bottom: 0px;">Importe</label></th>
 							<th class="iconos-operaciones">
 								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
@@ -76,69 +79,66 @@
 					</tbody>		
 					<tfoot style="background : #F9F9F9;">
 						<tr>
-							<th></th>
-							<th></th>
-							<th style="text-align: right;">Total horas</th>
-							<th><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></th>
-							<th></th>
-							<th></th>
-							<th class="iconos-operaciones">
+							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+							<td style="text-align: right;">Total horas</td>
+							<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
+							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+							<td class="iconos-operaciones">
 								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
 								<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
-							</th>
+							</td>
 						</tr>
 						<tr>
-							<th></th>
-							<th style="text-align: right;">Precio/Hora</th>
-							<th>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;">Precio/Hora</td>
+							<td>
 								<input type="number" class="form-control input-sm" id="precio_hora" name="preciohora" value="300" min="1">
-							</th>
-							<th></th>
-							<th> Subtotal </th>
-							<th>
+							</td>
+							<td> Subtotal </td>
+							<td>
 								<label id="label_subtotal">$0</label>
 								<input type="text" class="form-control input-sm input-tfoot" id="subtotal" style="display:none;" value="0">
-							</th>
-							<th> </th>
+							</td>
+							<td> </td>
 						</tr>
 						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th> Descuento </th>
-							<th style="position: relative;">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td> Descuento </td>
+							<td style="position: relative;">
 								<input type="number" name="descuento" class="form-control input-sm input-tfoot" value="0" min="0" max="100">
 								<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
-							</th>
-							<th>
-							</th>
+							</td>
+							<td></td>
 						</tr>
 						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th> I.V.A. </th>
-							<th style="position: relative;">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td> I.V.A. </td>
+							<td style="position: relative;">
 								<input type="number" class="form-control input-sm input-tfoot" value="16" disabled>
 								<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
-							</th>
-							<th>
-							</th>
+							</td>
+							<td></td>
 						</tr>
 						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th> Total </th>
-							<th>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td> Total </td>
+							<td>
 								<label id="label_total">$0</label>
-							</th>
-							<th>
-							</th>
+							</td>
+							<td></td>
 						</tr>
 					</tfoot>
 				</table>
@@ -155,7 +155,7 @@
 				<thead>
 					<tr class="info">
 						<td>
-							<input type="checkbox" class="todos" name="todos" id="servicio_<%= id %>/toggleSee_<%= id %>">
+							<input type="checkbox" name="todos" id="servicio_<%= id %>/toggleSee_<%= id %>">
 						</td>
 						<td style="min-width:150px;"><%= nombre %></td>
 						<td>
@@ -194,7 +194,7 @@
 				<tfoot>
 					<tr>
 						<td style="border:0px;"></td>
-						<td colspan="6" style="border:0px;"><button type="button" id="span_otraSeccion" class="btn btn-primary btn-xs"><span class="icon-circleadd"></span> sección</button></td>
+						<td colspan="6" style="border:0px;"><button type="button" id="span_otraSeccion" class="btn btn-default btn-xs"><span class="icon-circleadd"></span> sección</button></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -256,5 +256,6 @@ script_tag('js/backbone.localStorage.js');?>
 ?>
 
 <script>
+	app.coleccionCotizaciones = new ColeccionCotizaciones(app.coleccionDeCotizaciones);
 	app.vistaNuevaCotizacion = new app.VistaNuevaCotizacion();
 </script>

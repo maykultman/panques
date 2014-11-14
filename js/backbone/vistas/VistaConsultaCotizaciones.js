@@ -181,7 +181,10 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 			vSeccion,
 			$select = this.$('#busqueda')[0].selectize;
 
-		this.obtenerFolio();
+		app.coleccionCotizaciones.folio 
+			= app.coleccionDeCotizaciones.folio.folio;
+		this.$('#h4_folio')
+				.text('Folio: '+ app.coleccionCotizaciones.establecerFolio());
 
 		this.$('#titulo').val(this.model.get('titulo'));
 		$select.setValue(this.model.get('idcliente'));
@@ -294,7 +297,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	'click  #btn_eliminarVarios'  	 : 'eliminarVarios',
 		'click #btn_restaurarVarios' : 'restaurarVarios',
 
-        'click  #todos' 		 : 'marcarTodosCheck',
+        'click  .todos' 		 : 'marcarTodosCheck',
 
 		'click .span_editar'	: 'conmutarSeccion',
 		'click .btn_toggle'	: 'regresar',
@@ -325,11 +328,11 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 				total = horas * Number(model.get('preciohora'));
 				total = total - total * Number(model.get('descuento'))/100;
 				total = total + total * 0.16;
-				total = '' + total.toFixed(2);
-				total = total.split('.');
-				decimales = total[1];
-				total = conComas(total[0].split(''));
-				return total+'.'+decimales;
+				// total = '' + total.toFixed(2);
+				// total = total.split('.');
+				// decimales = total[1];
+				total = conComas(total.toFixed(2));
+				return total;
 			}()
 	 	});
 		if (eliminado) {
@@ -385,18 +388,18 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
         	this.cargarCotizaciones();
         }
 	},
-	marcarTodosCheck : function(elemento) {
-		marcarCheck(elemento);
+	marcarTodosCheck : function(e) {
+		marcarCheck(e, '#tabla_cotizaciones');
     },
     eliminarVarios 				: function () {
 		var here = this, mensaje, visibilidad, ids;
 		/*De los checkboxs con class .todos tomamos el primero (sin importar si hay uno o vareios checheados)
 		  Si hay checheados, procedemos*/
-		if (this.$('.todos:checked').val()) {
+		if (this.$('input[name="todos"]:checked').val()) {
 			/*Solo con el primer cliente seleccionado nos vasta para saber
 			  lo que queremos eliminar (clientes o prospectos).*/
 			visibilidad = app.coleccionCotizaciones
-							 .get(this.$('.todos:checked').val())
+							 .get(this.$('input[name="todos"]:checked').val())
 							 .toJSON()
 							 .visibilidad;
 			if ( visibilidad == '1' ) {
@@ -406,7 +409,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 			};
 			confirmar(mensaje,
 				function () {
-					ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
+					ids = pasarAJson(here.$('input[name="todos"]:checked').serializeArray()).todos;
 					if ( visibilidad == '1' ) { /*Si visibilidad es 1, queremos enviar clientes a la papelera*/
 						if ($.isArray(ids)) { /*Si es verdadero, eliminaremos varios clientes*/
 							for (var i = 0; i < ids.length; i++) {
@@ -453,8 +456,8 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 		};	
 	},
 	restaurarVarios	: function () {
-		if (this.$('.todos:checked').val()) { /*Por lo menos un cliente seleccionado*/
-			var ids = pasarAJson(this.$('.todos:checked').serializeArray()).todos;
+		if (this.$('input[name="todos"]:checked').val()) { /*Por lo menos un cliente seleccionado*/
+			var ids = pasarAJson(this.$('input[name="todos"]:checked').serializeArray()).todos;
 			if ($.isArray(ids)) { /*Sol varios clientes ha restaurar*/
 				for (var i = 0; i < ids.length; i++) {
 					app.coleccionCotizaciones

@@ -4,45 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
         
-    <script type="text/javascript" src="<?=base_url()?>js/jquery.js"></script>
-
-    <!-- Alertas alertify.js -->
-    <script type="text/javascript" src="<?=base_url()?>js/plugin/alertify/alertify.js"></script>
-    <?=
-        link_tag('js/plugin/alertify/themes/alertify.core.css').
-        link_tag('js/plugin/alertify/themes/alertify.bootstrap.css');
-    ?>
-
-
-    <!--Bootstrap. Debe cargarse antes que las libs de tablesorter
-        crea conflicto con jquery-latest.min.js-->
-    <?=
-        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
-        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').
-        script_tag('css/bootstrap-3.1.1-dist/js/bootstrap.min.js');
-    ?>
-
-    <!-- plugin selectize css -->
-    <?= script_tag('js/tablas/jquery-latest.min.js').
+    <?= script_tag('js/jquery-1.11.1.min.js').
+        script_tag('js/jquery-ui.min.js').
+        script_tag('css/bootstrap-3.1.1-dist/js/bootstrap.min.js').
+        script_tag('js/plugin/selectize/selectize.min.js').
         script_tag('js/tablas/jquery.tablesorter.js').
         script_tag('js/tablas/jquery.tablesorter.widgets.js').
         // script_tag('js/tablas/widget-scroller.js').
         script_tag('js/tablas/widget-cssStickyHeaders.js').
-        script_tag('js/tablas/estilo_tabla.js');
-    ?>
-    <?php /*Si no se llama aquí, la edicion de la ficha de un cliente no se activa,
-            además debe estar despues de las librerias selectize*/ ?>
-    <?= link_tag('css/theme.default.css').
+        script_tag('js/plugin/alertify/alertify.js'); ?>
+
+    <!-- Alertas alertify.js -->
+    <?= 
+        link_tag('js/plugin/alertify/themes/alertify.core.css').
+        link_tag('js/plugin/alertify/themes/alertify.bootstrap.css').
+        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
+        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').
+        link_tag('css/jquery-ui.min.css').
+        link_tag('css/theme.default.css').
         link_tag('js/plugin/selectize/selectize.default.css').
-        script_tag('js/plugin/selectize/selectize.min.js');
+        /*icommon*/
+        link_tag('css/style.css');
     ?>
-
- 
-    <!--Iconos-->
-        <?=link_tag('css/style.css');?>
-    <!-- Css -->
-    <link rel="stylesheet/css" type="text/css" href="<?=base_url()?>css/jquery-ui-1.10.4.custom.css">
-
+        
     <!--Less-->
 
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_menu_cabecera.less">

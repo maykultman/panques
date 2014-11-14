@@ -8,7 +8,7 @@
 							<thead>
 								<tr>
 									<th class="sorter-false">
-										<input id="todos" type="checkbox" name="todos" style="margin-left: 4px;">
+										<input type="checkbox" class="todos" style="margin-left: 4px;">
 									</th>
 									<th class="sorter-false">
 										<!-- Títulos -->
@@ -47,11 +47,11 @@
 </div>
 
 	<script type = "text/plantilla" id="tds_Cotizacion">
-		<td><input type="checkbox" class="todos" name="todos" value="<%= id %>" />
+		<td><input type="checkbox" name="todos" value="<%= id %>" />
 		<td>	<%=cliente%>								</td>
 		<td>	<%=titulo%>								</td>
 		<td>	<%=empleado%>								</td>
-		<td>	<%=formatearFechaUsuario(new Date(fecha))%>	</td>
+		<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>
 		<td>   $<%=total%>									</td>
 		<td class="icon-operaciones">
 			<span class="icon-restore span_restaurar"		data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
@@ -107,12 +107,7 @@
 				<table class="table"> <!-- id="mostrarTabla" -->
 					<thead style="background : #F9F9F9;">
 						<tr>
-							<th><input id="todos" type="checkbox"></th>
-							<th style="min-width:170px;">Servicios a cotizar</th>
-							<th style="min-width:170px;"><textarea class="form-control" rows="1" style="min-width:150px; visibility:hidden;" disabled></textarea></th>
-							<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
-							<th><input type="text" class="form-control input-sm" style="visibility:hidden;" disabled></th>
-							<th>Importe</th>
+							<th colspan="6" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label> <label style="float:right; margin-bottom: 0px;">Importe</label></th>
 							<th class="iconos-operaciones">
 								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
@@ -125,12 +120,12 @@
 					</tbody>		
 					<tfoot style="background : #F9F9F9;">
 						<tr>
-							<th></th>
-							<th></th>
+							<th><input type="text" class="form-control input-sm" style="visibility: hidden;"></th>
+							<th><input type="text" class="form-control input-sm" style="visibility: hidden;"></th>
 							<th style="text-align: right;">Total horas</th>
 							<th><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></th>
-							<th></th>
-							<th></th>
+							<th><input type="text" class="form-control input-sm" style="visibility: hidden;"></th>
+							<th><input type="text" class="form-control input-sm" style="visibility: hidden;"></th>
 							<th class="iconos-operaciones">
 								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
@@ -204,7 +199,7 @@
 					<thead>
 						<tr class="info">
 							<td>
-								<input type="checkbox" class="todos" name="todos" id="servicio_<%= id %>/toggleSee_<%= id %>">
+								<input type="checkbox" name="todos" id="servicio_<%= id %>/toggleSee_<%= id %>">
 							</td>
 							<td style="min-width:150px;"><%= nombre %></td>
 							<td>
