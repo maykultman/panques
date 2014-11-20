@@ -4,11 +4,11 @@
 			<div id="div_fullHeight">    
 		        <div id="posicion_infotd">
 		    		<div id="clientes" class="wrapper"> 
-					    <table id="tabla_cotizaciones" class="table table-striped tablesorter">
+					    <table id="tabla_principal" class="table table-striped tablesorter">
 							<thead>
 								<tr>
 									<th class="sorter-false">
-										<input type="checkbox" class="todos" style="margin-left: 4px;">
+										<input class="todos" type="checkbox" style="margin-left: 4px;">
 									</th>
 									<th class="sorter-false">
 										<!-- Títulos -->
@@ -16,20 +16,21 @@
 										<span class="icon-search busqueda"></span>
 									</th>
 									<th class="sorter-false">
+										<input type="search" class="form-control search input-sm" data-column="2" placeholder="Nombre versión">
+										<span class="icon-search busqueda"></span>
+									</th>
+									<th class="sorter-false">
 										<!-- Cliente -->
-										<input type="search" class="form-control search input-sm" data-column="2" placeholder="Cliente">
+										<input type="search" class="form-control search input-sm" data-column="3" placeholder="Cliente">
 									    <span class="icon-search busqueda"></span>
 									</th>
 									<th class="sorter-false">
 										<!-- Relizado por -->
-										<input type="search" class="form-control search input-sm" data-column="3" placeholder="Relizado por">
+										<input type="search" class="form-control search input-sm" data-column="4" placeholder="Relizado por">
 										<span class="icon-search busqueda"></span>
 									</th>
-									<th class="sorter-false">
-										fecha
-										<!-- <div id="bfecha" class="abajo" style="margin-left:5px;"><span id="fecha" class="downt"></span></div> -->
-									</th>
-									<th class="filter-false">Total</th>
+									<!-- <th class="filter-false">Total</th> -->
+									<!-- <th class="sorter-false">fecha</th> -->
 									<th class="sorter-false">Operaciones</th>
 								</tr>
 							</thead>
@@ -46,13 +47,14 @@
 	</section><!-- /.contenedor_principal_modulos -->
 </div>
 
-	<script type = "text/plantilla" id="tds_Cotizacion">
+	<script type = "text/plantilla" id="tds_cotizacion">
 		<td><input type="checkbox" name="todos" value="<%= id %>" />
+		<td>	<%=titulo%>									</td>
+		<td>	<%=nombreversion%>							</td>
 		<td>	<%=cliente%>								</td>
-		<td>	<%=titulo%>								</td>
 		<td>	<%=empleado%>								</td>
-		<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>
-		<td>   $<%=total%>									</td>
+		<!--<td>   $<%=total%>									</td>-->
+		<!--<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>-->
 		<td class="icon-operaciones">
 			<span class="icon-restore span_restaurar"		data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
 			<span class="icon-circledelete span_borrar"	data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
@@ -300,11 +302,9 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/modelos/ModeloEmpleado.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
 	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
-	script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
 
 	script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
-	script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
 	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
@@ -316,5 +316,6 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/vistas/VistaConsultaCotizaciones.js');
 ?>
 <script>
+	app.coleccionCotizaciones = new ColeccionCotizaciones(app.coleccionDeCotizaciones.cotizaciones);
 	app.cotizaciones = new app.CotizacionesEliminadas();
 </script>

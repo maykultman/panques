@@ -4,7 +4,7 @@
 			<div id="div_fullHeight">    
 		        <div id="posicion_infotd">
 		    		<div id="clientes" class="wrapper"> 
-					    <table id="tabla_cotizaciones" class="table table-striped tablesorter">
+					    <table id="tabla_principal" class="table table-striped tablesorter">
 							<thead>
 								<tr>
 									<th class="sorter-false">
@@ -16,23 +16,24 @@
 										<span class="icon-search busqueda"></span>
 									</th>
 									<th class="sorter-false">
+										<input type="search" class="form-control search input-sm" data-column="2" placeholder="Nombre versión">
+										<span class="icon-search busqueda"></span>
+									</th>
+									<th class="sorter-false">
 										<!-- Cliente -->
-										<input type="search" class="form-control search input-sm" data-column="2" placeholder="Cliente">
+										<input type="search" class="form-control search input-sm" data-column="3" placeholder="Cliente">
 									    <span class="icon-search busqueda"></span>
 									</th>
 									<th class="sorter-false">
 										<!-- Relizado por -->
-										<input type="search" class="form-control search input-sm" data-column="3" placeholder="Relizado por">
+										<input type="search" class="form-control search input-sm" data-column="4" placeholder="Relizado por">
 										<span class="icon-search busqueda"></span>
 									</th>
-									<th class="sorter-false">
-										fecha
-										<!-- <div id="bfecha" class="abajo" style="margin-left:5px;"><span id="fecha" class="downt"></span></div> -->
-									</th>
 									<th class="filter-false">Total</th>
+									<!-- <th class="sorter-false">fecha</th> -->
 									<th class="sorter-false">Operaciones</th>
 								</tr>
-							</thead>					
+							</thead>				
 							<tbody id="tbody_cotizaciones">
 								<!-- Lista de las ultimas cotizaciones-->
 							</tbody>		
@@ -61,21 +62,22 @@
 			</div>
 		</section><!-- /.row -->
 	</section><!-- /.contenedor_principal_modulos -->
-</div>
+</div><!-- /.contenedor_modulo -->
 
-	<script type = "text/plantilla" id="tds_Cotizacion">
-		<td><input type="checkbox" name="todos" value="<%= id %>" />
+	<script type = "text/plantilla" id="tds_cotizacion">
+		<td><input type="checkbox" name="todos" value="<%= id %>" /></td>
 		<td>	<%=titulo%>									</td>
+		<td>	<%=nombreversion%>							</td>
 		<td>	<%=cliente%>								</td>
 		<td>	<%=empleado%>								</td>
-		<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>
 		<td>   $<%=total%>									</td>
+		<!--<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>-->
 		<td class="icon-operaciones">
 			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
 			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver cotización"></span>
 			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
 			<span class="icon-edit2 span_editar"    	data-toggle="tooltip" data-placement="top" title="Editar"><input type="hidden" value="<%= id %>"></span>
-			<!--<span class="icon-uniF5E2"  				data-toggle="tooltip" data-placement="top" title="Realizar contrato"></span>-->
+			<span class="icon-uniF5E2 span_acontrato"  				data-toggle="tooltip" data-placement="top" title="Pasar a contrato"></span>
 			<form>
 				<div class="dropdown">
 					<span class="icon-uniF73E dropdown-toggle versione" id="versiones"		data-toggle="dropdown" data-placement="top" title="Versiones"></span>
@@ -99,7 +101,8 @@
 	<script type="text/template" id="plantilla-formulario">
 		<div class="row">
 			<div class="col-md-4">
-				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título de la cotización">
+				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
+				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
 				<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
 				<input type="hidden" name="idcliente">
 				<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			
@@ -107,12 +110,12 @@
 				<input type="hidden" name="folio">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-8">
 				<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
 			</div>
-			<div class="col-md-4">
+			<!--<div class="col-md-4">
 				<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
-			</div>
+			</div>-->
 		</div>
 	    <div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
@@ -329,17 +332,15 @@
 				<li role="presentation">
 					<a role="menuitem" tabindex="-1" href="#">
 							<input type="radio" name="status" style="width:auto;" checked disabled>
-							<b>Versión <%= version.version %></b> <small class="label label-info">Actual</small>
-						<!--<span id="<%= version.id %>" class="icon-trash span_papeleraVersion"	data-toggle="tooltip" data-placement="top" title="Papelera" style="font-size:13px;"></span>-->
-						<!--<span id="<%= version.id %>" class="icon-preview span_vistaPreviaVersion"	data-toggle="tooltip" data-placement="top" title="Ver cotización" style="font-size:13px;"></span>-->
+							<b>V.<%= version.version %> - <%= version.nombreversion %> </b> <small class="label label-info">Actual</small>
 					</a>
 				</li>
 			<% } else{ %>
 				<li role="presentation">
 					<a role="menuitem" tabindex="-1" href="#">
-						<label for="cotizacion<%= version.id %>" style="margin:0px;">
+						<label for="cotizacion<%= version.id %>" style="margin:0px; font-weight: lighter;">
 							<input type="radio" class="label_statusVersion" id="cotizacion<%= version.id %>" name="status" value="<%= version.id %>" style="width:auto;">
-							Versión <%= version.version %>
+							V.<%= version.version %> - <%= version.nombreversion %>
 						</label>
 						<span id="<%= version.id %>" class="icon-trash span_papeleraVersion"	data-toggle="tooltip" data-placement="top" title="Papelera" style="font-size:13px;"></span>
 						<span id="<%= version.id %>" class="icon-preview span_vistaPreviaVersion"	data-toggle="tooltip" data-placement="top" title="Ver cotización" style="font-size:13px;"></span>
@@ -355,13 +356,27 @@ script_tag('js/backbone/app.js').
 script_tag('js/backbone.localStorage.js');?>
 
 <script type="text/javascript">
+	// font-family del folio
+	WebFontConfig = {
+		google: { families: [ 'Oswald::latin' ] }
+	};
+	(function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+	})();
+	
 	var app = app || {};
 	app.coleccionDeCotizaciones   	= <?php echo json_encode($cotizaciones)   	  ?>;
 	app.coleccionDeServicios      	= <?php echo json_encode($servicios)      	  ?>;
 	app.coleccionDeClientes       	= <?php echo json_encode($clientes)       	  ?>;
 	app.coleccionDeRepresentantes 	= <?php echo json_encode($representantes) 	  ?>;
 	app.coleccionDeEmpleados      	= <?php echo json_encode($empleados) 		  ?>;
-	app.coleccionServiciosCotizados = <?php echo json_encode($serviciosCotizados) ?>;
+	app.coleccionDeServiciosCotizados = <?php echo json_encode($serviciosCotizados) ?>;
 </script>
 <?=
 	script_tag('js/backbone/modelos/ModeloServicio.js').
@@ -369,11 +384,9 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/modelos/ModeloEmpleado.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
 	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
-	script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
 
 	script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
-	script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
 	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').

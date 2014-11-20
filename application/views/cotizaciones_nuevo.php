@@ -28,19 +28,20 @@
 	<script type="text/template" id="plantilla-formulario">
 		<div class="row">
 			<div class="col-md-4">
-				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título de la cotización">
+				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
+				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
 				<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
 				<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			
 				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">
 				<input type="hidden" name="folio">
-				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
+				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-8">
 				<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
 			</div>
-			<div class="col-md-4">
+			<!--<div class="col-md-4">
 				<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
-			</div>
+			</div>-->
 		</div>
 	    <div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
@@ -231,6 +232,20 @@ script_tag('js/backbone/app.js').
 script_tag('js/backbone.localStorage.js');?>
 
 <script type="text/javascript">
+	// font-family del folio
+	WebFontConfig = {
+		google: { families: [ 'Oswald::latin' ] }
+	};
+	(function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+	})();
+	/*----------------------------------------------------------------------*/
 	var app = app || {};
 	app.coleccionDeServicios      	  = <?php echo json_encode($servicios)      	?>;
 	app.coleccionDeClientes       	  = <?php echo json_encode($clientes)       	?>;
@@ -242,14 +257,12 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
-	script_tag('js/backbone/modelos/ModeloLocalCotizacion.js').
 
 	script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
-	script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js').
 
 	script_tag('js/backbone/vistas/VistaServicio.js').
 	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js');

@@ -133,7 +133,10 @@ function marcarCheck(e, ambito)
     // console.log(ambito);
     // if(!checkboxTabla)
     // {
+        // alert(ambito+' input[name="'+$(e.currentTarget).attr('class')+'"]');
         var checkboxs = $(ambito+' input[name="'+$(e.currentTarget).attr('class')+'"]');
+        // alert(JSON.stringify(pasarAJson($(checkboxs).serializeArray())));
+        // alert(checkboxs.length);
     // }
 
     if ($(e.currentTarget).is(':checked'))

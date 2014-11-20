@@ -30,9 +30,9 @@
     <!--Less-->
 
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_menu_cabecera.less">
-    <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_clientes.less">
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilo_general.less">
+    <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
     <script>
         less = {
             env: "development",

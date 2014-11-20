@@ -1,13 +1,13 @@
-
-		<section class="secciones1 container-fluid">
+	<section class="container-fluid contenedor_principal_modulos">
+		<!-- <section class="secciones1"> -->
 			<form id="registroContrato">
 		   	</form>
-		</section> 
-		<section class="secciones2" style="display:none">
+		<!-- </section>  -->
+		<!-- <section class="secciones2" style="display:none">
 			<h1>Vispre previa del contrato</h1> <button id="cerrar_vistaPrevia">Cerrar vista previa</button>
 			<div id="divVistapreviaContrato">
 			</div>
-		</section>    	 
+		</section>     -->	 
 	</section><!-- /.contenedor_principal_modulos -->            
 </div><!-- /.contenedor_modulo -->
 
@@ -37,7 +37,7 @@
 					<span class="label label-info">Todos los campos son requeridos</span>
 				</div>
 				<div class="col-md-8">
-					<input type="text" id="titulo" class="form-control" name="titulocontrato" placeholder="Nombre para el contrato">			
+					<input type="text" id="titulo" class="form-control" name="titulo" placeholder="Nombre para el contrato">			
 				</div>
 				<div class="col-md-4">
 					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha en que se firmará el contrato">
@@ -147,7 +147,7 @@
 					        	<td colspan="2">Fecha de pago</td>
 					        	<td colspan="2">Pago por plazo</td>
 					        	<td style="text-align:right;">
-					        		<button type="button" id="btn_recargarPagos" class="btn btn-default btn-sm"><span class="icon-refresh"></span></button>
+					        		<button type="button" id="btn_recargarPagos" class="btn btn-default btn-xs"><span class="icon-refresh"></span></button>
 					        	</td>
 					        </tr>
 						</thead>
@@ -182,11 +182,9 @@
 								</td>	       									          			         
 					        </tr>
 					        <tr>
-								<td colspan="1"><b>No. de Pago</b></td>
-								<td colspan="3"><b>Fecha de pago</b></td>
-								<td colspan="3">
-									<b>Renta Mensual</b>
-								</td>
+								<td colspan="1">No. de Pago</td>
+								<td colspan="3">Fecha de pago</td>
+								<td colspan="3">Renta Mensual</td>
 					        </tr>
 						</thead>
 						<tbody id="tbody_pagos_evento" class="tbody_oculto"></tbody>
@@ -335,19 +333,6 @@
 				<span class="icon-circledelete span_eliminar_seccion"></span>
 			</td>
 		</script>
-	<!-- <script type="text/template" id="servicioContratado">
-		<td style="width: 50px;"><input type="checkbox"></td>
-		<td><%- nombre %><input type="hidden" name="idservicio" value="<%- idserv %>"></td>
-		<td><input id="cantidad" 	class="input_precio inputsServicios" 	name="cantidad"		type="number" value="<%- cantidad %>" min="1"></td>
-		<td><input id="precio" 		class="input_precio inputsServicios"	name="precio"		type="number" value="<%- precio %>"></td>
-		<td><input id="descuento" 	class="input_descuento inputsServicios" name="descuento"	type="number" min="0" max="100" value="<%- descuento %>"> %</td>
-		<td>$<%- total %> <input type="hidden" class="total" value="<%- total %>"></td>
-		<td class="icon-eliminar">
-        	<div class="eliminar_cliente">
-    			<span id="<%- idserv %>" class="icon-circledelete eliminar"  data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
-           </div>
-       </td>
-	</script> -->
 	<script type="text/template" id="tr_pagos">
 			<td colspan="2"><%- n %></td>
 			<td colspan="2">
@@ -385,6 +370,20 @@
 
 <?=script_tag('js/backbone/app.js');?>
 <script type="text/javascript">
+	// font-family del folio
+	WebFontConfig = {
+		google: { families: [ 'Oswald::latin' ] }
+	};
+	(function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+	})();
+	/*----------------------------------------------------------------------*/
 	var app = app || {};
 	app.iva = 0.16;
 	app.coleccionDeClientes 		= <?= json_encode($clientes); ?>;
@@ -403,17 +402,13 @@
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
 	script_tag('js/backbone/colecciones/ColeccionServicios.js').
-	script_tag('js/backbone/colecciones/ColeccionContratos.js').
-	script_tag('js/backbone/colecciones/ColeccionServiciosContrato.js').
-	script_tag('js/backbone/colecciones/ColeccionPagos.js');?>
+	// En la colección contratos están el modelo y coleccion de pagos
+	script_tag('js/backbone/colecciones/ColeccionContratos.js');?>
 	<script type="text/javascript">
 		app.coleccionContratos = new ColeccionContratos();
 		app.coleccionServiciosContrato = new ColeccionServiciosContrato();
 		app.coleccionPagos = new ColeccionPagos();
-		
-		app.coleccionContratos_LocalStorage = new ColeccionContratos_LocalStorage();
-		app.coleccionServiciosContrato_LocalStorage = new ColeccionServiciosContrato_LocalStorage();
-		app.coleccionPagos_LocalStorage = new ColeccionPagos_LocalStorage();
+		app.coleccionContratos_L = new ColeccionContratos_L();
 	</script>
 <!-- vistas -->
 	<script type="text/javascript">

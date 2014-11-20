@@ -12,14 +12,17 @@
         public function create($post)
         {   
             // var_dump($post); die();
+
             $this->db->insert('cotizaciones', $post);
             $dataCot = $this->get($this->db->insert_id(), TRUE);
-            $data = array(
-                    'folio' => $post['folio'],
-                    'cotizacion' => true,
-                    'contrato' => false
-                );
-            $this->db->insert('folios', $data);
+            
+            $query = $this->db->get_where('folios_cotizaciones', array('folio'=>$post['folio']));
+            if($query->num_rows == 0)
+            {
+                $data = array( 'folio' => $post['folio'] );
+                $this->db->insert('folios_cotizaciones', $data);
+            }
+                
             return $dataCot;
         }
         
@@ -31,10 +34,10 @@
             } else {
                 $reply = $this->where( $id );
                 $this->db->order_by('fechacreacion', 'desc');  
-                $datos['cotizaciones'] = $this->db->get  ( 'cotizaciones' )->$reply();
+                $data['cotizaciones'] = $this->db->get  ( 'cotizaciones' )->$reply();
                 $this->db->order_by('id', 'desc');
-                $datos['folio'] = $this->db->get  ( 'folios' )->row();
-                return $datos;
+                $data['folio'] = $this->db->get  ( 'folios_cotizaciones' )->row();
+                return $data;
             }           
         }
 

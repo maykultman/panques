@@ -117,7 +117,7 @@
 			}
 		</style>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Cotizacion</title>	
+		<title>Cotización</title>	
 		<?=
 			script_tag('js/jquery-1.11.1.min.js').
 			script_tag('js/plugin/jsPDF/jspdf.min.js');
@@ -181,7 +181,6 @@
 <script type="text/template" id="template-detalles">
 	<h2>Detalle</h2>
 	<%- detalles %><br>
-	<%- caracteristicas %>
 </script>
 <script type="text/template" id="template-filaServicio">
 	<tr>
@@ -258,13 +257,12 @@
 	// <!-- MVC -->
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
-	script_tag('js/backbone/modelos/ModeloServicio.js').
-	script_tag('js/backbone/modelos/ModeloLocalCotizacion.js'). 
+	script_tag('js/backbone/modelos/ModeloServicio.js'). 
 
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
-	script_tag('js/backbone/colecciones/ColeccionLocalCotizaciones.js');
+	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js');
 ?> 
 
 <script type="text/javascript">
@@ -296,9 +294,9 @@
  		};
 
  		this.horas = 0,
- 		app.coleccionLocalCotizaciones.fetch();
+ 		app.coleccionCotizaciones_L.fetch();
  		this.cargarCotizacion();
- 		app.coleccionLocalServicios.fetch();
+ 		app.coleccionServicios_L.fetch();
  		this.cargarServicios();
 
  		localStorage.clear();
@@ -349,7 +347,7 @@
  	},
  	cargarCotizacion : function(modelo) {
 
- 		var json = app.coleccionLocalCotizaciones.toJSON()[0];
+ 		var json = app.coleccionCotizaciones_L.toJSON()[0];
 
  		// json.fecha = formatearFechaUsuario(new Date(json.fecha));
 		// json.nombreComercial = app.coleccionClientes.get({id:json.idcliente}).get('nombreComercial');
@@ -361,7 +359,7 @@
  	},
 
  	cargarServicios : function () {
- 		var idservicios = app.coleccionLocalServicios.pluck('idservicio'),
+ 		var idservicios = app.coleccionServicios_L.pluck('idservicio'),
  		
  		idservicios = _.union(idservicios);
 
@@ -383,7 +381,7 @@
  			modelos,
  			importe = 0;
 
- 		modelos = app.coleccionLocalServicios.where( {idservicio: idservicio} );
+ 		modelos = app.coleccionServicios_L.where( {idservicio: idservicio} );
 
  		for (var i = 0; i < modelos.length; i++) {
  			json.descripcion += '<li>'+(modelos[i].get('descripcion')+'</li>');

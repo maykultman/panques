@@ -185,7 +185,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		this.listenTo(app.coleccionCotizaciones, 'reset', function () {
 			var folio = app.coleccionCotizaciones.establecerFolio();
 			this.$('input[name="folio"]').val(folio);
-			this.$('#h4_folio').text('Folio: '+ folio);
+			this.$('#h4_folio').text('Folio: '+ folio).fadeIn('fast');
 		});
 		this.render();
 		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
@@ -215,7 +215,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#titulo').val('Cotizaicón No. '+(Math.random()).toFixed(3) *1000);
 
 		/*FOLIO. En la cración de una cotización ocurrira el fetch,
-		  pero cuando se edite una cotización no se realizará*/
+		  pero cuando se edite una cotización no se realizará.
+		  Esto es porque el la longitud de la colección en la
+		  creción de la cotizacion es 0, pero en la cosulta, la
+		  longitud es diferente mayor*/
 		if (app.coleccionCotizaciones.length == 0) {
 			app.coleccionCotizaciones.fetch({reset:true});
 		};
@@ -337,7 +340,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	vistaPrevia 		: function(e) {
 		localStorage.clear();
 
-		var json = this.obtenerDatos();
+		var json = this.obtenerDatos(),
+			self = this;
 		/*La función obtenerDatos devuelve un json
 		  de los datos básicos de la cotización y
 		  los datos de las secciones para la coti-
@@ -349,15 +353,18 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		if (!json) {
 			return;
 		};
-		app.coleccionLocalCotizaciones.create(json.datos, {
+
+		app.coleccionCotizaciones_L.create(json.datos, {
 			wait: true,
-			success: function (exito) { 
-				// console.log('exito');
+			success: function (exito) {
 				for(i in json.secciones) {   
-					app.coleccionLocalServicios.create(json.secciones[i], { 
+					app.coleccionServicios_L.create(json.secciones[i], { 
 						wait:true,
 						success:function(exito) {
-							window.open("formatoCotizacion");
+							if (self.aumentarContador() == json.secciones.length) {
+								self.contadorAlerta = 1;
+								window.open("formatoCotizacion");
+							};
 							// console.log('Fue exito');
 						},
 						error:function(error) {
@@ -391,7 +398,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		json.datos.status = true;
 		json.datos.visibilidad = true;
 		
-		$('input,select,button,textarea').attr('disabled',true);
+		$('#block').toggleClass('activo');
 		 Backbone.emulateHTTP = true;
 		 Backbone.emulateJSON = true; 
 		 //Hacemos un CREATE con los datos primarios de la cotización
@@ -472,7 +479,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	guardado		: function () {
 		var self = this;
 		// Desbloqueamos todos los botones
-		$('input,select,button,textarea').attr('disabled',false);
+		$('#block').toggleClass('activo');
 		alerta('¡Cotización guardada!', function () {
 			confirmar('<b>¿Deseas crear otra cotización?</b>', function () {
 				// Necesitamos resetear la coleccion para,
@@ -492,7 +499,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		});
 	},
 	noGuardada	: function () {
-		$('input,select,button,textarea').attr('disabled',false);
+		$('#block').toggleClass('activo');
 		alerta('La cotización ha sido guardada, pero ocurrieron algunos errores<br>Recomendamos que revice la cotización en la consulta de cotizaciones', function () {
 			location.href = 'cotizaciones_consulta';
 			this.resetearContador();

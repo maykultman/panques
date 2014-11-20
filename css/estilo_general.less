@@ -269,3 +269,50 @@ hr{
   cursor: pointer;
   color: white;
 }
+
+/*Bloqueo de pantalla*/
+#block.activo {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  /*min-height: 100%;*/
+  left: 0px;
+  right: 0px;
+
+  visibility: visible;
+  background: rgba(0,0,0,0.3);
+  z-index: 3;
+  -webkit-transition: background 0.5s;
+  -moz-transition: background 0.5s;
+  -ms-transition: background 0.5s;
+  -o-transition: background 0.5s;
+  transition: background 0.5s;
+}
+#block{
+  position: fixed;
+  visibility: hidden;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: none;
+  -webkit-transition: background 0.5s, visibility 1s;
+  -moz-transition: background 0.5s, visibility 1s;
+  -ms-transition: background 0.5s, visibility 1s;
+  -o-transition: background 0.5s, visibility 1s;
+  transition: background 0.5s, visibility 1s;
+}
+#block p {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 5px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}

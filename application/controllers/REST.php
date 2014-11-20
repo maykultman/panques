@@ -49,7 +49,7 @@ class  REST extends CI_Controller {
         if($modulo)
         {
             ($var===FALSE) ?  $this->load->view($modulo) : $this->load->view($modulo,$var);     
-        }        
+        }
     }
 
     public function pre_response($query, $metod)

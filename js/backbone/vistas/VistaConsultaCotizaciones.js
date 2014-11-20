@@ -2,12 +2,11 @@ var app = app || {};
 
 app.VistaCotizacion = Backbone.View.extend({
 	tagName : 'tr',
-	plantilla : _.template($('#tds_Cotizacion').html()),
 	events : {
 		'click .span_papelera' 			: 'cambiarVisibilidad',
 		'click .span_restaurar' 		: 'cambiarVisibilidad',
 		'click .span_borrar' 			: 'eliminarPermanente',
-		'click .icon-uniF5E2' 			: 'pasarAContrato',
+		'click .span_acontrato' 			: 'pasarAContrato',
 		'click .span_vistaPrevia'		: 'vistaPrevia',
 		'click .span_papeleraVersion'	: 'cambiarVisibilidadVersion',
 		'click .span_vistaPreviaVersion': 'vistaPreviaVersion',
@@ -114,8 +113,7 @@ app.VistaCotizacion = Backbone.View.extend({
 			},
 			function () {});
 	},
-	pasarAContrato : function()
-	{
+	pasarAContrato : function() {
 		alert('contrato');
 	},
 	vistaPrevia : function() {
@@ -145,7 +143,7 @@ var VistaCotizacionEliminada = app.VistaCotizacion.extend({
 	render : function (){
 		this.$el.html(this.plantilla(this.model.toJSON()));
 		/*Modificamos la funcion render comentando la siguiente
-		  linea, para que las cotizaciones eliminadas co carguen,
+		  linea, para que las cotizaciones eliminadas no carguen
 		  datos innecesarias*/
 		// this.obtenerVersiones(); -->Comparar con clase padre
 		return this;
@@ -179,12 +177,25 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 			json 			= {},
 			preciohora 		= this.model.get('preciohora'),
 			vSeccion,
+			folio,
 			$select = this.$('#busqueda')[0].selectize;
 
-		app.coleccionCotizaciones.folio 
-			= app.coleccionDeCotizaciones.folio.folio;
+		
+		/*La función render de la clase padre no establece
+		el nuevo folio para la nueva versión de la cotización.
+		esto es porque la longitud de la colección es mayor
+		aquí. Tenemos que realizarlo manualmente.
+		También tenemos que estanblecer el folio que viene
+		desde le servidor, del array de objetos a la coleccion
+		de cotizaciones de Backbone. 
+		/*--DESCOMENTAR SI LOS FOLIO DEBEN NUNCA SE REPETIRAN--*/
+			/*app.coleccionCotizaciones.folio 
+				= app.coleccionDeCotizaciones.folio.folio;
+			folio = app.coleccionCotizaciones.establecerFolio();*/
 		this.$('#h4_folio')
-				.text('Folio: '+ app.coleccionCotizaciones.establecerFolio());
+				.text( 'Folio: '+ this.model.get('folio') )
+				.fadeIn('fast');
+		this.$('input[name="folio"]').val( this.model.get('folio') );
 
 		this.$('#titulo').val(this.model.get('titulo'));
 		$select.setValue(this.model.get('idcliente'));
@@ -220,32 +231,24 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 			.trigger('change');
 	},
 	obtenerDatos	: function () {
-		/*Ocultamos la versión actual*/
+		// Ocultamos la versión actual
+		// debe hacerce antes para no mostrar las
+		// dos cotizaciones, actual y nueva versión.
 		this.model.cambiarStatus();
 
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('#titulo, #busqueda, #idrepresentante')
-								    .serializeArray()),
+			json  = pasarAJson(this.$('#titulo').serializeArray()),
 			f = new Date();
 		/*Cortafuego para forzar establecer los siguientes datos*/
-		if (
-				json.titulo == '' 
-			|| 	json.idcliente == '' 
-			|| 	json.idrepresentante == ''
-		) {
+		if (json.titulo == '' || json.idcliente == '' || json.idrepresentante == '') {
 			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
 			return false; // Terminamos el flujo del código
 		};
 
-		json = {
-			secciones : [], datos : ''
-		};
+		json = { secciones : [], datos : '' };
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#registroCotizacion').serializeArray());
-			json.datos
-				.fecha = f.getFullYear() + "-" + 
-						(f.getMonth() +1) + "-" + 
-						(f.getDate() +1);
+			json.datos.fechacreacion = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1);
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 
 		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
@@ -261,7 +264,7 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		// Dato basura
 		delete json.datos.todos;
 
-		/*preparamos la nueva antes de devorverla*/
+		/*preparamos la nueva version antes de devorverla*/
 		json.datos.version = parseInt( this.model.get('version') ) +1;
 		if (this.model.get('idcotizacion') == '0') {
 			json.datos.idcotizacion = this.model.get('id');
@@ -271,8 +274,8 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		
 		return json;
 	},
-	cotizacionGuardada		: function () {
-		$('input,select,button,textarea').attr('disabled',false);
+	guardado		: function () {
+		$('#block').toggleClass('activo');
 		alerta('Nueva versión guardada', function () {
 			// $('#registroCotizacion')[0].reset();
 			// this.$('.span_eliminar_servicio').click();
@@ -281,17 +284,33 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 			location.href = 'cotizaciones_consulta';
 		});
 	},
-	cotizacionNoGuardada	: function () {
-		$('input,select,button,textarea').attr('disabled',false);
+	noGuardado	: function () {
+		$('#block').toggleClass('activo');
 		alerta('La nueva versión ha sido guardada, pero ocurrieron algunos errores<br>Recomendamos que revice la cotización', function () {
 			location.href = 'cotizaciones_consulta';
 			// this.resetearContador();
 		});
-	}
+	},
+	regresarLista : function  () {
+		var self = this;
+		$('.btn_toggle').on('click', function () {
+			// Conmutamos la visibilidad de las
+			// secciones
+			$('#seccion_cotizaciones').fadeToggle();
+			$('#section_actualizar').fadeToggle();
+			// Borramos el contenido del formulario
+			$('#registroCotizacion').html('');
+			// Apagamos el evento clic del botón regresar
+			$('.btn_toggle').off('click');
+			// Apagamos todos los eventos de la vista
+			// edición
+			self.$el.off();
+		});
+	},
 });
 
 app.VistaConsultaCotizaciones = Backbone.View.extend({
-	el : '.contenedor_principal_modulos',
+	el : '#seccion_cotizaciones',
 
 	events : {
 	 	'click  #btn_eliminarVarios'  	 : 'eliminarVarios',
@@ -300,37 +319,22 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
         'click  .todos' 		 : 'marcarTodosCheck',
 
 		'click .span_editar'	: 'conmutarSeccion',
-		'click .btn_toggle'	: 'regresar',
 	},
-	regresar : function  () {
-		var self = this;
-		_.extend(this.$('.btn_toggle'), Backbone.Events);
-		this.$('.btn_toggle').on('regresar', function () {
-			self.$('#seccion_cotizaciones').fadeToggle();
-			self.$('#section_actualizar').fadeToggle();
-			self.$('#registroCotizacion').html('');
-		});
-		this.$('.btn_toggle').trigger('regresar');
-		this.$('.btn_toggle').off('regresar');
-	},
-	cargarCotizacion 	: function (model, eliminado) {
+	cargar 	: function (model, eliminado) {
+		var vista;
 		model.set({    
 	 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
 	 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
 			total    : function () {
 				var modelos = app.coleccionServiciosCotizados.where({idcotizacion:model.get('id')}),
 					horas = 0,
-					total = 0,
-					vista;
+					total = 0;
 				for (var i = 0; i < modelos.length; i++) {
 					horas += Number(modelos[i].get('horas'));
 				};
 				total = horas * Number(model.get('preciohora'));
 				total = total - total * Number(model.get('descuento'))/100;
 				total = total + total * 0.16;
-				// total = '' + total.toFixed(2);
-				// total = total.split('.');
-				// decimales = total[1];
 				total = conComas(total.toFixed(2));
 				return total;
 			}()
@@ -340,7 +344,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 		} else {
 			vista = new app.VistaCotizacion({model : model});
 		};
-		
+		vista.plantilla = _.template($('#tds_cotizacion').html());
 		this.$tbodyCotizaciones.append( vista.render().el);
 	},
 	obtenerActivos	: function () {
@@ -349,47 +353,34 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 			status	: '1',
 			visibilidad: '1'
 		});
-		this.recursividadCotizaciones(cotizaciones, false);
+		this.recursividad(cotizaciones, false);
 	},
 	obtenerEliminados	: function () {
 		this.$tbodyCotizaciones.html('');
 		var cotizaciones = app.coleccionCotizaciones.where({
 			visibilidad: '0'
 		});
-		this.recursividadCotizaciones(cotizaciones, true);
+		this.recursividad(cotizaciones, true);
 	},
-	recursividadCotizaciones	: function (cotizaciones, eliminado) {
-		/*el parametro cotizaciones es un arreglo de objetos que contiene a
+	recursividad	: function (objetos, eliminado) {
+		/*el parametro objetos es un arreglo de objetos que contiene a
 		clientes activos, aliminados así como prospectos.*/
-		if (cotizaciones!="null" 
-			&& cotizaciones!=null 
-			&& cotizaciones!="" 
-			&& typeof cotizaciones != "undefined") 
+		if (objetos!="null" 
+			&& objetos!=null 
+			&& objetos!="" 
+			&& typeof objetos != "undefined") 
 		{
-			if (cotizaciones.length) {
-				for (var i = 0; i < cotizaciones.length; i++) {
-					this.recursividadCotizaciones(cotizaciones[i], eliminado);
+			if (objetos.length) {
+				for (var i = 0; i < objetos.length; i++) {
+					this.recursividad(objetos[i], eliminado);
 				};
 			} else {
-				this.cargarCotizacion(cotizaciones, eliminado);
+				this.cargar(objetos, eliminado);
 			};
 		};
 	},
-	/*?*/ordenarporfecha : function(fecha) {	
-		app.coleccionCotizaciones.reset( app.coleccionCotizaciones.toJSON().reverse() );
-		ordenar(fecha);
-	},
-	/*?*/busqueda : function(elemento) {
-		autocompleteGenerico(elemento, this, app.coleccionCotizaciones, this.$tbodyCotizaciones);
-	},	
-    /*?*/borrayRenderiza	: function (e) {
-		if(e.keyCode===8)
-        {
-        	this.cargarCotizaciones();
-        }
-	},
 	marcarTodosCheck : function(e) {
-		marcarCheck(e, '#tabla_cotizaciones');
+		marcarCheck(e, '#'+this.$el.attr('id'));
     },
     eliminarVarios 				: function () {
 		var here = this, mensaje, visibilidad, ids;
@@ -472,20 +463,21 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 		};
 	},
 	editarCotizacion : function(e) {
-		app.vista = new EdicionCotizacion({
+		var vista = new EdicionCotizacion({
 			model:app.coleccionCotizaciones
 					 .get( $(e.currentTarget)
 						 .children()
 					 .val() )
 		});
-		app.vista.establecerCotizacion();
+		vista.establecerCotizacion();
+		vista.regresarLista();
 	},
 	conmutarSeccion	: function (e) {
 		var self = this;
 		this.editarCotizacion(e);
-		this.$('#seccion_cotizaciones').fadeToggle();
+		$('#seccion_cotizaciones').fadeToggle();
 		setTimeout(function() {
-			self.$('#section_actualizar').fadeToggle();
+			$('#section_actualizar').fadeToggle();
 		}, 10);
 	},
 	cargarPlugin 	: function () {
@@ -509,37 +501,42 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 		};
 		/* make second table scroll within its wrapper */
 		options.widgetOptions.cssStickyHeaders_attachTo = '.wrapper'; // or $('.wrapper')
-		this.$("#tabla_cotizaciones").tablesorter(options);
+		this.$("#tabla_principal").tablesorter(options);
 	}
 });
 
 app.CotizacionesVisibles = app.VistaConsultaCotizaciones.extend({
 	initialize : function () {
+		// Guardamos el selector. será usado varias veces
 		this.$tbodyCotizaciones = this.$('#tbody_cotizaciones');
 		this.obtenerActivos();
 		var self = this;
+		// Cualquier cambio en el status de las cotizaciones
+		// provocará que se haga una petición GET de todas
+		// las cotizaciones al servidor
 		this.listenTo( app.coleccionCotizaciones,
 			'change:status',
-		function (ef) {
-			app.coleccionCotizaciones.fetch({
-				reset:true,
-				wait:true,
-				success: function () {
-					self.obtenerActivos();
-				}
+			function () {
+				app.coleccionCotizaciones.fetch({
+					reset:true,
+					wait:true,
+					success: function () {
+						// Despues de haber traido
+						// todas las cotizaciones,
+						// volvemos a cargar todo
+						self.obtenerActivos();
+					}
+				});
 			});
-		});
-		this.$('#seccion_cotizaciones').show();
-		this.$('#section_actualizar').hide();
-
+		// Utilizamos código de terceros
 		this.cargarPlugin();
 	}
 });
 app.CotizacionesEliminadas = app.VistaConsultaCotizaciones.extend({
 	initialize : function () {
+		// Guardamos el selector. será usado varias veces
 		this.$tbodyCotizaciones = this.$('#tbody_cotizaciones');
 		this.obtenerEliminados();
-
 		this.cargarPlugin();			
 	}
 });
