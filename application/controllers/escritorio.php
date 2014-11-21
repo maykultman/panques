@@ -329,7 +329,7 @@ class Escritorio extends REST {
 		if($this->ruta()==='formatoContrato')
 		{
 			$this->load->model('modelo_servicioProyecto');
-			$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+			$data['clientes']		  = $this->customer->get();	# Lista de clientes
 			$data['servicios'] 		  = $this->serv->get_Servicios_Proyecto();  	# Lista de Servicios
 			$data['representantes']	  = $this->representa->get();
 

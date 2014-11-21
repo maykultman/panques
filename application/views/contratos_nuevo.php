@@ -37,7 +37,7 @@
 					<span class="label label-info">Todos los campos son requeridos</span>
 				</div>
 				<div class="col-md-8">
-					<input type="text" id="titulo" class="form-control" name="titulo" placeholder="Nombre para el contrato">			
+					<input type="text" id="prestacion" class="form-control" name="prestaciones" placeholder="Prestaciones">			
 				</div>
 				<div class="col-md-4">
 					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha en que se firmará el contrato">

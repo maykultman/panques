@@ -183,7 +183,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		});
 
 		// this.$('#fecha').val( formatearFechaUsuario(new Date()) );
-		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#titulo').val('Contrato No. '+(Math.random()).toFixed(3) *1000);
+		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#prestacion').val('Contrato No. '+(Math.random()).toFixed(3) *1000);
 
 		/*FOLIO. En la cración de una cotización ocurrira el fetch,
 		  pero cuando se edite una cotización no se realizará*/
@@ -226,7 +226,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			return;
 		};
 
-		app.coleccionContratos_L.create(json.datos, {
+		app.coleccionContratos_L.create(json, {
 			wait: true,
 			success: function (exito) {
 				// for(i in json.secciones) {   
@@ -350,13 +350,13 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 	},
 	obtenerDatos	: function () {
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('#titulo, #busqueda, #idrepresentante, #hidden_fechafirma, input[name="plan"]:checked')
+			json  = pasarAJson(this.$('#prestacion, #busqueda, #idrepresentante, #hidden_fechafirma, input[name="plan"]:checked')
 					.serializeArray()),
 			f = new Date(),
 			fechainicio,
 			fechafinal;
 		/*Cortafuego para forzar establecer los siguientes datos*/
-		if (   json.titulo == '' 
+		if (   json.prestaciones == '' 
 			|| json.idcliente == '' 
 			|| json.idrepresentante == '' 
 			|| json.fechafirma == ''

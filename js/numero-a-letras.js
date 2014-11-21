@@ -149,19 +149,37 @@ function NumeroALetras(num){
 		letrasMonedaCentavoSingular: "centavo"
 	};
 
-	if (data.centavos > 0) {
-		data.letrasCentavos = "con " + (function (){
-			if (data.centavos == 1)
-				return Millones(data.centavos) + " " + data.letrasMonedaCentavoSingular;
-			else
-				return Millones(data.centavos) + " " + data.letrasMonedaCentavoPlural;
-		})();
-	};
+	if (data.centavos > 0)
+    	data.letrasCentavos = data.centavos + "/100";
+    else
+    	data.letrasCentavos = "00/100";
+
+	/*Convierte los centavos a letras*/
+	// if (data.centavos > 0) {
+	// 	data.letrasCentavos = "con " + (function (){
+	// 		if (data.centavos == 1)
+	// 			return Millones(data.centavos) + " " + data.letrasMonedaCentavoSingular;
+	// 		else
+	// 			return Millones(data.centavos) + " " + data.letrasMonedaCentavoPlural;
+	// 	})();
+	// };
 
 	if(data.enteros == 0)
-	return "cero " + data.letrasMonedaPlural + " " + data.letrasCentavos;
+		return "cero " + data.letrasMonedaPlural + " " + data.letrasCentavos;
 	if (data.enteros == 1)
-	return Millones(data.enteros) + " " + data.letrasMonedaSingular + " " + data.letrasCentavos;
+		return Millones(data.enteros) + " " + data.letrasMonedaSingular + " " + data.letrasCentavos;
 	else
-	return Millones(data.enteros) + " " + data.letrasMonedaPlural + " " + data.letrasCentavos;
+		return Millones(data.enteros) + " " + data.letrasMonedaPlural + " " + data.letrasCentavos;
 }//NumeroALetras()
+function SoloNumerosALetras(num) {
+	var data = {
+		numero: num,
+		enteros: Math.floor(num),
+	};
+	if(data.enteros == 0)
+		return "cero";
+	if (data.enteros == 1)
+		return Millones(data.enteros);
+	else
+		return Millones(data.enteros);
+}

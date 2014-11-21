@@ -12,70 +12,52 @@
 		section {
 			background: white;
 			width: 15.59cm;
-			height: 22.94cm; /*1056px = 27.94cm*/
+			/*height: 22.94cm;*/ /*1056px = 27.94cm*/
 			padding: 2.5cm 3cm 2.5cm 3cm;
 			position: relative;
 			margin: auto;
 			-webkit-box-shadow: 0px 20px 50px gray;
 			box-shadow: 0px 20px 50px gray;
+			text-align: justify;
 		}
-		section * {
+		ul, ol {
 			padding: 0px;
 		}
+		p, li {
+			margin: 10px 0px;
+		}
+		.titulos {
+			text-align: center;
+			margin: 30px 0px;
+			letter-spacing: 5px;
+		}
+		.textUppercase {
+			text-transform: uppercase;
+		}
+		.textLowercase {
+			text-transform: lowercase;
+		}
+		@media screen, print {
+			/*div.break {
+				page-break-before: always;
+			}*/
+			@page {
+				margin: 2.5cm 3cm 2.5cm 3cm;
+			}
+			/*section {*/
+				/*height: 22.94cm;*/ /*1056px = 27.94cm*/
+			/*}*/
+		}
 	</style>
+	<?=
+		// <!-- Utilerias -->
+			script_tag('js/funcionescrm.js').
+			script_tag('js/numero-a-letras.js');
+
+	?>
 	<title>Contrato</title>
 </head>
 <body>
-	<section>
-		<p>
-			<b>CONTRATO DE PRESTACION DE SERVICIOS QUE CELEBRAN POR UNA PARTE, QUALIUM PUBLICIDAD Y MARKETING, S.C.P., A TRAVÉS DE SU REPRESENTANTE LEGAL, DAVID ENRIQUE XACUR SALVATIERRA, Y POR LA OTRA PARTE <u>nombre comercial</u>, A QUIENES EN LO SUCESIVO Y PARA EFECTOS DEL PRESENTE CONTRATO SE LES DENOMINARÁ COMO “EL PRESTADOR DE SERVICIOS” Y “EL CLIENTE”, RESPECTIVAMENTE; AL TENOR DE LAS SIGUIENTES DECLARACIONES Y CLÁUSULAS:</b>
-		</p>
-		<p align="center"><b>D E C L A R A C I O N E S</b></p>
-		<p>
-			<ol type="I">
-				<li>
-					<b>Declara EL PRESTADOR DE SERVICIOS por conducto de su representante legal que:</b>
-					<ol type="a">
-						<li>
-							Es una sociedad civil debidamente constituida y existente de conformidad con las leyes de los Estados Unidos Mexicanos, otorgada ante la fe del Notario Público número 74 de Mérida, Yucatán, Abogado Mario Enrique Montejo Pérez, debidamente inscrita en el Registro Público de la Propiedad y del Comercio del Instituto de Seguridad Jurídica Patrimonial de Yucatán. 
-						</li>
-						<li>
-							Cuenta con facultades suficientes para la celebración del presente Contrato en su nombre y representación, según consta en la Escritura Pública descrita en el inciso inmediato anterior; asimismo manifiesta que dichas facultades no le han sido revocadas o limitadas en forma alguna.
-						</li>
-						<li>
-							Se encuentra inscrita ante el Registro Federal de Contribuyentes bajo la clave de identificación <b>QPM1201103S5</b>
-						</li>
-						<li>
-							Atendiendo a su objeto social se dedica, entre otras actividades, a la prestación de servicios de <b>Administración de página de Facebook y Facebook Ads</b>. Además, que conforme a su objeto social le está permitido la celebración del presente Contrato.
-						</li>
-						<li>
-							Conoce plenamente la calidad, características, requisitos, mecanismos, procedimientos y necesidades del objeto del presente contrato; que ha considerado todos los factores que intervienen en su celebración y que cuenta con el personal profesional, equipo de cómputo y recursos económicos suficientes para desarrollar eficazmente dicha labor.
-						</li>
-						<li>
-							Para los efectos del presente Contrato, señala como su domicilio fiscal el ubicado en la calle treinta y seis diagonal número trescientos uno, interior tres por la calle veinticuatro del Fraccionamiento Montebello, Código Postal 97113 de esta ciudad de Mérida, Yucatán.
-						</li>
-					</ol>
-				</li>
-				<li>
-					<b>Declara EL CLIENTE, por conducto de su representante legal que:</b>
-					<ol type="a">
-						<li>
-							Que es una persona física, mayor de edad legal, de nacionalidad Mexicana, en pleno goce y ejercicio de sus facultades legales.
-						</li>
-						<li>
-							Se encuentra inscrita ante el Registro Federal de Contribuyentes bajo la clave de identificación <b>AAGF790710UH6</b>.
-						</li>
-						<li>
-							Para los efectos legales del presente instrumento señala como su domicilio el ubicado en la <b>calle veinte siete por dieciséis y dieciocho número 101 I colonia Francisco I madero, código postal 97240, de la ciudad de Mérida, Yucatán</b>.
-						</li>
-					</ul>
-				</li>
-				<li>
-					<b>Las partes declaran que:</b>
-				</li>
-			</ol>
-		</p>
-	</section>
 </body>
 </html>
 
@@ -101,7 +83,230 @@
 </script>
 
 <script type="text/template" id="plantilla_contrato">
-	<% var meses = new Array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'), Anio_Mes_dia %>
+	<p>
+		<b>CONTRATO DE PRESTACION DE SERVICIOS QUE CELEBRAN POR UNA PARTE, QUALIUM PUBLICIDAD Y MARKETING, S.C.P., A TRAVÉS DE SU REPRESENTANTE LEGAL, DAVID ENRIQUE XACUR SALVATIERRA, Y POR LA OTRA PARTE <u class="textUppercase"><%= cliente.nombreComercial %></u>, A QUIENES EN LO SUCESIVO Y PARA EFECTOS DEL PRESENTE CONTRATO SE LES DENOMINARÁ COMO “EL PRESTADOR DE SERVICIOS” Y “EL CLIENTE”, RESPECTIVAMENTE; AL TENOR DE LAS SIGUIENTES DECLARACIONES Y CLÁUSULAS:</b>
+	</p>
+	<p class="titulos"><b>DECLARACIONES</b></p>
+	<p>
+		<ol type="I">
+			<li>
+				<b>Declara EL PRESTADOR DE SERVICIOS por conducto de su representante legal que:</b>
+				<ol type="a">
+					<li>
+						Es una sociedad civil debidamente constituida y existente de conformidad con las leyes de los Estados Unidos Mexicanos, otorgada ante la fe del Notario Público número 74 de Mérida, Yucatán, Abogado Mario Enrique Montejo Pérez, debidamente inscrita en el Registro Público de la Propiedad y del Comercio del Instituto de Seguridad Jurídica Patrimonial de Yucatán. 
+					</li>
+					<li>
+						Cuenta con facultades suficientes para la celebración del presente Contrato en su nombre y representación, según consta en la Escritura Pública descrita en el inciso inmediato anterior; asimismo manifiesta que dichas facultades no le han sido revocadas o limitadas en forma alguna.
+					</li>
+					<li>
+						Se encuentra inscrita ante el Registro Federal de Contribuyentes bajo la clave de identificación <b>QPM1201103S5</b>
+					</li>
+					<li>
+						Atendiendo a su objeto social se dedica, entre otras actividades, a la prestación de servicios de <b><u><%= datos.prestaciones %></u></b>. Además, que conforme a su objeto social le está permitido la celebración del presente Contrato.
+					</li>
+					<li>
+						Conoce plenamente la calidad, características, requisitos, mecanismos, procedimientos y necesidades del objeto del presente contrato; que ha considerado todos los factores que intervienen en su celebración y que cuenta con el personal profesional, equipo de cómputo y recursos económicos suficientes para desarrollar eficazmente dicha labor.
+					</li>
+					<li>
+						Para los efectos del presente Contrato, señala como su domicilio fiscal el ubicado en la calle treinta y seis diagonal número trescientos uno, interior tres por la calle veinticuatro del Fraccionamiento Montebello, Código Postal 97113 de esta ciudad de Mérida, Yucatán.
+					</li>
+				</ol>
+			</li>
+			<li>
+				<b>Declara EL CLIENTE, por conducto de su representante legal que:</b>
+				<ol type="a">
+					<li>
+						Que es una persona física, mayor de edad legal, de nacionalidad Mexicana, en pleno goce y ejercicio de sus facultades legales.
+					</li>
+					<li>
+						Se encuentra inscrita ante el Registro Federal de Contribuyentes bajo la clave de identificación <b><%= cliente.rfc %></b>.
+					</li>
+					<li>
+						Para los efectos legales del presente instrumento señala como su domicilio el ubicado en la <b><%= cliente.direccion %></b>.
+					</li>
+				</ol>
+			</li>
+			<li>
+				<b>Las partes declaran que:</b>
+				<p>
+					Han negociado libremente los términos y condiciones del presente Contrato y que tienen pleno conocimiento de sus derechos y obligaciones establecidas en el mismo, por tanto es su voluntad celebrar el presente instrumento de Prestación de Servicios de conformidad con las siguientes:
+				</p>
+				<p class="titulos"><b>CLÁUSULAS</b></p>
+				<P>
+					<b>PRIMERA.- DEL OBJETO.-</b> Por el presente contrato <b>“EL CLIENTE”</b> encomienda a <b>“EL PRESTADOR DE SERVICIOS”</b> y éste se obliga a prestarle los servicios de <b>
+					<% 	if (_.isArray(secciones)) {
+							var nombres = _.uniq(_.pluck(secciones, 'nombre')),
+								ultimo = nombres.pop();
+							nombres = nombres.join(', ') + ' y ' + ultimo; %>
+							<%= nombres %>
+					<% 	} else{ %>
+							<%= secciones.nombre %>
+					<% 	} %>
+					</b>., en lo sucesivo <b>“LOS SERVICIOS”</b>, en el estado de Yucatán.
+				</P>
+				<P>
+					<b>SEGUNDA.- DE LA PRESTACIÓN DE LOS SERVICIOS.-</b> En congruencia a lo dispuesto en la cláusula anterior, <b>“EL PRESTADOR DE SERVICIOS”</b> se compromete a brindar <b>“LOS SERVICIOS”</b> de manera enunciativa más no limitativa conforme a lo siguiente:
+					<ol type="a">
+						<li>
+							Brindará <b>“LOS SERVICIOS” por 90</b> días naturales.
+						</li>
+						<li>
+							Generará publicidad para red social Facebook Ads, durante los 90 días.
+						</li>
+						<li>
+							Enviará 4 correos electrónicos masivos a su base de datos en el transcurso de los 90 días.
+						</li>
+					</ol>
+				</P>
+				<P>
+					<p>
+						<b>TERCERA.- DEL MONTO Y FORMA DE PAGO.-</b> Las partes acuerdan expresamente que como contraprestación por todas y cada una de las obligaciones que <b>“EL PRESTADOR DE SERVICIOS”</b> asume a su cargo a favor de <b>“EL CLIENTE”</b>, ésta le pagará 
+						
+						<%if (datos.plan == 'iguala') {%>
+							<%if (datos.nplazos == '1'){%>
+								una mensualidad
+							<%} else{%>
+								de manera mensual
+							<%};%>
+						<%} else{%>
+							<%if (datos.nplazos == '1'){%>
+								unicamente
+							<%} else{%>
+								periodicamente
+							<%};%>
+						<%};%>
+
+						por los servicios objeto de este contrato, la cantidad de <b>$<%= conComas(datos.pagomes) %> (Son: <%= datos.mensualidadletras %> Moneda Nacional)</b> 
+						<%if (datos.plan == 'iguala') {%>
+							<%if (datos.nplazos == '1'){%>
+								<!--por un mes-->.
+							<%} else{%>
+								mensuales.
+							<%};%>
+						<%}%>
+					</p>
+					<p>
+						<b>“EL CLIENTE”</b> efectuará el pago a <b>“EL PRESTADOR DE SERVICIOS”</b> de la cantidad a que se refiere el primer párrafo de la presente cláusula, 
+							<%if (datos.plan == 'iguala'){%>
+								<%if ( _.isArray(datos.fechapago) ){%>
+									el día <%= SoloNumerosALetras(datos.fechapago[0].split('-')[2]) %> de cada mes.
+								<%} else{%>
+									el día <%= SoloNumerosALetras(datos.fechapago.split('-')[2]) %> del mes de <%= meses[parseInt(datos.fechapago.split('-')[1]) -1] %>.
+								<%};%>
+							<%} else{%>
+								<%if ( _.isArray(datos.fechapago) ){%>
+									cada <%= SoloNumerosALetras(datos.plazo) %> días.
+									por <%= SoloNumerosALetras(datos.nplazos) %> periodos.
+								<%} else{%>
+									en un solo pago.
+								<%};%>
+							<%};%>
+							En caso de que el día señalado de pago sea inhábil, el pago procederá al siguiente día hábil que corresponda.
+					</p>
+				</P>
+				<P>
+					<b>CUARTA.- DE LA VIGENCIA Y TERMINACIÓN ANTICIPADA.-</b> El presente contrato será por 
+					<%if (datos.plan == 'iguala') {%>
+						<%= SoloNumerosALetras(parseInt(datos.nplazos) * 30) %>
+						<%if ( parseInt(datos.nplazos) * 30 > 1 ){%>
+							días.
+						<%} else{%>
+							día.
+						<%}%>
+					<%} else {%>
+						<%= SoloNumerosALetras(parseInt(datos.nplazos) * parseInt(datos.plazo)) %>
+						<%if ( parseInt(datos.nplazos) * parseInt(datos.plazo) ){%>
+							días.
+						<%} else{%>
+							día.
+						<%}%>
+					<%};%>
+					Incumplir las obligaciones propias de cada una de las partes, dará lugar a la otra para terminar unilateralmente el Contrato de Prestación de Servicio.
+				</P>
+				<P>
+					<b>QUINTA.- DE LA SUPERVISIÓN.-</b> <b>“EL CLIENTE”</b> podrá en todo momento, a través de quien al efecto designe, supervisar y vigilar que los servicios a que se refiere este contrato se ajusten a los términos convenidos y dar a <b>“EL PRESTADOR DE SERVICIOS”</b> las instrucciones que estime convenientes para su mejor ejecución, sin que esto implique modificaciones a las obligaciones a cargo de <b>“EL PRESTADOR DE SERVICIOS”</b>, a fin de que se ajuste a las características y especificaciones que en su caso convenga con <b>“EL CLIENTE”</b>.
+				</P>
+				<P>
+					<p>
+						<b>SEXTA.- DE LAS CAUSAS DE RESCISIÓN.-</b> Las partes están de acuerdo en que el presente contrato podrá rescindirse, sin responsabilidad para ellas y sin que sea necesaria resolución de autoridad alguna al respecto, en los casos que de manera enunciativa más no limitativa se señalan a continuación: 
+					</p>
+					<ol type="a">
+						<li>
+							Si <b>“EL PRESTADOR DE SERVICIOS”</b> no cumple con el objeto de este contrato en el lapso convenido y conforme a lo establecido;
+						</li>
+						<li>
+							Si <b>“EL PRESTADOR DE SERVICIOS”</b> suspende injustificadamente el objeto de este contrato; o 
+						</li>
+						<li>
+							Por incumplimiento a cualquiera de los términos y demás obligaciones estipuladas en este contrato por cualquiera de las partes.
+						</li>
+					</ol>
+					<p>
+						En el momento en que “EL CLIENTE” tenga conocimiento de que “EL PRESTADOR DE SERVICIOS” no ha cumplido con alguna o algunas de las obligaciones derivadas de este instrumento, deberá notificarlo en forma fehaciente, para que ponga efectivo remedio al retraso o a la indebida prestación de la obligación convenida por acción u omisión, según se trate, para que en un término no mayor a 5 (cinco) días naturales, “EL PRESTADOR DE SERVICIOS” cumpla, de manera inmediata con sus obligaciones. En caso de continuar el incumplimiento en forma total o parcial, “EL CLIENTE” podrá rescindir el contrato.
+					</p>
+				</P>
+				<P>
+					<p><b>SÉPTIMA.- DISPOSICIONES GENERALES.</b></p>
+					<ol type="A">
+						<li>
+							<b>DE LA CONFIDENCIALIDAD.- “EL PRESTADOR DE SERVICIOS”</b> se obliga a guardar absoluta confidencialidad de toda la información que bajo el presente contrato reciba de <b>“EL CLIENTE”</b> durante y posterior a la ejecución del mismo y a no hacer uso de esta información más que para lo estrictamente indispensable en la prestación de los servicios objeto de este instrumento jurídico. Una vez concluida la vigencia de este contrato, <b>“EL PRESTADOR DE SERVICIOS”</b> está de acuerdo en destruir o regresar cualquier información confidencial que tenga de <b>“EL CLIENTE”</b>.
+						</li>
+						<li>
+							<b>DE LOS DERECHOS DE PROPIEDAD.-</b> El presente contrato, no transfiere a <b>“EL PRESTADOR DE SERVICIOS”</b> ningún derecho o título de propiedad sobre las marcas, nombres comerciales, slogans publicitarios, derechos de autor, o algún otro derecho de propiedad industrial, que sea propiedad de <b>“EL CLIENTE”</b> o de cualquiera de sus socios, sus filiales, subsidiarias y cualquier otra persona física o moral que tuviese relación en la producción, distribución, comercialización o venta de los productos que elabora <b>“EL CLIENTE”</b>.
+							<br>
+							En virtud de lo anterior, <b>“EL PRESTADOR DE SERVICIOS”</b> se obliga a no llevar a cabo directa ni indirectamente, acto alguno que pueda poner en peligro los derechos de <b>“EL CLIENTE”</b> respecto de los derechos de propiedad.
+						</li>
+						<li>
+							<b>DE LAS OBLIGACIONES FISCALES.-</b> Cada una de las partes se obliga a dar cumplimiento a las obligaciones fiscales que le correspondan y que se encuentren vigentes a la fecha de su exigibilidad.
+						</li>
+						<li>
+							<b>DE LAS LICENCIAS Y/O PERMISOS.- “EL PRESTADOR DE SERVICIOS”</b> se obliga a contar con todos los permisos, licencias y/o autorizaciones administrativas o de cualquier otra índole que se requieren para la debida prestación de los servicios objeto del presente contrato, siendo el único responsable ante cualquier autoridad, federal, estatal o municipal o cualquier otro tercero que pudiera resultar perjudicado por no contar con dichas autorizaciones, debiendo en todo caso deslindar a <b>“EL CLIENTE”</b> cualquier responsabilidad al respecto. 
+						</li>
+						<li>
+							<b>DE LA RELACION CONTRACTUAL.</b> Queda claramente definido y se entiende por las partes contratantes que la actividad y servicios que desarrollará <b>“EL PRESTADOR DE SERVICIOS”</b> son extraordinarios y estrictamente de carácter profesional, libremente ejercidos, sin subordinación alguna a <b>“EL CLIENTE”</b>, con sus medios propios y que no implica relación de trabajo alguna entre las partes. 
+						</li>
+						<li>
+							<b>DE LA CESIÓN DE DERECHOS.- “EL PRESTADOR DE SERVICIOS”</b> se obliga a no ceder, transferir, enajenar o negociar en cualquier forma a terceras personas físicas o morales sus derechos y obligaciones derivadas de este contrato; salvo que cuente con la previa autorización por escrito de <b>“EL CLIENTE”</b>.
+						</li>
+						<li>
+							<b>DEL CASO FORTUITO O FUERZA MAYOR.-</b> El incumplimiento a las obligaciones previstas en este contrato originado por caso fortuito o fuerza mayor no será causa de responsabilidad contractual para ninguna de las partes y ambas tendrán derecho a suspender las obligaciones contenidas en este contrato, previa notificación por escrito.
+						</li>
+						<li>
+							<b>DE LAS MODIFICACIONES AL CONTRATO.-</b> Las modificaciones al presente contrato se efectuarán mediante documento por escrito debidamente firmado por las partes. Cualquier modificación que se lleve a cabo sin cumplir con las formalidades previstas en esta cláusula, no surtirá efectos entre las partes.
+						</li>
+						<li>
+							<b>DE LAS NOTIFICACIONES.-</b> Todos los avisos y notificaciones que las partes deban darse, de acuerdo con los términos estipulados en el presente Contrato, se realizarán en los domicilios señalados en el apartado de Declaraciones de este documento.
+						</li>
+					</ol>
+
+				</P>
+				<P>
+					<b>DÉCIMA.- DE LA INTERPRETACIÓN Y CUMPLIMIENTO DEL CONTRATO.-</b> Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a las leyes y a la jurisdicción y competencia de los Tribunales del fuero común en la ciudad de Mérida Yucatán renunciando expresamente a cualquier otro fuero que pudiera corresponderles por razón de su domicilio presente o futuro. Leído que fue el presente contrato y enteradas las partes de su contenido y alcance legal, lo firman de conformidad y para constancia, en la ciudad de Mérida, Yucatán, a los <b class="textLowercase"><%= SoloNumerosALetras(datos.fechafirma.split('-')[2]) %> días del mes de <%= meses[parseInt(datos.fechafirma.split('-')[1]) -1] %> del <%= datos.fechafirma.split('-')[0] %></b>.
+				</P>
+			</li>
+		</ol>
+		
+		<P>
+			<table>
+				<thead>
+					<tr>
+						<th>POR “EL PRESTADOR DE SERVICIOS”</th>
+						<th>POR “EL CLIENTE”</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>C. William José Carrillo Cáceres</td>
+						<td>
+							C. <%= representante.nombre %>
+							<br>
+							<%= cliente.nombreFiscal %>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</P>
+	</p>
 </script>
 
 <?=script_tag('js/backbone/app.js')?>
@@ -115,8 +320,6 @@
 	
 </script>
 <?=
-// <!-- Utilerias -->
-	script_tag('js/funcionescrm.js').
 // <!-- Librerias Backbone -->
 	script_tag('js/backbone/lib/jquery.js').
     script_tag('js/backbone/lib/underscore.js').
@@ -135,21 +338,24 @@
 ?>
 	<script type="text/javascript">
 		app.coleccionContratos_L = new ColeccionContratos_L();
+		$(document).on('ready', function () {
+			// $('section').height( (1056 - (94.48818897638 * 2)).toFixed() ).append('<div class="break"></div>');
+		});
 	</script>
 <!-- vistas -->
 	<script type="text/javascript">
 		app = app || {};
 		var V_HojaContrato = Backbone.View.extend({
-			tagName			: 'div',
+			tagName			: 'section',
 			plantilla	: _.template($('#plantilla_contrato').html()),
-			render		: function () {
-				// this.$el.html(this.plantilla( this.model.toJSON() ));
-				// return this;
+			render		: function (json) {
+				this.$el.html(this.plantilla( json ));
+				return this;
 			}
 		});
 
 		var Consulta_Hoja	= Backbone.View.extend({
-			el	: 'section',
+			el	: 'body',
 			initialize	: function () {
 				app.coleccionContratos_L.fetch();
 				
@@ -157,28 +363,39 @@
 
 			},
 			cargarContrato	: function (contrato) {
-				contrato.set({nombreComercial:app.coleccionClientes.get({id:contrato.get('idcliente')}).get('nombreComercial')});
-				contrato.set({nombreRepresentante:app.coleccionRepresentantes.get({id:contrato.get('idrepresentante')}).get('nombre')});
+				contrato = contrato.toJSON();
+				contrato.cliente = _.omit(
+						app.coleccionClientes.get(contrato.datos.idcliente).toJSON(),
+						'id' /*Omitimos el id*/
+					);
+
+				contrato.representante = app.coleccionRepresentantes.get(contrato.datos.idrepresentante).toJSON();
 
 				var pagomes = 0.0,
 					mensualidades = '';
 
-				if ( _.isArray(contrato.get('pago')) ) {
-					pagomes = Number(contrato.get('pago')[0]);
-					mensualidades = contrato.get('pago').length;
+				if (_.isArray(contrato.secciones)) {
+					for (var i = 0; i < contrato.secciones.length; i++) {
+						contrato.secciones[i].nombre = app.coleccionServicios.get(contrato.secciones[i].idservicio).get('nombre');
+					};
 				} else{
-					pagomes = Number(contrato.get('pago'));
+					contrato.secciones.nombre = app.coleccionServicios.get(contrato.secciones.idservicio).get('nombre');
+				};
+
+				if ( _.isArray(contrato.datos.pago) ) {
+					pagomes = Number(contrato.datos.pago[0]);
+					mensualidades = contrato.datos.pago.length;
+				} else{
+					pagomes = Number(contrato.datos.pago);
 					mensualidades = 1;
 				};
 
-				contrato.set({
-					pagomes:(pagomes).toFixed(2),
-					mensualidades:mensualidades
-				});
+				contrato.datos.pagomes = (pagomes).toFixed(2);
+				contrato.datos.mensualidades = mensualidades;
 
-				var vista = new V_HojaContrato({model:contrato});
+				var vista = new V_HojaContrato();
 
-				this.$el.html(vista.render().el);
+				this.$el.html(vista.render(contrato).el);
 			},
 			cargarContratos	: function () {
 				app.coleccionContratos_L.each(this.cargarContrato, this);
@@ -187,13 +404,13 @@
 
 		var consulta_Hoja = new Consulta_Hoja();
 
-		app.coleccionContratos_L.each(function (model){ 
-			model.destroy();
-		},this);
-		app.coleccionServiciosContrato_L.each(function (model){ 
-			model.destroy();
-		},this);
-		app.coleccionPagos_L.each(function (model){ 
-			model.destroy();
-		},this);
+		// app.coleccionContratos_L.each(function (model){ 
+		// 	model.destroy();
+		// },this);
+		// app.coleccionServiciosContrato_L.each(function (model){ 
+		// 	model.destroy();
+		// },this);
+		// app.coleccionPagos_L.each(function (model){ 
+		// 	model.destroy();
+		// },this);
 	</script>
