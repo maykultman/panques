@@ -82,6 +82,19 @@
 							</tbody>
 					  	</table>
 					</div>
+					<hr>
+					<div class="panel panel-default">
+						<div class="panel-heading">Enunciados de los servicios</div>
+						<div class="panel-body" id="panel_enunciados">
+							<div class="input-group input-group-sm">
+								<textarea class="form-control" name="enunciado" placeholder="¿Que está comprando el cliente?"></textarea>
+								<span class="input-group-btn">
+									<button class="btn btn-default btn_quitarEnunciado" type="button">-</button>
+									<button class="btn btn-default btn_anadirEnunciado" type="button">+</button>
+								</span>
+							</div><!-- /input-group -->
+						</div>
+					</div>
 				</div>
 				<div class="col-md-8" id="">
 					<table class="table"> <!-- id="mostrarTabla" -->
@@ -366,6 +379,15 @@
 		nombrecontrato: 		<%- nombrecontrato %>									<br>
 		total: 					<%- total %>											<br>
 		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>-->
+	</script>
+	<script type="text/template" id="input-group-inunciado">
+		<div class="input-group input-group-sm">
+			<textarea class="form-control" name="enunciado" placeholder="¿Que está comprando el cliente?"></textarea>
+			<span class="input-group-btn">
+				<button class="btn btn-default btn_quitarEnunciado" type="button">-</button>
+				<button class="btn btn-default btn_anadirEnunciado" type="button">+</button>
+			</span>
+		</div><!-- /input-group -->
 	</script>
 
 <?=script_tag('js/backbone/app.js');?>

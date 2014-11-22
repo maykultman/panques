@@ -11,20 +11,24 @@
 		}
 		section {
 			background: white;
-			width: 15.59cm;
 			/*height: 22.94cm;*/ /*1056px = 27.94cm*/
-			padding: 2.5cm 3cm 2.5cm 3cm;
 			position: relative;
 			margin: auto;
-			-webkit-box-shadow: 0px 20px 50px gray;
-			box-shadow: 0px 20px 50px gray;
 			text-align: justify;
 		}
 		ul, ol {
 			padding: 0px;
 		}
-		p, li {
+		ol ol, ol ul, ul ol, ul ul {
+			padding: 0px 0px 0px 24px;
+		}
+		p p, li {
 			margin: 10px 0px;
+		}
+		th, td {
+			width: 50%;
+			text-align: center;
+			vertical-align: top;
 		}
 		.titulos {
 			text-align: center;
@@ -37,16 +41,28 @@
 		.textLowercase {
 			text-transform: lowercase;
 		}
-		@media screen, print {
+		@media screen {
+			section {
+				width: 15.59cm;
+				padding: 2.5cm 3cm 2.5cm 3cm;
+				-webkit-box-shadow: 0px 20px 50px gray;
+				box-shadow: 0px 20px 50px gray;
+			}
+		}
+		@media print {
+			 section {
+				margin: 2.5cm 3cm 2.5cm 3cm;
+			};
+			/*section {
+				padding: 0cm;
+				margin: 2.5cm 3cm 2.5cm 3cm;
+			}*/
 			/*div.break {
 				page-break-before: always;
 			}*/
-			@page {
-				margin: 2.5cm 3cm 2.5cm 3cm;
-			}
-			/*section {*/
-				/*height: 22.94cm;*/ /*1056px = 27.94cm*/
-			/*}*/
+			/*div.marginTop {
+				margin-top: 2.5cm;
+			}*/
 		}
 	</style>
 	<?=
@@ -107,6 +123,8 @@
 					<li>
 						Conoce plenamente la calidad, características, requisitos, mecanismos, procedimientos y necesidades del objeto del presente contrato; que ha considerado todos los factores que intervienen en su celebración y que cuenta con el personal profesional, equipo de cómputo y recursos económicos suficientes para desarrollar eficazmente dicha labor.
 					</li>
+					<!--<div class="break"></div>-->
+					<!--<div class="marginTop"></div>-->
 					<li>
 						Para los efectos del presente Contrato, señala como su domicilio fiscal el ubicado en la calle treinta y seis diagonal número trescientos uno, interior tres por la calle veinticuatro del Fraccionamiento Montebello, Código Postal 97113 de esta ciudad de Mérida, Yucatán.
 					</li>
@@ -132,7 +150,7 @@
 					Han negociado libremente los términos y condiciones del presente Contrato y que tienen pleno conocimiento de sus derechos y obligaciones establecidas en el mismo, por tanto es su voluntad celebrar el presente instrumento de Prestación de Servicios de conformidad con las siguientes:
 				</p>
 				<p class="titulos"><b>CLÁUSULAS</b></p>
-				<P>
+				<p>
 					<b>PRIMERA.- DEL OBJETO.-</b> Por el presente contrato <b>“EL CLIENTE”</b> encomienda a <b>“EL PRESTADOR DE SERVICIOS”</b> y éste se obliga a prestarle los servicios de <b>
 					<% 	if (_.isArray(secciones)) {
 							var nombres = _.uniq(_.pluck(secciones, 'nombre')),
@@ -143,22 +161,18 @@
 							<%= secciones.nombre %>
 					<% 	} %>
 					</b>., en lo sucesivo <b>“LOS SERVICIOS”</b>, en el estado de Yucatán.
-				</P>
-				<P>
+				</p>
+				<p>
 					<b>SEGUNDA.- DE LA PRESTACIÓN DE LOS SERVICIOS.-</b> En congruencia a lo dispuesto en la cláusula anterior, <b>“EL PRESTADOR DE SERVICIOS”</b> se compromete a brindar <b>“LOS SERVICIOS”</b> de manera enunciativa más no limitativa conforme a lo siguiente:
 					<ol type="a">
-						<li>
-							Brindará <b>“LOS SERVICIOS” por 90</b> días naturales.
-						</li>
-						<li>
-							Generará publicidad para red social Facebook Ads, durante los 90 días.
-						</li>
-						<li>
-							Enviará 4 correos electrónicos masivos a su base de datos en el transcurso de los 90 días.
-						</li>
+						<% datos.enunciado = datos.enunciado.split(',.,') %>
+						
+							<%for (var i = 0; i < datos.enunciado.length; i++) {%>
+								<li><%= datos.enunciado[i] %>.</li>
+							<%};%>
 					</ol>
-				</P>
-				<P>
+				</p>
+				<p>
 					<p>
 						<b>TERCERA.- DEL MONTO Y FORMA DE PAGO.-</b> Las partes acuerdan expresamente que como contraprestación por todas y cada una de las obligaciones que <b>“EL PRESTADOR DE SERVICIOS”</b> asume a su cargo a favor de <b>“EL CLIENTE”</b>, ésta le pagará 
 						
@@ -203,8 +217,8 @@
 							<%};%>
 							En caso de que el día señalado de pago sea inhábil, el pago procederá al siguiente día hábil que corresponda.
 					</p>
-				</P>
-				<P>
+				</p>
+				<p>
 					<b>CUARTA.- DE LA VIGENCIA Y TERMINACIÓN ANTICIPADA.-</b> El presente contrato será por 
 					<%if (datos.plan == 'iguala') {%>
 						<%= SoloNumerosALetras(parseInt(datos.nplazos) * 30) %>
@@ -222,11 +236,11 @@
 						<%}%>
 					<%};%>
 					Incumplir las obligaciones propias de cada una de las partes, dará lugar a la otra para terminar unilateralmente el Contrato de Prestación de Servicio.
-				</P>
-				<P>
+				</p>
+				<p>
 					<b>QUINTA.- DE LA SUPERVISIÓN.-</b> <b>“EL CLIENTE”</b> podrá en todo momento, a través de quien al efecto designe, supervisar y vigilar que los servicios a que se refiere este contrato se ajusten a los términos convenidos y dar a <b>“EL PRESTADOR DE SERVICIOS”</b> las instrucciones que estime convenientes para su mejor ejecución, sin que esto implique modificaciones a las obligaciones a cargo de <b>“EL PRESTADOR DE SERVICIOS”</b>, a fin de que se ajuste a las características y especificaciones que en su caso convenga con <b>“EL CLIENTE”</b>.
-				</P>
-				<P>
+				</p>
+				<p>
 					<p>
 						<b>SEXTA.- DE LAS CAUSAS DE RESCISIÓN.-</b> Las partes están de acuerdo en que el presente contrato podrá rescindirse, sin responsabilidad para ellas y sin que sea necesaria resolución de autoridad alguna al respecto, en los casos que de manera enunciativa más no limitativa se señalan a continuación: 
 					</p>
@@ -244,8 +258,8 @@
 					<p>
 						En el momento en que “EL CLIENTE” tenga conocimiento de que “EL PRESTADOR DE SERVICIOS” no ha cumplido con alguna o algunas de las obligaciones derivadas de este instrumento, deberá notificarlo en forma fehaciente, para que ponga efectivo remedio al retraso o a la indebida prestación de la obligación convenida por acción u omisión, según se trate, para que en un término no mayor a 5 (cinco) días naturales, “EL PRESTADOR DE SERVICIOS” cumpla, de manera inmediata con sus obligaciones. En caso de continuar el incumplimiento en forma total o parcial, “EL CLIENTE” podrá rescindir el contrato.
 					</p>
-				</P>
-				<P>
+				</p>
+				<p>
 					<p><b>SÉPTIMA.- DISPOSICIONES GENERALES.</b></p>
 					<ol type="A">
 						<li>
@@ -279,33 +293,38 @@
 						</li>
 					</ol>
 
-				</P>
-				<P>
+				</p>
+				<p>
 					<b>DÉCIMA.- DE LA INTERPRETACIÓN Y CUMPLIMIENTO DEL CONTRATO.-</b> Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a las leyes y a la jurisdicción y competencia de los Tribunales del fuero común en la ciudad de Mérida Yucatán renunciando expresamente a cualquier otro fuero que pudiera corresponderles por razón de su domicilio presente o futuro. Leído que fue el presente contrato y enteradas las partes de su contenido y alcance legal, lo firman de conformidad y para constancia, en la ciudad de Mérida, Yucatán, a los <b class="textLowercase"><%= SoloNumerosALetras(datos.fechafirma.split('-')[2]) %> días del mes de <%= meses[parseInt(datos.fechafirma.split('-')[1]) -1] %> del <%= datos.fechafirma.split('-')[0] %></b>.
-				</P>
+				</p>
 			</li>
 		</ol>
-		
-		<P>
-			<table>
-				<thead>
-					<tr>
-						<th>POR “EL PRESTADOR DE SERVICIOS”</th>
-						<th>POR “EL CLIENTE”</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>C. William José Carrillo Cáceres</td>
-						<td>
-							C. <%= representante.nombre %>
-							<br>
-							<%= cliente.nombreFiscal %>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</P>
+		<br>
+		<br>
+		<table>
+			<thead>
+				<tr>
+					<th>POR “EL PRESTADOR DE SERVICIOS”</th>
+					<th>POR “EL CLIENTE”</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2" style="color:white;">espacio</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="color:white;">espacio</td>
+				</tr>
+				<tr>
+					<td>C. William José Carrillo Cáceres</td>
+					<td>
+						C. <%= representante.nombre %>
+						<br>
+						<%= cliente.nombreFiscal %>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</p>
 </script>
 
@@ -349,6 +368,7 @@
 			tagName			: 'section',
 			plantilla	: _.template($('#plantilla_contrato').html()),
 			render		: function (json) {
+				console.log(json);
 				this.$el.html(this.plantilla( json ));
 				return this;
 			}
@@ -381,6 +401,7 @@
 				} else{
 					contrato.secciones.nombre = app.coleccionServicios.get(contrato.secciones.idservicio).get('nombre');
 				};
+				console.log(contrato);
 
 				if ( _.isArray(contrato.datos.pago) ) {
 					pagomes = Number(contrato.datos.pago[0]);

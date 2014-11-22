@@ -306,10 +306,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		total = total - total * desc;
 		total = total + total * iva;
 		this.total = total.toFixed(2); // Sirve para la clase contrato
-		// total = '' + total.toFixed(2);
-		// total = total.split('.');
-		// decimales = total[1];
-		// total = conComas(total[0].split(''));
+		
 		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
 
 		this.calcularTotalHoras();

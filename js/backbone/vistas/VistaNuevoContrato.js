@@ -142,13 +142,16 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 			'click #btn_recargarPagos'	: 'recargarPagos',
 			'click 	   #guardar'	   	: 'guardar', //Guarda la cotización
+			'click .btn_anadirEnunciado': 'anadirEnunciado',
+			'click .btn_quitarEnunciado': 'quitarEnunciado',
+			// 'click .td_servicio tfoot button' : 'calcularTotal'
 
 
 			// 'change .input_renta'	: 'equilibrarPagos',
 			// 'wheel .input_renta'	: 'equilibrarPagos',
 			// 'blur .input_renta'	: 'equilibrarPagos',
 	},
-	initialize : function () {
+	initialize 				: function () {
 		this.listenTo(app.coleccionContratos, 'reset', function () {
 			var folio = app.coleccionContratos.establecerFolio();
 			this.$('input[name="folio"]').val(folio);
@@ -164,7 +167,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 		localStorage.clear();
 	},
-	render : function () {
+	render 					: function () {
 		this.$('#registroContrato').html( $('#plantilla-formulario').html() );
 		// Invocamos el metodo para cargar y pintar los servicios
 		this.cargarServiciosCo();
@@ -192,6 +195,38 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		};
 		return this;
 	},
+	calcularTotal 			: function () {
+		/*Reescribimos esta función para agregar
+		  código. ver [1] en esta función*/
+		var valores = this.$('.input-tfoot');
+		/*El capo Descuento es un input number, por lo que cuando se escribe
+		  un número con letras, el campo lo rechaza y adopta el valor ''*/
+		if ($(valores[1]).val() == '') {
+			alerta('El campo Descuento solo acepta números', function () {});
+			$(valores[1]).val('0');
+		};
+		var	total = Number($(valores[0]).val()),
+			desc  = Number($(valores[1]).val()) / 100,
+			iva   = Number($(valores[2]).val()) / 100,
+			decimales;
+
+		total = total - total * desc;
+		total = total + total * iva;
+		this.total = total.toFixed(2); // Sirve para la clase contrato
+
+		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+		// [1]
+		// Verificamos que tipo de plan está activo y
+		// disparamos un evento al campo pertinente.
+		if (this.$('#porEvento').is(':checked')) {
+			this.$('.n_pagos:eq()').trigger('change');
+		} 
+		else if(this.$('#iguala').is(':checked')){
+			this.$('.n_pagos:eq()').trigger('change');
+		};
+
+		this.calcularTotalHoras();
+	},
 	eliminarServicios 		: function () {
 		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
 		if (spans.length) { /*Solo si hay servicios marcados*/
@@ -209,7 +244,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		};
 		// this.$('.span_eliminar_servicio').click();
 	},
-	vistaPrevia 		: function(e) {
+	vistaPrevia 			: function(e) {
 		localStorage.clear();
 
 		var json = this.obtenerDatos(),
@@ -247,7 +282,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		});
 		e.preventDefault();
 	},
-	guardar 		: function () {
+	guardar 				: function () {
 		if (!this.obtenerDatos()) {
 			return;
 		};
@@ -298,7 +333,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		Backbone.emulateJSON = false;
 		localStorage.clear();
 	},
-	guardarSeccion	: function (idContrato, secciones) {
+	guardarSeccion			: function (idContrato, secciones) {
 		var self = this;
 		for (var i = 0; i < secciones.length; i++) {
 			secciones[i].idcontrato = idContrato;
@@ -323,7 +358,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			Backbone.emulateJSON = false;
 		};
 	},
-	guardado		: function () {
+	guardado				: function () {
 		if (this.aumentarContador() == this.totalelementos) {
 			var self = this;
 			$('#block').toggleClass('activo');
@@ -339,7 +374,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			});
 		};
 	},
-	noGuardada	: function () {
+	noGuardada				: function () {
 		if (this.aumentarContador() == this.totalelementos) {
 			$('#block').toggleClass('activo');
 			alerta('El contrato ha sido guardado, pero ocurrieron algunos errores<br>Revice el contrato en el historial de contratos', function () {
@@ -348,7 +383,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			});
 		};
 	},
-	obtenerDatos	: function () {
+	obtenerDatos			: function () {
 		var forms = this.$('.form_servicio'),
 			json  = pasarAJson(this.$('#prestacion, #busqueda, #idrepresentante, #hidden_fechafirma, input[name="plan"]:checked')
 					.serializeArray()),
@@ -372,7 +407,8 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#registroContrato')
 						.serializeArray());
-			
+			if ( Array.isArray(json.datos.enunciado) )
+				json.datos.enunciado = json.datos.enunciado.join(',.,');
 		// Validar datos
 			// if ( json.datos.fechainicio == '' ){
 			// 	alerta('Establezca la fecha de inicio de pagos');
@@ -452,10 +488,14 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			case 'iguala':
 				this.$('#fechaInicioEvento,#plazo,.n_pagos:eq(0)').attr('disabled',true);
 				this.$('#fechaInicioIguala,.n_pagos:eq(1)').attr('disabled',false);
+				this.$('#tbody_pagos_evento .hidden_renta').attr('name', '');
+				this.$('#tbody_pagos_iguala .hidden_renta').attr('name', 'pago');
 			break;
 			case 'evento':
 				this.$('#fechaInicioEvento,#plazo,.n_pagos:eq(0)').attr('disabled',false);
 				this.$('#fechaInicioIguala,.n_pagos:eq(1)').attr('disabled',true);
+				this.$('#tbody_pagos_evento .hidden_renta').attr('name', 'pago');
+				this.$('#tbody_pagos_iguala .hidden_renta').attr('name', '');
 			break;
 		}
 
@@ -553,7 +593,6 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			fecha2 = fechaNormal.split('/');
 			plazo = plazo + aumento;
 		};
-
 		// Descomentar para mantenimiento
 			/************************/
 			/*this.modificarPagos();*/
@@ -567,6 +606,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			self.$('#tbody_pagos_'+self.tipoPlan).html('');
 			self.establecerPagos( n );
 		};
+
 		// solo si el evento es un enter o un cambio
 		if (e.keyCode === 13 || e.type === 'change' || e.type === 'click') {
 			// Ejecutamos la función que establece los pagos
@@ -667,6 +707,20 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		this.$('#tbody_pagos_'+this.tipoPlan).html('');
 		$('.n_pagos').first().trigger('change');
 	},
+	anadirEnunciado 		: function (e) {
+		var longitud = this.$('.btn_anadirEnunciado').length;
+		if ( longitud >= 1 ) {
+			this.$('#panel_enunciados')
+				.append( _.template($('#input-group-inunciado')
+				.html()) );
+		}
+	},
+	quitarEnunciado 		: function (e) {
+		var longitud = this.$('.btn_anadirEnunciado').length;
+		if ( longitud > 1 ) {
+			$(e.currentTarget).parents('.input-group').remove();
+		}
+	}
 	/********************************/
 	/*Descomentar para mantenimiento*/
 	/********************************/
