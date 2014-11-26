@@ -32,14 +32,14 @@ var ColeccionClientes = Backbone.Collection.extend({
 	},
 
 	/*Descomentar antes de subir a git, debe arregarse que se pueda utilizar en cualquier módulo*/
-	sync	: function (method, model, options) {
-		if (method === 'read') {
-			app.busquedaCliente.cliente.buscarPorNombre(options.data.nombreComercial).done(function (data) {
-				// console.log(data); //Debuelbe el objeto [Object]
-				options.success(data);
-			});
-		};
-	}
+	// sync	: function (method, model, options) {
+	// 	if (method === 'read') {
+	// 		app.busquedaCliente.cliente.buscarPorNombre(options.data.nombreComercial).done(function (data) {
+	// 			// console.log(data); //Debuelbe el objeto [Object]
+	// 			options.success(data);
+	// 		});
+	// 	};
+	// }
 });
 
 app.coleccionClientes = new ColeccionClientes(app.coleccionDeClientes);

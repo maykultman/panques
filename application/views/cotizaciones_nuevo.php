@@ -15,14 +15,70 @@
 				
 			</form>
 		</div>
-	</div>	
+	</div>
+	<div class="modal fade" id="modal-newClient">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Registro rápido de <b>prospecto</b></h4>
+				</div>
+				<form id="form-newClient" role="form">
+					<input type="hidden" name="tipoCliente" value="prospecto">
+					<input type="hidden" name="foto" value="img/sinfoto.png">
+					<div class="modal-body">
+						<p>
+							<div class="form-group">
+								<label for="nombreC">Nombre comercial <span class="label label-info">Requerido</span></label>
+								<input type="text" class="form-control" id="nombreC" name="nombreComercial" onkeyup="textoObligatorio(this)" placeholder="Nombre comercial">
+							</div>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input type="text" class="form-control" id="email" name="email" onkeyup="validarEmail(this)" placeholder="Enter email">
+							</div>
+							<div class="form-group">
+								<label for="telefono">Teléfono (de 10 a 20 dígitos)</label>
+								<div class="row">
+									<input type="hidden" name="tabla" value="clientes">
+									<div class="col-xs-9">
+										<input type="text" class="form-control" id="telefono" name="numero" onkeyup="validarTelefono(this)" placeholder="Teléfono">
+									</div>
+									<div class="col-xs-3">
+										<select class="form-control" name="tipo">
+											<option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="button_cancelClient" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn btn-primary" id="button_saveClient">Guardar</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </section>
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
-			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
+			
+			<%if(typeof eliminar != 'undefined'){%>
+				<label class="label_servicio" for="servicio_<%= id %>">
+					<%= nombre %>
+					<span class="icon-circledelete span_eliminarNuevo"></span>
+				</label>
+			<%} else{%>
+				<label class="label_servicio" for="servicio_<%= id %>">
+					<%= nombre %>
+					<!--<span class="icon-circledelete span_eliminarNuevo"></span>-->
+				</label>
+			<%};%>
 			<div class="check_posicion">
 				<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
-			<div>
+			</div>
 		</td>
 	</script>
 	<script type="text/template" id="plantilla-formulario">
@@ -31,8 +87,8 @@
 				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
 				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
 				<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
-				<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			
-				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">
+				<!--<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">          -->
+				<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
 				<input type="hidden" name="folio">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">
 			</div>
@@ -43,9 +99,9 @@
 				<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
 			</div>-->
 		</div>
-	    <div class="desborde"></div>
+		<div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
-		<hr>		
+		<hr>        
 		<div class="row">
 			<div class="col-md-4">
 				<div class="div_table_overflow">
@@ -54,13 +110,14 @@
 							<tr>
 								<th class="sorter-false">
 									<input class="form-control input-sm search-services" type="search" data-column="all" placeholder="Servicios">
+									<div id="alert_anadirNuevioServicio" class="alert alert-info" role="alert">Enter para añadir...</div>
 								</th>
 							</tr>
 						</thead>
 						<tbody id="tbody_servicios">
 							<!-- PLANTILLAS DE SERVICIOS -->
 						</tbody>
-				  	</table>
+					</table>
 				</div>
 			</div>
 			<div class="col-md-8" id="">
@@ -77,7 +134,7 @@
 					</thead>
 					<tbody id="tbody_servicios_seleccionados">
 						<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
-					</tbody>		
+					</tbody>        
 					<tfoot style="background : #F9F9F9;">
 						<tr>
 							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
@@ -144,11 +201,11 @@
 					</tfoot>
 				</table>
 			</div>
-		</div>		
+		</div>      
 		<br><br> 
-		<button id="guardar"   type="button" class="btn btn-primary"> Guardar  </button>		    
+		<button id="guardar"   type="button" class="btn btn-primary"> Guardar  </button>            
 		<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>
-		<button id="vista-previa"  type="button" class="btn btn-default"> Vista previa </button>		
+		<button id="vista-previa"  type="button" class="btn btn-default"> Vista previa </button>        
 	</script>
 	<script type="text/template" id="tds_servicio_seleccionado">
 		<td class="td_servicio" colspan="7" style="padding:0px;">
@@ -207,14 +264,14 @@
 				<input type="hidden" name="idservicio" value="<%= id %>">
 				<input type="hidden" name="seccion">
 				<input type="hidden" name="descripcion">
-				<input type="hidden" name="horas" 		value="1">
+				<input type="hidden" name="horas"       value="1">
 				<!--<input type="hidden" name="precio_hora">-->
 			</form>
 		</td>
-		<td><input type="text" 		id="seccion"		class="form-control input-sm" 			 	style="min-width:150px;">					</td>
-		<td><textarea 				id="descripcion"	class="form-control" rows="3" 			 	style="min-width:150px;"></textarea>		</td>
-		<td><input type="number" 	id=""				class="form-control input-sm number horas" 	 	min="1" value="1">						</td>
-		<td><input type="number" 	id=""				class="form-control input-sm number precio_hora" style="visibility:hidden;"	 	min="1"></td>
+		<td><input type="text"      id="seccion"        class="form-control input-sm"               style="min-width:150px;">                   </td>
+		<td><textarea               id="descripcion"    class="form-control" rows="3"               style="min-width:150px;"></textarea>        </td>
+		<td><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
+		<td><input type="number"    id=""               class="form-control input-sm number precio_hora" style="visibility:hidden;"     min="1"></td>
 		<td>
 			<div class="input-group input-group-sm">
 				<span class="input-group-addon">$</span>
@@ -247,9 +304,9 @@ script_tag('js/backbone.localStorage.js');?>
 	})();
 	/*----------------------------------------------------------------------*/
 	var app = app || {};
-	app.coleccionDeServicios      	  = <?php echo json_encode($servicios)      	?>;
-	app.coleccionDeClientes       	  = <?php echo json_encode($clientes)       	?>;
-	app.coleccionDeRepresentantes 	  = <?php echo json_encode($representantes) 	?>;
+	app.coleccionDeServicios          = <?php echo json_encode($servicios)          ?>;
+	app.coleccionDeClientes           = <?php echo json_encode($clientes)           ?>;
+	app.coleccionDeRepresentantes     = <?php echo json_encode($representantes)     ?>;
 </script>
 <?=
 	// <!-- MVC -->
@@ -263,6 +320,7 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+	script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
 
 	script_tag('js/backbone/vistas/VistaServicio.js').
 	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js');

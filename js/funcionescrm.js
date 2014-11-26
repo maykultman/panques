@@ -119,8 +119,8 @@ function notificacion(){
     return false;
 }
 
-function ok(){
-    alertify.success("Visita nuestro <a href=\"http://blog.reaccionestudio.com/\" style=\"color:white;\" target=\"_blank\"><b>BLOG.</b></a>");
+function ok(mensaje){
+    alertify.success(mensaje);
     return false;
 }
 
@@ -325,16 +325,9 @@ function conComas(valor) {
     return res;
 }
 
-function loadSelectize_Client (selector,options) {
+function loadSelectize_Client (selector,args,options) {
     // Aplicamos el plugin al select con sus propiedades
-    var $select = $(selector).selectize({
-        maxItems    : null,
-        valueField  : 'id',
-        labelField  : 'title',
-        searchField : 'title',
-        maxItems    : 1,
-        create      : false
-    });
+    var $select = $(selector).selectize(args);
     // Respaldamos las poripiedades del plugin
     var control = $select[0].selectize;
     // Borramos todas las opciones que tenga el select

@@ -265,7 +265,7 @@ class Escritorio extends REST {
 	public function cotizaciones()
 	{
 		$this->area_Estatica('cotizaciones');
-		$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+		$data['clientes']		  = $this->customer->get();	# Lista de clientes
 		$data['servicios'] 		  = $this->serv->get_s();  	# Lista de Servicios
 		$data['representantes']	  = $this->representa->get();					# List de representantes
 		$data['empleados']	      = $this->empleado->get();

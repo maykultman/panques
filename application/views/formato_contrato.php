@@ -3,6 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<style type="text/css">
+		@page {
+			size: portrait;
+			page-size: letter;
+			margin: 2.5cm 3cm;
+		}
 		* {
 			font-family: Open Sans;
 		}
@@ -50,19 +55,7 @@
 			}
 		}
 		@media print {
-			 section {
-				margin: 2.5cm 3cm 2.5cm 3cm;
-			};
-			/*section {
-				padding: 0cm;
-				margin: 2.5cm 3cm 2.5cm 3cm;
-			}*/
-			/*div.break {
-				page-break-before: always;
-			}*/
-			/*div.marginTop {
-				margin-top: 2.5cm;
-			}*/
+			
 		}
 	</style>
 	<?=
@@ -151,14 +144,16 @@
 				</p>
 				<p class="titulos"><b>CLÁUSULAS</b></p>
 				<p>
-					<b>PRIMERA.- DEL OBJETO.-</b> Por el presente contrato <b>“EL CLIENTE”</b> encomienda a <b>“EL PRESTADOR DE SERVICIOS”</b> y éste se obliga a prestarle los servicios de <b>
-					<% 	if (_.isArray(secciones)) {
+					<b>PRIMERA.- DEL OBJETO.-</b> Por el presente contrato <b>“EL CLIENTE”</b> encomienda a <b>“EL PRESTADOR DE SERVICIOS”</b> y éste se obliga a prestarle 
+					<% 	if (secciones.length > 1) {
 							var nombres = _.uniq(_.pluck(secciones, 'nombre')),
 								ultimo = nombres.pop();
 							nombres = nombres.join(', ') + ' y ' + ultimo; %>
+							los servicios de <b>
 							<%= nombres %>
 					<% 	} else{ %>
-							<%= secciones.nombre %>
+							el servicio de <b>
+							<%= secciones[0].nombre %>
 					<% 	} %>
 					</b>., en lo sucesivo <b>“LOS SERVICIOS”</b>, en el estado de Yucatán.
 				</p>

@@ -14,6 +14,8 @@ app.VistaSeccion = Backbone.View.extend({
 		'mousewheel .number'				: 'calcularSeccion',
 		// 'click .number'				: 'calcularSeccion',
 		'blur .number'				: 'calcularSeccion',
+		'keyup imput[type="text"]' 		: 'actualizarTexto',
+		'keyup textarea'			 		: 'actualizarTexto'
 	},
 	initialize 	: function () { },
 	render: function (id) {
@@ -44,11 +46,13 @@ app.VistaSeccion = Backbone.View.extend({
 		  en tds de tabla, para que se puede generar un json por casa sección 
 		  del servicio que se encuantra cotizando, debemos pasar esos valores
 		  a unos input hidden que si se encuentran en formularios.*/
-		this.$('input[name="seccion"]')		.val(this.$('#seccion')		.val());
-		this.$('input[name="descripcion"]')	.val(this.$('#descripcion')	.val());
 		this.$('input[name="horas"]')	.val(horas);
 		this.$('input[name="precio_hora"]')		.val(precio_hora);
 	},
+	actualizarTexto : function () {
+		this.$('input[name="seccion"]')		.val(this.$('#seccion')		.val());
+		this.$('input[name="descripcion"]')	.val(this.$('#descripcion')	.val());
+	}
 });
 
 app.VistaCotizarServicio = Backbone.View.extend({
@@ -74,7 +78,13 @@ app.VistaCotizarServicio = Backbone.View.extend({
 	},
 	apilarSeccion 	: function () {
 		var vistaSeccion = new app.VistaSeccion();
-		this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );
+
+		if ( this.model.get('nuevo') ) {
+			this.$('tbody').append( vistaSeccion.render(this.model.get('nombre')).el );
+		} else{
+			this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );	
+		};
+		
 		/*Despues de que el se ha apilado el servicio a cotizar,
 		  calculamos instantaneamente el importe del servicio*/
 		this.carlcularImporte();
@@ -116,11 +126,7 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		setTimeout(function() {
 			here.$('.importe').val(importe).trigger(jQuery.Event('change'));
 		}, 10);		
-	},
-	// validarTypeNumber	: function (e) {
-	// 	// console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
-	// 	// validarInput(e.currentTarget.type, $(e.currentTarget).val(), e);
-	// }
+	}
 });
 
 app.VistaTrServ = app.VistaTrServicio.extend({
@@ -128,22 +134,26 @@ app.VistaTrServ = app.VistaTrServicio.extend({
 	plantillaDefault  : _.template($('#tds_servicio').html()),
 	events  : {
 		'click .checkbox_servicio'  : 'apilarServicio',
+		'click .span_eliminarNuevo' : 'eliminarNuevo'
 	},
 	apilarServicio  : function (elem) {
 		/*Desabilitar la seleccion del servicio*/
 		$(elem.currentTarget).attr('disabled',true);
-		// this.$tbody_servicios_seleccionados.append(
-		// 	'<tr>' + 
-		// 		this.plantillaSeleccionado( this.model.toJSON() )
-		// 	+ '</tr>' 
-		// );
 
 		/*Creación de la vista de servicio cotizado*/
 		var vistaCotizarServicio = new app.VistaCotizarServicio({model:this.model});
+		
 		this.$tbody_servicios_seleccionados.append(vistaCotizarServicio.render().el);
-		// VistaTrTablaServ.setElement( this.$el.find('#servicio_'+this.model.get('id')) );
 
 		this.$el.css('color','#CCC');
+	},
+	autoApilar 	: function () {
+		this.$el.css('display', 'table-row');
+		this.$('.checkbox_servicio').click();
+	},
+	eliminarNuevo : function () {
+		if ( !this.$('.checkbox_servicio').is(':disabled') )
+			this.model.destroy();
 	}
 });
 
@@ -152,8 +162,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	el : '.contenedor_principal_modulos',
 
 	events : {
-		'change     #busqueda'     	: 'buscarRepresentante',     //Cuando escribes una letra, despliega un menu de sugerencias
-		'click 	   #guardar'	   	: 'guardar', //Guarda la cotización
+		/*Descomentar si se requiere al representante en la,
+		  cotización*/
+		// 'change     #busqueda'     	: 'buscarRepresentante',
+		'click 	   #guardar'	   	: 'guardar',
 		'click     .todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
 		'click     #vista-previa' 	: 'vistaPrevia',
 
@@ -167,16 +179,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		'change 	#precio_hora' : 'dispararCambio',
 		'mousewheel #precio_hora' : 'dispararCambio',
 		'blur 		#precio_hora' : 'dispararCambio',
-		// 'keyup 		#precio_hora' : 'dispararCambio',
-		// 'click 		#precio_hora' : 'dispararCambio',
-		// 'focus 		#precio_hora' : 'dispararCambio',
 
 		'change 	.input-tfoot' : 'calcularTotal',
 		'mousewheel .input-tfoot' : 'calcularTotal',
 		'blur 		.input-tfoot' : 'calcularTotal',
-		// 'keyup 		.input-tfoot' : 'calcularTotal',
-		// 'click 		.input-tfoot' : 'calcularTotal',
-		// 'focus 		.input-tfoot' : 'calcularTotal',
+
+		// modal nuevo cliente
+		'click #button_saveClient' : 'guardarCliente',
 
 		'click #cancelar'	: 'cancelar'
 	},
@@ -187,6 +196,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			this.$('input[name="folio"]').val(folio);
 			this.$('#h4_folio').text('Folio: '+ folio).fadeIn('fast');
 		});
+
+		this.listenTo(app.coleccionServicios, 'reset', this.cargarServicios);
+
 		this.render();
 		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
 		// // this.$tablaServicios = this.$('#listaServicios');
@@ -196,20 +208,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	},
 	render : function () {
 		this.$('#registroCotizacion').html( $('#plantilla-formulario').html() );
+		
 		// Invocamos el metodo para cargar y pintar los servicios
-		this.cargarServiciosCo();
-		loadSelectize_Client('#busqueda',app.coleccionClientes.toJSON());
+		this.cargarServicios();
 
-		this.$('#table_servicios').tablesorter({
-			theme: 'blue',
-		    widgets: ["zebra", "filter"],
-		    widgetOptions : {
-		      filter_external : '.search-services',
-		      filter_columnFilters: false,
-		      filter_saveFilters : true,
-		      filter_reset: '.reset'
-		    }
-		});
+		this.cargarPlugins();
 
 		this.$('#fecha').val( formatearFechaUsuario(new Date()) );
 		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#titulo').val('Cotizaicón No. '+(Math.random()).toFixed(3) *1000);
@@ -225,16 +228,16 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		return this;
 	},
-	cargarServicioCo	: function (serviciosCotizacion) {
+	cargarServicio	: function (servicio) {
 		/*....................Instanciamos un modelo servicios y le pasamos el modelo.............*/
-		var vistaTrServ = new app.VistaTrServ( { model:serviciosCotizacion } );
+		var vistaTrServ = new app.VistaTrServ( { model:servicio } );
 		/*..Pintamos el modelo en la vista servicio mendiante una herencia al metodo render de la vista servicio...*/
 		this.$('#tbody_servicios').append( vistaTrServ.render().el );
 	},
-	cargarServiciosCo 	: function () {
+	cargarServicios 	: function () {
 		/*....hacemos un ciclo each a la colección pasandole cada modelo de servicio para poder pintarlo en la tabla......*/
-			this.$('#tbody_servicios').html('');
-			app.coleccionServicios.each(this.cargarServicioCo, this);
+		this.$('#tbody_servicios').html('');
+		app.coleccionServicios.each(this.cargarServicio, this);
 	},
 	calcularSubtotal 	: function () {
 		var total = 0,
@@ -324,16 +327,16 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	marcarTodosCheck 	: function(e) {        
 			marcarCheck(e, '#tbody_servicios_seleccionados');
 	},
-	buscarRepresentante 		: function (e) {
-		var here = this,
-			representante = app.coleccionRepresentantes.findWhere({ idcliente:$(e.currentTarget).val() });
-		if (representante) {
-			this.$('#nombreRepresentante').val(representante.get('nombre'));
-			this.$('#idrepresentante').val(representante.get('id'));
-		} else{
-			alerta('El cliente seleccionado no tiene representante (<b>Requerido</b>)', function () {});
-		};
-	},
+	// buscarRepresentante 		: function (e) {
+	// 	var here = this,
+	// 		representante = app.coleccionRepresentantes.findWhere({ idcliente:$(e.currentTarget).val() });
+	// 	if (representante) {
+	// 		this.$('#nombreRepresentante').val(representante.get('nombre'));
+	// 		this.$('#idrepresentante').val(representante.get('id'));
+	// 	} else{
+	// 		alerta('El cliente seleccionado no tiene representante (<b>Requerido</b>)', function () {});
+	// 	};
+	// },
 	vistaPrevia 		: function(e) {
 		localStorage.clear();
 
@@ -392,6 +395,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		if (!json) {
 			return;
 		};
+
 		json.datos.status = true;
 		json.datos.visibilidad = true;
 		
@@ -416,15 +420,20 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	},
 	obtenerDatos	: function () {
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('#titulo, #busqueda, #idrepresentante').serializeArray()),
+			/*Añadir (, #idrepresentante) si se requiere
+			  al representante*/
+			json  = pasarAJson(this.$('#titulo, #busqueda').serializeArray()),
 			f = new Date();
 		/*Cortafuego para forzar establecer los siguientes datos*/
-		if (json.titulo == '' || json.idcliente == '' || json.idrepresentante == '') {
+			/*Añadir || json.idrepresentante == '' si se requiere al
+			  representante*/
+		if (json.titulo == '' || json.idcliente == '') {
 			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
 			return false; // Terminamos el flujo del código
 		};
 
 		json = { secciones : [], datos : '' };
+
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#registroCotizacion').serializeArray());
 			json.datos.fechacreacion = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1);
@@ -569,5 +578,259 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		  fundamentales para los cálculos de los totales de cada
 		  sección, por tanto los actualizamos.*/
 		this.$('.precio_hora').val(precioHora).trigger('change');
+	},
+	guardarNuevoServ 	: function (e) {
+		// Procedemos solo si el evento que ejecuta esta 
+		// función es un keypress y su valor es 13 (tecla 
+		// Enter) y de tipo entero.
+		if(e.keyCode === 13){
+			var self = this;
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionServicios.create({
+				nombre : this.$(e.currentTarget).val(),
+			},{
+				wait 	: true,
+				success : function (model) {
+					// Establecemos como verdadero la propiedad
+					// eliminar, la cual servirá para mostrar un boton
+					// (<span>) , que se encuentra en la plantilla,
+					// para eliminar el servicio que se esta agregando.
+					model.set({eliminar:true});
+					// Creamo un nuevo objeto de la clase VistaTrServ,
+					// pasamos el modelo crado manualmente, el id que
+					// se establecemos en le objeto no existe en la
+					// colección, así que deberemos prepararnos para
+					// no crear conplictos en la vista previa de la
+					// cotización. El nobmre es el que se ha escrito
+					// en el campo busqueda servicio. 
+					var vistaTrServ = new app.VistaTrServ({
+						model : model
+					});
+					// Apilamos el nuevo servicio al principio de la lista
+					self.$('#tbody_servicios').prepend( vistaTrServ.render().el );
+					// Seleccionamos manualmente el servicio					
+					vistaTrServ.autoApilar();
+					// [Importante] Este paso dispara un evento al plugin
+					// tablesorter, para referenciar el nuevo servicio y
+					// puede ser filtrado. El primer parametro es el elemento
+					// tr sel servicio que recuperamos con la vista de 
+					// Backbone que hemos creado. El segundo resetea los
+					// eventos de tablesorter para que el nuevo elemento
+					// sea tomando en cuanta en las filtraciones. Ir a la
+					// dicumentacion de tablesorter addRows para más info.
+					self.$('#table_servicios').trigger('addRows', [vistaTrServ.$el, true]);
+					// Limpiamos el campo de busqueda de servicios,
+					// y despues disparamos el evento change para volver
+					// a ver todos los servicios.
+					self.$(e.currentTarget).val('').trigger('change');
+					// y escondemos el mensaje de instrucciones
+					self.$('#alert_anadirNuevioServicio').hide();
+				},
+				error 	: function (model) {
+					alerta('El servicio no pudo ser creado', function(){});
+				}
+			});
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
+		}
+	},
+	guardarCliente 		: function (e) {
+		// Validamos los campos antes de guardar al
+		// cliente. Si uno de ellos retorna verdadero
+		// significa que unos de los datos es incorrectos
+		if( textoObligatorio( this.$('#nombreC') )
+			|| validarEmail( this.$('#email') )
+			|| validarTelefono( this.$('#telefono') )
+		) {
+			alerta('Revise los campos',function () {});
+			e.preventDefault();
+			return;
+		};
+		
+		// obtenemos todos los datos del form del modal
+		var json = pasarAJson( this.$('#form-newClient').serializeArray() ),
+			// preparamos un objeto para el teléfono.
+			telefono = {
+				numero 	:'',
+				tipo 	:'',
+				tabla 	:''
+			},
+			// Guardamos una referencia al modal, lo usaremos varias veces
+			$modal = this.$('#modal-newClient'),
+			self = this;
+
+		// si el objeto trae un teléfono pasamos los datos al objeto
+		// telefono que hemos preparado
+		if (json.numero != '') {
+			telefono.numero	= json.numero;
+			telefono.tipo	= json.tipo;
+			telefono.tabla	= json.tabla;
+		};
+		// y eliminamos del objeto original las propiedades del telefono
+		delete json.numero;
+		delete json.tipo;
+		delete json.tabla;
+
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		app.coleccionClientes.create(json, {
+			wait 	: true,
+			success : function (model) {
+				ok('El nuevo cliente se a guardado como <b>prospecto</b>.');
+				// Actualizamos el option del cliente nuevo. No se actualozará,
+				// la selección porque es una imagen del option original (el
+				// que sí se actualiza).
+				self.$('#busqueda')[0]
+					.selectize
+					.updateOption('nuevo',{
+						id 	  :model.get('id'),
+						title :model.get('nombreComercial')
+					});
+					// El plugin no actualiza el value del cliente nuevo 
+					// seleccionado porque es una imagen del original,
+					// (verificar api selectize.js). Lo realizamos manualmente
+					self.$('select option[value="nuevo"]').val( model.get('id') );
+				// guardamos el telefono si en usuario lo ha proporcionado
+				if (telefono.numero != '') {
+					// cramos una nueva propiedad en el objeto telefono que es
+					// para saber de quién es el telefono.
+					telefono.idpropietario = model.get('id');
+					Backbone.emulateHTTP = true;
+					Backbone.emulateJSON = true;
+					app.coleccionTelefonos.create(telefono, {
+						wait 	: true,
+						success : function () { },
+						error 	: function () {
+							error('No se guardo el teléfono. '+
+								  '<b>Puede seguir con el registro de la cotización</b>, '+
+								  'después puede editar los datos del clinete');
+						}
+					});
+					Backbone.emulateHTTP = false;
+					Backbone.emulateJSON = false;
+				};
+				$modal.modal('hide');/*Resetea el fomulario*/
+			},
+			error 	: function () {
+				error('El cliente no ha sido guardado.');
+				$modal.find('.close').click();/*Resetea el fomulario*/
+			}
+		});
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
+
+		e.preventDefault();
+	},
+	cargarPlugins 		: function () {
+		// Preparamos un id temporal en caso de que
+		// se agreguen nuevos servicios y poder
+		// realizar cálculos con ellos
+		this.idTemporalServ = app.coleccionServicios.establecerIdSiguiente();
+		
+		var self = this,
+			// Referenciamos el <div> modal
+			$modal = self.$('#modal-newClient');	
+			// Evita poder salir del modal (javascrip modal bootstrap)
+			$modal.modal({ backdrop : false });
+			// La linea anterior muestra el modal; la escondemos!
+			$modal.modal('hide');
+
+		loadSelectize_Client( '#busqueda',{
+			valueField  : 'id',
+			labelField  : 'title',
+			searchField : 'title',
+			maxItems    : 1,
+			create      : function (value) {
+				// Permitimos crear nuevos elementos,
+				// (sino deberiamos cambiamos la función
+				// por false). El parametro value es el
+				// texto que escribimos.
+
+				var eliminarIntentoCliente = function () {
+						// Al cerrar el modal sin guardar al 
+						// cliente tendremos que eliminar del 
+						// <select> el nombre que escribimos 
+						// removeOption func. del plugin selectize
+						self.$('#busqueda')[0]
+							.selectize
+							.removeOption('nuevo');
+						$modal.find('form')[0].reset();
+					};
+				// Llenamos automaticamente el campo nombre 
+				// comercial
+				$modal.find('#nombreC').val(value);
+				$modal.modal('show');
+				$modal.find('#button_cancelClient,.close').
+					on('click', function () {
+						eliminarIntentoCliente();
+					});
+				$modal.on('hidden.bs.modal', function () {
+					eliminarIntentoCliente();
+				});
+				// Debe retornarse el siguiente objeto, para ser
+				// apilado junto con los otros options, sino
+				// retornamos nada el plugin eliminará toda la
+				// lista.
+				return {
+					id 		:'nuevo',
+					title 	:value
+				}
+			},
+			onItemRemove 	: function () {
+			// onItemRemove -evento del plugin- se
+			// ejecuta cuando cerramos el modal, para
+			// no dejar al cliente que hemos decidido
+			// no guardar.
+				this.focus();
+			}
+		},(function () {
+			// Quitamos de la colección los clientes
+			// con visibilidad 0
+			var options = app.coleccionClientes
+			  .remove(app.coleccionClientes.where({
+			  	visibilidad:'0'
+			})).toJSON();
+			return options;
+		})() );
+
+		this.$('#table_servicios').tablesorter({
+			theme: 'blue',
+			widgets: ["zebra", "filter"],
+			widgetOptions : {
+				filter_external : '.search-services',
+				filter_columnFilters: false,
+				filter_saveFilters : true,
+				filter_reset: '.reset'
+			}
+		}).bind('filterEnd', function () {
+			// filterEnd es un evento propio del plugin;
+			// se dispara cuando se ha realizado la filtracion,
+			// por ello utilizamos la función bind para ligar
+			// este evento a la tabla cuando se hace una filtración.
+
+			// Si! la filtracion no ha dado resultados (solo en ese caso)
+			// creamos un listener del input busqueda de servicios y
+			// mistramos el mensaje que da intrucciones al usuario.
+			// cada vez que se escribe en el input se ejecuta la función 
+			// guardarNuevoServ. [Importante]: también debe terminarse
+			// el listener del input buqueda de servicio, esto es porque
+			// ocurrirá dos veces el evento keypress y se agregaría
+			// el nuevo servicio y una cadena vacia.
+
+			// Si no!, la filtración ha resultados. en tal caso, se deja de
+			// escuchar el evento keypress del campo de busqueda y 
+			// escundemos las instrucciones al usuario.
+			if (!self.$('#table_servicios tbody tr:visible').length) {
+				self.$('.search-services').on('keypress', function (e) {
+					self.guardarNuevoServ(e);
+					self.$('.search-services').off('keypress');
+				});
+				self.$('#alert_anadirNuevioServicio').show();
+			} else {
+				self.$('.search-services').off('keypress');
+				self.$('#alert_anadirNuevioServicio').hide();
+			};
+		});
 	}
 });

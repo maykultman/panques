@@ -11,7 +11,8 @@
 		}
 
 		public function insert_s($post)
-		{  //var_dump($post); die();
+		{  
+			//var_dump($post); die();
 
 			// if(!$post['nombre'][0])
 			// {
@@ -19,9 +20,20 @@
 			// 	return $this->get_s($id); 						
 			// }
 
+			// var_dump($post); die();
+			// if(!is_array($post['nombre'])) {
+			
+			// 	for ($j = 0 ; $j<count($post['nombre']); $j++) {
+			// 			$this->db->insert('servicios', $post); 
+			// 			$resp[$j] = $this->db->insert_id();		
+			// 	}
+			// 	return $resp;
+			// }
+
 			if(!is_array($post['nombre']))
 			{
-				$this->db->insert('servicios', $post); 	$id = $this->db->insert_id();
+				$this->db->insert('servicios', $post); 	
+				$id = $this->db->insert_id();
 				return $this->get_s($id); 	
 			}
 			

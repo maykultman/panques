@@ -495,7 +495,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 				cssStickyHeaders_addCaption    : true,
 				cssStickyHeaders_attachTo      : null,
 				cssStickyHeaders_filteredToTop : true,
-				cssStickyHeaders_zIndex        : 10
+				cssStickyHeaders_zIndex        : 1
 			}
 
 		};

@@ -95,7 +95,7 @@
 			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
 			<div class="check_posicion">
 				<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
-			<div>
+			</div>
 		</td>
 	</script>
 	<script type="text/template" id="plantilla-formulario">
@@ -128,6 +128,7 @@
 							<tr>
 								<th class="sorter-false">
 									<input class="form-control input-sm search-services" type="search" data-column="all" placeholder="Servicios">
+									<div id="alert_anadirNuevioServicio" class="alert alert-info" role="alert">Enter para añadir...</div>
 								</th>
 							</tr>
 						</thead>

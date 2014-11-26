@@ -43,6 +43,36 @@
     function validarRFC (elem) {
         $(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());
     }
+
+    function textoObligatorio (elem) {
+        if ($(elem).val() != '') {
+            $(elem).parents('.form-group').removeClass('has-error');
+           return false;
+        } else {
+            $(elem).parents('.form-group').addClass('has-error');
+             return true;
+        };
+    }
+
+    function validarEmail (elem) {
+        if( (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(elem).val())) || $(elem).val() == '') {
+            $(elem).parents('.form-group').removeClass('has-error');
+            return false;
+        } else{
+            $(elem).parents('.form-group').addClass('has-error');
+            return true;
+        };
+    }
+
+    function validarTelefono(elem) {
+        if( (/^\d{10,20}$/.test($(elem).val().trim())) || $(elem).val().trim() == '' ) {
+            $(elem).parents('.form-group').removeClass('has-error');
+            return false;
+        } else{
+            $(elem).parents('.form-group').addClass('has-error');
+            return true;
+        };
+    }
     // validaciones jQuery
     // $(document).on('ready',function () {
     //     $('input[type=number]').on('click', function () {

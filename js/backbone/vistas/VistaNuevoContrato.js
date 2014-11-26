@@ -142,8 +142,8 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 			'click #btn_recargarPagos'	: 'recargarPagos',
 			'click 	   #guardar'	   	: 'guardar', //Guarda la cotización
-			'click .btn_anadirEnunciado': 'anadirEnunciado',
-			'click .btn_quitarEnunciado': 'quitarEnunciado',
+			'click .btn_quitarEnunciado': 'enunciado',
+			'click .btn_anadirEnunciado': 'enunciado',
 			// 'click .td_servicio tfoot button' : 'calcularTotal'
 
 
@@ -159,7 +159,6 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		});
 
 		this.render();
-		this.eventosPlugins();
 		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
 		// // this.$tablaServicios = this.$('#listaServicios');
 		this.contadorAlerta = 1;
@@ -169,21 +168,11 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 	},
 	render 					: function () {
 		this.$('#registroContrato').html( $('#plantilla-formulario').html() );
+		
 		// Invocamos el metodo para cargar y pintar los servicios
 		this.cargarServiciosCo();
-		loadSelectize_Client('#busqueda',app.coleccionClientes.toJSON());
-		loadDatepicker('.datepicker');
 
-		this.$('#table_servicios').tablesorter({
-			theme: 'blue',
-		    widgets: ["zebra", "filter"],
-		    widgetOptions : {
-		      filter_external : '.search-services',
-		      filter_columnFilters: false,
-		      filter_saveFilters : true,
-		      filter_reset: '.reset'
-		    }
-		});
+		this.cargarPlugins();
 
 		// this.$('#fecha').val( formatearFechaUsuario(new Date()) );
 		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#prestacion').val('Contrato No. '+(Math.random()).toFixed(3) *1000);
@@ -695,31 +684,56 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			location.href = 'contratos_historial';
 		});
 	},
-	eventosPlugins 			: function () {
+	recargarPagos 			: function () {
+		this.$('#tbody_pagos_'+this.tipoPlan).html('');
+		$('.n_pagos').first().trigger('change');
+	},
+	enunciado 		:function (e) {
+		var longitud = this.$('.campo-enunciado').length;
+		if ( $(e.currentTarget).attr('class')=='btn btn-default btn_anadirEnunciado' ) {
+			if ( longitud >= 1 ) {
+			this.$('#panel_enunciados')
+				.append( _.template($('#plantilla-input-group-inunciado')
+				.html()) );
+			};
+		} else if ( $(e.currentTarget).attr('class')=='btn btn-default btn_quitarEnunciado' ) {
+			if ( longitud > 1 ) {
+				$(e.currentTarget).parents('.campo-enunciado').remove();
+			};
+		};
+	},
+	cargarPlugins 		: function () {
 		var self = this,
 			date;
 		this.$('#fechaFirma').on('change', function () {
 			date = $(this).datepicker( 'getDate' );
 			self.$('#hidden_fechafirma').val( date.getFullYear() + "-" + (date.getMonth() +1) + "-" + date.getDate() );
 		});
-	},
-	recargarPagos 			: function () {
-		this.$('#tbody_pagos_'+this.tipoPlan).html('');
-		$('.n_pagos').first().trigger('change');
-	},
-	anadirEnunciado 		: function (e) {
-		var longitud = this.$('.btn_anadirEnunciado').length;
-		if ( longitud >= 1 ) {
-			this.$('#panel_enunciados')
-				.append( _.template($('#input-group-inunciado')
-				.html()) );
-		}
-	},
-	quitarEnunciado 		: function (e) {
-		var longitud = this.$('.btn_anadirEnunciado').length;
-		if ( longitud > 1 ) {
-			$(e.currentTarget).parents('.input-group').remove();
-		}
+		loadDatepicker('.datepicker');
+		loadSelectize_Client('#busqueda',{
+			valueField  : 'id',
+			labelField  : 'title',
+			searchField : 'title',
+			maxItems    : 1,
+			create      : false
+		},app.coleccionClientes.toJSON());
+
+		this.$('#table_servicios').tablesorter({
+			theme: 'blue',
+			widgets: ["zebra", "filter"],
+			widgetOptions : {
+				filter_external : '.search-services',
+				filter_columnFilters: false,
+				filter_saveFilters : true,
+				filter_reset: '.reset'
+			}
+		}).bind('filterEnd', function () {
+			if (!$('#table_servicios tbody tr:visible').length) {
+				self.$('#alert_anadirNuevioServicio').show();
+			} else {
+				self.$('#alert_anadirNuevioServicio').hide();
+			};
+		});
 	}
 	/********************************/
 	/*Descomentar para mantenimiento*/

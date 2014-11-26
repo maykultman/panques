@@ -19,7 +19,7 @@
 				<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
 				<div class="check_posicion">
 					<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
-				<div>
+				</div>
 			</td>
 		</script>
 		<script type="text/template" id="plantilla-formulario">
@@ -74,6 +74,7 @@
 								<tr>
 									<th class="sorter-false">
 										<input class="form-control input-sm search-services" type="search" data-column="all" placeholder="Servicios">
+										<div id="alert_anadirNuevioServicio" class="alert alert-info" role="alert">Enter para añadir...</div>
 									</th>
 								</tr>
 							</thead>
@@ -86,10 +87,10 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Enunciados de los servicios</div>
 						<div class="panel-body" id="panel_enunciados">
-							<div class="input-group input-group-sm">
+							<div class="input-group input-group-sm campo-enunciado">
 								<textarea class="form-control" name="enunciado" placeholder="¿Que está comprando el cliente?"></textarea>
 								<span class="input-group-btn">
-									<button class="btn btn-default btn_quitarEnunciado" type="button">-</button>
+									<button class="btn btn-default btn_quitarEnunciado" type="button">&ndash;</button>
 									<button class="btn btn-default btn_anadirEnunciado" type="button">+</button>
 								</span>
 							</div><!-- /input-group -->
@@ -380,11 +381,11 @@
 		total: 					<%- total %>											<br>
 		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>-->
 	</script>
-	<script type="text/template" id="input-group-inunciado">
-		<div class="input-group input-group-sm">
+	<script type="text/template" id="plantilla-input-group-inunciado">
+		<div class="input-group input-group-sm campo-enunciado">
 			<textarea class="form-control" name="enunciado" placeholder="¿Que está comprando el cliente?"></textarea>
 			<span class="input-group-btn">
-				<button class="btn btn-default btn_quitarEnunciado" type="button">-</button>
+				<button class="btn btn-default btn_quitarEnunciado" type="button">&ndash;</button>
 				<button class="btn btn-default btn_anadirEnunciado" type="button">+</button>
 			</span>
 		</div><!-- /input-group -->

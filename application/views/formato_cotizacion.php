@@ -357,20 +357,24 @@
  		this.preciohora = Number(json.preciohora);
  		this.descuento = Number(json.descuento);
  	},
-
  	cargarServicios : function () {
- 		var idservicios = app.coleccionServicios_L.pluck('idservicio'),
+ 		// obtenemos solo los id's de la coleccion localStorage
+ 		var idservicios = app.coleccionServicios_L.pluck('idservicio');
  		
+ 		// borramos todos los id's repetidos, el resultado simpre
+ 		// es un array
  		idservicios = _.union(idservicios);
 
+ 		// Iteramos en array de servicios para obtener
+ 		// cada una de las descripciones de que se 
+ 		// anotaron en el formulario de contizaciones.
  		for (var i = 0; i < idservicios.length; i++) {
- 			// vista = new Servicios({ model: modelo});
-	 		this.$('article table tbody').append( this.plantillas.servicio(this.obtenerServicio(idservicios[i])) );
+	 		this.$('article table tbody')
+	 			.append( this.plantillas.servicio(this.obtenerServicio(idservicios[i])) );
  		};
 
  		this.totales();
- 	},
- 	
+ 	},	
  	obtenerServicio : function (idservicio) {
  		var json = {
  				idservicio 	: '',
@@ -381,13 +385,42 @@
  			modelos,
  			importe = 0;
 
+ 		// Buscamos todas las secciones en las que coincida el
+ 		// id que se ha pasado como perametro ha esta función.
+ 		// La función where siempre retorna un arreglo. Esta
+ 		// linea hace que el modelo se busque así mismo para,
+ 		// aislarlo de otras secciones que no son del mismo 
+ 		// servicio.
  		modelos = app.coleccionServicios_L.where( {idservicio: idservicio} );
 
+
+ 		// Iteramos sobre los modelos para contruir un nuevo objeto
+ 		// que se retornara para contruir el dicumento de cotización.
  		for (var i = 0; i < modelos.length; i++) {
  			json.descripcion += '<li>'+(modelos[i].get('descripcion')+'</li>');
  			json.horas += Number(modelos[i].get('horas'));
  		};
- 		json.servicio = app.coleccionServicios.get(idservicio).get('nombre');
+
+ 		// Biscamos el nombre del servicio por medio del id
+ 		// que se pasa como parametro. En caso de que no existe
+ 		// querra decir que el servicio va ser creado cuando la
+ 		// cotizacion sea creada. Por lo tanto el nombre viene
+ 		// en la propiedad id del modelo. La función get devuelve
+ 		// un Modelo no array de Modelos
+ 		json.servicio = app.coleccionServicios.get(idservicio);
+ 		// Si la propiedad servicio de json es undefined entronces
+ 		// tomamos el id del primer modelo de la variable modelos 
+ 		// porque allí se enuentra el nombre del servicio temporal.
+ 		// Sino, la linea anterior devolvio un modelo y tomarías
+ 		// el nombre de servicio que contiene.
+ 		if (!json.servicio) {
+ 			json.servicio = modelos[0].get('idservicio');
+ 		} else {
+ 			json.servicio = json.servicio.get('nombre');
+ 		};
+
+ 		// El precio es una variable global, así como el 
+ 		// precio por hora
  		json.preciohora = '$'+conComas(this.preciohora.toFixed(2));
  		json.importe = '$'+conComas((json.horas * this.preciohora).toFixed(2));
 
