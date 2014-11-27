@@ -61,43 +61,61 @@ app.ModeloCotizacion = Backbone.Model.extend({
 		});
 	},
 	eliminarPermanente: function () {
-		var arrayModels, original;
+		// Verificamos si la cotización es la versión original
+		// y si su eliminación fue como cotizacion activa.
+		if (this.get('version')=='1' && this.get('status') == '1') {
+			// this es una cotizacion original, entonces buscamos
+			// las versiones para eliminarlas para no dejar 
+			// residuos en la base de datos.
+			var versiones = app.coleccionCotizaciones.where({
+				idcotizacion:this.get('id'),
+				status:'0',
+			});
+			// armamos un arreglo con todos los modelos para
+			// iterar en ellos y eliminarlos.
+			versiones = versiones.concat(this);
+			for (var i = 0; i < versiones.length; i++) {
+				this.destroy_model(versiones[i]);
+			};
+		} else if (this.get('status') == '1') {
+			// this es una cotizacion original,
+			// obtenemos cotización original pero que no
+			// este activa
+			var original = app.coleccionCotizaciones.findWhere({
+				id:this.get('idcotizacion'),
+				status:'0',
+			});
+			// buscamo las versiones para eliminarlas para
+			// no dejar residuos en la base de datos.
+			var versiones = app.coleccionCotizaciones.where({
+				idcotizacion:this.get('idcotizacion'),
+				status:'0',
+			});
+			// armamos un arreglo con todos los modelos para
+			// iterar en ellos y eliminarlos.
+			versiones = versiones.concat(this);
+			versiones = versiones.concat(original);
+			varsinoes = _.uniq(versiones);
+			for (var i = 0; i < versiones.length; i++) {
+				this.destroy_model(versiones[i]);
+			};
+		} else {
+			// Esto ocurre cuando la cotizacion tiene un estatus 0.
+			// no importa si se trata  de una cotizacion original o
+			// una versión.
+			this.destroy_model(this);
+		};
 		
-		// De  qué cotizacion se trata
-		switch(this.get('version')) {
-		case '1': // Es una original
-			// Buscamos sus versiones
-			// Los respaldamos en una variable
-	        arrayModels = app.coleccionCotizaciones
-	        				.where({idcotizacion:this.get('id')});
-	        // Añadimos el original al array
-	        arrayModels.push(this);
-	        // Recorremos el array para
-	        // eliminar cada modelos
-        	for (var i = 0; i < arrayModels.length; i++) {
-        		console.log(arrayModels.length);
-				this.destroy_model(arrayModels[i]);
-			};
-	        break;
-		default: // No es la original
-			// Bucamos la original
-	        original = app.coleccionCotizaciones
-	        			.get(this.get('idcotizacion'));
-	        // Buscamos las versiones
-			arrayModels = app.coleccionCotizaciones
-						.where({idcotizacion:original.get('id')});
-			// Incluimos el original al array
-			arrayModels.push(original);
-			// Eliminamos cada uno de los modelos
-	        for (var i = 0; i < arrayModels.length; i++) {
-				this.destroy_model(arrayModels[i]);
-			};
-		}
+	},
+	obtenerTodos	: function () {
+		// 
 	},
 	destroy_model 	: function (model) {
 		model.destroy({
 			wait : true,
-			success	: function (model) { },
+			success	: function (model) {
+				// console.log(model.get('titulo')+' fue borrado');
+			},
 			error	: function () {
 				alerta('Ha ocurrido un error, inténtelo más tarde', function () {});
 			}

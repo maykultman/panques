@@ -92,7 +92,17 @@
 
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
-			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
+			<%if(typeof eliminar != 'undefined'){%>
+				<label class="label_servicio" for="servicio_<%= id %>">
+					<%= nombre %>
+					<span class="icon-circledelete span_eliminarNuevo"></span>
+				</label>
+			<%} else{%>
+				<label class="label_servicio" for="servicio_<%= id %>">
+					<%= nombre %>
+					<!--<span class="icon-circledelete span_eliminarNuevo"></span>-->
+				</label>
+			<%};%>
 			<div class="check_posicion">
 				<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
 			</div>
@@ -105,8 +115,8 @@
 				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
 				<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
 				<input type="hidden" name="idcliente">
-				<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			
-				<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">
+				<!--<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			-->
+				<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
 				<input type="hidden" name="folio">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
 			</div>

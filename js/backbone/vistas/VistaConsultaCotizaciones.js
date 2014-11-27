@@ -22,33 +22,41 @@ app.VistaCotizacion = Backbone.View.extend({
 		return this;
 	},
 	obtenerVersiones	: function () {
-		var original  = [],
+		var original = [],
 			versiones = [];
-		original = app.coleccionCotizaciones.where({
-			id:this.model.get('idcotizacion')
-		});
-		if (original.length) {
+		// Tenemos que saber si se trata de la primera
+		// versión u otra.
+		if (this.model.get('version') == '1') {
+			// si se trata de la primera versión obtenemos
+			// las versiones derivadas de esta que no estén
+			// eliminados
 			versiones = app.coleccionCotizaciones.where({
-				idcotizacion:original[0].get('id'),visibilidad:'1'
+				idcotizacion : this.model.get('id'),
+				visibilidad  :'1'
 			});
-			this.cargarVersiones(original, versiones);
+			// cargamos todo
+			this.cargarVersiones(this.model, versiones);
 		} else {
-			versiones = app.coleccionCotizaciones.where({
-				idcotizacion:this.model.get('id')
+			// Sino, se trata de una version derivada.
+			// Obtenemos la original sin importar si está
+			// eliminada
+			original = app.coleccionCotizaciones.findWhere({
+				id 			 :this.model.get('idcotizacion')
 			});
-			if (versiones.length) {
-				original = app.coleccionCotizaciones.where({
-					id:versiones[0].get('idcotizacion'),visibilidad:'1'
-				});
-				this.cargarVersiones(original, versiones);
-			};
+			// cargamos todo 	// original	// versiones
+			this.cargarVersiones( original, app.coleccionCotizaciones.where({
+				idcotizacion : this.model.get('idcotizacion'),
+				visibilidad  :'1'
+			}) );
 		};
 	},
 	cargarVersiones 	: function (original, versiones) {
 		var arrayJson = [],
-			list 	  = $('#li_version').html()
-		// Añadimos el original al principio del array
-		versiones.unshift(original[0]);
+			list 	  = $('#li_version').html();
+		// Añadimos el original al principio del array,
+		// si es que original tiene algún valor
+		if (original != undefined)
+			versiones.unshift(original);
 
 		/*La versión original actualmente está en la papelera,
 		  no la mostramos en la lista de versiones*/
@@ -71,8 +79,8 @@ app.VistaCotizacion = Backbone.View.extend({
 		  crearon a ordenarlos. Reemplazamos arrayJson*/
 		arrayJson = _.values(_.indexBy(arrayJson,'version'));
 		this.$('#ul-versiones').html('').append(_.template(list)({
-			versiones : arrayJson,
-			actual : this.model.get('version')
+			versiones  	: arrayJson,
+			actual  	: this.model.get('version')
 		}));
 	},
 	cambiarStatus		: function (e) {
@@ -126,9 +134,9 @@ app.VistaCotizacion = Backbone.View.extend({
  		});
 		for(i in servicios)
 		{
-			app.coleccionLocalServicios.create(servicios[i].toJSON());
+			app.coleccionServicios_L.create(servicios[i].toJSON());
 		}
-		app.coleccionLocalCotizaciones.create(this.model.toJSON());
+		app.coleccionCotizaciones_L.create(this.model.toJSON());
 		window.open("formatoCotizacion");
 	},
 	vistaPreviaVersion	: function (e) {
@@ -354,6 +362,15 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 			visibilidad: '1'
 		});
 		this.recursividad(cotizaciones, false);
+		// Necesarioamente debemos disparar el evento addRows
+		// (evento de tablesorter.js plugin) cuando se apilen
+		// todos los trs, esto sirve para que cada vez que se
+		// actualize la tabla vuelva tomar los eventos del plugin,
+		// [Importante] la vista ejecutará dos veces esta función,
+		// cuando se cambie una version por otra para verla en la
+		// tabla.
+		cotizaciones = this.$tbodyCotizaciones.find('tr');
+		this.$('#tabla_principal').trigger('addRows', [cotizaciones, true]);
 	},
 	obtenerEliminados	: function () {
 		this.$tbodyCotizaciones.html('');

@@ -64,7 +64,6 @@
 </section>
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
-			
 			<%if(typeof eliminar != 'undefined'){%>
 				<label class="label_servicio" for="servicio_<%= id %>">
 					<%= nombre %>

@@ -170,7 +170,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		this.$('#registroContrato').html( $('#plantilla-formulario').html() );
 		
 		// Invocamos el metodo para cargar y pintar los servicios
-		this.cargarServiciosCo();
+		this.cargarServicios();
 
 		this.cargarPlugins();
 
