@@ -156,58 +156,5 @@
 		{
 			return $this->db->delete('clientes', array('id' => $id));  		   	
 		}
-
-		// public function update_customer($id, $iput){
-
-		// 	$x=0; $cliente = array();  $cont=0;
-		// 	$this->db->select('*');			
-		// 	$atr = $this->db->get('atributo_cliente'); # Consulto la lista de atributos...
-  		//  $put = (array)$iput;
-		// 	# La propiedad visible ya no muestra al cliente a un usuario normal simula una eliminación...
-		// 	# Solo el superusuario podrá eliminar al cliente...
-		// 	if(array_key_exists('visibilidad', $put))
-		//  { 				
-		//		 $this->db->where('id', $id);
-  		//       $query = $this->db->update('clientes', array('visibilidad'=> $put['visibilidad']));
-		// 	}
-		// 	else
-		// 	{
-		// 		foreach ($put as $key => $value) 
-		// 		{					
-		// 			if($key=='nombreComercial'||$key=='tipoCliente'||$key=='fechacreacion')
-		// 			{
-		// 				$cliente[$key] = $value; # Relleno un array para la tabla de clientes
-		// 			} #IF
-		// 			else
-		// 			{
-		// 				foreach ($atr->result() as $keya => $valuea) 
-		// 				{
-		// 					if($valuea->atributo===$key) # $Key Coincide con algun dato de la lista atributos?
-		// 					{	
-		// 						# Consulto si existe el idcliente y el id del $key en la tabla de cliente_atributo
-		// 						$where=array('idcliente'=>$id, 'idatributo'=>$valuea->id);
-		// 						$query = $this->db->get_where('cliente_atributo',$where);
-
-		// 						if($query->result()){  # Si existe actualizalo
-
-		// 							$this->db->where($where);
-		// 		  		       		$queryA = $this->db->update('cliente_atributo', array('dato'=>$value));
-		// 						} # if
-		// 						else # Si no Existe crealo...
-		// 						{
-		// 							$queryA = $this->db->insert('cliente_atributo', array('idcliente'=>$id, 'idatributo'=>$valuea->id, 'dato'=>$value));
-		// 						} # else
-		// 					} #IF
-
-		// 				} #Foreach											
-		// 			} # Else
-		// 		}#Foreach		
-		// 		$this->db->where('id', $id);	
-		// 		$query = $this->db->update('clientes', $cliente); # Aquí Actualizamos los datos de la tabla cliente...
-		// 	}# else
-			
-		//  return $query;			
-		// } # Fin del update_customer....
-		
 	}//Fin de la clase Model_Customer		
 
