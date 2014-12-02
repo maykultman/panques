@@ -3,7 +3,7 @@
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-lg-10 col-md-9 col-xs-8">
-					<h3>Información Básica</h3>
+					<h3>Datos básicos</h3>
 					<hr>
 				</div>
 				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
@@ -11,7 +11,7 @@
 					<hr>
 				</div>
 			</div>
-			<form id="registroCotizacion">
+			<form id="formPrincipal">
 				
 			</form>
 		</div>
@@ -34,7 +34,7 @@
 							</div>
 							<div class="form-group">
 								<label for="email">Email</label>
-								<input type="text" class="form-control" id="email" name="email" onkeyup="validarEmail(this)" placeholder="Enter email">
+								<input type="text" class="form-control" id="email" name="email" onkeyup="validarEmail(this)" placeholder="Email">
 							</div>
 							<div class="form-group">
 								<label for="telefono">Teléfono (de 10 a 20 dígitos)</label>
@@ -49,7 +49,6 @@
 										</select>
 									</div>
 								</div>
-								
 							</div>
 						</p>
 					</div>

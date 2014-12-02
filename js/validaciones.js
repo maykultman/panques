@@ -21,11 +21,6 @@
 
     function letras(especiales, key, letras, tecla_especial)
     {
-        // key = e.keyCode || e.which;
-        // tecla = String.fromCharCode(key).toLowerCase();
-        // letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        // especiales = "8-37-39-46";
-        // tecla_especial = false
         for(var i in especiales)
         {
              if(key == especiales[i])
@@ -64,7 +59,7 @@
         };
     }
 
-    function validarTelefono(elem) {
+    function validarTelefono (elem) {
         if( (/^\d{10,20}$/.test($(elem).val().trim())) || $(elem).val().trim() == '' ) {
             $(elem).parents('.form-group').removeClass('has-error');
             return false;
@@ -73,28 +68,13 @@
             return true;
         };
     }
-    // validaciones jQuery
-    // $(document).on('ready',function () {
-    //     $('input[type=number]').on('click', function () {
-    //         alert(2);
-    //     });
-    // });
-    // function validarNumero (inputType, valor, e) {
-    //     var respuesta;
-    //     console.log(isNaN(valor));return;
-    //     switch(inputType) {
-    //         case 'number':
-    //             if( isNaN(valor) ) {
-    //                 alerta('Solo números porfavor',function () {});
-
-    //                 $(e.currentTarget).css('border-color','#a94442');
-
-    //                 respuesta = false;
-    //             } else{
-    //                 $(e.currentTarget).css('border-color','#CCC');
-    //                 respuesta = true;
-    //             }
-    //         break;
-    //     }
-    //     return respuesta;
-    // }
+    
+    function validarURL (elem) {
+        if ( ($(elem).val().trim().match(/^[a-z0-9\.-]+\.[a-z]{2,4}/gi)) || $(elem).val().trim() == '' ) {
+            $(elem).parents('.form-group').removeClass('has-error');
+            return false;
+        } else{
+            $(elem).parents('.form-group').addClass('has-error');
+            return true;
+        };
+    }

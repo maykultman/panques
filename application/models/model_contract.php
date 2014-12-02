@@ -16,7 +16,8 @@
 			// }
 
 			public function create($post) 
-			{
+			{	
+				$post['fechacreacion'] = date('Y-m-d');
 				$this->db->insert('contratos', $post);
 				$dataCont = $this->get($this->db->insert_id(), TRUE);
 				$data = array( 'folio' => $post['folio'] );

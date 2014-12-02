@@ -18,6 +18,7 @@ $route[ 'escritorio/prueba_ver_proyecto'    ] = 'escritorio/modulo';
 $route[ 'escritorio/modal_consulta_proyecto'] = 'escritorio/modulo';
 $route[ 'escritorio/contratos_nuevo'      	] = 'escritorio/modulo';
 $route[ 'escritorio/contratos_historial'  	] = 'escritorio/modulo';
+$route[ 'escritorio/contratos_papelera'  	] = 'escritorio/modulo';
 $route[ 'escritorio/formatoContrato'        ] = 'escritorio/modulo';
 $route[ 'escritorio/cotizaciones_nuevo'     ] = 'escritorio/modulo';
 $route[ 'escritorio/cotizaciones_consulta'  ] = 'escritorio/modulo';

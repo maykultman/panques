@@ -35,9 +35,9 @@ app.ModeloCotizacion = Backbone.Model.extend({
 			},
 			error 	:function (error) {
 				if (error.toJSON().visibilidad == '1') {
-					error('Error al Eliminar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+					error('Error al Eliminar la cotización. Intentelo más tarde');
 				} else{
-					error('Error al Restaurar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+					error('Error al Restaurar la cotización. Intentelo más tarde');
 				};
 			}
 		});
@@ -105,7 +105,6 @@ app.ModeloCotizacion = Backbone.Model.extend({
 			// una versión.
 			this.destroy_model(this);
 		};
-		
 	},
 	obtenerTodos	: function () {
 		// 

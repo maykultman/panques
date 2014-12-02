@@ -67,8 +67,7 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		'change .costoSeccion' : 'carlcularImporte',
 		'click .span_eliminar_seccion' : 'eliminarSeccion',
 	},
-	initialize 	: function () {
-	},
+	initialize 	: function () { },
 	render 		: function () {
 		this.$el.html(this.plantillas.plantillaSeleccionado(this.model.toJSON()));
 		var here = this;
@@ -207,7 +206,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		localStorage.clear();
 	},
 	render : function () {
-		this.$('#registroCotizacion').html( $('#plantilla-formulario').html() );
+		this.$('#formPrincipal').html( $('#plantilla-formulario').html() );
 		
 		// Invocamos el metodo para cargar y pintar los servicios
 		this.cargarServicios();
@@ -327,16 +326,16 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	marcarTodosCheck 	: function(e) {        
 			marcarCheck(e, '#tbody_servicios_seleccionados');
 	},
-	// buscarRepresentante 		: function (e) {
-	// 	var here = this,
-	// 		representante = app.coleccionRepresentantes.findWhere({ idcliente:$(e.currentTarget).val() });
-	// 	if (representante) {
-	// 		this.$('#nombreRepresentante').val(representante.get('nombre'));
-	// 		this.$('#idrepresentante').val(representante.get('id'));
-	// 	} else{
-	// 		alerta('El cliente seleccionado no tiene representante (<b>Requerido</b>)', function () {});
-	// 	};
-	// },
+	/*No se está usando*/buscarRepresentante 		: function (e) {
+		var here = this,
+			representante = app.coleccionRepresentantes.findWhere({ idcliente:$(e.currentTarget).val() });
+		if (representante) {
+			this.$('#nombreRepresentante').val(representante.get('nombre'));
+			this.$('#idrepresentante').val(representante.get('id'));
+		} else{
+			alerta('El cliente seleccionado no tiene representante (<b>Requerido</b>)', function () {});
+		};
+	},
 	vistaPrevia 		: function(e) {
 		localStorage.clear();
 
@@ -398,7 +397,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		json.datos.status = true;
 		json.datos.visibilidad = true;
-		
+		// $('nav:eq(1)').text(JSON.stringify(json));
+		// return false;
 		$('#block').toggleClass('activo');
 		 Backbone.emulateHTTP = true;
 		 Backbone.emulateJSON = true; 
@@ -406,7 +406,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		 app.coleccionCotizaciones.create(json.datos, {
 			wait:true,
 			success:function(exito){
-				console.log('se guardo', exito);
 				self.guardarSeccion(exito.get('id'), json.secciones);
 			},
 			error:function(error){
@@ -431,12 +430,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
 			return false; // Terminamos el flujo del código
 		};
-
+		// $('nav:eq(1)').text(JSON.stringify(json));
 		json = { secciones : [], datos : '' };
 
 		// Datos básicos
-			json.datos = pasarAJson(this.$('#registroCotizacion').serializeArray());
-			json.datos.fechacreacion = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1);
+			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 
 		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/

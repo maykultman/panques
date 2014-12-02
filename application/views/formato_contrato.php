@@ -52,6 +52,7 @@
 				padding: 2.5cm 3cm 2.5cm 3cm;
 				-webkit-box-shadow: 0px 20px 50px gray;
 				box-shadow: 0px 20px 50px gray;
+				margin: 20px auto;
 			}
 		}
 		@media print {
@@ -311,7 +312,7 @@
 					<td colspan="2" style="color:white;">espacio</td>
 				</tr>
 				<tr>
-					<td>C. William José Carrillo Cáceres</td>
+					<td>C. <%= datos.firmaempleado %></td>
 					<td>
 						C. <%= representante.nombre %>
 						<br>
@@ -363,7 +364,7 @@
 			tagName			: 'section',
 			plantilla	: _.template($('#plantilla_contrato').html()),
 			render		: function (json) {
-				console.log(json);
+				// this.$el.html(JSON.stringify(json));
 				this.$el.html(this.plantilla( json ));
 				return this;
 			}
@@ -396,7 +397,6 @@
 				} else{
 					contrato.secciones.nombre = app.coleccionServicios.get(contrato.secciones.idservicio).get('nombre');
 				};
-				console.log(contrato);
 
 				if ( _.isArray(contrato.datos.pago) ) {
 					pagomes = Number(contrato.datos.pago[0]);
@@ -408,7 +408,7 @@
 
 				contrato.datos.pagomes = (pagomes).toFixed(2);
 				contrato.datos.mensualidades = mensualidades;
-
+				// this.$el.html(JSON.stringify(contrato));return;
 				var vista = new V_HojaContrato();
 
 				this.$el.html(vista.render(contrato).el);

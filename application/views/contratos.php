@@ -10,7 +10,7 @@
 	 			<li>
 	            	<a href="contratos_nuevo">
 	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-newtab"></span>
+	                	 <span class="icon-uniF476"></span>
 	              	   </div>
 	                   Nuevo
 	                </a>
@@ -21,6 +21,14 @@
 							<span class="icon-draft"></span>
 					    </div>
 						Historial
+		            </a>
+				</li>
+				<li>
+					<a href="contratos_papelera">
+						<div class="icono_menu_modulo">
+							<span class="icon-trash"></span>
+					    </div>
+						Papelera
 		            </a>
 				</li>	
 		    </ul> 

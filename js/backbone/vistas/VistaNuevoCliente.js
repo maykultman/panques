@@ -3,6 +3,8 @@ var app = app || {};
 app.VistaNuevoCliente = Backbone.View.extend({
 	el      : '.contenedor_modulo',
 
+	plantillas : {},
+
 	events  : 
 		{
 					//Eventos de consulta
@@ -34,13 +36,10 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					/*Las funciones para validar se ejecutan cuando 
 					se hace blur a los elementos html con el id o class 
 					especificados*/
-					  'blur #email'         : 'validarCorreo',
-					'blur .telefonoCliente' : 'validarTelefono',
-					 'blur #paginaCliente'  : 'validarPaginaWeb',
-				'blur #contactoEmail'       : 'validarCorreo',
-				'blur .telefonoContacto'    : 'validarTelefono',
-				'blur #emailRepresentante'  : 'validarCorreo',
-			'blur .telefonoRepresentante'   : 'validarTelefono',
+					  // 'blur #email'         : 'validarCorreo',
+					 // 'blur #paginaCliente'  : 'validarPaginaWeb',
+				// 'blur #contactoEmail'       : 'validarCorreo',
+				// 'blur #emailRepresentante'  : 'validarCorreo',
 			// 'blur #otroContactoEmail'        : 'validarCorreo',
 
 			'keyup #rfc'    : 'validarRFC',
@@ -66,8 +65,8 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		this.$nombreRepresentante = $('#nombreRepresentante');
 		this.$correoRepresentante = $('#emailRepresentante');
 		this.$cargoRepresentante  = $('#cargoRepresentante');
-		this.$telefonoRepresentante = $('.telefonoRepresentante');
-		this.$tipoTelefonoRepresentante = $('.tipoTelefonoRepresentante');
+		// this.$telefonoRepresentante = $('.telefonoRepresentante');
+		// this.$tipoTelefonoRepresentante = $('.tipoTelefonoRepresentante');
 
 	// selectores de servicios de interes y actuales
 		this.$menuServicios   = $('.menuServicios');
@@ -135,6 +134,12 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	},
 // -----nuevoContacto----------------------------- 
 	nuevoContacto   :               function () {
+		if ( this.$('#formularioContacto .has-error').length >= 1 ) {
+			alerta('Un <b>teléfono</b> o <b>email</b> es incorrecto', function () {});
+			e.preventDefault();
+			return;
+		};
+
 		$('#btn_otroContacto').click();
 		$($('.tab-content').children()[$('.tab-content').children().length -2]).toggleClass('active');
 		$($('.pagination-ms').children()[$('.pagination-ms').children().length -2]).toggleClass('active');
@@ -151,11 +156,11 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		Backbone.emulateJSON = true;
 		/*Para registrar a un representante debe cumplirse quelo
 		  elementosdel html que apuntan los selectores no esten vacios*/
-		var nombreR = this.$nombreRepresentante.val().trim(),
-			correoR = this.$correoRepresentante.val().trim(),
-			cargoR = this.$cargoRepresentante.val().trim(),
-			telefonoR = this.$telefonoRepresentante.serializeArray(),
-			tipoTelfR = this.$tipoTelefonoRepresentante.serializeArray();
+		var nombreR = this.$('#nombreRepresentante').val().trim(),
+			correoR = this.$('#emailRepresentante').val().trim(),
+			cargoR = this.$('#cargoRepresentante').val().trim(),
+			telefonoR = this.$('.telefonoRepresentante').serializeArray(),
+			tipoTelfR = this.$('.tipoTelefonoRepresentante').serializeArray();
 		if (nombreR
 			&& correoR
 			&& cargoR
@@ -279,7 +284,23 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		return this.contadorContactos++;
 	},
 // -----nuevoCliente------------------------------ 
-	nuevoCliente    :               function (evento) {
+	nuevoCliente    :               function (e) {
+		if( validarEmail( this.$('#formularioCliente #email') ) ) {
+			alerta('El <b>email</b> es incorrecto', function () {});
+			e.preventDefault();
+			return;
+		}
+		if ( validarURL( this.$('#formularioCliente #paginaCliente') ) ) {
+			alerta('La <b>URL</b> es incorrecta', function () {});
+			e.preventDefault();
+			return;
+		};
+		if ( this.$('#formularioCliente .has-error').length >= 1 ) {
+			alerta('El <b>teléfono</b> es incorrecto', function () {});
+			e.preventDefault();
+			return;
+		};
+
 		/*Se ejecuta la funcion nuevosAtributosCliente que
 		  tras terminar devuelve un json el cual es
 		  almacenado en la variable objetoCliente*/
@@ -300,7 +321,6 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		} else{
 			this.objetoCliente.foto = 'img/sinfoto.png';
 		};
-		/*console.log(this.objetoCliente);*/ /* NO ELIMINAR ESTAS LINEAS */
 		/*Guardamos la referencia a this para poder usarla en las
 		  funciones dentro de esta función*/
 		var here = this;
@@ -434,7 +454,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 
-		evento.preventDefault();
+		e.preventDefault();
 	},
 // -----guardarServiciosI------------------------- 
 	guardarServiciosI   :           function (idcliente,idservicios) {
@@ -532,21 +552,21 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		obtenerFoto(e);
 	},
 // -----otroTelefono------------------------------ 
-	otroTelefono    :               function (elemento) {
+	otroTelefono    :               function (e) {
 		/*Esta función se ejecuta su evento asociado
 		pasandole como parametro un objeto del DOM.
-		Este elemento DOM sirve como referencia para
+		Este (e) DOM sirve como referencia para
 		obtener html y encajarla en nuevo html. Al final
 		el nuevo html se imprime el una lista de teléfonos.*/
-		this.$(elemento.currentTarget).parents('.telefonos').prepend('<div class="div_telefono">'+this.$(elemento.currentTarget).parent().parent().parent().parent().html()+'</div>');
+		this.$(e.currentTarget).parents('.telefonos').prepend( '<div class="form-group div_telefono" style="display:block;">'+$(e.currentTarget).parents('.div_telefono').html()+'</div>' );
 		/*Se añade en el atributo class un nuevo nombre donde 
 		apunta el selector*/
-		$('.copia .icon-uniF476').removeClass().addClass('icon-uniF477 eliminarCopia'); 
+		// $('.copia .icon-uniF476').removeClass().addClass('icon-uniF477 eliminarCopia'); 
 		/*Primero se elimina y luego se añade un nuevo nombere 
-		en el atributo class del elemento donde apunta el selector*/
-		$('.copia .otroTelefono').removeClass().addClass('btn btn-default eliminarCopia'); 
-		this.$telefonoRepresentante = $('.telefonoRepresentante');
-		this.$tipoTelefonoRepresentante = $('.tipoTelefonoRepresentante');
+		en el atributo class del (e) donde apunta el selector*/
+		// $('.copia .otroTelefono').removeClass().addClass('btn btn-default eliminarCopia'); 
+		// this.$telefonoRepresentante = $('.telefonoRepresentante');
+		// this.$tipoTelefonoRepresentante = $('.tipoTelefonoRepresentante');
 	},
 // -----obtenerServicios-------------------------- 
 	obtenerServicios    :           function (servicio) {
@@ -584,50 +604,6 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			objetoArchivo.tipo = $(tipo).val();
 			objetoArchivo.comentario = $(comentario).val().trim();
 			return jQuery.parseJSON(JSON.stringify(objetoArchivo));
-		};
-	},
-// -----validarCorreo----------------------------- 
-	validarCorreo   :               function (elemento) {
-		if( !(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
-			alerta('No es un correo valido',function () {});
-			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
-				$(elemento.currentTarget).focus();
-			});
-			$(elemento.currentTarget).css('border-color','#a94442');
-			return false;
-		} else{
-			$(elemento.currentTarget).css('border-color','#CCC');
-			return true;
-		};
-	},
-//------validarTelefono--------------------------- 
-	validarTelefono :               function (elemento) {
-		// if(isNaN($(elemento.currentTarget).val().trim()) && $(elemento.currentTarget).val().trim() != '' ) {
-		if(!(/^\d{10,20}$/.test($(elemento.currentTarget).val().trim())) && $(elemento.currentTarget).val().trim() != '' ) {
-			alerta('No ingrese letras u otros símbolos<br>Establezca un tipo de teléfono<br>Escriba 10 números como mínimo o 20 como máximo',function () {});
-			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
-				$(elemento.currentTarget).focus();
-			});
-			$(elemento.currentTarget).css('border-color','#a94442');
-			return false;
-		} else{
-			$(elemento.currentTarget).css('border-color','#CCC');
-			$(elemento.currentTarget).next().children('select').focus();
-			return true;
-		};
-	},
-//------validarPaginaWeb-------------------------- 
-	validarPaginaWeb    :           function (elemento) {
-		if (!($(elemento.currentTarget).val().trim().match(/^[a-z0-9\.-]+\.[a-z]{2,4}/gi)) && $(elemento.currentTarget).val().trim() != '' ) {
-			alerta('La dirección de la página web no es correcta',function () {});
-			$(document.getElementsByTagName('body')).find('#alertify-ok').on('click',function(){
-				$(elemento.currentTarget).focus();
-			});
-			$(elemento.currentTarget).css('border-color','#a94442');
-			return false;
-		} else{
-			$(elemento.currentTarget).css('border-color','#CCC');
-			return true;
 		};
 	},
 	// cerrarAlerta : function () {

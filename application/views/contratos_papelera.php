@@ -44,11 +44,6 @@
 				</div>
 			</div>
 		</section>
-		<section id="section_actualizar">
-			<button type="button" class="btn btn-default btn_toggle">Regresar</button>
-			<form id="formPrincipal">
-		   	</form>
-		</section><!-- /.row -->
 	</section><!-- /.contenedor_principal_modulos -->
 </div><!-- /.contenedor_modulo -->
 <!-- plantillas -->
@@ -62,19 +57,8 @@
 		<td>	<%= formatearFechaUsuario(new Date(fechacreacion)) %></td>
 		<td>	<%= formatearFechaUsuario(new Date(fechafinal)) %></td>
 		<td class="icon-operaciones">
-			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
-			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver contrato"></span>
-			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
-			<span class="icon-redo span_editar" data-toggle="tooltip" data-placement="top" title="Renovar"><input type="hidden" value="<%= id %>"></span>
-			<form>
-				<div class="dropdown">
-					<span class="icon-uniF73E dropdown-toggle versione" id="versiones"		data-toggle="dropdown" data-placement="top" title="Versiones"></span>
-					<ul id="ul-versiones" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="versiones">
-						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Vacío</a></li>
-						<!--<li role="presentation" class="divider"></li>-->
-					</ul>
-				</div>
-			</form>
+			<span class="icon-restore span_restaurar"		data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
+			<span class="icon-circledelete span_borrar"	data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
 		</td>
 	</script>
 	<!-- plantillas para la edicion de contrato -->
@@ -411,23 +395,23 @@
 				<span class="icon-circledelete span_eliminar_seccion"></span>
 			</td>
 		</script>
-		<script type="text/template" id="tr_pagos">
-				<td colspan="2"><%- n %></td>
-				<td colspan="2">
-					<%- fecha %>
-					<input type="hidden" name="fechapago" value="<%- fecha2 %>">
-				</td>
-				<td colspan="3">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">$</span>
-						<input type="number" id="<%- id %>" min="1" value="<%- pago %>" class="form-control <%- atrClase %>" <%- disabled %>>
-						<input type="hidden" class="hidden_renta" name="pago" value="<%- pago %>">
-						<span class="input-group-btn">
-							<button class="btn btn-default <%= active %> <%= candado %>" type="button" <%- disabled %>></button>
-						</span>
-					</div>
-				</td>
-		</script>
+	<script type="text/template" id="tr_pagos">
+			<td colspan="2"><%- n %></td>
+			<td colspan="2">
+				<%- fecha %>
+				<input type="hidden" name="fechapago" value="<%- fecha2 %>">
+			</td>
+			<td colspan="3">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">$</span>
+					<input type="number" id="<%- id %>" min="1" value="<%- pago %>" class="form-control <%- atrClase %>" <%- disabled %>>
+					<input type="hidden" class="hidden_renta" name="pago" value="<%- pago %>">
+					<span class="input-group-btn">
+						<button class="btn btn-default <%= active %> <%= candado %>" type="button" <%- disabled %>></button>
+					</span>
+				</div>
+			</td>
+	</script>
 	<!-- Plantillas de la consulta cotizaciones -->
 	<script type="text/template" id="td_seccionReal">
 		<td style="border:0px;">
@@ -487,23 +471,7 @@
 			</span>
 		</div><!-- /input-group -->
 	</script>
-
-<?=script_tag('js/backbone/app.js');?>
 <script type="text/javascript">
-	// font-family del folio
-	WebFontConfig = {
-		google: { families: [ 'Oswald::latin' ] }
-	};
-	(function() {
-		var wf = document.createElement('script');
-		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-		wf.type = 'text/javascript';
-		wf.async = 'true';
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(wf, s);
-	})();
-	/*----------------------------------------------------------------------*/
     var app = app || {};
     app.iva = 0.16;
     app.coleccionDeClientes     		= <?=json_encode($clientes) ?>;
@@ -548,5 +516,5 @@
 	script_tag('js/backbone/vistas/VistaConsultaContratos.js');
 ?>
 <script>
-	app.contratos = new app.ContratosVisibles();
+	app.contratos = new app.ContratosEliminadas();
 </script>

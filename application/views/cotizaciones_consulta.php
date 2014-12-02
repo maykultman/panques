@@ -1,6 +1,9 @@
-
+<?=
+	script_tag('js/autocompletes.js').
+	link_tag('css/estilos_modulo_contratos.css');
+?>
 	<section class="container-fluid contenedor_principal_modulos">
-		<section id="seccion_cotizaciones">
+		<section id="seccion_tabla">
 			<div id="div_fullHeight">    
 		        <div id="posicion_infotd">
 		    		<div id="clientes" class="wrapper"> 
@@ -8,7 +11,7 @@
 							<thead>
 								<tr>
 									<th class="sorter-false">
-										<input class="todos" type="checkbox" style="margin-left: 4px;">
+										<input type="checkbox" class="todos" style="margin-left: 4px;">
 									</th>
 									<th class="sorter-false">
 										<!-- Títulos -->
@@ -45,18 +48,7 @@
 		</section>
 		<section id="section_actualizar" class="row">
 			<div class="col-md-12">
-				<button type="button" class="btn btn-default btn_toggle">Regresar</button>
-				<div class="row">
-					<div class="col-lg-10 col-md-9 col-xs-8">
-						<h3>Información Básica</h3>
-						<hr>
-					</div>
-					<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
-						<h3 id="h4_folio"></h3>
-						<hr>
-					</div>
-				</div>
-				<form id="registroCotizacion">
+				<form id="formPrincipal">
 					
 				</form>
 			</div>
@@ -76,8 +68,8 @@
 			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
 			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver cotización"></span>
 			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
-			<span class="icon-edit2 span_editar"    	data-toggle="tooltip" data-placement="top" title="Editar"><input type="hidden" value="<%= id %>"></span>
-			<span class="icon-uniF5E2 span_acontrato"  				data-toggle="tooltip" data-placement="top" title="Pasar a contrato"></span>
+			<span class="icon-uniF5E2 span_editar"  	data-toggle="tooltip" data-placement="top" title="Pasar a contrato" id="pasaracontrato"><input type="hidden" value="<%= id %>"></span>
+			<span class="icon-edit2 span_editar"    	data-toggle="tooltip" data-placement="top" title="Editar" id="soloeditar"><input type="hidden" value="<%= id %>"></span>
 			<form>
 				<div class="dropdown">
 					<span class="icon-uniF73E dropdown-toggle versione" id="versiones"		data-toggle="dropdown" data-placement="top" title="Versiones"></span>
@@ -109,23 +101,34 @@
 		</td>
 	</script>
 	<script type="text/template" id="plantilla-formulario">
+		<button type="button" class="btn btn-default btn_toggle">Regresar</button>
 		<div class="row">
-			<div class="col-md-4">
-				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
-				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
-				<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
-				<input type="hidden" name="idcliente">
-				<!--<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			-->
-				<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
-				<input type="hidden" name="folio">
-				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
+				<div class="col-lg-10 col-md-9 col-xs-8">
+					<h3>Datos básicos</h3>
+					<hr>
+				</div>
+				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
+					<h3 id="h4_folio"></h3>
+					<hr>
+				</div>
 			</div>
-			<div class="col-md-8">
-				<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
-			</div>
-			<!--<div class="col-md-4">
-				<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
-			</div>-->
+		<div class="row">
+		<div class="col-md-4">
+			<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
+			<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
+			<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
+			<input type="hidden" name="idcliente">
+			<!--<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">			-->
+			<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
+			<input type="hidden" name="folio">
+			<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
+		</div>
+		<div class="col-md-8">
+			<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
+		</div>
+		<!--<div class="col-md-4">
+			<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
+		</div>-->
 		</div>
 	    <div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
@@ -238,6 +241,275 @@
 		<button type="button" class="btn btn-default btn_toggle"> Cancelar </button>
 		<button id="vista-previa"  type="button" class="btn btn-default"> Vista previa </button>		
 	</script>
+	<!-- plantillas contrato -->
+		<script type="text/template" id="plantilla-formulario-contrato">
+			<button type="button" class="btn btn-default btn_toggle">Regresar</button>
+			<div class="row">
+				<div class="col-lg-10 col-md-9 col-xs-8">
+					<h3>Datos básicos</h3>
+					<hr>
+				</div>
+				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
+					<h3 id="h4_folio"></h3>
+    				<input type="hidden" name="folio">
+					<hr>
+				</div>
+				<div class="col-md-12">
+					<span class="label label-info">Todos los campos son requeridos</span>
+				</div>
+			</div><!-- /.row -->
+			<div class="row">
+				<div class="col-md-4">
+					<input type="text" id="prestacion" class="form-control" name="prestaciones" placeholder="Prestaciones">			
+				</div>
+				<div class="col-md-4">
+					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará">
+						<option value="enrique">Enrique</option>
+						<option value="willian">William</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha de firmas">
+					<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+				</div>
+			</div><!-- /.row -->
+			<div class="row">
+				<div class="col-md-4">
+					<select id="busqueda" placeholder="Buscar cliente" disabled></select>
+					<input type="hidden" name="idcliente">
+				</div>
+				<div class="col-md-4">
+					<input type="text" id="nombreRepresentante" class="form-control" disabled placeholder="Representante">
+					<input type="hidden" id="idrepresentante" name="idrepresentante">
+				</div>
+				<div class="col-md-4">
+					<div class="btn-group input-group" data-toggle="buttons">
+						<span class="input-group-addon">Tipo de plan </span>
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
+						</label>
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
+						</label>
+					</div>
+				</div>
+				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->
+			</div><!-- /.row -->
+		    <div class="desborde"></div>
+			<h3>Inversión & Tiempo</h3>
+			<hr>		
+			<div class="row">
+				<div class="col-md-4">
+					<div class="div_table_overflow">
+						<table id="table_servicios" class="table table-hover"><!-- table_proyecto -->
+							<thead class="thead_overflow">
+								<tr>
+									<th class="sorter-false">
+										<input class="form-control input-sm search-services" type="search" data-column="all" placeholder="Servicios">
+										<div id="alert_anadirNuevioServicio" class="alert alert-info" role="alert">Enter para añadir...</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody id="tbody_servicios">
+								<!-- PLANTILLAS DE SERVICIOS -->
+							</tbody>
+					  	</table>
+					</div>
+					<hr>
+					<select id="enunciado" name="enunciado" multiple placeholder="Seleccione o escriba los enunciados del contrato"></select>
+				</div><!--/.col-md-4-->
+				<div class="col-md-8" id="">
+					<table class="table"> <!-- id="mostrarTabla" -->
+						<thead style="background : #F9F9F9;"><!--comutadores-->
+							<tr>
+							<th colspan="6" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label> <label style="float:right; margin-bottom: 0px;">Importe</label></th>
+							<th class="iconos-operaciones">
+								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
+								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
+								<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+							</th>
+						</tr>
+						</thead>
+						<tbody id="tbody_servicios_seleccionados">
+							<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
+						</tbody>
+						<tbody style="background : #F9F9F9;"><!--comutadores-->
+							<tr>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td style="text-align: right;">Total horas</td>
+								<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td class="iconos-operaciones">
+									<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
+									<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
+									<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+								</td>
+							</tr>
+						</tbody>
+						<tbody> <!-- Separacion -->
+							<tr>
+								<td colspan="7"></td>
+							</tr>
+						</tbody>
+						<thead id="thead_evento" class="thead_oculto" style="background-color: #f9f9f9!important;">
+					    	<tr>
+					    		<td colspan="7"><i>Datos para el contrato <b>por evento</b></i></td>
+					    	</tr>
+					    	<tr>
+								<td colspan="7">
+									<div class="row">
+										<div class="col-md-3">
+											<input id="fechaInicioEvento" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos">
+											<!--<input type="hidden" class="fehcaInicioEvento" name="fechainicio">-->
+										</div>
+										<div class="col-md-3">
+											<input type="number" id="plazo"  class="form-control input-sm" name="plazo" min="1" max="" placeholder="Plazo en días">	
+										</div>
+										<div class="col-md-3">
+											<input type="number" class="form-control input-sm n_pagos" name="nplazos" min="1" max="" placeholder="Núm. de plazos">	
+										</div>
+										<div class="col-md-3">
+											<input id="vencimientoPlanEvento" class="form-control input-sm datepicker" disabled type="text" placeholder="Vencimiento">
+											<input id="fechafinalEvento" type="hidden">
+										</div>							
+									</div>
+								</td>
+					        </tr>
+					        <tr>
+					        	<td colspan="2">No. de Pago</td>
+					        	<td colspan="2">Fecha de pago</td>
+					        	<td colspan="2">Pago por plazo</td>
+					        	<td style="text-align:right;">
+					        		<button type="button" id="btn_recargarPagos" class="btn btn-default btn-xs"><span class="icon-refresh"></span></button>
+					        	</td>
+					        </tr>
+						</thead>
+						<thead id="thead_iguala" class="thead_oculto" style="background-color: #f9f9f9!important;">
+					    	<tr>
+					    		<td colspan="7"><i>Datos para el contrato <b>iguala mensual</b></i></td>
+					    	</tr>
+					    	<tr>
+								<td colspan="7">
+									<div class="row">
+										<div class="col-md-4">
+											<input id="fechaInicioIguala" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos">
+											<!--<input type="hidden" class="fehcaInicioIguala" name="fechainicio">-->
+										</div>
+										<div class="col-md-4">
+											<select class="form-control input-sm n_pagos" name="nplazos" placeholder="Mensualidades...">
+											  <option value="1">1 Mes</option>
+											  <option value="3">3 Meses</option>
+											  <option value="6">6 Meses</option>
+											  <option value="12">12 Meses</option>
+											  <option value="18">18 meses</option>
+											  <option value="24">24 meses</option>
+											  <option value="48">48 meses</option>
+											  <option style="display:none;" selected>Mensualidades...</option>
+											</select>	
+										</div>
+										<div class="col-md-4">
+											<input id="vencimientoPlanIguala" class="form-control input-sm datepicker" disabled type="text" placeholder="Vencimiento">
+											<input id="fechafinalIguala" type="hidden">
+										</div>									
+									</div>
+								</td>	       									          			         
+					        </tr>
+					        <tr>
+								<td colspan="1">No. de Pago</td>
+								<td colspan="3">Fecha de pago</td>
+								<td colspan="3">Renta Mensual</td>
+					        </tr>
+						</thead>
+						<tbody id="tbody_pagos_evento" class="tbody_oculto"></tbody>
+						<tbody id="tbody_pagos_iguala" class="tbody_oculto"></tbody>
+						<tbody> <!-- Separacion -->
+							<tr>
+								<td colspan="7">
+									<!-- -->
+								</td>
+							</tr>
+						</tbody>		
+						<tfoot style="background : #F9F9F9;"><!--Precio/Hora - Subtotal-->
+							<tr>
+								<td></td>
+								<td></td>
+								<td style="text-align: right;">Precio/Hora</td>
+								<td>
+									<input type="number" class="form-control input-sm" id="precio_hora" name="preciohora" value="300" min="1">
+								</td>
+								<td> Subtotal </td>
+								<td>
+									<label id="label_subtotal">$0</label>
+									<input type="text" class="form-control input-sm input-tfoot" id="subtotal" style="display:none;" value="0">
+								</td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td> Descuento </td>
+								<td style="position: relative;">
+									<input type="number" name="descuento" class="form-control input-sm input-tfoot" value="0" min="0" max="100">
+									<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td> I.V.A. </td>
+								<td style="position: relative;">
+									<input type="number" class="form-control input-sm input-tfoot" value="16" disabled>
+									<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><!--Descomentar para desarrollo. suma: <label id="suma">--></label></td>
+								<td><!--Descomentar para desarrollo. totalReal: <label id="total">--></label></td>
+								<td><!--Descomentar para desarrollo. diferencia: <label id="diferencia">--></label></td>
+								<td> Total </td>
+								<td>
+									<label id="label_total">$0</label>
+								</td>
+								<td>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>		
+			<br><br> 
+			<button id="guardar"   type="button" class="btn btn-primary"> Guardar  </button>		    
+			<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>
+			<button id="vista-previa"  type="button" class="btn btn-default"> Vista previa </button>
+		</script>
+		<script type="text/template" id="tr_pagos">
+				<td colspan="2"><%- n %></td>
+				<td colspan="2">
+					<%- fecha %>
+					<input type="hidden" name="fechapago" value="<%- fecha2 %>">
+				</td>
+				<td colspan="3">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">$</span>
+						<input type="number" id="<%- id %>" min="1" value="<%- pago %>" class="form-control <%- atrClase %>" <%- disabled %>>
+						<input type="hidden" class="hidden_renta" name="pago" value="<%- pago %>">
+						<span class="input-group-btn">
+							<button class="btn btn-default <%= active %> <%= candado %>" type="button" <%- disabled %>></button>
+						</span>
+					</div>
+				</td>
+		</script>
 	<script type="text/template" id="tds_servicio_seleccionado">
 		<td class="td_servicio" colspan="7" style="padding:0px;">
 				<table id="table_servicio_<%= id %>" class="table" style="margin-bottom:0px;">
@@ -364,7 +636,8 @@
 <!-- Librerias -->
 <?=
 script_tag('js/backbone/app.js').
-script_tag('js/backbone.localStorage.js');?>
+script_tag('js/backbone.localStorage.js').
+script_tag('js/numero-a-letras.js');?>
 
 <script type="text/javascript">
 	// font-family del folio
@@ -398,6 +671,7 @@ script_tag('js/backbone.localStorage.js');?>
 
 	script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
+	script_tag('js/backbone/colecciones/ColeccionContratos.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
 	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
@@ -405,10 +679,18 @@ script_tag('js/backbone.localStorage.js');?>
 
 	script_tag('js/backbone/vistas/VistaServicio.js').
 	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js').
-	/*script_tag('js/backbone/vistas/VistaServicioCotizacion.js').*/
-	script_tag('js/backbone/vistas/VistaConsultaCotizaciones.js');
+	script_tag('js/backbone/vistas/VistaNuevoContrato.js').
+	script_tag('js/backbone/vistas/CotizacionAContrato.js').
+	script_tag('js/backbone/vistas/VistaConsultaCotizaciones.js').
+	script_tag('js/backbone/vistas/VistaConsultaContratos.js');
 ?>
 <script>
 	app.coleccionCotizaciones = new ColeccionCotizaciones(app.coleccionDeCotizaciones.cotizaciones);
+
+	app.coleccionContratos = new ColeccionContratos();
+	app.coleccionServiciosContrato = new ColeccionServiciosContrato();
+	app.coleccionPagos = new ColeccionPagos();
+	app.coleccionContratos_L = new ColeccionContratos_L();
+	
 	app.cotizaciones = new app.CotizacionesVisibles();
 </script>

@@ -113,7 +113,7 @@ class Escritorio extends REST {
 			{
 				$this->proyectos();				
 			}
-			if($this->ruta()==='contratos_nuevo'||$this->ruta()==='contratos_historial')
+			if($this->ruta()==='contratos_nuevo'||$this->ruta()==='contratos_historial'||$this->ruta()==='contratos_papelera')
 			{
 				$this->contratos();				
 			}
@@ -298,7 +298,7 @@ class Escritorio extends REST {
 			// $this->load->view('formularioContrato');
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'contratos_historial')
+		if($this->ruta() == 'contratos_historial' || $this->ruta() == 'contratos_papelera')
 		{
 			$this->load->model('Model_ServiceContract');
 			$this->load->model('Model_contract');

@@ -6,7 +6,7 @@
 					<li>
 						<a href="cotizaciones_nuevo">
 							<div class="icono_menu_modulo">
-								<span class="icon-calculator"></span>
+								<span class="icon-uniF476"></span>
 							</div>
 							Nuevo
 						</a>

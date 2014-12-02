@@ -1,6 +1,6 @@
 	<section class="container-fluid contenedor_principal_modulos">
 		<!-- <section class="secciones1"> -->
-			<form id="registroContrato">
+			<form id="formPrincipal">
 		   	</form>
 		<!-- </section>  -->
 		<!-- <section class="secciones2" style="display:none">
@@ -36,13 +36,23 @@
 				<div class="col-md-12">
 					<span class="label label-info">Todos los campos son requeridos</span>
 				</div>
-				<div class="col-md-8">
+			</div><!-- /.row -->
+			<div class="row">
+				<div class="col-md-4">
 					<input type="text" id="prestacion" class="form-control" name="prestaciones" placeholder="Prestaciones">			
 				</div>
 				<div class="col-md-4">
-					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha en que se firmará el contrato">
+					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará">
+						<option value="enrique">Enrique</option>
+						<option value="willian">William</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha de firmas">
 					<input type="hidden" id="hidden_fechafirma" name="fechafirma">
 				</div>
+			</div><!-- /.row -->
+			<div class="row">
 				<div class="col-md-4">
 					<select id="busqueda" name="idcliente" placeholder="Buscar cliente"></select>
 				</div>
@@ -84,19 +94,8 @@
 					  	</table>
 					</div>
 					<hr>
-					<div class="panel panel-default">
-						<div class="panel-heading">Enunciados de los servicios</div>
-						<div class="panel-body" id="panel_enunciados">
-							<div class="input-group input-group-sm campo-enunciado">
-								<textarea class="form-control" name="enunciado" placeholder="¿Que está comprando el cliente?"></textarea>
-								<span class="input-group-btn">
-									<button class="btn btn-default btn_quitarEnunciado" type="button">&ndash;</button>
-									<button class="btn btn-default btn_anadirEnunciado" type="button">+</button>
-								</span>
-							</div><!-- /input-group -->
-						</div>
-					</div>
-				</div>
+					<select id="enunciado" name="enunciado" multiple placeholder="Seleccione o escriba los enunciados del contrato"></select>
+				</div><!--/.col-md-4-->
 				<div class="col-md-8" id="">
 					<table class="table"> <!-- id="mostrarTabla" -->
 						<thead style="background : #F9F9F9;"><!--comutadores-->
@@ -140,11 +139,11 @@
 								<td colspan="7">
 									<div class="row">
 										<div class="col-md-3">
-											<input id="fechaInicioEvento" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos" value="5 Noviembre, 2014">
+											<input id="fechaInicioEvento" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos">
 											<!--<input type="hidden" class="fehcaInicioEvento" name="fechainicio">-->
 										</div>
 										<div class="col-md-3">
-											<input type="number" id="plazo"  class="form-control input-sm" name="plazo" min="1" max="" placeholder="Plazo en días" value="5">	
+											<input type="number" id="plazo"  class="form-control input-sm" name="plazo" min="1" max="" placeholder="Plazo en días">	
 										</div>
 										<div class="col-md-3">
 											<input type="number" class="form-control input-sm n_pagos" name="nplazos" min="1" max="" placeholder="Núm. de plazos">	
@@ -381,7 +380,7 @@
 		total: 					<%- total %>											<br>
 		pago mensual:			<%- (total/nplazos).toFixed(2) %>						<br>-->
 	</script>
-	<script type="text/template" id="plantilla-input-group-inunciado">
+	<script type="text/template" id="plantilla-input-group-enunciado">
 		<div class="input-group input-group-sm campo-enunciado">
 			<textarea class="form-control" name="enunciado" placeholder="¿Que está comprando el cliente?"></textarea>
 			<span class="input-group-btn">

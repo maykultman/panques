@@ -11,6 +11,7 @@
          
         public function create($post)
         {   
+            $post['fechacreacion'] = date('Y-m-d');
             // var_dump($post); die();
 
             $this->db->insert('cotizaciones', $post);

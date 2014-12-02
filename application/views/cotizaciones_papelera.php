@@ -1,6 +1,6 @@
 
 	<section class="container-fluid contenedor_principal_modulos">
-		<section id="seccion_cotizaciones">
+		<section id="seccion_tabla">
 			<div id="div_fullHeight">    
 		        <div id="posicion_infotd">
 		    		<div id="clientes" class="wrapper"> 
@@ -58,7 +58,6 @@
 		<td class="icon-operaciones">
 			<span class="icon-restore span_restaurar"		data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
 			<span class="icon-circledelete span_borrar"	data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
-		
 		</td>
 	</script>
 	<script type="text/template" id="tds_servicio">

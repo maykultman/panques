@@ -1,5 +1,5 @@
 var app = app || {};
-var f = new Date();
+// var f = new Date();
 
 /*---------------------------------------------------------------*/
 app.ModeloPago	= Backbone.Model.extend({
@@ -11,9 +11,9 @@ var ColeccionPagos= Backbone.Collection.extend({
 });
 app.ModeloContrato	= Backbone.Model.extend({
 	urlRoot	: 'http://crmqualium.com/api_contratos',
-	defaults	: {
-		fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
-	},
+	// defaults	: {
+	// 	fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1)
+	// },
 	cambiarVisibilidad: function () {
 		// this.respuesta = 'no lo pasa';
 		this.save({
@@ -26,13 +26,91 @@ app.ModeloContrato	= Backbone.Model.extend({
 			},
 			error 	:function (error) {
 				if (error.toJSON().visibilidad == '1') {
-					error('Error al Eliminar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+					error('Error al Eliminar el contrato. Intentelo más tarde');
 				} else{
-					error('Error al Restaurar a <b>'+error.toJSON().nombreComercial+'</b>. Intentelo más tarde');
+					error('Error al Restaurar el contrato. Intentelo más tarde');
 				};
 			}
 		});
 	},
+	cambiarStatus	: function () {
+		this.save({
+			status: !parseInt(this.get('status'))
+		},{
+			wait:true, 
+			patch:true,
+			success	:function (exito) {
+				// ok('OK');
+			},
+			error 	:function (error) {
+				if (error.toJSON().status == '1') {
+					error('Error al Guardar la nueva versión del contrato. Intentelo más tarde');
+				} else{
+					error('Error al Restaurar la nueva versión del contrato. Intentelo más tarde');
+				};
+			}
+		});
+	},
+	eliminarPermanente: function () {
+		// Verificamos si la cotización es la versión original
+		// y si su eliminación fue como cotizacion activa.
+		if (this.get('version')=='1' && this.get('status') == '1') {
+			// this es una cotizacion original, entonces buscamos
+			// las versiones para eliminarlas para no dejar 
+			// residuos en la base de datos.
+			var versiones = app.coleccionContratos.where({
+				idcontrato:this.get('id'),
+				status:'0',
+			});
+			// armamos un arreglo con todos los modelos para
+			// iterar en ellos y eliminarlos.
+			versiones = versiones.concat(this);
+			for (var i = 0; i < versiones.length; i++) {
+				this.destroy_model(versiones[i]);
+			};
+		} else if (this.get('status') == '1') {
+			// this es una cotizacion original,
+			// obtenemos cotización original pero que no
+			// este activa
+			var original = app.coleccionContratos.findWhere({
+				id:this.get('idcontrato'),
+				status:'0',
+			});
+			// buscamo las versiones para eliminarlas para
+			// no dejar residuos en la base de datos.
+			var versiones = app.coleccionContratos.where({
+				idcontrato:this.get('idcontrato'),
+				status:'0',
+			});
+			// armamos un arreglo con todos los modelos para
+			// iterar en ellos y eliminarlos.
+			versiones = versiones.concat(this);
+			versiones = versiones.concat(original);
+			varsinoes = _.uniq(versiones);
+			for (var i = 0; i < versiones.length; i++) {
+				this.destroy_model(versiones[i]);
+			};
+		} else {
+			// Esto ocurre cuando la cotizacion tiene un estatus 0.
+			// no importa si se trata  de una cotizacion original o
+			// una versión.
+			this.destroy_model(this);
+		};
+	},
+	obtenerTodos	: function () {
+		// 
+	},
+	destroy_model 	: function (model) {
+		model.destroy({
+			wait : true,
+			success	: function (model) {
+				// console.log(model.get('titulo')+' fue borrado');
+			},
+			error	: function () {
+				alerta('Ha ocurrido un error, inténtelo más tarde', function () {});
+			}
+		})
+	}
 });
 var ColeccionContratos = Backbone.Collection.extend({
 	model			: app.ModeloContrato,
@@ -122,9 +200,9 @@ var ColeccionPagos_L = Backbone.Collection.extend({
 	}
 });
 app.ModeloContrato_L	= Backbone.Model.extend({
-	defaults	: {
-		fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
-	}
+	// defaults	: {
+	// 	fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
+	// }
 });
 var ColeccionContratos_L = Backbone.Collection.extend({
 	model			: app.ModeloContrato_L,

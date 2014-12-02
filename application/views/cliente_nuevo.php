@@ -1,13 +1,13 @@
     <?=link_tag('css/estilos_modulo_clientes_nuevo.less')?>
     <section style="position: relative !important;">
-        <?php echo '<button id="toggle">Toggle</button>'; ?>
+        <?php /*echo '<button id="toggle">Toggle</button>';*/ ?>
         <!-- REGISTRO DEL CLIENTE -->
         <div id="formularioCliente" class="visibleR">
             <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
             <!-- <h2>Registro para nuevo cliente</h2> -->
             <!-- <hr> -->
             <h4>Datos básicos</h4>
-            <hr style="margin-top: -1px;"><br>
+            <hr style="margin-top: -1px;">
             Tipo de cliente <!-- <small><span class="icon-asterisk2 obligatorio"></span></small> --> 
             <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-primary">
@@ -18,8 +18,7 @@
                 </label>
             </div>
             <span class="label label-info" style="width:19% !important;display:inline;">Requerido</span>
-            <div class="desborde"></div>
-            <br>  
+            <div class="desborde"></div> 
             <div class="row">
                 <div class="col-md-6">                
                     <!-- <div class="input_info"> -->
@@ -43,35 +42,33 @@
                 </div>          
                 <div class="col-md-6">
                     <!-- <div class="input_info"> -->
-                    <input type="email" id="email" class="form-control form_input" placeholder="Email">
-                    <input type="text" id="paginaCliente"  class="form-control form_input" placeholder="Página web">
+                    <div class="form-group">
+                        <input type="email" id="email" class="form-control form_input" onkeyup="validarEmail(this)" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="paginaCliente"  class="form-control form_input" onkeyup="validarURL(this)" placeholder="Página web">
+                    </div>
                     <textarea id="txtareaDireccion" class="form-control form_input" rows="3" placeholder="Dirección" style="height: 34px !important;"></textarea>
                     
                     <div class="telefonos">
-                        <div class="div_telefono">
-                            <div class="input-group">
-                                <input type="text" class="form-control telefonoCliente" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
-                                <span class="input-group-btn">
-                                    <div class="btn-group">
-                                        <select class="form-control input-lg tipoTelefonoCliente" name="tipo">
-                                            <option value="No definido" selected style="display:none;">Tipo</option>
-                                            <option value="Casa">Casa</option>
-                                            <option value="Fax">Fax</option>
-                                            <option value="Movil">Movil</option>
-                                            <option value="Oficina">Oficina</option>
-                                            <option value="Personal">Personal</option>
-                                            <option value="Trabajo">Trabajo</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
+                        <div class="form-group div_telefono" style="display:block;">
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-7">
+                                    <input type="text" class="form-control telefonoCliente" name="numero" onkeyup="validarTelefono(this)" placeholder="Teléfono, de 10 a 20 dígitos">
+                                </div>
+                                <div class="col-xs-4 col-sm-3">
+                                    <select class="form-control tipoTelefonoCliente" name="tipo">
+                                        <option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-2">
+                                    <div class="btn-group" role="group" aria-label="...">
+                                        <button type="button" class="btn btn-default eliminarCopia">&ndash;</button>
+                                        <button type="button" class="btn btn-default otroTelefono">+</button>
                                     </div>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default eliminarCopia"><span class="icon-uniF477"></span></button>
-                                        <button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
-                                    </div>
-                                </span>
+                                </div>
                             </div>
-                            <br>
-                        </div> <!-- /Contenedor del form de teléfono -->
+                        </div>
                     </div>                    
                      <!-- </div>  -->               
                 </div>
@@ -132,11 +129,31 @@
                     <!-- <div class="dato_contacto"> -->
                         <div><h3>Datos de Representante</h3></div>
                         <hr>
-                        <input type="text" id="nombreRepresentante"  class="form-control form_input " placeholder="Nombre completo del representante">
-                        <input type="text" id="emailRepresentante" class="form-control form_input " placeholder="Correo">
+                        <input type="text" id="nombreRepresentante"  class="form-control form_input" placeholder="Nombre completo del representante">
+                        <div class="form-group">
+                            <input type="text" id="emailRepresentante" class="form-control form_input" onkeyup="validarEmail(this)" placeholder="Correo">
+                        </div>
                         <input type="text" id="cargoRepresentante" class="form-control form_input " placeholder="Cargo">
                         <div class="telefonos">
-                            <div class="div_telefono">
+                            <div class="form-group div_telefono" style="display:block;">
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-7">
+                                        <input type="text" class="form-control telefonoRepresentante" name="numero" onkeyup="validarTelefono(this)" placeholder="Teléfono, de 10 a 20 dígitos">
+                                    </div>
+                                    <div class="col-xs-4 col-sm-3">
+                                        <select class="form-control tipoTelefonoRepresentante" name="tipo">
+                                            <option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-default eliminarCopia">&ndash;</button>
+                                            <button type="button" class="btn btn-default otroTelefono">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="div_telefono">
                                 <div class="input-group">
                                     <input type="text" class="form-control telefonoRepresentante" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
                                     <span class="input-group-btn">
@@ -159,7 +176,7 @@
                                     </span>
                                 </div>
                                 <br>
-                            </div> <!-- /Contenedor del form de teléfono -->
+                            </div> --> <!-- /Contenedor del form de teléfono -->
                         </div>
                    <!--  </div> -->
                 </div>
@@ -205,33 +222,29 @@
         <div class="tab-pane active" id="<%- i %>">
             <button id="eliminar" class="btn btn-danger btn-sm" style="position:absolute; top: 20px; right: 60px;"><%- i %> <span class="icon-trash"></span></button>
             <input type="text" id="contactoNombre" class="form-control form_input" placeholder="Nombre completo del contacto">
-            <input type="text" id="contactoEmail" class="form-control form_input" placeholder="Correo">
+            <div class="form-group">
+                <input type="text" id="contactoEmail" onkeyup="validarEmail(this)" class="form-control form_input" placeholder="Correo">
+            </div>
             <input type="text" id="contactoCargo" class="form-control form_input" placeholder="Cargo">
             <div class="telefonos">
-                <div class="div_telefono">
-                    <div class="input-group">
-                        <input type="text" class="form-control telefonoContacto" name="numero" placeholder="Teléfono" minlength="10" maxlength="20">
-                        <span class="input-group-btn">
-                            <div class="btn-group">
-                                <select class="form-control input-lg tipoTelefonoContacto" name="tipo">
-                                    <option value="No definido" selected style="display:none;">Tipo</option>
-                                    <option value="Casa">Casa</option>
-                                    <option value="Fax">Fax</option>
-                                    <option value="Movil">Movil</option>
-                                    <option value="Oficina">Oficina</option>
-                                    <option value="Personal">Personal</option>
-                                    <option value="Trabajo">Trabajo</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
+                <div class="form-group div_telefono" style="display:block;">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-7">
+                            <input type="text" class="form-control telefonoContacto" name="numero" onkeyup="validarTelefono(this)" placeholder="Teléfono, de 10 a 20 dígitos">
+                        </div>
+                        <div class="col-xs-4 col-sm-3">
+                            <select class="form-control tipoTelefonoContacto" name="tipo">
+                                <option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 col-sm-2">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default eliminarCopia">&ndash;</button>
+                                <button type="button" class="btn btn-default otroTelefono">+</button>
                             </div>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default eliminarCopia"><span class="icon-uniF477"></span></button>
-                                <button type="button" class="btn btn-default otroTelefono"><span class="icon-uniF476"></span></button>
-                            </div>
-                        </span>
+                        </div>
                     </div>
-                    <br>
-                </div> <!-- /Contenedor del form de teléfono -->
+                </div>
             </div>
         </div>
     </script>

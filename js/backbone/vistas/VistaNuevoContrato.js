@@ -42,7 +42,7 @@ app.VistaPago = Backbone.View.extend({
 	desbloquear		: function () {
 		this.render();
 	},
-	validarCampo 	: function (e) {	
+	validarCampo 	: function (e) {
 		var self = this;
 		var condiciones = function () {
 			if ( $('.input_renta').length == 1 
@@ -144,6 +144,13 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			'click 	   #guardar'	   	: 'guardar', //Guarda la cotización
 			'click .btn_quitarEnunciado': 'enunciado',
 			'click .btn_anadirEnunciado': 'enunciado',
+
+			'change #plazo'					: 'cambiar_n_pagos',
+			'mousewheel #plazo'				: 'cambiar_n_pagos',
+			'click #plazo'					: 'cambiar_n_pagos',
+			'keyup #plazo'					: 'cambiar_n_pagos',
+			'change #fechaInicioEvento' 	: 'cambiar_n_pagos',
+			'change #fechaInicioIguala' 	: 'cambiar_n_pagos'
 			// 'click .td_servicio tfoot button' : 'calcularTotal'
 
 
@@ -152,10 +159,17 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			// 'blur .input_renta'	: 'equilibrarPagos',
 	},
 	initialize 				: function () {
+		var self = this;
 		this.listenTo(app.coleccionContratos, 'reset', function () {
 			var folio = app.coleccionContratos.establecerFolio();
 			this.$('input[name="folio"]').val(folio);
 			this.$('#h4_folio').text('Folio: '+ folio).fadeIn('fast');
+
+			// los enunciados es lo que el cliente está comprando. solo
+			// se pueden recuperar en este lugar, debido a que en la 
+			// creación un contrato no se envia la colección
+			// sino hasta que se solicita.
+			this.cargarEnunciados();
 		});
 
 		this.render();
@@ -167,7 +181,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		localStorage.clear();
 	},
 	render 					: function () {
-		this.$('#registroContrato').html( $('#plantilla-formulario').html() );
+		this.$('#formPrincipal').html( $('#plantilla-formulario').html() );
 		
 		// Invocamos el metodo para cargar y pintar los servicios
 		this.cargarServicios();
@@ -183,6 +197,13 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			app.coleccionContratos.fetch({reset:true});
 		};
 		return this;
+	},
+	cambiar_n_pagos : function (e) {
+		var id = $(e.currentTarget).attr('id');
+		if (id == 'plazo' || id == 'fechaInicioEvento')
+			this.$('.n_pagos:eq(0)').trigger('change');
+		if (id == 'fechaInicioIguala') 
+			this.$('.n_pagos:eq(1)').trigger('change');
 	},
 	calcularTotal 			: function () {
 		/*Reescribimos esta función para agregar
@@ -208,10 +229,10 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		// Verificamos que tipo de plan está activo y
 		// disparamos un evento al campo pertinente.
 		if (this.$('#porEvento').is(':checked')) {
-			this.$('.n_pagos:eq()').trigger('change');
+			this.$('.n_pagos:eq(0)').trigger('change');
 		} 
 		else if(this.$('#iguala').is(':checked')){
-			this.$('.n_pagos:eq()').trigger('change');
+			this.$('.n_pagos:eq(1)').trigger('change');
 		};
 
 		this.calcularTotalHoras();
@@ -253,19 +274,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		app.coleccionContratos_L.create(json, {
 			wait: true,
 			success: function (exito) {
-				// for(i in json.secciones) {   
-				// 	app.coleccionServiciosContrato_L.create(json.secciones[i], { 
-				// 		wait:true,
-				// 		success:function(exito) {
-				// 			if (self.aumentarContador() == json.secciones.length) {
-				// 				self.contadorAlerta = 1;
-								window.open("formatoContrato");
-				// 			};
-				// 		},
-				// 		error:function(error) {
-				// 		}
-				// 	});
-				// };
+				window.open("formatoContrato");
 			},
 			error: function (error) {}
 		});
@@ -278,8 +287,8 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		// Primero removemos los campos de la tabla
 		// del plan desactivado para no traer sus
 		// datos.
-		this.$('.thead_oculto').remove();
-		this.$('.tbody_oculto').remove();
+		// this.$('.thead_oculto').remove();
+		// this.$('.tbody_oculto').remove();
 		
 		var jsonDatos,
 			jsonPagos,
@@ -353,7 +362,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			$('#block').toggleClass('activo');
 			alerta('¡Contrato guardado!', function () {
 				confirmar('<b>¿Deseas crear otro contrato?</b>', function () {
-					$('#registroContrato')[0].reset();
+					$('#formPrincipal')[0].reset();
 					$('.span_eliminar_servicio').click();
 					app.coleccionContratos.off().reset();
 					self.initialize();
@@ -374,39 +383,39 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 	},
 	obtenerDatos			: function () {
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('#prestacion, #busqueda, #idrepresentante, #hidden_fechafirma, input[name="plan"]:checked')
+			json  = pasarAJson(this.$('   #prestacion,'
+										+'#busqueda,'
+										+'#idrepresentante,'
+										+'#hidden_fechafirma,'
+										+'input[name="plan"]:checked,'
+										+'#select_firmaempleado')
 					.serializeArray()),
-			f = new Date(),
 			fechainicio,
 			fechafinal;
-		/*Cortafuego para forzar establecer los siguientes datos*/
-		if (   json.prestaciones == '' 
-			|| json.idcliente == '' 
-			|| json.idrepresentante == '' 
-			|| json.fechafirma == ''
-		) {
-			alerta('Complete los <b>datos básicos</b>', function () {});
-			return false; // Terminamos el flujo del código
-		} else if( !json.plan ){
-			alerta('Seleccione un tipo de <b>plan</b>', function () {});
-			return false; // Terminamos el flujo del código
-		};
-
+		// Cortafuego para forzar establecer los siguientes datos
+			if (   json.prestaciones == '' 
+				|| json.idcliente == '' 
+				|| json.idrepresentante == ''
+				|| json.firmaempleado == ''
+				|| json.fechafirma == ''
+			) {
+				alerta('Complete los <b>datos básicos</b>', function () {});
+				return false; // Terminamos el flujo del código
+			} else if( !json.plan ){
+				alerta('Seleccione un tipo de <b>plan</b>', function () {});
+				return false; // Terminamos el flujo del código
+			};
 		json = { secciones : [], datos : '' };
 		// Datos básicos
-			json.datos = pasarAJson(this.$('#registroContrato')
+			json.datos = pasarAJson(this.$('#formPrincipal')
 						.serializeArray());
 			if ( Array.isArray(json.datos.enunciado) )
 				json.datos.enunciado = json.datos.enunciado.join(',.,');
 		// Validar datos
-			// if ( json.datos.fechainicio == '' ){
-			// 	alerta('Establezca la fecha de inicio de pagos');
-			// 	return false;
-			// };
 			if ( json.datos.plan == 'evento' ){
 				fechainicio = this.$('#fechaInicioEvento').datepicker('getDate');
 				json.datos.fechainicio = formatearFechaDB(fechainicio);
-				json.datos.fechafinal = $('#fechafinalEvento').val();
+				json.datos.fechafinal = this.$('#fechafinalEvento').val();
 				if ( json.datos.plazo == '' ) {
 					alerta('Establezca el <b>plazo en días');
 					return false;
@@ -419,42 +428,31 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			if ( json.datos.plan == 'iguala' ) {
 				fechainicio = this.$('#fechaInicioIguala').datepicker('getDate');
 				json.datos.fechainicio = formatearFechaDB(fechainicio);
-				json.datos.fechafinal = $('#fechafinalIguala').val();
+				json.datos.fechafinal = this.$('#fechafinalIguala').val();
 				if ( json.datos.nplazos == '' ) {
 					alerta('Establezca las <b>Mensualidades</b>');
 					return false;
 				}
 			};
 
-			// if ( json.datos.plan == 'iguala' ){}
-
-
-			json.datos.fechacreacion = f.getFullYear() 
-									   + "-" + (f.getMonth() +1) 
-									   + "-" + (f.getDate() +1);
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
-
-
 		// Datos pagos
 			json.datos.mensualidadletras 
 			= 
 			(NumeroALetras(this.total/Number(json.datos.nplazos))).trim();
-		
-		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
-		if (!forms.length) {
-			alerta('Seleccione al menos un <b>servicio</b> para contratar'
-					, function () {});
-			return false; // Terminamos el flujo del código
-		};
-		
-		/*Servicios cotizados*/
+		// Cortafuego. Debe haber al menos 1 servicio para contratar
+			if (!forms.length) {
+				alerta('Seleccione al menos un <b>servicio</b> para contratar'
+						, function () {});
+				return false; // Terminamos el flujo del código
+			};		
+		// Servicios cotizados
 			for (var i = 0; i < forms.length; i++) {
 				json.secciones.push( pasarAJson($(forms[i])
 									 .serializeArray()) );
 			};
-		
-		// Dato basura
-		delete json.datos.todos;
+		// Datos basura
+			delete json.datos.todos;
 		
 		json.datos.version = 1;
 
@@ -479,12 +477,14 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				this.$('#fechaInicioIguala,.n_pagos:eq(1)').attr('disabled',false);
 				this.$('#tbody_pagos_evento .hidden_renta').attr('name', '');
 				this.$('#tbody_pagos_iguala .hidden_renta').attr('name', 'pago');
+				this.$('.n_pagos:eq(1)').trigger('change');
 			break;
 			case 'evento':
 				this.$('#fechaInicioEvento,#plazo,.n_pagos:eq(0)').attr('disabled',false);
 				this.$('#fechaInicioIguala,.n_pagos:eq(1)').attr('disabled',true);
 				this.$('#tbody_pagos_evento .hidden_renta').attr('name', 'pago');
 				this.$('#tbody_pagos_iguala .hidden_renta').attr('name', '');
+				this.$('.n_pagos:eq(0)').trigger('change');
 			break;
 		}
 
@@ -503,10 +503,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		/*Limpiamos el tbody de pagos cada vez que se entre a esta
 		  función, al igual que el array de pagos*/
 		var plazo = 1,
-			aumento = 0,
 			fecha = '',
-			fechaNormal = '',
-			fecha2 = '',
 			candado = 'icon-unlock',
 			disabled = '',
 			active = '',
@@ -514,45 +511,36 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 		if (this.$('#porEvento').is(':checked')) {
 			plazo = parseInt($('#plazo').val());
-			aumento = plazo;
+			
 			fecha = this.$('#fechaInicioEvento').datepicker( 'getDate' );
-			objDate = new Date( fecha.getTime() + ((plazo*nPagos)*24*60*60*1000));
-			fecha2 = formatearFechaUsuario(objDate);
-			if (fecha2 != 'NaN/NaN/NaN') {
-				// $('#vencimientoPlanEvento').val( fecha2 );
-				$('#vencimientoPlanEvento').datepicker( "setDate", objDate, 'd MM, yy' );
-			} else{
-				$('#vencimientoPlanEvento').val( '' );
+			try {
+				objDate = new Date( fecha.getTime() + ((plazo*nPagos)*24*60*60*1000));
+			} catch (error) {
+				return;
 			};
-			fecha2 = fecha2.split('/');
-			fecha2 = fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0];
-			$('#fechafinalEvento').val(fecha2);
+			
+			$('#vencimientoPlanEvento').datepicker( "setDate", objDate, 'd MM, yy' );
+			
+			$('#fechafinalEvento').val( formatearFechaDB(objDate) );
 
 			candado = 'icon-unlock icon-lock';
 		} else if (this.$('#iguala').is(':checked')){
 			plazo = 30;
-			aumento = plazo;
+			
 			fecha = this.$('#fechaInicioIguala').datepicker( 'getDate' );
-			objDate = new Date( fecha.getTime() + ((plazo*nPagos)*24*60*60*1000));
-			fecha2 = formatearFechaUsuario(objDate);
-			if (fecha2 != 'NaN/NaN/NaN') {
-				// $('#vencimientoPlanIguala').val( fecha2 );
-				$('#vencimientoPlanIguala').datepicker( "setDate", objDate, 'd MM, yy' );
-			} else{
-				$('#vencimientoPlanIguala').val( '' );
-			};
-			fecha2 = fecha2.split('/');
-			fecha2 = fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0];
-			$('#fechafinalIguala').val(fecha2);
+			try {
+				objDate = new Date( fecha.getTime() + ((plazo*nPagos)*24*60*60*1000));
+			}
+			catch (error) { return; };
+			
+			$('#vencimientoPlanIguala').datepicker( "setDate", objDate, 'd MM, yy' );
+			
+			$('#fechafinalIguala').val( formatearFechaDB(objDate) );
 
 			candado = 'icon-lock';
 			disabled = 'disabled';
 			active = 'active';
 		} else {alerta('Seleccione un tipo de plan para el contrato', function () {});return;};
-
-		objDate = new Date( fecha.getTime() + (1*24*60*60*1000));
-		fechaNormal = formatearFechaUsuario(objDate);
-		fecha2 = fechaNormal.split('/');
 
 		var Modelo;
 		this.vistaPago = [];
@@ -562,8 +550,8 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				defaults	: { 
 					id 		: i,
 					n 		: i+1,
-					fecha	: fechaNormal,
-					fecha2	: fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0],
+					fecha	: formatearFechaUsuario( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
+					fecha2	: formatearFechaDB( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
 					pago 	: (this.total/nPagos).toFixed(2),
 
 					candado	: candado,
@@ -577,10 +565,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 			$('#tbody_pagos_'+this.tipoPlan).append(this.vistaPago[i].render().el);
 
-			objDate = new Date(new Date(fecha).getTime() + (plazo*24*60*60*1000))
-			fechaNormal = formatearFechaUsuario(objDate);
-			fecha2 = fechaNormal.split('/');
-			plazo = plazo + aumento;
+			fecha = new Date(fecha.getTime() + (plazo*24*60*60*1000));
 		};
 		// Descomentar para mantenimiento
 			/************************/
@@ -676,14 +661,6 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 	},
-	confirmarContratoGuardado	: function () {
-		confirmar('El contrato se guardo con exito.<br>Si desea crear otro contrato haga clic en Aceptar'
-		,function(){
-			$('form')[0].reset();
-		},function(){
-			location.href = 'contratos_historial';
-		});
-	},
 	recargarPagos 			: function () {
 		this.$('#tbody_pagos_'+this.tipoPlan).html('');
 		$('.n_pagos').first().trigger('change');
@@ -693,7 +670,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		if ( $(e.currentTarget).attr('class')=='btn btn-default btn_anadirEnunciado' ) {
 			if ( longitud >= 1 ) {
 			this.$('#panel_enunciados')
-				.append( _.template($('#plantilla-input-group-inunciado')
+				.append( _.template($('#plantilla-input-group-enunciado')
 				.html()) );
 			};
 		} else if ( $(e.currentTarget).attr('class')=='btn btn-default btn_quitarEnunciado' ) {
@@ -734,6 +711,31 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				self.$('#alert_anadirNuevioServicio').hide();
 			};
 		});
+
+		this.$('#select_firmaempleado').selectize();
+	},
+	cargarEnunciados : function () {
+	    var $select = this.$('#enunciado').selectize({
+				valueField  : 'title',
+				labelField  : 'title',
+				searchField : 'title',
+				create      : true
+			});
+	    var control = $select[0].selectize;
+	    control.clearOptions();
+	    control.addOption(function () {
+	        var array = [],
+	        	enunciados = _.pluck(app.coleccionContratos.toJSON(),'enunciado');
+			enunciados = enunciados.join(',.,');
+			enunciados  = enunciados.split(',.,');
+	        for (var i = 0; i < enunciados.length; i++) {
+	           array.push({
+	                id      : enunciados[i],
+	                title   : enunciados[i]
+	            });
+	        };
+	        return array;
+	    }());
 	}
 	/********************************/
 	/*Descomentar para mantenimiento*/

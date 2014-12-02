@@ -36,19 +36,22 @@ function  limpiarJSON (objeto) {
 }
 
 /*Debe recibir un objeto Date*/
-function formatearFechaUsuario (fecha) {
-
+function formatearFechaUsuario (fechaBD) {
+    var value_of = fechaBD.valueOf();
+    value_of = value_of + (1*24*60*60*1000);
+    fechaFormateada = new Date(value_of);
+    fechaBD = fechaFormateada;
     var fechaFormateada = '';
-    if ((fecha.getDate()) < 10 )
-        fechaFormateada = '0'+(fecha.getDate());
+    if (fechaBD.getDate() < 10 )
+        fechaFormateada = '0'+ fechaBD.getDate();
     else
-        fechaFormateada = (fecha.getDate());
-    if ((fecha.getMonth() +1) < 10 )
-        fechaFormateada += '/0'+(fecha.getMonth() +1);
+        fechaFormateada = fechaBD.getDate();
+    if ((fechaBD.getMonth() +1) < 10 )
+        fechaFormateada += '/0'+ (fechaBD.getMonth() +1);
     else
-        fechaFormateada +=  '/'+(fecha.getMonth() +1);
+        fechaFormateada +=  '/'+ (fechaBD.getMonth() +1);
 
-    fechaFormateada +=  '/'+fecha.getFullYear();
+    fechaFormateada +=  '/'+fechaBD.getFullYear();
 
     return fechaFormateada;
 }
@@ -56,7 +59,7 @@ function formatearFechaUsuario (fecha) {
 function formatearFechaDB (objDate) {
       return objDate.getFullYear() 
        + "-" + (objDate.getMonth() +1) 
-       + "-" + (objDate.getDate());
+       + "-" + (objDate.getDate() +1);
 }
 
 function fechaAmigable (fecha) {
@@ -76,11 +79,6 @@ function fechaAmigable (fecha) {
     return fechaFormateada;
 }
 
-/*ALertas alertify.js. Código de tercero*/
-/*Recordar llamar a las librerias:
- <script type="text/javascript" src="lib/alertify.js'?>"></script>
- <link rel="stylesheet" type="text/css" href="themes/alertify.core.css'?>">
- <link rel="stylesheet" type="text/css" href="themes/alertify.default.css'?>">*/
 function alerta(mensaje, callback){
     //un alert
     alertify.alert(mensaje, function (e) {
@@ -238,15 +236,12 @@ function excluirDias (fechainicio, fechafinal) {
     var valorFechaEntrega = new Date(fechafinal).valueOf();
     var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
     var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-    // console.log('duracion: '+ duracion);
     for(var i = 0; i<duracion; i++){
         var dia = (new Date(new Date(fechainicio).getTime() + i*24*60*60*1000)).getDay();
         if(days[dia] == 'Sunday' || days[dia] == 'Saturday'){
-            // console.log(days[dia]);
             contador++;
         };
     };
-    // console.log('Sin trabajar: '+contador);
     return contador;
 };
 
@@ -353,6 +348,8 @@ function loadSelectize_Client (selector,args,options) {
     }(/*Los parentesis para ejecutar la función*/));
 }
 
+
+
 function loadDatepicker (selector) {
     $(selector).datepicker({ 
         dateFormat:'d MM, yy',  
@@ -381,3 +378,8 @@ function loadDatepicker (selector) {
         ]
     });
 }
+// Quita los espacion en blanco de las extremos de una cadena
+// function trim(cadena){
+//        cadena=cadena.replace(/^\s+/,'').replace(/\s+$/,'');
+//        return(cadena);
+// }

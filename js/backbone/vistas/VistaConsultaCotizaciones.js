@@ -6,7 +6,6 @@ app.VistaCotizacion = Backbone.View.extend({
 		'click .span_papelera' 			: 'cambiarVisibilidad',
 		'click .span_restaurar' 		: 'cambiarVisibilidad',
 		'click .span_borrar' 			: 'eliminarPermanente',
-		'click .span_acontrato' 			: 'pasarAContrato',
 		'click .span_vistaPrevia'		: 'vistaPrevia',
 		'click .span_papeleraVersion'	: 'cambiarVisibilidadVersion',
 		'click .span_vistaPreviaVersion': 'vistaPreviaVersion',
@@ -84,9 +83,18 @@ app.VistaCotizacion = Backbone.View.extend({
 		}));
 	},
 	cambiarStatus		: function (e) {
+		// cambiamos el status del documento visible
+		// par esconderlo
 		this.model.cambiarStatus();
+		// cambiamos el status de la version que queremos
+		// ver pero dejamos escuchar los cambios en el, ya 
+		// que el modelo anterior que hemos actualizado
+		// hace un fetch a la coleccion. si no apagamos
+		// el listener del modelo siguiente se realizará
+		// nuevamente el fetch
 		app.coleccionCotizaciones
 			.get($(e.currentTarget).val())
+			.off()
 			.cambiarStatus();
 	},
 	cambiarVisibilidad : function () {
@@ -120,9 +128,6 @@ app.VistaCotizacion = Backbone.View.extend({
 				self.model.eliminarPermanente();
 			},
 			function () {});
-	},
-	pasarAContrato : function() {
-		alert('contrato');
 	},
 	vistaPrevia : function() {
 		localStorage.clear();
@@ -175,7 +180,7 @@ var VistaSeccion = app.VistaSeccion.extend({
 var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 	el : '#section_actualizar',
 	
-	establecerCotizacion : function() {
+	establecerDatos : function() {
 		var idcotizacion 	= this.model.get('id'),
 			secciones 		= app.coleccionServiciosCotizados
 								 .where({
@@ -239,14 +244,8 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 			.trigger('change');
 	},
 	obtenerDatos	: function () {
-		// Ocultamos la versión actual
-		// debe hacerce antes para no mostrar las
-		// dos cotizaciones, actual y nueva versión.
-		this.model.cambiarStatus();
-
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('#titulo').serializeArray()),
-			f = new Date();
+			json  = pasarAJson(this.$('#titulo').serializeArray());
 		/*Cortafuego para forzar establecer los siguientes datos*/
 		if (json.titulo == '' || json.idcliente == '' || json.idrepresentante == '') {
 			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
@@ -255,8 +254,7 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 
 		json = { secciones : [], datos : '' };
 		// Datos básicos
-			json.datos = pasarAJson(this.$('#registroCotizacion').serializeArray());
-			json.datos.fechacreacion = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1);
+			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 
 		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
@@ -279,35 +277,75 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		} else {
 			json.datos.idcotizacion = this.model.get('idcotizacion');
 		};
+
+		// dependiendo de la version de la cotizacion
+		// será como se obtendrá la version siguiente.
+		if (this.model.get('version') == '1') {
+			json.datos.version = parseInt(
+				// primero (_.where): como se trata de la versión original
+				// obtenemos todas las versiones que se crearon a
+				// partir de esta.
+				// segundo (_.pluck): aislamos la propiedad "version" de 
+				// cada modelo recuperado, en un array.
+				// tercero: (_.max): obtenemos numero mayor de en el array 
+				// y le sumamos 1; temenos como resultado la nueva versión.
+				_.max( _.pluck( _.where(app.coleccionCotizaciones.toJSON(),{
+					idcotizacion:this.model.get('id')
+				}),'version' ), function (version) {
+					return version;
+				}) ) +1;
+			// si todo lo anterior no retorno valor, entonces no hay versiones
+			// a partir de la actual. asigmamos la versión manualmente
+			if ( !json.datos.version ) {
+				json.datos.version = parseInt( this.model.get('version') ) +1;
+			};
+			// establecemos el ancestro de la versión a crear
+			json.datos.idcotizacion = this.model.get('id');
+		} else{
+			// sino, se trata de la edicion de una de las versiones. solamente,
+			// cambiamos un parametro el la busqueda de las versiones. El
+			// documento actual se busca a si mismo por la posibilidad de que
+			// existan otras versiones. establecemos la version siguiente.
+			json.datos.version = parseInt(
+				_.max( _.pluck( _.where(app.coleccionCotizaciones.toJSON(),{
+					idcotizacion:this.model.get('idcotizacion')
+				}),'version' ), function (version) {
+					return version;
+				}) ) +1;
+			json.datos.idcotizacion = this.model.get('idcotizacion');
+		};
 		
 		return json;
 	},
 	guardado		: function () {
+		// Ocultamos la versión actual
+		// debe hacerce antes para no mostrar las
+		// dos cotizaciones, actual y nueva versión.
+		this.model.cambiarStatus();
 		$('#block').toggleClass('activo');
 		alerta('Nueva versión guardada', function () {
-			// $('#registroCotizacion')[0].reset();
-			// this.$('.span_eliminar_servicio').click();
-			// this.render();
-			// this.resetearContador();
 			location.href = 'cotizaciones_consulta';
 		});
 	},
 	noGuardado	: function () {
+		// Ocultamos la versión actual
+		// debe hacerce antes para no mostrar las
+		// dos cotizaciones, actual y nueva versión.
+		this.model.cambiarStatus();
 		$('#block').toggleClass('activo');
 		alerta('La nueva versión ha sido guardada, pero ocurrieron algunos errores<br>Recomendamos que revice la cotización', function () {
 			location.href = 'cotizaciones_consulta';
-			// this.resetearContador();
 		});
 	},
-	regresarLista : function  () {
+	establecerRegreso : function  () {
 		var self = this;
 		$('.btn_toggle').on('click', function () {
 			// Conmutamos la visibilidad de las
 			// secciones
-			$('#seccion_cotizaciones').fadeToggle();
+			$('#seccion_tabla').fadeToggle();
 			$('#section_actualizar').fadeToggle();
 			// Borramos el contenido del formulario
-			$('#registroCotizacion').html('');
+			$('#formPrincipal').html('');
 			// Apagamos el evento clic del botón regresar
 			$('.btn_toggle').off('click');
 			// Apagamos todos los eventos de la vista
@@ -318,7 +356,7 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 });
 
 app.VistaConsultaCotizaciones = Backbone.View.extend({
-	el : '#seccion_cotizaciones',
+	el : '#seccion_tabla',
 
 	events : {
 	 	'click  #btn_eliminarVarios'  	 : 'eliminarVarios',
@@ -479,20 +517,30 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 			};
 		};
 	},
-	editarCotizacion : function(e) {
-		var vista = new EdicionCotizacion({
-			model:app.coleccionCotizaciones
-					 .get( $(e.currentTarget)
-						 .children()
-					 .val() )
-		});
-		vista.establecerCotizacion();
-		vista.regresarLista();
+	editar : function(e) {
+		var vista,
+			hacer = $(e.currentTarget).attr('id');
+		if (hacer == 'soloeditar') {
+			app.vistaEdicion = new EdicionCotizacion({
+				model:app.coleccionCotizaciones
+				 .get( $(e.currentTarget)
+					 .children()
+				 .val() )
+			})
+		} else if (hacer == 'pasaracontrato') {
+			app.vistaEdicion = new app.CotizacionAContrato({
+				model:app.coleccionCotizaciones
+				 .get( $(e.currentTarget)
+					 .children()
+				 .val() )
+			});
+		};
+		app.vistaEdicion.establecerDatos();
+		app.vistaEdicion.establecerRegreso();
 	},
 	conmutarSeccion	: function (e) {
-		var self = this;
-		this.editarCotizacion(e);
-		$('#seccion_cotizaciones').fadeToggle();
+		this.editar(e);
+		$('#seccion_tabla').fadeToggle();
 		setTimeout(function() {
 			$('#section_actualizar').fadeToggle();
 		}, 10);

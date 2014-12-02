@@ -5,12 +5,13 @@
 		public function __construct(){}
 
 		function insert_customer($post)
-		{		
+		{	
+			$post['fechacreacion'] = date('Y-m-d');
 			$x=0; # Este es un contador para mi array de inserción...	
 			# Se almacena campos obligatorios en la tabla de clientes... 						
 			$cliente = $this->db->insert('clientes', array('nombreComercial'=>$post['nombreComercial'], 
 														 'tipoCliente'=>$post['tipoCliente'],
-														 'fechaCreacion'=>$post['fechaCreacion'],
+														 'fechacreacion'=>$post['fechacreacion'],
 														 'visibilidad'=>$post['visibilidad'],));
 			# devolvemos su id_cliente para registrar sus atributos...
 			$idcliente = $this->db->insert_id();
@@ -60,7 +61,7 @@
 			$this->db->select('*');
 			if(is_numeric($id)) { $this->db->where('id',$id); }
 			
-			$this->db->order_by('fechaCreacion', 'desc'); # Los Ordenamos por fecha de Creación...
+			$this->db->order_by('fechacreacion', 'desc'); # Los Ordenamos por fecha de Creación...
 			$cliente = $this->db->get('clientes');
 
 			#################################################ATRIBUTOS DEL CLIENTE##################################
@@ -83,7 +84,7 @@
 				 			$datos[$cont]['id'] 			 = $key->id;
 				 			$datos[$cont]['nombreComercial'] = $key->nombreComercial;
 				 			$datos[$cont]['tipoCliente'] 	 = $key->tipoCliente;
-				 			$datos[$cont]['fechaCreacion']	 = $key->fechaCreacion;
+				 			$datos[$cont]['fechacreacion']	 = $key->fechacreacion;
 				 			$datos[$cont]['visibilidad'] 	 = $key->visibilidad;
 				 			$datos[$cont][$value->atributo]  = $value->dato;
 											 					 			
@@ -93,7 +94,7 @@
 				 			$datos[$cont]['id'] 			 = $key->id;
 				 			$datos[$cont]['nombreComercial'] = $key->nombreComercial;
 				 			$datos[$cont]['tipoCliente'] 	 = $key->tipoCliente;
-				 			$datos[$cont]['fechaCreacion']	 = $key->fechaCreacion;
+				 			$datos[$cont]['fechacreacion']	 = $key->fechacreacion;
 				 			$datos[$cont]['visibilidad'] 	 = $key->visibilidad;
 				 		}
 
@@ -173,7 +174,7 @@
 		// 	{
 		// 		foreach ($put as $key => $value) 
 		// 		{					
-		// 			if($key=='nombreComercial'||$key=='tipoCliente'||$key=='fechaCreacion')
+		// 			if($key=='nombreComercial'||$key=='tipoCliente'||$key=='fechacreacion')
 		// 			{
 		// 				$cliente[$key] = $value; # Relleno un array para la tabla de clientes
 		// 			} #IF
