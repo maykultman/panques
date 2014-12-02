@@ -1,9 +1,4 @@
 	<div id="div_fullHeight"> 
-		<?=link_tag('css/theme.default.css').
-		//plugin selectize css
-		link_tag('js/plugin/selectize/selectize.default.css');
-		?>
-
 		<div id="posicion_infotd">
 			<div id="clientes" class="wrapper">                            
 				<table id="tbla_cliente" class="table table-striped tablesorter">
