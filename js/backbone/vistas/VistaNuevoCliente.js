@@ -33,15 +33,6 @@ app.VistaNuevoCliente = Backbone.View.extend({
 				// 'click   #btn_otroContacto'  : 'otroContacto',
 				'change #formularioFoto'       	: 'obtenerFoto',
 
-					/*Las funciones para validar se ejecutan cuando 
-					se hace blur a los elementos html con el id o class 
-					especificados*/
-					  // 'blur #email'         : 'validarCorreo',
-					 // 'blur #paginaCliente'  : 'validarPaginaWeb',
-				// 'blur #contactoEmail'       : 'validarCorreo',
-				// 'blur #emailRepresentante'  : 'validarCorreo',
-			// 'blur #otroContactoEmail'        : 'validarCorreo',
-
 			'keyup #rfc'    : 'validarRFC',
 
 			'click #toggle' : 'toggle'
