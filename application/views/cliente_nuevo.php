@@ -183,7 +183,7 @@
                 <div id="div_contactos" class="col-md-6">
                      <!-- <div class="dato_contacto" id="div_contactos" style="position:relative"> -->
                         <div id="listaContactosCliente">
-                        <h3>Datos de contacto</h3><br><button id="btn_otroContacto" class="btn btn-primary btn-sm" ><span class="icon-addfriend"></span></button>
+                        <h3>Datos de contacto</h3><br><button id="btn_otroContacto" class="btn btn-default btn-sm" ><span class="icon-addfriend"></span></button>
                         </div>
                         <div class="desborde"></div>
                         <hr>

@@ -824,8 +824,8 @@ app.VistaGeneralContactos = Backbone.View.extend({
 		this.$contactoNombre =       this.$('.tab-content #'+ this.i +' #contactoNombre');
 		this.$contactoEmail =        this.$('.tab-content #'+ this.i +' #contactoEmail');
 		this.$contactoCargo =        this.$('.tab-content #'+ this.i +' #contactoCargo');
-		this.$telefonoContacto =     this.$('.tab-content #'+ this.i +' .telefonoContacto');
-		this.$tipoTelefonoContacto = this.$('.tab-content #'+ this.i +' .tipoTelefonoContacto');
+		this.$telefonoContacto =     this.$('.tab-content #'+ this.i +' .telefonos .row div .telefonoContacto');
+		this.$tipoTelefonoContacto = this.$('.tab-content #'+ this.i +' .telefonos .row div .tipoTelefonoContacto');
 	},
 });
 var vistaGeneralContactos = new  app.VistaGeneralContactos();
