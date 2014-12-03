@@ -388,8 +388,9 @@
                         </div>
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <!-- -------SEGUNDA PAGINA DE INFORMACION DEL CLIENTE------- --> 
-                        <div class="visible oculto">
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
+                        <div id="div_seccionContactos" class="visible oculto">
+                            <button type="button" id="btn_nuevoContacto" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
+                            <br>
                             <div id="divContactos">
                                 <!--AQUÍ VAN LOS CONTACTOS-->
                             </div>

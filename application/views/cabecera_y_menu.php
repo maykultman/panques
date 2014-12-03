@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
         
-    <?= script_tag('js/jquery-1.11.1.min.js').
+    <?= script_tag('js/backbone/lib/jquery-1.11.1.min.js').
         script_tag('js/jquery-ui.min.js').
         script_tag('css/bootstrap-3.1.1-dist/js/bootstrap.min.js').
         script_tag('js/plugin/selectize/selectize.min.js').

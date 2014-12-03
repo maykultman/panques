@@ -119,7 +119,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotización</title>	
 		<?=
-			script_tag('js/jquery-1.11.1.min.js').
+			script_tag('js/backbone/lib/jquery-1.11.1.min.js').
 			script_tag('js/plugin/jsPDF/jspdf.min.js');
 		?>
 	</head>

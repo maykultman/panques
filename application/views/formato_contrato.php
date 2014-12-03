@@ -336,7 +336,7 @@
 </script>
 <?=
 // <!-- Librerias Backbone -->
-	script_tag('js/backbone/lib/jquery.js').
+	script_tag('js/backbone/lib/jquery-1.11.1.min.js').
     script_tag('js/backbone/lib/underscore.js').
     script_tag('js/backbone/lib/backbone.js').
     script_tag('js/backbone/lib/backbone.localStorage.js').

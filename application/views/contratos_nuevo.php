@@ -16,7 +16,17 @@
 	<!-- Plantillas de cotizaciones -->
 		<script type="text/template" id="tds_servicio">
 			<td style="padding:0px">
-				<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
+				<%if(typeof eliminar != 'undefined'){%>
+					<label class="label_servicio" for="servicio_<%= id %>">
+						<%= nombre %>
+						<span class="icon-circledelete span_eliminarNuevo"></span>
+					</label>
+				<%} else{%>
+					<label class="label_servicio" for="servicio_<%= id %>">
+						<%= nombre %>
+						<!--<span class="icon-circledelete span_eliminarNuevo"></span>-->
+					</label>
+				<%};%>
 				<div class="check_posicion">
 					<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
 				</div>

@@ -705,9 +705,16 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				filter_reset: '.reset'
 			}
 		}).bind('filterEnd', function () {
-			if (!$('#table_servicios tbody tr:visible').length) {
+			// comentarios en la función cargarPlugins de
+			// VistaNuevaCotizacion.js
+			if (!self.$('#table_servicios tbody tr:visible').length) {
+				self.$('.search-services').on('keypress', function (e) {
+					self.guardarNuevoServ(e);
+					self.$('.search-services').off('keypress');
+				});
 				self.$('#alert_anadirNuevioServicio').show();
 			} else {
+				self.$('.search-services').off('keypress');
 				self.$('#alert_anadirNuevioServicio').hide();
 			};
 		});
