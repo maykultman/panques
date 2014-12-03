@@ -14,7 +14,7 @@
 				height: 931.51181102362px; /*1056px = 27.94cm*/
 				padding: 94.48818897638px 2cm 0px 2cm;
 				position: relative;
-				margin: auto;
+				margin: 20px auto;
 				border-bottom: 30px solid rgba(64, 64, 64, 1);
 				-webkit-box-shadow: 0px 20px 50px gray;
 				box-shadow: 0px 20px 50px gray;

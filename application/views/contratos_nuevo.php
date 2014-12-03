@@ -485,4 +485,3 @@
 		<script type="text/javascript">
 			app.vistaNuevoContrato = new app.VistaNuevoContrato();
 		</script>
-	<?=script_tag('js/backbone/routers/router.js');?>
