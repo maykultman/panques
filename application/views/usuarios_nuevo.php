@@ -42,7 +42,6 @@
 </div>
 
 <script type="text/plantilla" id="tsubmodulos">	
-	
 	<div class="tab-pane <% if(active!=undefined){ %> <%- active %> <% } %>" id="<%-modulo %>" >
 	<% var cont=0; for(i in submodulos){  cont++; %>
 		<div id="toggle">
@@ -75,6 +74,9 @@
 								submodulos[i]=='Perfiles'	||	submodulos[i] == 'Puestos'		||
 								submodulos[i]=='Roles'		||	submodulos[i] == 'Servicios'	
 						){ %>
+								<%if(submodulos[i] == 'Empleados'||submodulos[i]=='Perfiles'	||submodulos[i] == 'Puestos'		
+									||submodulos[i]=='Roles'||submodulos[i] == 'Servicios')
+									{%>  <input id="2" name="<%-modulo%><%-submodulos[i]%>" value="2" class="chek" type="checkbox" ><p>Nuevo</p> <%}%>
 								<input id="2" name="<%-modulo%><%-submodulos[i]%>" value="2" class="chek" type="checkbox" ><p>Consultar</p>
 								<input id="3" name="<%-modulo%><%-submodulos[i]%>" value="3" class="chek" type="checkbox" ><p>Editar</p>
 								<input id="4" name="<%-modulo%><%-submodulos[i]%>" value="4" class="chek" type="checkbox" ><p>Eliminar</p>
@@ -84,9 +86,7 @@
 					</div>
 				</div>
 			<% } %>	
-	
 	</div>
-
 </script>
 
 

@@ -1,13 +1,12 @@
 var app = app || {};
 app.VistaConsultaPerfil = Backbone.View.extend
 ({
-	el : '#accordion',
+	el : '#misperfiles',
 	plantilla : _.template($('#divperfil').html()),
 
 	events : 
 	{
 		'click .delete' : 'eliminar',
-		'click .edit' : 'editar',
 	},
 
 	initialize : function()
@@ -17,31 +16,24 @@ app.VistaConsultaPerfil = Backbone.View.extend
   		this.cargarPerfil();        
 	}, 
 
-	render : function()
-	{
-		return this;
-	},
-
-	editar : function(elemento)
-	{
-		var id = $(elemento.currentTarget).attr('id');		
-		var nombre = app.coleccionPerfiles.findWhere({'id': id }).toJSON();
-		$('#verpermisos'+id).toggle();
+	// editar : function(elemento)
+	// {
+	// 	var id = $(elemento.currentTarget).attr('id');		
+	// 	var nombre = app.coleccionPerfiles.findWhere({'id': id }).toJSON();
+	// 	$('#verpermisos'+id).toggle();
 		
-	},
-
+	// },
+	
 	cargarPerfil : function()
 	{
 		app.coleccionPerfiles.each
-		(
-			function(perfil){
-				this.$('#unperfil').append(this.plantilla(perfil.toJSON()));
+		( 	function(perfil)
+			{
+				$('#perfiles').append( new app.VistaPerfil({ model : perfil}).render().el );
 			}
 			,this
 		);
-	}
-
-
+	},
 	// eliminar : function()
 	// {
 	// 	this.model.destroy();

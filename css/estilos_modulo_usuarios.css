@@ -36,13 +36,11 @@
 
 /*------Estilos Perfiles--------------------------*/
 
-#contenido_nuevoperfil{   height: 500px;	}
+#contenido_nuevoperfil{   width: 700px; font-family: 'Philosopher', sans-serif;}
 
 .cheka * 
 {	
 	text-align: left;
-	/*width: auto;*/
-	/*display: inline-block;*/
 	display: block;
 }
 
@@ -56,31 +54,12 @@
 #perfil_nuevo
 {
 	float: right;
-	margin-top:15px; 
+	margin-top:10px; 
 }
 
  /* ----------------Estilos de Permisos----------------------   */
 		
-#lista_permisos
-{
-	width: 400px;
-	margin-top:15px; 
-}	
-
-.eliminar_permiso
-{
-	float:right;
-	margin-top: 5px;
-}
-
 .linea_x{	width: 400px !important;	}
-
-.contenido_permisos{
-	display: inline-block;
-	float: left;
-	margin-right: 35px;
-	width: 500px;	
-}
 
 .panel-body span{
 	padding: 5px;

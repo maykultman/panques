@@ -10,7 +10,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		'keypress #empleado': 'soloLetras',
 		'click .tohead'    : 'resize',
 		'change #idperfil' : 'mispermisos',
-		'change #registroUsuario' : 'obtenerFoto1'
+		// 'change #registroUsuario' : 'obtenerFoto1'
 	},
 
 	obtenerFoto1 : function(e)
@@ -77,11 +77,12 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	
 	mispermisos : function(idperfil)
 	{
+		$('.chek').attr('checked',false);
 		idperfil = $(idperfil.currentTarget).val();
 		var permisos = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
 		var mispermisos = jQuery.parseJSON(permisos);
-		var inputchek;
-		$('.check').attr('checked', false);
+		var inputchek='';		
+		var chek='';
 		for(i in mispermisos)
 		{
 			if(
@@ -96,11 +97,12 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 					for(y in mispermisos[i].submodulos[x].permisos)
 					{
 						inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+' #'+mispermisos[i].submodulos[x].permisos[y]);
-						$(inputchek).attr('checked',true);												
+					    $(inputchek).attr('checked',true);												
 					}					
 				}
-			}			
-		}		
+			}		
+		}
+		
 	},
 
 	marcarTodos : function(elemento)

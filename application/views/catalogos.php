@@ -3,7 +3,7 @@ script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
 		script_tag('css/bootstrap-3.1.1-dist/js/transition.js');?>
 <div class="contenedor_modulo">  
 	<section>
-	   <h1 id="titulo_del_modulo"><label>Catalogos</label></h1>
+	   <h1 id="titulo_del_modulo"><label>Catálogos</label></h1>
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
 				<li>
@@ -23,15 +23,7 @@ script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
 	                   Perfiles
 	                </a>
 	            </li>
-				 <!-- <li>
-	            	<a href="catalogo_permisos">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-unlock"></span>
-	              	   </div>
-	                   Permisos
-	                </a>
-	            </li> -->
-	            <li>
+			    <li>
 	            	<a href="catalogo_puestos">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class=" icon-avatar2"></span>
