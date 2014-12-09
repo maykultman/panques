@@ -17,6 +17,7 @@ app.VistaTrServicio = app.VistaServicio.extend({
 	plantillaSeleccionado : _.template( $('#tds_servicio_seleccionado').html() ),
 
 	initialize  : function () {
+		this.listenTo(this.model, 'destroy', this.remove);
 		this.$tbody_servicios_seleccionados 
 		= $('#tbody_servicios_seleccionados');
 	},

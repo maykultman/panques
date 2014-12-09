@@ -156,7 +156,7 @@
 <script type="text/javascript">
  app = app || {};
 
- var datos = Backbone.View.extend({
+ var Datos = Backbone.View.extend({
  	tanName : 'div',
  	plantilla : _.template($('#datosCliente').html()),
  
@@ -179,51 +179,67 @@
  	}
  });
 
- var PreviaCotizacion = Backbone.View.extend({
+ var VistaPrevia = Backbone.View.extend({
  	el : 'body',
 
  	initialize : function()
  	{
- 		this.array = 0,
+ 		// this.array = 0,
  		app.coleccionLocalCotizaciones.fetch();
- 		this.cargarCotizaciones();
+ 		this.cargarCotizacion();
  		app.coleccionLocalServicios.fetch();
  		this.cargarServicios(); 		
  	},
 
- 	cargarCotizacion : function(modelo)
+ 	cargarCotizacion : function()
  	{
- 		modelo.set({ fecha      :  formatearFechaUsuario(new Date(modelo.get('fecha')))  });
- 		modelo.set({nombreComercial:app.coleccionClientes.get({id:modelo.get('idcliente')}).get('nombreComercial')});	
- 		modelo.set({nombre:app.coleccionRepresentantes.get({id:modelo.get('idrepresentante')}).get('nombre')});	
- 		var cotizacion = new datos({ model : modelo});
- 		this.$('#previaCotizacion').html(cotizacion.render().el);
+ 		var self = this;
+ 		app.coleccionLocalCotizaciones.each(function (modelo) {
+			// modelo.set({ fecha      :  formatearFechaUsuario(new Date(modelo.get('fecha')))  });
+	 		// modelo.set({nombreComercial:app.coleccionClientes.get({id:modelo.get('idcliente')}).get('nombreComercial')});	
+	 		// modelo.set({nombre:app.coleccionRepresentantes.get({id:modelo.get('idrepresentante')}).get('nombre')});	
+	 		var cotizacion = new Datos({ model : modelo});
+	 		self.$('#previaCotizacion').html(cotizacion.render().el);
+ 		}, this);
+	 		
  	},
 
- 	cargarCotizaciones : function()
- 	{
- 		app.coleccionLocalCotizaciones.each(this.cargarCotizacion, this); 		
- 	},
- 	cargarServicio : function(modelo)
- 	{
- 		modelo.set({ idservicio : app.coleccionServicios.get
- 				  ({ id         : modelo.get('idservicio')}).get('nombre'),
- 				     importe    : (Number(modelo.get( 'precio'    ) ) )*
- 				     			  (Number(modelo.get( 'cantidad'  ) ) )-
- 				     			  (Number(modelo.get( 'descuento' ) ) ) 				  	 
- 				  });
+ 	// cargarCotizaciones : function()
+ 	// {
+ 	// 	app.coleccionLocalCotizaciones.each(this.cargarCotizacion, this); 		
+ 	// },
+ 	// cargarServicio : function(modelo)
+ 	// {
+ 	// 	modelo.set({ idservicio : app.coleccionServicios.get
+ 	// 			  ({ id         : modelo.get('idservicio')}).get('nombre'),
+ 	// 			     importe    : (Number(modelo.get( 'precio'    ) ) )*
+ 	// 			     			  (Number(modelo.get( 'cantidad'  ) ) )-
+ 	// 			     			  (Number(modelo.get( 'descuento' ) ) ) 				  	 
+ 	// 			  });
 
- 		var vista = new Servicios({ model: modelo});
- 		this.$('#tbody').append( vista.render().el);
- 		this.array += parseInt(modelo.get('importe'));	
- 	},
+ 	// },
 
  	cargarServicios : function()
  	{
- 		app.coleccionLocalServicios.each(this.cargarServicio, this);
- 		$('#total').text('$'+this.array); 		
+/* 		
+ 		descripcion: ""
+ 		horas: "1"
+ 		id: "61e48755-f580-ab3b-82ce-e1cc46c46b39"
+ 		idservicio: "3"
+ 		seccion: ""
+*/
+ 		app.coleccionLocalServicios.each(function (modelo) {
+ 			modelo.set({
+ 				servicio : app.coleccionServicios.get('id').get('nombre');
+ 			})
+ 			console.log(modelo);
+	 		// var vista = new Servicios({ model: modelo});
+	 		// this.$('#tbody').append( vista.render().el);
+	 		// var array += parseInt(modelo.get('importe'));	
+	 		// $('#total').text('$'+array); 
+ 		}, this);		
  	}
- });
+});
 
- app.previaCotizacion = new PreviaCotizacion();
+ app.vistaPrevia = new VistaPrevia();
 </script>

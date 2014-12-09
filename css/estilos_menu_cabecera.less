@@ -46,25 +46,50 @@ li{
 /* {{{{{{{{{{{{{{{{{Estilo de datos del usuario}}}}}}}}}}}}}}}}} */
 #divUsuario{
 	background: @colorPrimario-azul-claro;
-	float: right;
+	//float: right;
+    position:absolute;
+    top:0px;
+    right:0px;
 	height: @alto-cabecera;
-	margin: -13px -13px 0px 0px;
-	padding: 0px 0px 0px 13px;
 	width: auto;
+    padding: 0px 0px 0px 15px;
+}
+#foto,
+.usuario,
+#configuracionUsuario {
+  float: left;
+  padding: 0px 15px 0px 0px;
+}
+#foto img{
+  height: 40px;
+  width: 40px;
+  border: 2px solid white;
+  margin: 0px;
+  /*margin-bottom: -5px;*/
+}
+#foto {
+  margin: 5px 0px;
 }
 .usuario{
 	/*float: left;*/
-	display: inline-block;
-	padding: 0px 0px 0px 13px;
-	line-height: 20px;
+	//display: inline-block;
+  margin:10px;
 }
-#foto{
-	height: 41px;
-	margin-top: 5px;
-	margin-bottom: -5px;
-	width: 41px;
-	border: 2px solid white;
+
+#configuracionUsuario{
+  //margin: 0px 13px 0px -13px;
 }
+#configuracionUsuario li a:hover{
+  background: darken(@colorPrimario-azul-claro, 10%);
+}
+header .dropdown-menu{
+  background: darken(@colorPrimario-azul, 5%);
+  margin: 0;
+}
+.open > a {
+  background-color: #005dbc !important;
+}
+
 .datosU{
 	margin-bottom: -5px;
 }
@@ -104,15 +129,6 @@ li{
 }
 #accesosRapidos li a:hover{
 	background: darken(@colorPrimario-azul, 10%);
-}
-#configuracionUsuario{
-	margin: -13px 13px -10px -13px;
-}
-#configuracionUsuario li a:hover{
-	background: darken(@colorPrimario-azul-claro, 10%);
-}
-.dropdown-menu{
-	background: darken(@colorPrimario-azul, 5%);
 }
 /* {{{{{{{{{{{{{{{{{Estilo de datos del usuario}}}}}}}}}}}}}}}}} */
 

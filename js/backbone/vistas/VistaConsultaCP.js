@@ -11,7 +11,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 		la tecla precionada. tras dicho evento se ejecuta la funcion
 		buscarCliente.*/
 		'keyup #inputBuscarCliente'	: 'buscarCliente',
-		'click #todos'	    : 'marcarTodosCheck',
+		'click .todos'	    : 'marcarTodosCheck',
 
 		'click #btn_eliminarVarios'	: 'eliminarVarios',
 		'click #btn_restaurarVarios'	: 'restaurarVarios',
@@ -21,9 +21,8 @@ app.VistaConsultaCP = Backbone.View.extend({
 		return this;
 	},
 
-	marcarTodosCheck : function(elemento)
-    {        
-        marcarCheck(elemento);
+	marcarTodosCheck : function(e) {
+        marcarCheck(e, '#'+this.$el.attr('id'));
     },
 	/* {{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}} */
 	agregarCliente	: function (cliente) {
@@ -130,10 +129,10 @@ app.VistaConsultaCP = Backbone.View.extend({
 		var here = this, mensaje, visibilidad, ids;
 		/*De los checkboxs con class .todos tomamos el primero (sin importar si hay uno o vareios checheados)
 		  Si hay checheados, procedemos*/
-		if (this.$('.todos:checked').val()) {
+		if (this.$('input[name="todos"]:checked').val()) {
 			/*Solo con el primer cliente seleccionado nos vasta para saber
 			  lo que queremos eliminar (clientes o prospectos).*/
-			visibilidad = app.coleccionClientes.get(this.$('.todos:checked').val()).toJSON().visibilidad;
+			visibilidad = app.coleccionClientes.get(this.$('input[name="todos"]:checked').val()).toJSON().visibilidad;
 			if ( visibilidad == '1' ) {
 				mensaje = '¿Deseas eliminar a los clientes seleccionados?<br><b>Se enviarán a la papelera</b>';
 			} else {
@@ -141,7 +140,7 @@ app.VistaConsultaCP = Backbone.View.extend({
 			};
 			confirmar(mensaje,
 				function () {
-					ids = pasarAJson(here.$('.todos:checked').serializeArray()).todos;
+					ids = pasarAJson(here.$('input[name="todos"]:checked').serializeArray()).todos;
 					if ( visibilidad == '1' ) { /*Si visibilidad es 1, queremos enviar clientes a la papelera*/
 						if ($.isArray(ids)) { /*Si es verdadero, eliminaremos varios clientes*/
 							for (var i = 0; i < ids.length; i++) {
@@ -178,11 +177,10 @@ app.VistaConsultaCP = Backbone.View.extend({
 				},
 				function () {});
 		};
-			
 	},
 	restaurarVarios	: function () {
-		if (this.$('.todos:checked').val()) { /*Por lo menos un cliente seleccionado*/
-			var ids = pasarAJson(this.$('.todos:checked').serializeArray()).todos;
+		if (this.$('input[name="todos"]:checked').val()) { /*Por lo menos un cliente seleccionado*/
+			var ids = pasarAJson(this.$('input[name="todos"]:checked').serializeArray()).todos;
 			if ($.isArray(ids)) { /*Sol varios clientes ha restaurar*/
 				for (var i = 0; i < ids.length; i++) {
 					app.coleccionClientes.get(ids[i]).cambiarVisibilidad();
@@ -191,7 +189,30 @@ app.VistaConsultaCP = Backbone.View.extend({
 				app.coleccionClientes.get(ids).cambiarVisibilidad();
 			};
 		};
-	}			
+	},
+	cargarPlugin 	: function () {
+		var options = {
+			widthFixed : true,
+			showProcessing: true,
+			headerTemplate: '{content} {icon}', // Add icon for jui theme; new in v2.7!
+
+			widgets: [ 'zebra', 'cssStickyHeaders', 'filter' ],
+
+			widgetOptions: {
+				filter_columnFilters   : false,
+				filter_external : '.search',
+				cssStickyHeaders_offset        : 0,
+				cssStickyHeaders_addCaption    : true,
+				cssStickyHeaders_attachTo      : null,
+				cssStickyHeaders_filteredToTop : true,
+				cssStickyHeaders_zIndex        : 1
+			}
+
+		};
+		/* make second table scroll within its wrapper */
+		options.widgetOptions.cssStickyHeaders_attachTo = '.wrapper'; // or $('.wrapper')
+			this.$("#tbla_cliente").tablesorter(options);
+	}		
 });
 
 app.VistaConsultaClientes = app.VistaConsultaCP.extend({
@@ -207,6 +228,7 @@ app.VistaConsultaClientes = app.VistaConsultaCP.extend({
 		la función obtenerClientes(). Está fución se encargará de
 		imprimir a todos los clientes.*/
 		this.obtenerClientes(this.tipoCliente);
+		this.cargarPlugin();
 	},
 });
 
@@ -223,6 +245,7 @@ app.VistaConsultaProspectos = app.VistaConsultaCP.extend({
 		la función obtenerClientes(). Está fución se encargará de
 		imprimir a todos los clientes.*/
 		this.obtenerClientes(this.tipoCliente);
+		this.cargarPlugin();
 	},
 });
 
@@ -234,6 +257,7 @@ app.VistaClientesEliminados = app.VistaConsultaCP.extend({
 		this.$filasClientes = $('#filasClientes');
 
 		this.obtenerEliminados();
+		this.cargarPlugin();
 	},
 });
 

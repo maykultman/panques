@@ -1,279 +1,236 @@
 #form_nuevo_cliente{
-	/*margin: 0px 40px 40px 40px;*/
-	/*float: left;*/
+  /*margin: 0px 40px 40px 40px;*/
+  /*float: left;*/
 }
 #txtarea{
-width:400px;
-height: 83px;
+  width:400px;
+  height: 83px;
 }
 .input__ {
-float:left;
-display: inline-block;
-margin-right: 100px;
+  float:left;
+  display: inline-block;
+  margin-right: 100px;
 }
 #btn_agregar{
-margin-left: 323px;
-margin-top: -26px;
+  margin-left: 323px;
+  margin-top: -26px;
 }
 #btn_agregarI, #btn_agregarC{
-/*margin-left: 322px;*/
-/*margin-top: -26px;*/
+  /*margin-left: 322px;*/
+  /*margin-top: -26px;*/
 }
 
 #inputBusquedaI, #inputBusquedaC{
-width: 320px;
-/*margin-bottom: -13px;*/
-/*margin-left: -1px;*/
+  width: 320px;
+  /*margin-bottom: -13px;*/
+  /*margin-left: -1px;*/
 }
 .dato_contacto{
-float: left;
-display:inline;
-margin-right: 100px;
+  float: left;
+  display:inline;
+  margin-right: 100px;
 }
 /*------------------------------------------*/
-	#tbla_cliente .input-group{
-		width: 100%;
-	}
+#tbla_cliente .input-group{
+  width: 100%;
+}
 
-	.input-group input,.input-group select {
-		margin-top: 0px;
-	}
+.input-group input,.input-group select {
+  margin-top: 0px;
+}
 
-	.otroArchivo button, .otroTelefono button, .eliminarCopia button{
-		/*border-radius: 0px 4px 4px 0px;*/
-		/*margin: 0px 0px 0px -1px;*/
-	}
-	button.otroTelefono, 
-	button.eliminarCopia {
-		float: none !important;
-	}
-	.tipoTelefonoCliente,
-	.tipoTelefonoRepresentante,
-	.tipoTelefonoContacto {
-		font-size: 13px;
-		padding: 0px !important;
-		width: 100px !important; /*Sin esta propiedad no, en chrome se desacomoda*/
-		line-height: 2.5 !important;
-		max-height: 34px;
-	}
-	.input_info .btn-group-justified{
-		width: 400px;
-	}
-	.input_info{
-		display: inline-block;
-		padding-right: 100px;
-		float: left;
-	}
+.otroArchivo button, .otroTelefono button, .eliminarCopia button{
+  /*border-radius: 0px 4px 4px 0px;*/
+  /*margin: 0px 0px 0px -1px;*/
+}
+/*button.otroTelefono,
+button.eliminarCopia {
+  float: none !important;
+}*/
+/*.tipoTelefonoCliente,
+.tipoTelefonoRepresentante,
+.tipoTelefonoContacto {
+  font-size: 13px;
+  padding: 0px !important;
+  width: 100px !important;
+  line-height: 2.5 !important;
+  max-height: 34px;
+}*/
+.input_info .btn-group-justified{
+  width: 400px;
+}
+.input_info{
+  display: inline-block;
+  padding-right: 100px;
+  float: left;
+}
 
 /*----------------Css efecto ver info clientes-----*/
 .img-rounded {
-	border: 1px solid #CCC;
+  border: 1px solid #CCC;
 }
 .telefonosCliente{
-	height: 35px;
+  /*height: 35px;*/
 }
-	.div_telefono,
-	.div_tipoTelefono {
-		display: inline-block;
-	}
-	.divTelefono {
-		padding-left: 10px;
-		margin-left: -10px;
-	}
-	.div_tipoTelefono, 
-	.div_telefono {
-		margin-bottom: 10px;
-	}
-.div_tipoTelefono {
-	margin: 0px;
-	width: 100px;
-}
+/*Sirve para ordenar los telefonos y sus tipos*/
+  .div_telefono,
+  .div_tipoTelefono {
+    display: inline-block;
+  }
+  .divTelefono {
+    padding-left: 10px;
+    margin-left: -10px;
+  }
+  .div_tipoTelefono,
+  .div_telefono {
+    margin-bottom: 10px;
+  }
+  .div_tipoTelefono {
+    margin: 0px;
+    width: 100px;
+  }
 /*------TABLA DE CONSULTAS--------------*/
-	.spin{
-		width: 15px;
-		height: 15px;
-		background-image: url(http://crmqualium.com/img/ajax-loader.gif);
-		background-size: 100% 100%;
-	}
-	#div_fullHeight {
-		margin: 40px 0px 40px 0px !important;
-		padding: 0px 40px 0px 0px !important;
-		position: absolute !important;
-		bottom: 40px !important;
-		top: 180px !important;
-	}
-	#div_fullHeight #posicion_infotd {
-		height: 100% !important;
-	}
-	#div_fullHeight .wrapper {
-		height: 100% !important;
-		overflow: auto !important;
-	}
-	#btn_eliminarVarios,
-	#btn_restaurarVarios {
-		margin-top: 15px !important;
-	}
+.spin{
+  width: 15px;
+  height: 15px;
+  background-image: url(http://crmqualium.com/img/ajax-loader.gif);
+  background-size: 100% 100%;
+}
 
-	.contenedor_principal_modulos #tbla_cliente{
-			width: 100%;
-			webkit-transition: 0.2s;
-		}
-	#tbla_cliente thead{
-	}
-	#tbla_cliente input{
-			width: 100%;
-			margin: 0px;
-		}
-	.fade input#nombreComercial {
-		width: 320px;
-	}
-	.fade #nombreComercial {
-		margin-top: -20px !important;
-	}
-	#tbla_cliente tr{
-		&:hover{
-			.icon-operaciones span{
-				opacity: 1;
-			}
-		};
-	}
-	#tbla_cliente .td_tablaPricipal {
-		padding: 0px 5px 0px 5px;
-	}
+#btn_eliminarVarios,
+#btn_restaurarVarios {
+  margin-top: 15px !important;
+}
 
-	#tbla_cliente table tr .atributo, 
-	.tbla_contacto tr .atributo {
-		/*top: 0px;*/
-		text-align: left !important;
-		width: 170px !important;
-		/*padding: auto 0px auto 0px;*/
-		vertical-align: text-top !important;
-		color: #428bca !important;
-	}
-	.icon-operaciones span{
-			font-size: 15px;
-			padding: 5px;
-			opacity: 1;
-		}
-	.panel-body span{
-		padding: 0px;
-		opacity: 1;
-	}
-	.icon-operaciones span:hover{
-			background: #0494E8;
-			border-radius: 3px;
-			cursor: pointer;
-			color: white;
-		}
+.contenedor_principal_modulos #tbla_cliente{
+  width: 100%;
+  webkit-transition: 0.2s;
+}
+#tbla_cliente thead{
+}
+#tbla_cliente input{
+  width: 100%;
+  margin: 0px;
+}
+.fade input#nombreComercial {
+  width: 320px;
+}
+.fade #nombreComercial {
+  margin-top: -20px !important;
+}
 
-	.eliminar_cliente{
-		display: inline-block;
+#tbla_cliente .td_tablaPricipal {
+  padding: 0px 5px 0px 5px;
+}
 
-	}
-
-	.icon-operaciones .icon-trash:hover,
-	.icon-operaciones .icon-circledelete:hover{ //ES EL ICONO DE ELIMINAR CLIENTE
-			
-			background: red;
-			border-radius: 3px;
-			cursor: pointer;
-			color: white;
-	}
-
-	#posicion_infotd td {
-		vertical-align: middle !important;
-	}
-
-	.copia {
-		margin-bottom: 15px !important;
-	}
+#tbla_cliente table tr .atributo,
+.tbla_contacto tr .atributo {
+  /*top: 0px;*/
+  text-align: left !important;
+  width: 170px !important;
+  /*padding: auto 0px auto 0px;*/
+  vertical-align: text-top !important;
+  color: #428bca !important;
+}
 
 
-	.busqueda{
+.eliminar_cliente{
+  display: inline-block;
 
-	    float:right;
-	    margin-top: -23px !important;
-	    margin-right: 8px !important;
-	}
+}
+
+
+
+.copia {
+  margin-bottom: 15px !important;
+}
+
+
+.busqueda{
+
+  float:right;
+  margin-top: -23px !important;
+  margin-right: 8px !important;
+}
 #cerrar_consulta{
-	cursor: pointer;
-	margin-top: -30px;
+  cursor: pointer;
+  margin-top: -30px;
 }
 .modal-footer{
-	text-align: justify;
+  text-align: justify;
 }
 
 #contenido_cliente{
-	width:600px;
+  width:600px;
 }
 
 #color_hr{
-	background-color: #BFDFFF; 
-	margin-top:25px;
+  background-color: #BFDFFF;
+  margin-top:25px;
 }
 
 .logo_empresa{
-	width: 40px;
-	height: 40px;
-	border:1px solid #ddd;
-	-webkit-border-radius: 4px;
-	 border-radius: 4px;
-	-webkit-box-shadow: 1px 1px 3px #888888;
-	 box-shadow: 1px 1px 3px #888888;
+  width: 40px;
+  height: 40px;
+  border:1px solid #ddd;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 1px 3px #888888;
+  box-shadow: 1px 1px 3px #888888;
 }
 #logo_empresa_info {
-	display: inline-block;
-    width: 150px;
-	height: 150px;
-	border:1px solid #ddd;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-webkit-box-shadow: 1px 1px 3px #888888;
-	box-shadow: 1px 1px 3px #888888;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border:1px solid #ddd;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 1px 3px #888888;
+  box-shadow: 1px 1px 3px #888888;
 }
 .info_cliente1 {
-	 
-	 display: inline-block;
-	 margin: 25px 15px 15px 15px;
-	 position: absolute;
+
+  display: inline-block;
+  margin: 25px 15px 15px 15px;
+  position: absolute;
 
 }
 
 #info_cliente2{
-	margin-top: 8px;
-	margin-left: 20px;
+  margin-top: 8px;
+  margin-left: 20px;
 }
 
 
 #icon-operaciones2{
-	display: inline-block;
-	right: 16px;
-	margin-top: 78px;
-	position: absolute;
-	z-index: 1;
+  display: inline-block;
+  right: 16px;
+  margin-top: 78px;
+  position: absolute;
+  z-index: 1;
 }
 #icon-operaciones2 button label:hover{
-	background: inherit;
-	cursor: pointer;
+  background: inherit;
+  cursor: pointer;
 }
 #icon-operacionesContacto{
-	display: inline-block;
-	right: 16px;
-	margin-top: 56px;
-	position: absolute;
-	z-index: 1;
+  display: inline-block;
+  right: 16px;
+  margin-top: 56px;
+  position: absolute;
+  z-index: 1;
 }
 #icon-operacionesContacto label:hover{
-	background: inherit;
-	cursor: pointer;
+  background: inherit;
+  cursor: pointer;
 
 }
 .contenedorContacto{
-	margin-right: 50px;
+  margin-right: 50px;
 }
 
 .trCliente, .trContacto{
-	height: 51px;
+  height: 51px;
 }
 
 /*------------Menu de herramientas-------
@@ -285,72 +242,72 @@ margin-right: 100px;
 @colorTextoMenu: #AAA;
 
 #menu2{
-	background: @colorPrimario-Menu;
-	height:550px;
-	width:40px;
-	float: left;
-	margin-left: -16px;
-	margin-top:-15px; 
-    padding: 0px 5px 0px 5px;
-	/*position: absolute;*/
-	
+  background: @colorPrimario-Menu;
+  height:550px;
+  width:40px;
+  float: left;
+  margin-left: -16px;
+  margin-top:-15px;
+  padding: 0px 5px 0px 5px;
+  /*position: absolute;*/
+
 }
 #menu2-lista{
-	padding: 0px 5px 0px 5px;
+  padding: 0px 5px 0px 5px;
 }
 #menu2-lista li{
-	border-bottom: 1px solid @colorElementoDeMenuHover;
-	line-height: 104px;
+  border-bottom: 1px solid @colorElementoDeMenuHover;
+  line-height: 104px;
 }
 #menu2-lista li a{
-	position: absolute;
+  position: absolute;
 }
 #menu2-lista li:hover{
-	background: @colorElementoDeMenuHover;
-	margin: -1px -10px 0px -10px;
-	padding: 1px 10px 0px 10px;
-	border-bottom: 1px solid @colorElementoDeMenuHover;
+  background: @colorElementoDeMenuHover;
+  margin: -1px -10px 0px -10px;
+  padding: 1px 10px 0px 10px;
+  border-bottom: 1px solid @colorElementoDeMenuHover;
 }
 
 
 .icono2{
-	color: @colorTextoMenu;
-	cursor: pointer;
-	padding-right: 10px;
-	font-size: 20px;
+  color: @colorTextoMenu;
+  cursor: pointer;
+  padding-right: 10px;
+  font-size: 20px;
 }
 
 .visible{
-	visibility: visible;
-	opacity: 1;
-	/*height: auto;*/
-	/*transform:none;*/
-	transition:visibility .45s, opacity .45s;
-	/*position: inherit;*/
+  visibility: visible;
+  opacity: 1;
+  /*height: auto;*/
+  /*transform:none;*/
+  transition:visibility .45s, opacity .45s;
+  /*position: inherit;*/
 }
 .oculto {
-	visibility: hidden;
-	opacity: 0;
-	height: 0px;
-	/*transform:translateX(-2000px);*/
-	transition:visibility .6s, opacity .6s, height .6s;
-	z-index: 5;
-    /*position: absolute;*/
-	/*float: left;
-	margin-left: -15px;
-	margin-top: -15px;
-	height: 550px;
-	width: 598px;
-	border: 1px outset #999999;
-	background-color: white;*/
-	/*padding: 20px;*/
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
+  /*transform:translateX(-2000px);*/
+  transition:visibility .6s, opacity .6s, height .6s;
+  z-index: 5;
+  /*position: absolute;*/
+  /*float: left;
+  margin-left: -15px;
+  margin-top: -15px;
+  height: 550px;
+  width: 598px;
+  border: 1px outset #999999;
+  background-color: white;*/
+  /*padding: 20px;*/
 }
 
 .editar{
-	display: none;
+  display: none;
 }
 .editando{
-	display: inline;
+  display: inline;
 }
 
 /*#divcomentarios{
@@ -379,75 +336,168 @@ margin-right: 100px;
 
 
 .foto{
-	width: 40px;
-	height: 40px;
-	margin: 5px;
-	border-radius: 5px;
-	border: 1px solid #CCC;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #CCC;
 }
 
 /*estilos de la ficha de información del cliente*/
-	#btn_nuevoContacto {
-		position: absolute;
-		top: 240px;
-		right: 16px;
-	}
-	.exito{
-		-webkit-animation:efectoOpacidad 3s;
-		color: green;
-		opacity:.4;
+#btn_nuevoContacto {
+  position: absolute;
+  top: 240px;
+  right: 16px;
+}
+.exito{
+  -webkit-animation:efectoOpacidad 3s;
+  color: green;
+  opacity:.4;
 
-	}
-	.error{
-		-webkit-animation:efectoOpacidad 3s;
-		color: red;
-		opacity:.4;
+}
+.error{
+  -webkit-animation:efectoOpacidad 3s;
+  color: red;
+  opacity:.4;
 
-	}
+}
 
-	@-webkit-keyframes efectoOpacidad
-	{
-	0%   {opacity:1;}
-	50%   {opacity:1;}
-	100% {opacity:.4;}
-	}
+@-webkit-keyframes efectoOpacidad
+{
+  0%   {opacity:1;}
+  50%   {opacity:1;}
+  100% {opacity:.4;}
+}
 
 
 /*estilo modal correo */
 
 #destinatario{
-float: left;
-margin-left: -10px;
-display: inline-block;
+  float: left;
+  margin-left: -10px;
+  display: inline-block;
 }
 
 #asunto{
-float: left;
-margin-left: -10px;
-display: inline-block;
+  float: left;
+  margin-left: -10px;
+  display: inline-block;
 }
 
 .lbl_correo{
 
-	outline: 0;
-    margin-left: 7px !important;
-    width: 90% !important;
-    border: none;
+  outline: 0;
+  margin-left: 7px !important;
+  width: 90% !important;
+  border: none;
 }
 
 .division{
 
-	margin-left: -19px; 
-	width:595px; 
-	border-top: 0px;
-	margin-top: 8px;	
+  margin-left: -19px;
+  width:595px;
+  border-top: 0px;
+  margin-top: 8px;
 }
 
 #txt_area{
-    
-    border: none;
-	margin: -10px 0px -30px -10px;
-	width: 580px;
-	height: 250px;
-	outline: 0;
+
+  border: none;
+  margin: -10px 0px -30px -10px;
+  width: 580px;
+  height: 250px;
+  outline: 0;
 }
+
+/*Estilos para el sudmodulo de cliente nuevo*/
+.iconos-operaciones-contacto span {
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.iconos-operaciones-contacto span:hover {
+  background: #d7d7d7;
+  cursor: pointer;
+}
+
+#comentarioCliente{
+  width: 100% !important;
+}
+
+
+
+/*-------EFECTO EN CAMBIO DE FORMULARIO---------*/
+.visibleR{
+  transition: opacity .5s;
+  opacity: 1;
+}
+.ocultoR {
+  position: absolute;
+  top: 0px;
+  opacity: 0;
+  z-index: -1;
+}
+
+/*-------EFECTO EN CAMBIO DE FORMULARIO---------*/
+  .menusServicios{
+    float: left;
+  }
+  .list-group-item-info{
+    background: #0494e8;
+    color: #FFF;
+  }
+  .list-group{
+    width: 400px;
+  }
+  .icon-uniF470{
+    cursor: pointer;
+  }
+  #span_cliente{
+    color: #000;
+  }
+
+  #h1_nombreCliente{
+    color: gray;
+  }
+
+
+  #listaContactosCliente{
+    margin-bottom: 46px;
+
+  }
+  #listaContactosCliente h3{
+    float: left;
+  }
+  #listaContactosCliente button{
+    float: right;
+  }
+  #contactosLista h4{
+    float: left;
+  }
+  #contactosLista .iconos-operaciones-contacto{
+    float: right;
+    padding: 9px;
+  }
+
+  .form_input{
+
+    width: 100% !important;
+  }
+
+  .fileinput-button {
+    position: relative;
+    overflow: hidden;
+  }
+  .fileinput-button input {
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+  }
+

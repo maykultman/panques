@@ -6,6 +6,12 @@
 	}
 /**/
 
+#h4_folio {
+	color: red !important;
+	font-family: 'Oswald', sans-serif;
+	display:none;
+}
+
 	#tabla_cotizaciones td{
 		
 		vertical-align: middle;
@@ -16,12 +22,12 @@
 		float: left;
 	}
 
-	#tabla_cotizaciones input{
+	/*#tabla_cotizaciones input{
 		width: 100%;
 		margin: 0px;
 
 	
-	}
+	}*/
 
 	/*#mostrarTabla tr{
 		&:hover{
@@ -57,7 +63,8 @@
 	}
 	/*Estilos para los botones eliminar de la tabla de servicios que se están cotizando*/
 	.iconos-operaciones span.span_eliminar_servicio:hover,
-	.iconos-operaciones span.span_eliminar_seccion:hover {
+	.iconos-operaciones span.span_eliminar_seccion:hover,
+	.iconos-operaciones span.span_deleteAll:hover {
 		background:red;
 		color: white;
 	}
@@ -86,7 +93,7 @@
 /* {{{{{{{{{{{Sección nuEva cotizacion}}}}}}}}}}} */
 /*#mostrarTabla{  width: 100%;	}*/
 
-#tablaServicios{ 	display: inline-block; 	float:left;   width:300px; }
+/*#tablaServicios{ 	display: inline-block; 	float:left;   width:300px; }*/
 
 #cabecera_serv{
    
@@ -187,9 +194,35 @@ td .ocultoI2 { display: none;  }
 /*Estilos agregados por geyser*/
 	/*Estilos de la lista (tabla) de servicios*/
 		.label_servicio {
-				padding: 8px;
-				margin-bottom: 0px;
-				display: block;
-				/*width:457px;*/
-				/*height:100%;*/
-			}
+			padding: 8px;
+			margin-bottom: 0px;
+			display: block;
+			/*width:457px;*/
+			/*height:100%;*/
+		}
+		#section_actualizar{
+			display:none;
+		}
+
+/*Modificaciones tablesorter*/
+	input.tablesorter-filter.disabled {
+		display: none;
+	}
+/*Lista de servicios (Tabla servicios)*/
+	#alert_anadirNuevioServicio {
+		margin: 0px;
+		padding: 5px;
+		width: 70%;
+		font-weight: lighter;
+		position: absolute;
+		display: none;
+	}
+	.span_eliminarNuevo {
+		float: right;
+		/* text-align: right; */
+		/* line-height: 15px; */
+		/* display: block; */
+		font-size: 15px;
+		margin-top: -2px;
+		cursor: pointer;
+	}

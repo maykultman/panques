@@ -1,5 +1,5 @@
 var app = app || {};
-var f = new Date();
+// var f = new Date();
 app.ModeloCliente = Backbone.Model.extend({
 
 	urlRoot	:'http://crmqualium.com/api_cliente',
@@ -19,7 +19,7 @@ app.ModeloCliente = Backbone.Model.extend({
 			 //   serviciosCuenta : '',
 			 //              logo : '',
 					  visibilidad : true,
-					fechaCreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
+					// fechaCreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate()
 	},
 
 	cambiarVisibilidad: function () {

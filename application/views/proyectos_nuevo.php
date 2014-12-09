@@ -212,7 +212,7 @@
 			<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
 			<div class="check_posicion"><!---->
 				<input type="checkbox" id="servicio_<%= id %>" class="checkbox_servicio">
-			<div>
+			</div>
 		</td>
 	</script>
 

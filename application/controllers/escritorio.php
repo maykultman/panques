@@ -113,11 +113,11 @@ class Escritorio extends REST {
 			{
 				$this->proyectos();				
 			}
-			if($this->ruta()==='contratos_nuevo'||$this->ruta()==='contratos_historial')
+			if($this->ruta()==='contratos_nuevo'||$this->ruta()==='contratos_historial'||$this->ruta()==='contratos_papelera')
 			{
 				$this->contratos();				
 			}
-			if($this->ruta()==='cotizaciones_nuevo'||$this->ruta()==='cotizaciones_consulta')
+			if($this->ruta()==='cotizaciones_nuevo'||$this->ruta()==='cotizaciones_consulta'||$this->ruta()==='cotizaciones_papelera')
 			{
 				$this->cotizaciones();				
 			}
@@ -204,7 +204,7 @@ class Escritorio extends REST {
 
 	public function clientes()
 	{
-		$this->area_Estatica('Clientes');  # Carga la vista por default + la vista del modulo
+		$this->area_Estatica('clientes');  # Carga la vista por default + la vista del modulo
 
 		if($this->ruta() == 'cliente_nuevo')
 		{
@@ -265,7 +265,7 @@ class Escritorio extends REST {
 	public function cotizaciones()
 	{
 		$this->area_Estatica('cotizaciones');
-		$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+		$data['clientes']		  = $this->customer->get();	# Lista de clientes
 		$data['servicios'] 		  = $this->serv->get_s();  	# Lista de Servicios
 		$data['representantes']	  = $this->representa->get();					# List de representantes
 		$data['empleados']	      = $this->empleado->get();
@@ -275,6 +275,11 @@ class Escritorio extends REST {
 			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'cotizaciones_consulta')
+		{   
+			$data['cotizaciones'] = $this->budget->get();
+			$this->load->view($this->ruta(), $data);
+		}
+		if($this->ruta() == 'cotizaciones_papelera')
 		{   
 			$data['cotizaciones'] = $this->budget->get();
 			$this->load->view($this->ruta(), $data);
@@ -293,7 +298,7 @@ class Escritorio extends REST {
 			// $this->load->view('formularioContrato');
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'contratos_historial')
+		if($this->ruta() == 'contratos_historial' || $this->ruta() == 'contratos_papelera')
 		{
 			$this->load->model('Model_ServiceContract');
 			$this->load->model('Model_contract');
@@ -324,7 +329,7 @@ class Escritorio extends REST {
 		if($this->ruta()==='formatoContrato')
 		{
 			$this->load->model('modelo_servicioProyecto');
-			$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+			$data['clientes']		  = $this->customer->get();	# Lista de clientes
 			$data['servicios'] 		  = $this->serv->get_Servicios_Proyecto();  	# Lista de Servicios
 			$data['representantes']	  = $this->representa->get();
 

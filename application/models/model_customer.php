@@ -5,12 +5,13 @@
 		public function __construct(){}
 
 		function insert_customer($post)
-		{		
+		{	
+			$post['fechacreacion'] = date('Y-m-d');
 			$x=0; # Este es un contador para mi array de inserción...	
 			# Se almacena campos obligatorios en la tabla de clientes... 						
 			$cliente = $this->db->insert('clientes', array('nombreComercial'=>$post['nombreComercial'], 
 														 'tipoCliente'=>$post['tipoCliente'],
-														 'fechaCreacion'=>$post['fechaCreacion'],
+														 'fechacreacion'=>$post['fechacreacion'],
 														 'visibilidad'=>$post['visibilidad'],));
 			# devolvemos su id_cliente para registrar sus atributos...
 			$idcliente = $this->db->insert_id();
@@ -60,7 +61,7 @@
 			$this->db->select('*');
 			if(is_numeric($id)) { $this->db->where('id',$id); }
 			
-			$this->db->order_by('fechaCreacion', 'desc'); # Los Ordenamos por fecha de Creación...
+			$this->db->order_by('fechacreacion', 'desc'); # Los Ordenamos por fecha de Creación...
 			$cliente = $this->db->get('clientes');
 
 			#################################################ATRIBUTOS DEL CLIENTE##################################
@@ -83,7 +84,7 @@
 				 			$datos[$cont]['id'] 			 = $key->id;
 				 			$datos[$cont]['nombreComercial'] = $key->nombreComercial;
 				 			$datos[$cont]['tipoCliente'] 	 = $key->tipoCliente;
-				 			$datos[$cont]['fechaCreacion']	 = $key->fechaCreacion;
+				 			$datos[$cont]['fechacreacion']	 = $key->fechacreacion;
 				 			$datos[$cont]['visibilidad'] 	 = $key->visibilidad;
 				 			$datos[$cont][$value->atributo]  = $value->dato;
 											 					 			
@@ -93,7 +94,7 @@
 				 			$datos[$cont]['id'] 			 = $key->id;
 				 			$datos[$cont]['nombreComercial'] = $key->nombreComercial;
 				 			$datos[$cont]['tipoCliente'] 	 = $key->tipoCliente;
-				 			$datos[$cont]['fechaCreacion']	 = $key->fechaCreacion;
+				 			$datos[$cont]['fechacreacion']	 = $key->fechacreacion;
 				 			$datos[$cont]['visibilidad'] 	 = $key->visibilidad;
 				 		}
 
@@ -155,58 +156,5 @@
 		{
 			return $this->db->delete('clientes', array('id' => $id));  		   	
 		}
-
-		// public function update_customer($id, $iput){
-
-		// 	$x=0; $cliente = array();  $cont=0;
-		// 	$this->db->select('*');			
-		// 	$atr = $this->db->get('atributo_cliente'); # Consulto la lista de atributos...
-  		//  $put = (array)$iput;
-		// 	# La propiedad visible ya no muestra al cliente a un usuario normal simula una eliminación...
-		// 	# Solo el superusuario podrá eliminar al cliente...
-		// 	if(array_key_exists('visibilidad', $put))
-		//  { 				
-		//		 $this->db->where('id', $id);
-  		//       $query = $this->db->update('clientes', array('visibilidad'=> $put['visibilidad']));
-		// 	}
-		// 	else
-		// 	{
-		// 		foreach ($put as $key => $value) 
-		// 		{					
-		// 			if($key=='nombreComercial'||$key=='tipoCliente'||$key=='fechaCreacion')
-		// 			{
-		// 				$cliente[$key] = $value; # Relleno un array para la tabla de clientes
-		// 			} #IF
-		// 			else
-		// 			{
-		// 				foreach ($atr->result() as $keya => $valuea) 
-		// 				{
-		// 					if($valuea->atributo===$key) # $Key Coincide con algun dato de la lista atributos?
-		// 					{	
-		// 						# Consulto si existe el idcliente y el id del $key en la tabla de cliente_atributo
-		// 						$where=array('idcliente'=>$id, 'idatributo'=>$valuea->id);
-		// 						$query = $this->db->get_where('cliente_atributo',$where);
-
-		// 						if($query->result()){  # Si existe actualizalo
-
-		// 							$this->db->where($where);
-		// 		  		       		$queryA = $this->db->update('cliente_atributo', array('dato'=>$value));
-		// 						} # if
-		// 						else # Si no Existe crealo...
-		// 						{
-		// 							$queryA = $this->db->insert('cliente_atributo', array('idcliente'=>$id, 'idatributo'=>$valuea->id, 'dato'=>$value));
-		// 						} # else
-		// 					} #IF
-
-		// 				} #Foreach											
-		// 			} # Else
-		// 		}#Foreach		
-		// 		$this->db->where('id', $id);	
-		// 		$query = $this->db->update('clientes', $cliente); # Aquí Actualizamos los datos de la tabla cliente...
-		// 	}# else
-			
-		//  return $query;			
-		// } # Fin del update_customer....
-		
 	}//Fin de la clase Model_Customer		
 

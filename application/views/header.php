@@ -14,7 +14,7 @@
 					<li><a href="contratos_nuevo">Contrato</a></li>
 					<li><a href="cotizaciones_nuevo">Cotización</a></li>					
 					<li><a href="proyectos_nuevo">Proyecto</a></li>
-					<li><a href="usuarios_nuevo">Usuario</a></li>
+					<li><a href="usuarios_nuevo">Usuario</a></li><!---->
 				</ul>
 			</li>
 		</ul>
@@ -22,12 +22,12 @@
 
 	
 	<div id="divUsuario" class="hidden-xs">
-		<div class="usuario" ><img  id="foto" class="img-circle pull-left" src="<?=base_url()?><?=$this->session->userdata('foto')?>"></div>
-		<div class="usuario" id="otro">
+		<div id="foto"><img class="img-circle pull-left" src="<?=base_url()?><?=$this->session->userdata('foto')?>"></div>
+		<div class="usuario">
 			<div id="nombre" class="datosU"><?=$this->session->userdata('usuario')?></div>
 			<div id="perfil" class="datosU"><?=$this->session->userdata('perfil')?></div>
 		</div>
-		<div id="configuracionUsuario" class="usuario">
+		<div id="configuracionUsuario">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="">

@@ -16,7 +16,7 @@ var ColeccionServicios = Backbone.Collection.extend({
 		if(!this.length){
 			return 1;
 		}
-		return this.last().get('id') + 1;
+		return parseInt(this.last().get('id')) + 1;
 	},
 
 	obtenerUltimoId	: function () {

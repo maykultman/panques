@@ -1,20 +1,14 @@
 	<div id="div_fullHeight"> 
-		<?=link_tag('css/theme.default.css').
-		//plugin selectize css
-		link_tag('js/plugin/selectize/selectize.default.css');
-		?>
-
 		<div id="posicion_infotd">
 			<div id="clientes" class="wrapper">                            
-				<table id="tbla_cliente" class="tablesorter table-striped">
+				<table id="tbla_cliente" class="table table-striped tablesorter">
 					<!-- BOTON PARA PRUEBAS -->
 					<!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
 					<thead>
 						<tr>
-							<th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
-							<th class="sorter-false"></th>
-							<th class="sorter-false">
-								<input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
+							<th class="sorter-false"><input class="todos" type="checkbox"></th>
+							<th class="sorter-false" colspan="2">
+								<input class="form-control input-sm search" type="search" placeholder="Nombre comercial" data-column="all">
 								<span class="icon-search busqueda"></span>
 							</th>
 							<th class="sorter-false">Tipo de cliente</th>
@@ -66,7 +60,7 @@
 <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
-        <td class="td_tablaPricipal"><input type="checkbox" class="todos" name="todos" value="<%- id %>"></td>
+        <td class="td_tablaPricipal"><input type="checkbox" name="todos" value="<%- id %>"></td>
         <td class="td_tablaPricipal">
             <% if (typeof foto != "undefined") { %>
                 <img src="<?=base_url()?><%- foto %>" class="foto" >
@@ -83,7 +77,7 @@
         <% }; %>
     
         <td class="td_tablaPricipal">
-        	<% var Año_Mes_dia = fechaCreacion.split('-'); %>
+        	<% var Año_Mes_dia = fechacreacion.split('-'); %>
                 <%- Año_Mes_dia[2] %>
                 <% for (var i = 0; i < meses.length+1; i++) { %>
                     <% if (i == Año_Mes_dia[1]) { %>
@@ -133,7 +127,7 @@
                             <td style="padding:0px 10px 0px 10px;">
                                 Cliente desde
                                 <label>
-                                    <% var Año_Mes_dia = fechaCreacion.split('-'); %>
+                                    <% var Año_Mes_dia = fechacreacion.split('-'); %>
                                     <%- Año_Mes_dia[2] %>
                                     <% for (var i = 0; i < meses.length+1; i++) { %>
                                         <% if (i == Año_Mes_dia[1]) { %>

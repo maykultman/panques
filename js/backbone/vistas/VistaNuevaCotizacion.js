@@ -1,28 +1,5 @@
 var app = app || {};
 
-function conComas(valor) {
-    var nums = new Array();
-    var simb = ","; //Éste es el separador
-    valor = valor.toString();
-    valor = valor.replace(/\D/g, "");   //Ésta expresión regular solo permitira ingresar números
-    nums = valor.split(""); //Se vacia el valor en un arreglo
-    var long = nums.length - 1; // Se saca la longitud del arreglo
-    var patron = 3; //Indica cada cuanto se ponen las comas
-    var prox = 2; // Indica en que lugar se debe insertar la siguiente coma
-    var res = "";
- 
-    while (long > prox) {
-        nums.splice((long - prox),0,simb); //Se agrega la coma
-        prox += patron; //Se incrementa la posición próxima para colocar la coma
-    }
- 
-    for (var i = 0; i <= nums.length-1; i++) {
-        res += nums[i]; //Se crea la nueva cadena para devolver el valor formateado
-    }
- 
-    return res;
-}
-
 app.VistaSeccion = Backbone.View.extend({
 	tagName	: 'tr',
 	// className : 'tr_seccion',
@@ -33,10 +10,12 @@ app.VistaSeccion = Backbone.View.extend({
 		// 'click .span_eliminar_seccion' : 'eliminarTr',
 
 		'change .number'					: 'calcularSeccion',
-		'keyup .number'						: 'calcularSeccion',
+		// 'keyup .number'						: 'calcularSeccion',
 		'mousewheel .number'				: 'calcularSeccion',
-		'click .number'				: 'calcularSeccion',
-		'focus .number'				: 'calcularSeccion',
+		// 'click .number'				: 'calcularSeccion',
+		'blur .number'				: 'calcularSeccion',
+		'keyup imput[type="text"]' 		: 'actualizarTexto',
+		'keyup textarea'			 		: 'actualizarTexto'
 	},
 	initialize 	: function () { },
 	render: function (id) {
@@ -52,6 +31,14 @@ app.VistaSeccion = Backbone.View.extend({
 		var horas 		= this.$('.horas').val(),
 			precio_hora = this.$('.precio_hora').val();
 
+		/*El capo Horas es un input number, por lo que cuando se escribe
+		  un número con letras, el campo lo rechaza y adopta el valor ''*/
+		if (horas == '') {
+			alerta('El campo <b>Horas</b> solo acepta números', function () {});
+			this.$('.horas').val('1');
+			return;
+		};
+
 		/*Mostramos el costo total de la seccion*/
 		this.$('.costoSeccion').val( horas * precio_hora ).trigger('change');
 		
@@ -59,11 +46,13 @@ app.VistaSeccion = Backbone.View.extend({
 		  en tds de tabla, para que se puede generar un json por casa sección 
 		  del servicio que se encuantra cotizando, debemos pasar esos valores
 		  a unos input hidden que si se encuentran en formularios.*/
+		this.$('input[name="horas"]')	.val(horas);
+		this.$('input[name="precio_hora"]')		.val(precio_hora);
+	},
+	actualizarTexto : function () {
 		this.$('input[name="seccion"]')		.val(this.$('#seccion')		.val());
 		this.$('input[name="descripcion"]')	.val(this.$('#descripcion')	.val());
-		this.$('input[name="precio_hora"]')	.val(horas);
-		this.$('input[name="horas"]')		.val(precio_hora);
-	},
+	}
 });
 
 app.VistaCotizarServicio = Backbone.View.extend({
@@ -78,8 +67,7 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		'change .costoSeccion' : 'carlcularImporte',
 		'click .span_eliminar_seccion' : 'eliminarSeccion',
 	},
- 	initialize 	: function () {
- 	},
+	initialize 	: function () { },
 	render 		: function () {
 		this.$el.html(this.plantillas.plantillaSeleccionado(this.model.toJSON()));
 		var here = this;
@@ -89,7 +77,13 @@ app.VistaCotizarServicio = Backbone.View.extend({
 	},
 	apilarSeccion 	: function () {
 		var vistaSeccion = new app.VistaSeccion();
-		this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );
+
+		if ( this.model.get('nuevo') ) {
+			this.$('tbody').append( vistaSeccion.render(this.model.get('nombre')).el );
+		} else{
+			this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );	
+		};
+		
 		/*Despues de que el se ha apilado el servicio a cotizar,
 		  calculamos instantaneamente el importe del servicio*/
 		this.carlcularImporte();
@@ -98,11 +92,11 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		/*Cambiamos el icono del boton, arriba o abajo segun sea el caso*/
 		this.$(e.currentTarget).toggleClass('icon-circleup');
 		/*Guardamos todos los td que seran afectados.*/
-		var selector = '#table_servicio_'+this.model.get('id')+' thead #tr_titulos_secciones td,';
-			selector += '#table_servicio_'+this.model.get('id')+' tbody tr td,';
-			selector += '#table_servicio_'+this.model.get('id')+' tfoot tr td';
+		var selector = '#table_servicio_'+this.model.get('id')+' thead #tr_titulos_secciones,';
+			selector += '#table_servicio_'+this.model.get('id')+' tbody,';
+			selector += '#table_servicio_'+this.model.get('id')+' tfoot';
 		/*La función slideToggle solo funciona con td, no con table, tr, thead, tbody no tfoot*/
-		this.$(selector).slideToggle('fast');
+		this.$(selector).fadeToggle('fast');
 	},
 	eliminarSeccion 		: function (e) {
 		/*El argumento e, es el span para elliminar
@@ -130,12 +124,7 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		  setTimeout*/
 		setTimeout(function() {
 			here.$('.importe').val(importe).trigger(jQuery.Event('change'));
-		}, 10);
-		
-	},
-	validarTypeNumber	: function (e) {
-		// console.log(e.currentTarget.type, $(e.currentTarget).val(), e);
-		// validarInput(e.currentTarget.type, $(e.currentTarget).val(), e);
+		}, 10);		
 	}
 });
 
@@ -144,22 +133,26 @@ app.VistaTrServ = app.VistaTrServicio.extend({
 	plantillaDefault  : _.template($('#tds_servicio').html()),
 	events  : {
 		'click .checkbox_servicio'  : 'apilarServicio',
+		'click .span_eliminarNuevo' : 'eliminarNuevo'
 	},
 	apilarServicio  : function (elem) {
 		/*Desabilitar la seleccion del servicio*/
 		$(elem.currentTarget).attr('disabled',true);
-		// this.$tbody_servicios_seleccionados.append(
-		// 	'<tr>' + 
-		// 		this.plantillaSeleccionado( this.model.toJSON() )
-		// 	+ '</tr>' 
-		// );
 
 		/*Creación de la vista de servicio cotizado*/
 		var vistaCotizarServicio = new app.VistaCotizarServicio({model:this.model});
+		
 		this.$tbody_servicios_seleccionados.append(vistaCotizarServicio.render().el);
-		// VistaTrTablaServ.setElement( this.$el.find('#servicio_'+this.model.get('id')) );
 
 		this.$el.css('color','#CCC');
+	},
+	autoApilar 	: function () {
+		this.$el.css('display', 'table-row');
+		this.$('.checkbox_servicio').click();
+	},
+	eliminarNuevo : function () {
+		if ( !this.$('.checkbox_servicio').is(':disabled') )
+			this.model.destroy();
 	}
 });
 
@@ -168,124 +161,84 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	el : '.contenedor_principal_modulos',
 
 	events : {
-			
-			'click     #cliente'     : 'buscarCliente',     //Cuando escribes una letra, despliega un menu de sugerencias
-			'click 	   #guardar'	   : 'guardarCotizacion', //Guarda la cotización
-			'click     #todos'	     : 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
-			'click     #vistaPrevia' : 'vistaPrevia',
-			'click     #bserv'       : 'completarServicio',
-			'keyup     #cliente'     : 'borrar',     //Cuando escribes una letra, despliega un menu de sugerencias
-			'keyup     #bserv'       : 'sinCoincidencias',
-			'blur      #titulo'      : 'titulo',
-			'keypress  #titulo'      : 'soloLetras',
-			'click     #delete'      : 'eleminiarServicios',
-			'keypress  #cliente'     : 'soloLetras',        //Valida que en el campo cliente haya solo letras
+		/*Descomentar si se requiere al representante en la,
+		  cotización*/
+		// 'change     #busqueda'     	: 'buscarRepresentante',
+		'click 	   #guardar'	   	: 'guardar',
+		'click     .todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
+		'click     #vista-previa' 	: 'vistaPrevia',
 
-			/*Botones del thead los servicios que se están cotizando*/
-			'click .span_toggleAllSee'	 : 'conmutarVistas',
-			'click .span_deleteAll'	 	: 'eliminarVistas',
-			
-			/*'click     .span_eliminar'   : 'eliminarServicio',*/  //Elimina un servicio de la tabla servicios cotizando
+		/*Botones del thead los servicios que se están cotizando*/
+		'click .span_deleteAll'	 		: 'eliminarServicios',
+		'click .span_eliminar_servicio' : 'eliminarServicio',
+		'click .span_toggleAllSee'	 	: 'conmutarServicios',
+		
+		'change     .importe'     : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
 
-			
-			'change     .importe'       : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
+		'change 	#precio_hora' : 'dispararCambio',
+		'mousewheel #precio_hora' : 'dispararCambio',
+		'blur 		#precio_hora' : 'dispararCambio',
 
+		'change 	.input-tfoot' : 'calcularTotal',
+		'mousewheel .input-tfoot' : 'calcularTotal',
+		'blur 		.input-tfoot' : 'calcularTotal',
 
-			'change 	#precio_hora' : 'dispararCambio',
-			'keyup 		#precio_hora' : 'dispararCambio',
-			'mousewheel #precio_hora' : 'dispararCambio',
-			'click 		#precio_hora' : 'dispararCambio',
-			'focus 		#precio_hora' : 'dispararCambio',
+		// modal nuevo cliente
+		'click #button_saveClient' : 'guardarCliente',
 
-			'change 	.input-tfoot' : 'calcularTotal',
-			'keyup 		.input-tfoot' : 'calcularTotal',
-			'mousewheel .input-tfoot' : 'calcularTotal',
-			'click 		.input-tfoot' : 'calcularTotal',
-			'focus 		.input-tfoot' : 'calcularTotal',
-
-			'click .span_eliminar_servicio' : 'eliminarVista',	
+		'click #cancelar'	: 'cancelar'
 	},
 
 	initialize : function () {
-		var fecha = new Date();   var dia=0;       var mes=0;
-		/* Le damos formato a la fecha para que lo muestre en el campo fecha*/
-		(fecha.getDate()<10) ? dia = '0'+fecha.getDate()      : dia = fecha.getDate();
-		(fecha.getMonth()<10)? mes = '0'+(fecha.getMonth()+1) : mes = (fecha.getMonth()+1);
+		this.listenTo(app.coleccionCotizaciones, 'reset', function () {
+			var folio = app.coleccionCotizaciones.establecerFolio();
+			this.$('input[name="folio"]').val(folio);
+			this.$('#h4_folio').text('Folio: '+ folio).fadeIn('fast');
+		});
 
-		this.$('#fecha').val(dia+'/'+mes+'/'+fecha.getFullYear());
-		/* Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar*/
-		// this.$tablaServicios = this.$('#listaServicios');
-		/*Invocamos el metodo para cargar y pintar los servicios*/
-		this.cargarServiciosCo();
+		this.listenTo(app.coleccionServicios, 'reset', this.cargarServicios);
 
+		this.render();
+		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
+		// // this.$tablaServicios = this.$('#listaServicios');
 		this.contadorAlerta = 1;
 
-		// this.$('#table_servicios').tablesorter({
-		// theme: 'blue',
-		// 	widgets: ["zebra", "filter"],
-		// 	widgetOptions : {
-		// 		filter_external : '.search-services',
-		// 		filter_columnFilters: false,
-		// 		filter_saveFilters : true,
-		// 		filter_reset: '.reset'
-		// 	}
-		// });
+		localStorage.clear();
 	},
+	render : function () {
+		this.$('#formPrincipal').html( $('#plantilla-formulario').html() );
+		
+		// Invocamos el metodo para cargar y pintar los servicios
+		this.cargarServicios();
 
-	render : function () { return this; },
+		this.cargarPlugins();
 
-	titulo : function()
-	{
-			$('#htitulo').val($('#titulo').val());
+		this.$('#fecha').val( formatearFechaUsuario(new Date()) );
+		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#titulo').val('Cotizaicón No. '+(Math.random()).toFixed(3) *1000);
+
+		/*FOLIO. En la cración de una cotización ocurrira el fetch,
+		  pero cuando se edite una cotización no se realizará.
+		  Esto es porque el la longitud de la colección en la
+		  creción de la cotizacion es 0, pero en la cosulta, la
+		  longitud es diferente mayor*/
+		if (app.coleccionCotizaciones.length == 0) {
+			app.coleccionCotizaciones.fetch({reset:true});
+		};
+
+		return this;
 	},
-	cargarServicioCo	: function (serviciosCotizacion) {
-		 /*....................Instanciamos un modelo servicios y le pasamos el modelo.............*/
-				var vistaTrServ = new app.VistaTrServ( { model:serviciosCotizacion } );
-				/*..Pintamos el modelo en la vista servicio mendiante una herencia al metodo render de la vista servicio...*/
-				this.$('#tbody_servicios').append( vistaTrServ.render().el );
+	cargarServicio	: function (servicio) {
+		/*....................Instanciamos un modelo servicios y le pasamos el modelo.............*/
+		var vistaTrServ = new app.VistaTrServ( { model:servicio } );
+		/*..Pintamos el modelo en la vista servicio mendiante una herencia al metodo render de la vista servicio...*/
+		this.$('#tbody_servicios').append( vistaTrServ.render().el );
 	},
-
-	cargarServiciosCo : function () {
+	cargarServicios 	: function () {
 		/*....hacemos un ciclo each a la colección pasandole cada modelo de servicio para poder pintarlo en la tabla......*/
-			this.$('#tbody_servicios').html('');
-			app.coleccionServicios.each(this.cargarServicioCo, this);
+		this.$('#tbody_servicios').html('');
+		app.coleccionServicios.each(this.cargarServicio, this);
 	},
-
-	// eliminarServicio : function (elemento)
-	// {
-	//  // var serviciosCotizados = pasarAJson($('.filas').serializeArray());
-	// 			/*.....Activamos el servicio de nuevo de la lista en la tablaServicios*/
-	// 	 $('#listaServicios #'+$(elemento.currentTarget).attr('id')).attr('disabled',false);
-	// 	 /*....Establecemos en checkbox oculto a falso y asi poder seleccionarlo de nuevo.....*/
-	// 	 $('#listaServicios #'+$(elemento.currentTarget).attr('id')).attr('checked',false);
-	// 	 $(elemento.currentTarget).parents('tr').remove();
-	// },
-
-	// eleminiarServicios : function(event)
-	// {
-	// 	 var ides = document.getElementsByName('todos');
-	// 	 var array = new Array();
-	// 	 for (var i = 0; i < ides.length; i++) 
-	// 	 {
-	// 			if ($(ides[i]).is(':checked')) {
-	// 				 array.push(ides[i]);
-	// 			};
-	// 	 };
-
-	// 	 for (var i = 0; i < array.length; i++) 
-	// 	 {
-	// 			$(array[i])
-	// 			.parents('tr')
-	// 			.children('.iconos-operaciones')
-	// 			.children('.btndelete')
-	// 			.click();
-	// 	 };
-
-	// 	 $('#todos').attr('checked', false);
-	// 	 event.preventDefault(); 
-	// },
-
-	calcularSubtotal : function () {
+	calcularSubtotal 	: function () {
 		var total = 0,
 			decimales;
 		/*Cada cambio en cualquiera de los importes activará los campos,
@@ -295,7 +248,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		/*Despues de haber obtenido los importes desactivamos nuevamente
 		  los campos*/
 		this.$('.importe').attr('disabled',true);
-		console.log();
+		
 		/*...¿Es un array de importes?...*/
 		if($.isArray(array.importes)) {    
 			// ...Si es cierto iteramos sobre los importes....
@@ -308,12 +261,12 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				this.$('#subtotal').val(total.toFixed(2));
 
 				/*Formateamos subtotal para mostrarlo*/
-				total = '' + total.toFixed(2);
-				total = total.split('.');
-				decimales = total[1];
-				total = conComas(total[0].split(''));
+				// total = '' + total.toFixed(2);
+				// total = total.split('.');
+				// decimales = total[1];
+				// total = conComas(total[0].split(''));
 				
-				this.$('#label_subtotal').text( '$'+total+'.'+decimales );
+				this.$('#label_subtotal').text( '$'+conComas(total.toFixed(2)) );
 		} else {	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
 			/*Evaluamos si hay algun valor en el objeto.
 			  Si no lo hay colocamos un cero, puesto que
@@ -327,32 +280,36 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				this.$('#subtotal').val(Number(array.importes).toFixed(2));
 
 				/*Formateamos subtotal para mostrarlo*/
-				total = '' + Number(array.importes).toFixed(2);
-				total = total.split('.');
-				decimales = total[1];
-				total = conComas(total[0].split(''));
+				// total = '' + Number(array.importes).toFixed(2);
+				// total = total.split('.');
+				// decimales = total[1];
+				// total = conComas(total[0].split(''));
 				
 				/*Formateamos subtotal para mostrarlo*/
-				this.$('#label_subtotal').text( '$'+total+'.'+decimales );
+				this.$('#label_subtotal').text( '$'+conComas(Number(array.importes).toFixed(2)) );
 			};
 			
 		}
 		this.calcularTotal();
 	},
-	calcularTotal : function () {
-		var valores = this.$('.input-tfoot'),
-			total = Number($(valores[0]).val()),
+	calcularTotal 		: function () {
+		var valores = this.$('.input-tfoot');
+		/*El capo Descuento es un input number, por lo que cuando se escribe
+		  un número con letras, el campo lo rechaza y adopta el valor ''*/
+		if ($(valores[1]).val() == '') {
+			alerta('El campo Descuento solo acepta números', function () {});
+			$(valores[1]).val('0');
+		};
+		var	total = Number($(valores[0]).val()),
 			desc  = Number($(valores[1]).val()) / 100,
 			iva   = Number($(valores[2]).val()) / 100,
 			decimales;
 
 		total = total - total * desc;
 		total = total + total * iva;
-		total = '' + total.toFixed(2);
-		total = total.split('.');
-		decimales = total[1];
-		total = conComas(total[0].split(''));
-		this.$('#label_total').text( '$'+total+'.'+decimales );
+		this.total = total.toFixed(2); // Sirve para la clase contrato
+		
+		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
 
 		this.calcularTotalHoras();
 	},
@@ -366,305 +323,512 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			return total;
 		}());
 	},
-	marcarTodosCheck : function(elemento) {        
-			marcarCheck(elemento);
+	marcarTodosCheck 	: function(e) {        
+			marcarCheck(e, '#tbody_servicios_seleccionados');
 	},
-
-	buscarCliente : function (elemento) {
-		/*..Establecemos global el array de clientes por que nos servira en el metodo buscarRepresentante...*/
-		clientes = new Array();  var cont  = 0;
-		/*..Iteramos la coleccionDeClientes y Obtenemos a todos los clientes en un array...*/
-			for(i in app.coleccionDeClientes)
-			{
-					clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;
-			};
-			/*...EL array obtenido lo usamos para un autocomplete..*/
-			console.log(clientes);
-			$('#cliente').autocomplete({ source: clientes});
-			var esto = this;
-			/*...Ahora obtenemos el nombre del cliente que seleccionamos de la lista y lo pasamos 
-					 a otra función para que se encargue de buscar a su representante..*/
-			$( "#cliente" ).on( "autocompleteselect", function( event, ui ) {
-					esto.buscarRepresentante(ui.item.value);
-			});
+	/*No se está usando*/buscarRepresentante 		: function (e) {
+		var here = this,
+			representante = app.coleccionRepresentantes.findWhere({ idcliente:$(e.currentTarget).val() });
+		if (representante) {
+			this.$('#nombreRepresentante').val(representante.get('nombre'));
+			this.$('#idrepresentante').val(representante.get('id'));
+		} else{
+			alerta('El cliente seleccionado no tiene representante (<b>Requerido</b>)', function () {});
+		};
 	},
+	vistaPrevia 		: function(e) {
+		localStorage.clear();
 
-	completarServicio : function() {
-		var completar=new Array();
-		
-		for(i in app.coleccionDeServicios)
-		{
-			 completar[i] = app.coleccionDeServicios[i].nombre;
-		}
-		$('#bserv').autocomplete({ source : completar});
-		var esto = this;
-		$( "#bserv" ).on( "autocompleteselect", function( event, ui ) { esto.buscarServicio(ui.item.value); });
-
-	},
-	buscarServicio : function(elemento) {
-			var modeloServicio = app.coleccionServicios.where({ nombre : elemento});
-			var vistaServicioCotizacion = new app.VistaServicioCotizacion( { model: modeloServicio[0] } );
-			this.$tablaServicios.html('');
-			this.$tablaServicios.append( vistaServicioCotizacion.render().el );
-	},
-
-	sinCoincidencias  : function (e) {
-		if(e.keyCode===8)
-		{
-			this.cargarServiciosCo();
-		}
-	},
-
-	// Validamos que el campo #cliente solo contenga letras
-		soloLetras : function(e) {
-			key = e.keyCode || e.which;
-			tecla = String.fromCharCode(key).toLowerCase();
-			letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-			especiales = "8-37-39-46";
-			tecla_especial = false
-			for(var i in especiales)
-			{
-					 if(key == especiales[i])
-					 {
-							 tecla_especial = true;
-							 break;
-					 }
-			 }
-			 if(letras.indexOf(tecla)==-1 && !tecla_especial)
-			 {
-					 return false;
-			 }         
-		},
-
-		borrar : function(e) {
-			if(e.keyCode===8)
-			{          
-				$('#idcliente')       . val( '' );
-				$('#idrepresentante') . val( '' );
-				$('#representante')   . val( '' );    
-			}          
-		},
-
-		buscarRepresentante : function(pcliente) {
-				var idcliente     = ( ( app.coleccionClientes.findWhere       ( { 'nombreComercial' : pcliente  } ) ).toJSON() ).id ;
-				var representante = ( ( app.coleccionRepresentantes.findWhere ( { 'idcliente'       : idcliente } ) ).toJSON() )    ;
-				if(representante)  
-				{
-					$('#idcliente')       . val( idcliente            );
-					$('#idrepresentante') . val( representante.id     );
-					$('#representante')   . val( representante.nombre ); 		
-				}
-		},
-
-		vistaPrevia : function(elemento) {
-				localStorage.clear(); 
-				var modeloservicios = pasarAJson($('.filas').serializeArray());
-				var longitud = modeloservicios.id;
-		
-				var f = new Date();
-				var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
-				modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
-				modelocotizacion.idempleado = '46';
-				app.coleccionLocalCotizaciones.create
-				(
-						modelocotizacion,
-						{
-							wait: true,
-							success: function (data)
-							{ 
-								console.log('exito');
-								for(i in longitud)
-								{   
-										app.coleccionLocalServicios.create
-										(                           
-												{     
-														idcotizacion : data.get('id'),  
-														idservicio   : modeloservicios.id[i],
-														duracion     : modeloservicios.duracion[i],
-														cantidad     : modeloservicios.cantidad[i],
-														precio       : modeloservicios.precio[i],
-														descuento    : modeloservicios.descuento[i]                          
-												},
-												{ 
-														wait:true,
-														success:function(exito)
-														{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
-																window.open("formatoCotizacion");
-																console.log('Fue exito');
-														},
-														error:function(error)
-														{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o 
-																preguntale a la API que ¡onda! :/ ..*/
-																console.log('Fue error ',error);
-														}
-												}
-										);
-								};
-							},
-							error: function (error) {}
-						}
-				);
-			elemento.preventDefault();
-		},
-
-		/*..Una vez que tenemos lista la cotizacion nos toca el turno de guardala en la base de datos :D ...*/
-		guardarCotizacion : function (elemento) {
-			
-			var forms = this.$('.form_servicio');
-			for (var i = 0; i < forms.length; i++) {
-				console.log(pasarAJson($(forms[i]).serializeArray()));
-			};
+		var json = this.obtenerDatos(),
+			self = this;
+		/*La función obtenerDatos devuelve un json
+		  de los datos básicos de la cotización y
+		  los datos de las secciones para la coti-
+		  zación. obtenerDatos rompe su ejecución
+		  si no se llegara a especificar un cliente,
+		  por lo que devolverá undefined, en ese caso
+		  en ésta funcion rompemos la ejecución para
+		  evitar crear una cotización innecesaria*/
+		if (!json) {
 			return;
-			var f = new Date();
-			var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
+		};
 
-			modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
-			modelocotizacion.idempleado = '65';
-		 
-			/*...Ahora obtenemos el form de cada fila de la tabla servicios cotizando y lo pasamos a un array..*/
-			var serviciosCotizados = pasarAJson($('.filas').serializeArray());
-			/*..Como en el array serviciosCotizados no podemos usar el length entonces obtenermos el array de id´s
-					de los servicios de la tabla y ahora este array si nos dejara usar length y asi poder iterar sobre el array
-					serviciosCotizados ...*/
-			var longitud = serviciosCotizados.id;
-			$('#registroCotizacion')[0].reset();
-			var self = this;
-			 Backbone.emulateHTTP = true; //Variables Globales
-			 Backbone.emulateJSON = true; //Variables Globales 
-			 app.coleccionCotizaciones.create
-			 (
-					modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
-					{
+		app.coleccionCotizaciones_L.create(json.datos, {
+			wait: true,
+			success: function (exito) {
+				for(i in json.secciones) {   
+					app.coleccionServicios_L.create(json.secciones[i], { 
 						wait:true,
-						success:function(exito)
-						{
-							/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
-							Backbone.emulateHTTP = true; //Variables Globales
-							Backbone.emulateJSON = true; //Variables Globales 
-							/*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
-							for(i in longitud)
-							{	
-								app.coleccionServiciosCotizados.create
-								(		           			
-									{     //El exito.get('id') obtiene el id de la cotización que se acaba de crear 
-											 // y ahora todos los servicios que estan dentro de este ciclo le pertenece a esa cotizacion acabada de crear
-										idcotizacion : exito.get('id'),  
-										idservicio   : serviciosCotizados.id[i],
-										duracion     : serviciosCotizados.duracion[i],
-										cantidad     : serviciosCotizados.cantidad[i],
-										precio       : serviciosCotizados.precio[i],
-										descuento    : serviciosCotizados.descuento[i]		           			
-									},
-									{ 
-										wait:true,
-										success:function(exito)
-										{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
-											if(self.aumentarContador() === longitud.length)
-											{ 
-												confirmar('La Cotizacón '+modelocotizacion.titulo+' se guardo con exito <br> ¿Desea crear otra?', 
-												function(){ 
-																		$('#tbody_servicios_seleccionados').html(''); 
-																		self.cargarServiciosCo();
-																	}, 
-												function(){ location.href='cotizaciones_consulta';} );  
-											}
-											
-										},
-										error:function(error)
-										{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o preguntale a la API que ¡onda! :/ ..*/
-												
-												if(self.aumentarContador() == longitud.length)
-												{
-													confirmar('Ocurrio un error al intentar registrar la Cotización de '+modelocotizacion.titulo+'<br><b>¿Desea volver a intentelo?</b>',
-													function () {/*El sistema dejará modificar los datos ni redirigirá o otro lado*/},
-													function () {
-														location.href = 'cotizaciones_consulta';
-													});
-												}
-										}
-									}
-								);
-								 
+						success:function(exito) {
+							if (self.aumentarContador() == json.secciones.length) {
+								self.contadorAlerta = 1;
+								window.open("formatoCotizacion");
 							};
-							Backbone.emulateHTTP = false; //Variables Globales
-							Backbone.emulateJSON = false; //Variables Globales
-
+							// console.log('Fue exito');
 						},
-						error:function(error)
-						{	/*..Tu modelo Cotizacion no se creo por lo tanto el modelo servicio cotizado Tampoco :( ..*/
-							console.log('Fue error ',error);
+						error:function(error) {
+							// console.log('Fue error ',error);
 						}
-					}
-			 ); //Fin de app.coleccionCotizaciones
-			Backbone.emulateHTTP = false; //Variables Globales
-			Backbone.emulateJSON = false; //Variables Globales
-			localStorage.clear();         
-	 		elemento.preventDefault();
+					});
+				};
+			},
+			error: function (error) {}
+		});
+		e.preventDefault();
+	},
+	cancelar			: function () {
+		location.href = 'cotizaciones_consulta';
+	},
+	guardar 	: function (e) {
+		var json = this.obtenerDatos(),
+			self = this;
 
-	}, //Fin del metodo guardarCotizacion
+		/*La función obtenerDatos devuelve un json
+		  de los datos básicos de la cotización y
+		  los datos de las secciones para la coti-
+		  zación. obtenerDatos rompe su ejecución
+		  si no se llegara a especificar un cliente,
+		  por lo que devolverá undefined, en ese caso
+		  en ésta funcion rompemos la ejecución para
+		  evitar crear una cotización innecesaria*/
+		if (!json) {
+			return;
+		};
 
-	aumentarContador : function() {
-		return this.contadorAlerta++;
+		json.datos.status = true;
+		json.datos.visibilidad = true;
+		// $('nav:eq(1)').text(JSON.stringify(json));
+		// return false;
+		$('#block').toggleClass('activo');
+		 Backbone.emulateHTTP = true;
+		 Backbone.emulateJSON = true; 
+		 //Hacemos un CREATE con los datos primarios de la cotización
+		 app.coleccionCotizaciones.create(json.datos, {
+			wait:true,
+			success:function(exito){
+				self.guardarSeccion(exito.get('id'), json.secciones);
+			},
+			error:function(error){
+				// console.log('Fue error ',error);
+			}
+		});
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
+		localStorage.clear();         
+		e.preventDefault();
+	},
+	obtenerDatos	: function () {
+		var forms = this.$('.form_servicio'),
+			/*Añadir (, #idrepresentante) si se requiere
+			  al representante*/
+			json  = pasarAJson(this.$('#titulo, #busqueda').serializeArray()),
+			f = new Date();
+		/*Cortafuego para forzar establecer los siguientes datos*/
+			/*Añadir || json.idrepresentante == '' si se requiere al
+			  representante*/
+		if (json.titulo == '' || json.idcliente == '') {
+			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
+			return false; // Terminamos el flujo del código
+		};
+		// $('nav:eq(1)').text(JSON.stringify(json));
+		json = { secciones : [], datos : '' };
+
+		// Datos básicos
+			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
+			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
+
+		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
+		if (!forms.length) {
+			alerta('Seleccione al menos un <b>servicio</b> para cotizarlo', function () {});
+			return false; // Terminamos el flujo del código
+		};
+		/*Servicios cotizados*/
+			for (var i = 0; i < forms.length; i++) {
+				json.secciones.push( pasarAJson($(forms[i]).serializeArray()) );
+			};
+
+		// Dato basura
+		delete json.datos.todos;
+
+		json.datos.version = 1;
+
+		return json;
 	},
 	/*Funciones creadas por geyser*/
-		conmutarVistas 	: function () {
-			var spans = $('.todos:checked'); /*Obtenemos todos los checkbox activados*/
-			if (spans) {
-				for (var i = 0; i < spans.length; i++) {
-					/*Hacemos clic en los span correspondientes a los trs checkeados.
-					  la vista de cada tr recibirá el evento clic y ejecutará la 
-					  funcion correspondiente*/
-					this.$('.iconos-operaciones #'+$(spans[i]).val().split('/')[1]).click();
-				};
+	guardarSeccion	: function (idCotizacion, secciones) {
+		var self = this;
+		for (var i = 0; i < secciones.length; i++) {
+			secciones[i].idcotizacion = idCotizacion;
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionServiciosCotizados.create(secciones[i], {
+				wait	: true,
+				success	: function (exito) {
+					if (self.aumentarContador() == secciones.length) {
+						self.guardado();
+					};
+					// ok('La seccion: <b>'+exito.toJSON().seccion+'</b> ha sido guardada');
+				},
+				error	: function (error) {
+					if (self.aumentarContador() == secciones.length) {
+						self.noGuardada();
+					};
+					// error('Error al guardar seccion: <b>'+error.toJSON().seccion+'</b>');
+				}
+			});
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
+		};
+	},
+	guardado		: function () {
+		var self = this;
+		// Desbloqueamos todos los botones
+		$('#block').toggleClass('activo');
+		alerta('¡Cotización guardada!', function () {
+			confirmar('<b>¿Deseas crear otra cotización?</b>', function () {
+				// Necesitamos resetear la coleccion para,
+				// traer nuevamento todos los datos junto
+				// con el folio más actual. Debemos terminar
+				// el listener del evento reset que se encuentra
+				// en la función initialize para poder usar la
+				// funcion reset() que elimina todo los modelo
+				// en la coleccion.
+				app.coleccionCotizaciones.off().reset();
+				// Inicializamos todo nuevamente para otra
+				// cotizacion
+				self.initialize();
+			}, function () {
+				location.href = 'cotizaciones_consulta';
+			});
+		});
+	},
+	noGuardada	: function () {
+		$('#block').toggleClass('activo');
+		alerta('La cotización ha sido guardada, pero ocurrieron algunos errores<br>Recomendamos que revice la cotización en la consulta de cotizaciones', function () {
+			location.href = 'cotizaciones_consulta';
+			this.resetearContador();
+		});
+	},
+	aumentarContador 	: function() {
+		return this.contadorAlerta++;
+	},
+	resetearContador	: function () {
+		this.contadorAlerta = 1;
+	},
+	conmutarServicios 		: function () {
+		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
+		if (spans) {
+			for (var i = 0; i < spans.length; i++) {
+				/*Hacemos clic en los span correspondientes a los trs checkeados.
+				  la vista de cada tr recibirá el evento clic y ejecutará la 
+				  funcion correspondiente*/
+				this.$('.iconos-operaciones #'+$(spans[i]).attr('id').split('/')[1]).click();
 			};
-			// this.$('.span_toggleSee').click();
-		},	
-		eliminarVista 	: function (e) {
+		};
+		// this.$('.span_toggleSee').click();
+	},	
+	eliminarServicio 		: function (e) {
 
-			/*Antes de eliminar la vista buscamos el servicio correspondiente en la lista de servicios*/
-			this.$(
-				'#table_servicios #'
-				+this.$(e.currentTarget)
-				.attr('id')
-			)							/*Obtenemos el imput checkbox*/
-			.attr('disabled',false) 	/*Desmarcamos el checkbox*/
-			.attr('checked',false) 		/*Activamos el checkbox*/
-			.parents('tr')				/*Buscamos tr que contiene el checkbox*/
-			.css('color','#333'); 		/*Reestablecemos el color original del texto*/
+		/*Antes de eliminar la vista buscamos el servicio correspondiente en la lista de servicios*/
+		this.$(
+			'#table_servicios #'
+			+this.$(e.currentTarget)
+			.attr('id')
+		)							/*Obtenemos el imput checkbox*/
+		.attr('disabled',false) 	/*Desmarcamos el checkbox*/
+		.attr('checked',false) 		/*Activamos el checkbox*/
+		.parents('tr')				/*Buscamos tr que contiene el checkbox*/
+		.css('color','#333'); 		/*Reestablecemos el color original del texto*/
 
-			/*En vez de eliminar la vista del servicio que se está cotizando
-			  lo hacemos en esta clase y no en su propia clase, debido a que
-			  necesitamos ejecutar la función calcularSubtotal que se encuentra
-			  en esta clase.*/
-			this.$(e.currentTarget).parents('.td_servicio').remove();
-			this.calcularSubtotal();
-		},
-		eliminarVistas 	: function () {
-			var spans = $('.todos:checked'); /*Obtenemos todos los checkbox activados*/
-			if (spans.length) { /*Solo si hay servicios marcados*/
-				var here = this;
-				confirmar('¿Los servicios marcados están siendo cotizados, estás seguro de eliminarlos?',
-					function () {
-						for (var i = 0; i < spans.length; i++) {
-							/*Hacemos clic en los span correspondientes a los trs checkeados.
-							  la vista de cada tr recibirá el evento clic y ejecutará la 
-							  funcion correspondiente*/
-							here.$('.iconos-operaciones #'+$(spans[i]).val().split('/')[0]).click();
-						};
-					},
-					function () {});
-			};
-			// this.$('.span_eliminar_servicio').click();
-		},	
-		dispararCambio	: function (e) {
-			var precioHora = $(e.currentTarget).val();
-			// $('input[name="precio_hora"]').val(precioHora);
-			this.$('.precio_hora').val(precioHora).trigger('change');
-			// this.$('.importe').trigger('change');
-			// this.$('.number').trigger('change');
+		/*En vez de eliminar la vista del servicio que se está cotizando
+		  lo hacemos en esta clase y no en su propia clase, debido a que
+		  necesitamos ejecutar la función calcularSubtotal que se encuentra
+		  en esta clase.*/
+		this.$(e.currentTarget).parents('.td_servicio').remove();
+		this.calcularSubtotal();
+	},
+	eliminarServicios 		: function () {
+		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
+		if (spans.length) { /*Solo si hay servicios marcados*/
+			var here = this;
+			confirmar('¿Los servicios marcados están siendo cotizados, estás seguro de eliminarlos?',
+				function () {
+					for (var i = 0; i < spans.length; i++) {
+						/*Hacemos clic en los span correspondientes a los trs checkeados.
+						  la vista de cada tr recibirá el evento clic y ejecutará la 
+						  funcion correspondiente*/
+						here.$('.iconos-operaciones #'+$(spans[i]).attr('id').split('/')[0]).click();
+					};
+				},
+				function () {});
+		};
+		// this.$('.span_eliminar_servicio').click();
+	},	
+	dispararCambio		: function (e) {
+		var precioHora = $(e.currentTarget).val();
+		/*El capo Precio/Horas es un input number, por lo que cuando se escribe
+		  un número con letras, el campo lo rechaza y adopta el valor ''*/
+		if (precioHora == '') {
+			alerta('El campo <b>Precio/Horas</b> solo acepta números', function () {});
+			$(e.currentTarget).val('300');
+		};
+		/*Los campo con class .precio_hora están ocultos pero son
+		  fundamentales para los cálculos de los totales de cada
+		  sección, por tanto los actualizamos.*/
+		this.$('.precio_hora').val(precioHora).trigger('change');
+	},
+	guardarNuevoServ 	: function (e) {
+		// Procedemos solo si el evento que ejecuta esta 
+		// función es un keypress y su valor es 13 (tecla 
+		// Enter) y de tipo entero.
+		if(e.keyCode === 13){
+			var self = this;
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionServicios.create({
+				nombre : this.$(e.currentTarget).val(),
+			},{
+				wait 	: true,
+				success : function (model) {
+					// Establecemos como verdadero la propiedad
+					// eliminar, la cual servirá para mostrar un boton
+					// (<span>) , que se encuentra en la plantilla,
+					// para eliminar el servicio que se esta agregando.
+					model.set({eliminar:true});
+					// Creamo un nuevo objeto de la clase VistaTrServ,
+					// pasamos el modelo crado manualmente, el id que
+					// se establecemos en le objeto no existe en la
+					// colección, así que deberemos prepararnos para
+					// no crear conplictos en la vista previa de la
+					// cotización. El nobmre es el que se ha escrito
+					// en el campo busqueda servicio. 
+					var vistaTrServ = new app.VistaTrServ({
+						model : model
+					});
+					// Apilamos el nuevo servicio al principio de la lista
+					self.$('#tbody_servicios').prepend( vistaTrServ.render().el );
+					// Seleccionamos manualmente el servicio					
+					vistaTrServ.autoApilar();
+					// [Importante] Este paso dispara un evento al plugin
+					// tablesorter, para referenciar el nuevo servicio y
+					// puede ser filtrado. El primer parametro es el elemento
+					// tr sel servicio que recuperamos con la vista de 
+					// Backbone que hemos creado. El segundo resetea los
+					// eventos de tablesorter para que el nuevo elemento
+					// sea tomando en cuanta en las filtraciones. Ir a la
+					// dicumentacion de tablesorter addRows para más info.
+					self.$('#table_servicios').trigger('addRows', [vistaTrServ.$el, true]);
+					// Limpiamos el campo de busqueda de servicios,
+					// y despues disparamos el evento change para volver
+					// a ver todos los servicios.
+					self.$(e.currentTarget).val('').trigger('change');
+					// y escondemos el mensaje de instrucciones
+					self.$('#alert_anadirNuevioServicio').hide();
+				},
+				error 	: function (model) {
+					alerta('El servicio no pudo ser creado', function(){});
+				}
+			});
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
 		}
+	},
+	guardarCliente 		: function (e) {
+		// Validamos los campos antes de guardar al
+		// cliente. Si uno de ellos retorna verdadero
+		// significa que unos de los datos es incorrectos
+		if( textoObligatorio( this.$('#nombreC') )
+			|| validarEmail( this.$('#email') )
+			|| validarTelefono( this.$('#telefono') )
+		) {
+			alerta('Revise los campos',function () {});
+			e.preventDefault();
+			return;
+		};
+		
+		// obtenemos todos los datos del form del modal
+		var json = pasarAJson( this.$('#form-newClient').serializeArray() ),
+			// preparamos un objeto para el teléfono.
+			telefono = {
+				numero 	:'',
+				tipo 	:'',
+				tabla 	:''
+			},
+			// Guardamos una referencia al modal, lo usaremos varias veces
+			$modal = this.$('#modal-newClient'),
+			self = this;
 
+		// si el objeto trae un teléfono pasamos los datos al objeto
+		// telefono que hemos preparado
+		if (json.numero != '') {
+			telefono.numero	= json.numero;
+			telefono.tipo	= json.tipo;
+			telefono.tabla	= json.tabla;
+		};
+		// y eliminamos del objeto original las propiedades del telefono
+		delete json.numero;
+		delete json.tipo;
+		delete json.tabla;
 
-}); //Fin de la vista Nueva Cotización
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		app.coleccionClientes.create(json, {
+			wait 	: true,
+			success : function (model) {
+				ok('El nuevo cliente se a guardado como <b>prospecto</b>.');
+				// Actualizamos el option del cliente nuevo. No se actualozará,
+				// la selección porque es una imagen del option original (el
+				// que sí se actualiza).
+				self.$('#busqueda')[0]
+					.selectize
+					.updateOption('nuevo',{
+						id 	  :model.get('id'),
+						title :model.get('nombreComercial')
+					});
+					// El plugin no actualiza el value del cliente nuevo 
+					// seleccionado porque es una imagen del original,
+					// (verificar api selectize.js). Lo realizamos manualmente
+					self.$('select option[value="nuevo"]').val( model.get('id') );
+				// guardamos el telefono si en usuario lo ha proporcionado
+				if (telefono.numero != '') {
+					// cramos una nueva propiedad en el objeto telefono que es
+					// para saber de quién es el telefono.
+					telefono.idpropietario = model.get('id');
+					Backbone.emulateHTTP = true;
+					Backbone.emulateJSON = true;
+					app.coleccionTelefonos.create(telefono, {
+						wait 	: true,
+						success : function () { },
+						error 	: function () {
+							error('No se guardo el teléfono. '+
+								  '<b>Puede seguir con el registro de la cotización</b>, '+
+								  'después puede editar los datos del clinete');
+						}
+					});
+					Backbone.emulateHTTP = false;
+					Backbone.emulateJSON = false;
+				};
+				$modal.modal('hide');/*Resetea el fomulario*/
+			},
+			error 	: function () {
+				error('El cliente no ha sido guardado.');
+				$modal.find('.close').click();/*Resetea el fomulario*/
+			}
+		});
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
 
-app.vistaNuevaCotizacion = new app.VistaNuevaCotizacion();
+		e.preventDefault();
+	},
+	cargarPlugins 		: function () {
+		// Preparamos un id temporal en caso de que
+		// se agreguen nuevos servicios y poder
+		// realizar cálculos con ellos
+		this.idTemporalServ = app.coleccionServicios.establecerIdSiguiente();
+		
+		var self = this,
+			// Referenciamos el <div> modal
+			$modal = self.$('#modal-newClient');	
+			// Evita poder salir del modal (javascrip modal bootstrap)
+			$modal.modal({ backdrop : false });
+			// La linea anterior muestra el modal; la escondemos!
+			$modal.modal('hide');
+
+		loadSelectize_Client( '#busqueda',{
+			valueField  : 'id',
+			labelField  : 'title',
+			searchField : 'title',
+			maxItems    : 1,
+			create      : function (value) {
+				// Permitimos crear nuevos elementos,
+				// (sino deberiamos cambiamos la función
+				// por false). El parametro value es el
+				// texto que escribimos.
+
+				var eliminarIntentoCliente = function () {
+						// Al cerrar el modal sin guardar al 
+						// cliente tendremos que eliminar del 
+						// <select> el nombre que escribimos 
+						// removeOption func. del plugin selectize
+						self.$('#busqueda')[0]
+							.selectize
+							.removeOption('nuevo');
+						$modal.find('form')[0].reset();
+					};
+				// Llenamos automaticamente el campo nombre 
+				// comercial
+				$modal.find('#nombreC').val(value);
+				$modal.modal('show');
+				$modal.find('#button_cancelClient,.close').
+					on('click', function () {
+						eliminarIntentoCliente();
+					});
+				$modal.on('hidden.bs.modal', function () {
+					eliminarIntentoCliente();
+				});
+				// Debe retornarse el siguiente objeto, para ser
+				// apilado junto con los otros options, sino
+				// retornamos nada el plugin eliminará toda la
+				// lista.
+				return {
+					id 		:'nuevo',
+					title 	:value
+				}
+			},
+			onItemRemove 	: function () {
+			// onItemRemove -evento del plugin- se
+			// ejecuta cuando cerramos el modal, para
+			// no dejar al cliente que hemos decidido
+			// no guardar.
+				this.focus();
+			}
+		},(function () {
+			// Quitamos de la colección los clientes
+			// con visibilidad 0
+			var options = app.coleccionClientes
+			  .remove(app.coleccionClientes.where({
+			  	visibilidad:'0'
+			})).toJSON();
+			return options;
+		})() );
+
+		this.$('#table_servicios').tablesorter({
+			theme: 'blue',
+			widgets: ["zebra", "filter"],
+			widgetOptions : {
+				filter_external : '.search-services',
+				filter_columnFilters: false,
+				filter_saveFilters : true,
+				filter_reset: '.reset'
+			}
+		}).bind('filterEnd', function () {
+			// filterEnd es un evento propio del plugin;
+			// se dispara cuando se ha realizado la filtracion,
+			// por ello utilizamos la función bind para ligar
+			// este evento a la tabla cuando se hace una filtración.
+
+			// Si! la filtracion no ha dado resultados (solo en ese caso)
+			// creamos un listener del input busqueda de servicios y
+			// mistramos el mensaje que da intrucciones al usuario.
+			// cada vez que se escribe en el input se ejecuta la función 
+			// guardarNuevoServ. [Importante]: también debe terminarse
+			// el listener del input buqueda de servicio, esto es porque
+			// ocurrirá dos veces el evento keypress y se agregaría
+			// el nuevo servicio y una cadena vacia.
+
+			// Si no!, la filtración ha resultados. en tal caso, se deja de
+			// escuchar el evento keypress del campo de busqueda y 
+			// escundemos las instrucciones al usuario.
+			if (!self.$('#table_servicios tbody tr:visible').length) {
+				self.$('.search-services').on('keypress', function (e) {
+					self.guardarNuevoServ(e);
+					self.$('.search-services').off('keypress');
+				});
+				self.$('#alert_anadirNuevioServicio').show();
+			} else {
+				self.$('.search-services').off('keypress');
+				self.$('#alert_anadirNuevioServicio').hide();
+			};
+		});
+	}
+});

@@ -1,4 +1,5 @@
 <div id="contenedor">
+<div id="block"> <p>Por favor espere...</p> </div>
 <input type="checkbox" id="btn_menu" checked>
 
 <nav id="menu" role="navigation">

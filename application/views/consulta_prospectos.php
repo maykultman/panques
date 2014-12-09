@@ -1,15 +1,14 @@
     <div id="div_fullHeight"> 
         <div id="posicion_infotd">
             <div id="clientes" class="wrapper">                            
-                <table id="tbla_cliente" class="tablesorter table-striped">
+                <table id="tbla_cliente" class="table table-striped tablesorter">
                     <!-- BOTON PARA PRUEBAS -->
                     <!-- <tr><td colspan="7"><button id="obtenerEliminados">Clientes eliminados</button></td></tr> -->
                     <thead>
                         <tr>
-                            <th class="sorter-false"> Todos <input id="todos" type="checkbox" name="todos"></th>
-                            <th class="sorter-false"></th>
-                            <th class="sorter-false">
-                                <input class="form-control search" type="search" placeholder="Nombre comercial" data-column="all">
+                            <th class="sorter-false"><input type="checkbox" class="todos"></th>
+                            <th class="sorter-false" colspan="2">
+                                <input class="form-control input-sm search" type="search" placeholder="Nombre comercial" data-column="all">
                                 <span class="icon-search busqueda"></span>
                             </th>
                             <th class="sorter-false">Giro</th>
@@ -66,8 +65,8 @@
      <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
 
-        <td class="td_tablaPricipal"><input type="checkbox" class="todos" name="todos" value="<%- id %>"></td>
-        <td>
+        <td class="td_tablaPricipal"><input type="checkbox" name="todos" value="<%- id %>"></td>
+        <td class="td_tablaPricipal">
             <% if (typeof foto != "undefined") { %>
                 <img src="<?=base_url().'<%- foto %>'?>" alt="" class="foto">
             <%} else{%>
@@ -132,7 +131,7 @@
                             <td style="padding:0px 10px 0px 10px;">
                                 Cliente desde
                                 <label>
-                                    <% var Año_Mes_dia = fechaCreacion.split('-'); %>
+                                    <% var Año_Mes_dia = fechacreacion.split('-'); %>
                                     <%- Año_Mes_dia[2] %>
                                     <% for (var i = 0; i < meses.length+1; i++) { %>
                                         <% if (i == Año_Mes_dia[1]) { %>
@@ -270,23 +269,23 @@
                                     <td id="telefonos">
                                         <label class="editar editando">No especificado</label>
                                         <div class="editar" id="formularioTelefono">
-                                            <div class="input-group">
-                                                <input type="text" id="numeroNuevo" class="form-control" name="numero" placeholder="Nuevo Teléfono" minlength="10" maxlength="20">
-                                                <div class="input-group-btn">
-                                                    <select id="tipoNuevo" class="btn btn-default" name="tipo">
-                                                        <option value="No definido" selected style="display:none;">Tipo</option>
-                                                        <option value="Casa">Casa</option>
-                                                        <option value="Fax">Fax</option>
-                                                        <option value="Movil">Movil</option>
-                                                        <option value="Oficina">Oficina</option>
-                                                        <option value="Personal">Personal</option>
-                                                        <option value="Trabajo">Trabajo</option>
-                                                        <option value="Otro">Otro</option>
-                                                    </select>
-                                                    <button id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-xs-4 col-sm-6">
+                                                        <input type="text" id="numeroNuevo" class="form-control" name="numero" onkeyup="validarTelefono(this)" placeholder="De 10 a 20 dígitos">
+                                                    </div>
+                                                    <div class="col-xs-4 col-sm-4">
+                                                        <select id="tipoNuevo" class="form-control" name="tipo">
+                                                            <option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xs-4 col-sm-2">
+                                                        <div class="btn-group" role="group" aria-label="..." style="margin:0px !important;">
+                                                            <button type="button" id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <br>
                                         </div>
                                     </td>
                                     <td class="respuesta">
@@ -301,10 +300,14 @@
                                             <a class="editar editando" href="#">
                                                 <%- email %>
                                             </a>
-                                            <input type="text" id="mail" class="form-control editar" name="email" value="<%- email %>">
+                                            <div class="form-group">
+                                                <input type="text" id="mail" class="form-control editar" onkeyup="validarEmail(this)" name="email" value="<%- email %>">
+                                            </div>
                                         <% } else { %>
                                             <label class="editar editando">No especificado</label>
-                                            <input type="text" id="mail" class="form-control editar" name="email">
+                                            <div class="form-group">
+                                                <input type="text" id="mail" class="form-control editar" onkeyup="validarEmail(this)" name="email">
+                                            </div>
                                         <% }; %>
                                     </td>
                                     <td class="respuesta">
@@ -385,8 +388,9 @@
                         </div>
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <!-- -------SEGUNDA PAGINA DE INFORMACION DEL CLIENTE------- --> 
-                        <div class="visible oculto">
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
+                        <div id="div_seccionContactos" class="visible oculto">
+                            <button type="button" id="btn_nuevoContacto" class="btn btn-default" data-toggle="modal" data-target="#modalNuevoContacto<%- id %>">Nuevo representante o contacto</button>
+                            <br>
                             <div id="divContactos">
                                 <!--AQUÍ VAN LOS CONTACTOS-->
                             </div>
@@ -400,73 +404,88 @@
     
     <script type="text/template" id="modalContacto">
         <div class="modal fade" id="modalNuevoContacto<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Nuevo representante o contacto</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="formNuevoContacto" role="form">
-                                Tipo de contacto
-                                <!--Revisar los comentarios de la funcion verContactos() 
-                                    del archivo VistaCliente.js para aclarar dudas-->
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="persona" value="representante" style="width:auto;margin: 4px 0 0;margin-left: -20px;"
-                                            <% if (existeRepr) { %>
-                                                disabled
-                                            <% } %>
-                                            > Representante
-                                        </label>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Nuevo representante o contacto</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span class="label label-info">Todos los campos son requeridos</span>
+                        <br>
+                        <form id="formNuevoContacto" role="form">
+                            Tipo de contacto
+                            <!--Revisar los comentarios de la funcion verContactos() 
+                                del archivo VistaCliente.js para aclarar dudas-->
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="persona" value="representante" style="width:auto;margin: 4px 0 0;margin-left: -20px;"
+                                        <% if (existeRepr) { %>
+                                            disabled
+                                        <% } %>
+                                        > Representante
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="persona" value="contacto" style="width:auto;margin: 4px 0 0;margin-left: -20px;" 
+                                        <% if (existeRepr) { %>
+                                            checked
+                                        <% } %>
+                                        > Contacto
+                                    </label>
+                                </div>
+                            <!--/fin comentario-->
+                            <br>
+                            <div class="form-group">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Email</label>
+                                <input type="text" id="nuevoMail" class="form-control" onkeyup="validarEmail(this)" name="correo" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Cargo</label>
+                                <input type="text" class="form-control" name="cargo" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Teléfono (de 10 a 20 dígitos)</label>
+                                <!--<div class="input-group">
+                                    <input type="text" id="nuevoNumero" class="form-control" name="numero" placeholder="Número telefónico" minlength="10" maxlength="20">
+                                    <div class="input-group-btn">
+                                        <select class="btn btn-default" name="tipo">
+                                            <option value="No definido" selected style="display:none;">Tipo</option>
+                                            <option value="Casa">Casa</option>
+                                            <option value="Fax">Fax</option>
+                                            <option value="Movil">Movil</option>
+                                            <option value="Oficina">Oficina</option>
+                                            <option value="Personal">Personal</option>
+                                            <option value="Trabajo">Trabajo</option>
+                                            <option value="Otro">Otro</option>
+                                        </select>
                                     </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="persona" value="contacto" style="width:auto;margin: 4px 0 0;margin-left: -20px;" 
-                                            <% if (existeRepr) { %>
-                                                checked
-                                            <% } %>
-                                            > Contacto
-                                        </label>
+                                </div>-->
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" id="nuevoNumero" name="numero" onkeyup="validarTelefono(this)" placeholder="">
                                     </div>
-                                <!--/fin comentario-->
-                                <br>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="nombre" placeholder="Nombre">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" id="nuevoMail" class="form-control" name="correo" placeholder="Correo">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="cargo" placeholder="Cargo">
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" id="nuevoNumero" class="form-control" name="numero" placeholder="Número telefónico" minlength="10" maxlength="20">
-                                        <div class="input-group-btn">
-                                            <select id="tipo" class="btn btn-default" name="tipo">
-                                                <option value="No definido" selected style="display:none;">Tipo</option>
-                                                <option value="Casa">Casa</option>
-                                                <option value="Fax">Fax</option>
-                                                <option value="Movil">Movil</option>
-                                                <option value="Oficina">Oficina</option>
-                                                <option value="Personal">Personal</option>
-                                                <option value="Trabajo">Trabajo</option>
-                                                <option value="Otro">Otro</option>
-                                            </select>
-                                            <!--<button id="otroTelefono" class="btn btn-default"><label class="icon-uniF476"></label></button>-->
-                                        </div>
+                                    <div class="col-xs-3">
+                                        <select id="tipo" class="form-control" name="tipo">
+                                            <option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn_guardarContacto">Guardar</button>
-                            <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
-                        </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btn_guardarContacto">Guardar</button>
+                        <button type="button" class="btn btn-default" id="btn_cerrarNuevoContacto" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
+        </div>
     </script>
 
     <script type="text/templates" id="plantilla_contactos">
@@ -476,10 +495,12 @@
                 <button type="button" class="btn btn-primary" id="btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
             </div>
         </div>
+
         <h3><%- etiqueta %></h3>
+        
         <div class="editar">Precione la tecla <kbd>Enter</kbd> para actualizar</div>
         <br>
-        <br>
+
         <table class="table table-striped tbla_contacto">
             <tr class="trContacto">
                 <td class="atributo"><b>Nombre:</b></td>
@@ -497,7 +518,9 @@
                 <td class="divDatoContacto">
                     <% if (typeof correo != 'undefined' && correo != '') { %>
                         <a class="editar editando" href="<%- correo %>"><%- correo %></a>
-                        <input type="text" id="mail" class="form-control editar" name="correo" value="<%- correo %>">
+                        <div class="form-group">
+                            <input type="text" id="mail" onkeyup="validarEmail(this)" class="form-control editar" name="correo" value="<%- correo %>">
+                        </div>
                     <% } else{ %>
                         <label class="editar editando">No especificado</label>
                     <% }; %>
@@ -527,7 +550,7 @@
                 <td class="atributo"><b>Teléfonos:</b></td>
                 <td class="divDatoContacto" id="telefonos">
                     <label class="editar editando">No especificado</label>
-                    <div class="editar">
+                    <!--<div class="editar">
                         <div class="input-group">
                             <input type="text" id="numeroNuevo" class="form-control" name="numero" placeholder="Nuevo Teléfono" minlength="10" maxlength="20">
                             <div class="input-group-btn">
@@ -545,6 +568,25 @@
                             </div>
                         </div>
                         <br>
+                    </div>-->
+                    <div class="editar">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-6">
+                                    <input type="text" id="numeroNuevo" class="form-control" name="numero" onkeyup="validarTelefono(this)" placeholder="De 10 a 20 dígitos">
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <select id="tipoNuevo" class="form-control" name="tipo">
+                                        <option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-2">
+                                    <div class="btn-group" role="group" aria-label="..." style="margin:0px !important;">
+                                        <button type="button" id="enviarTelefono" class="btn btn-default"><label class="icon-save"></label></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </td>
                 <td class="respuesta">
@@ -566,24 +608,24 @@
             <div class="div_telefono"><%-numero%></div>
         </div>
         <div class="editar">
-            <div class="input-group">
-                <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" placeholder="<%-numero%>" minlength="10" maxlength="20">
-                <div class="input-group-btn">
-                    <select id="tipo" class="btn btn-default" name="tipo">
-                        <option value="No definido" selected style="display:none;"><%-tipo%></option>
-                        <option value="Casa">Casa</option>
-                        <option value="Fax">Fax</option>
-                        <option value="Movil">Movil</option>
-                        <option value="Oficina">Oficina</option>
-                        <option value="Personal">Personal</option>
-                        <option value="Trabajo">Trabajo</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                    <button type="button" id="eliminar" class="btn btn-default"><label class="icon-uniF478"></label></button>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-6">
+                        <input type="text" id="numero" class="form-control" name="numero" value="<%-numero%>" onkeyup="validarTelefono(this)" placeholder="De 10 a 20 dígitos">
+                    </div>
+                    <div class="col-xs-4 col-sm-4">
+                        <select id="tipo" class="form-control" name="tipo">
+                            <option value="No definido" selected style="display:none;"><%-tipo%></option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4 col-sm-2">
+                        <div class="btn-group" role="group" aria-label="..." style="margin:0px !important;">
+                            <button type="button" id="eliminar" class="btn btn-default"><label class="icon-uniF478"></label></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
     </script>
 
     <script type="text/template" id="serviciosI">
