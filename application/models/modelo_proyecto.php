@@ -2,7 +2,8 @@
 	// require_once 'Modelo_crud.php';
 	class Modelo_proyecto extends CI_Model
 	{
-		public function __construct(){}
+		public function __construct()
+        {}
 
 		# DATOS DEL MODELO PROYECTO
 		# $post['idcliente'   ], $post['nombre'    ], 
@@ -33,6 +34,15 @@
         /*Anterior mente decia delete y le cambie a destroy*/
         public function destroy (  $id  ) 
         {   
+            // si existe un directorio para los archivos del
+            // proyecto lo eliminamos.
+            // IMPORTANTE. La carpeta debe estas vacia para
+            // eliminarla
+            if ( is_dir("./archivos/proyectos/".$id) ) {
+                /*CI*/$this->load->helper('file');
+                /*CI*/delete_files("./archivos/proyectos/".$id, TRUE);
+                /*PHP*/rmdir("./archivos/proyectos/".$id);
+            }
             return $this->db->delete('proyectos', array('id' => $id)  ); 
         }
 

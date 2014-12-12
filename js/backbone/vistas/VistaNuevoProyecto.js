@@ -554,7 +554,7 @@ app.VistaArchivos = Backbone.View.extend({
 	},
 	initialize 				: function () {
 		this.listenTo(app.coleccionProyectos, 'add', this.guardar);
-		this.listenTo(app.coleccionProyectos, 'destroy', this.eliminarArchivos);
+		// this.listenTo(app.coleccionProyectos, 'destroy', this.eliminarArchivos);
 
 		this.$inputArchivos			= this.$('#inputArchivos');
 		this.$tbody					= this.$('tbody');

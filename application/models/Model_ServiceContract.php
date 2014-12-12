@@ -1,7 +1,7 @@
 <?php
- require_once 'Modelo_crud.php';
+ // require_once 'modelo_crud.php';
 
- class Model_ServiceContract extends Modelo_crud
+ class Model_ServiceContract extends CI_Model
  {
  	public function __construct(){}
 

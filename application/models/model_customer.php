@@ -7,12 +7,13 @@
 		function insert_customer($post)
 		{	
 			$post['fechacreacion'] = date('Y-m-d');
+			
 			$x=0; # Este es un contador para mi array de inserción...	
 			# Se almacena campos obligatorios en la tabla de clientes... 						
 			$cliente = $this->db->insert('clientes', array('nombreComercial'=>$post['nombreComercial'], 
 														 'tipoCliente'=>$post['tipoCliente'],
 														 'fechacreacion'=>$post['fechacreacion'],
-														 'visibilidad'=>$post['visibilidad'],));
+														 'visibilidad'=>$post['visibilidad']));
 			# devolvemos su id_cliente para registrar sus atributos...
 			$idcliente = $this->db->insert_id();
 
@@ -138,7 +139,8 @@
 
 				$query = $this->db->get_where('cliente_atributo', $where);				
 
-				if(empty($query->result())) # El resultado de la query esta vacía?...
+				$resultado = $query->result();
+				if(empty($resultado)) # El resultado de la query esta vacía?...
 				{   # Si la query esta vacía, entonces ese atributo para ese cliente no existe y lo creamos...
 					$query = $this->db->insert('cliente_atributo',  array('idcliente'=>$id,'idatributo' => $dato[0]->id, 'dato' => $put[key($put)]));						
 			    }

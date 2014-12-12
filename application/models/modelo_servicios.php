@@ -2,8 +2,7 @@
 	/**
 	* Operaciones en la tabla Servicios de la bd...
 	*/
-	require_once 'modelo_crud.php';
-	class Modelo_servicios extends Modelo_crud
+	class Modelo_servicios extends CI_Model
 	{		
 		function __construct()
 		{
@@ -11,8 +10,7 @@
 		}
 
 		public function insert_s($post)
-		{  
-			//var_dump($post); die();
+		{  //var_dump($post); die();
 
 			// if(!$post['nombre'][0])
 			// {
@@ -20,20 +18,9 @@
 			// 	return $this->get_s($id); 						
 			// }
 
-			// var_dump($post); die();
-			// if(!is_array($post['nombre'])) {
-			
-			// 	for ($j = 0 ; $j<count($post['nombre']); $j++) {
-			// 			$this->db->insert('servicios', $post); 
-			// 			$resp[$j] = $this->db->insert_id();		
-			// 	}
-			// 	return $resp;
-			// }
-
 			if(!is_array($post['nombre']))
 			{
-				$this->db->insert('servicios', $post); 	
-				$id = $this->db->insert_id();
+				$this->db->insert('servicios', $post); 	$id = $this->db->insert_id();
 				return $this->get_s($id); 	
 			}
 			
@@ -73,7 +60,13 @@
 
 		public function get_s($id=FALSE)
 		{
-			$reply = $this->where( $id );     
+            $reply = 'result';
+            if(is_numeric($id))
+            {
+                $this->db->where( 'id', $id );
+                $reply = 'row';
+            }
+
             return $this->db->get  ( 'servicios' )->$reply();   			
 		}
 		# Esta funcion le sirve a la interfaz de modulo cliente_nuevo y consulta_cliente...

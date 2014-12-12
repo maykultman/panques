@@ -1,21 +1,40 @@
 <?php
-	require_once 'Modelo_crud.php';
-	class Model_rol extends Modelo_crud
-	{
-		public function __construct(){}
+    class Model_rol extends CI_Model
+    {
+        public function __construct(){}
 
-		#				            DATOS DEL MODELO ROL
-		#				 $post ['nombre']........$post ['descripcion']
-		
-		public function create($args)
+        #                           DATOS DEL MODELO ROL
+        #                $post ['nombre']........$post ['descripcion']
+        
+        public function create($args)
         {   
             $this->db->insert('roles', $args);
-            return $this->get($this->db->insert_id());     
+            return $this->get($this->db->insert_id());
+
+            // Guarda varios roles
+            /*if(!$args['nombre'][0])
+            {
+                $this->db->insert('roles', $args);
+                return $this->get( $this->db->insert_id() );
+            }
+
+            for($i = 0; $i<count($args['nombre']); $i++)
+            {
+                $this->db->insert('roles', $args );  
+                $id[$i] = $this->db->insert_id();
+
+            }
+            return $id;*/
         }
         
         public function get ( $id = FALSE ) 
-        {  
-           $reply = $this->where( $id );  # Ejecutamos el metodo where...      
+        {
+            $reply = 'result';
+            if(is_numeric($id))
+            {
+                $this->db->where( 'id', $id  );
+                $reply = 'row';
+            }
            return $this->db->get  ( 'roles' )->$reply();  # Este metodo ejecuta get con y sin ID...
         }
 
@@ -29,4 +48,4 @@
             return $this->db->delete('roles', array('id' => $id)  ); 
         }
 
-	} # Fin de la clase Modelo_proyecto
+    } # Fin de la clase Modelo_proyecto
