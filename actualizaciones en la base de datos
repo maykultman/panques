@@ -1,0 +1,3 @@
+ALTER TABLE `servicios_proy` ADD `seccion` TEXT NOT NULL AFTER `idservicio`, ADD `descripcion` TEXT NOT NULL AFTER `seccion`, ADD `horas` INT NOT NULL AFTER `descripcion`;
+
+ALTER TABLE `multimedia` CHANGE `fecha` `fechacreacion` DATE NOT NULL;

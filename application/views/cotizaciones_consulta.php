@@ -67,7 +67,7 @@
 		<td class="icon-operaciones">
 			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
 			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver cotización"></span>
-			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
+			<span class="icon-uniF7D5 span_descargar"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
 			<span class="icon-uniF5E2 span_editar"  	data-toggle="tooltip" data-placement="top" title="Pasar a contrato" id="pasaracontrato"><input type="hidden" value="<%= id %>"></span>
 			<span class="icon-edit2 span_editar"    	data-toggle="tooltip" data-placement="top" title="Editar" id="soloeditar"><input type="hidden" value="<%= id %>"></span>
 			<form>

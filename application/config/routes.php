@@ -88,3 +88,5 @@ $route[ 'api_telefonos'				  ] = 'telefono/api';
 $route[ 'api_telefonos/(:num)'		  ] = 'telefono/api/$1';
 $route[ 'api_usuarios'           	  ] = 'usuarios/api';
 $route[ 'api_usuarios/(:num)'    	  ] = 'usuarios/api/$1';
+
+$route['escritorio/pdf_cotizacion/(:any)'] = 'pdf_cotizacion/get_cotizacion/$1';

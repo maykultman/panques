@@ -214,8 +214,8 @@ function urlFoto () {
 
 /*Cálculo de fechas*/
 function calcularDuracion (fechainicio,fechafinal) {
-    var valorFechaInicio = new Date(fechainicio).valueOf();
-    var valorFechaEntrega = new Date(fechafinal).valueOf();
+    var valorFechaInicio = fechainicio.valueOf();
+    var valorFechaEntrega = fechafinal.valueOf();
     var valorFechaActual = new Date().valueOf();
     var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - excluirDias(fechainicio, fechafinal);
     var hoy = new Date();
@@ -232,8 +232,8 @@ function calcularDuracion (fechainicio,fechafinal) {
 };
 function excluirDias (fechainicio, fechafinal) {
     var contador = 0;
-    var valorFechaInicio = new Date(fechainicio).valueOf();
-    var valorFechaEntrega = new Date(fechafinal).valueOf();
+    var valorFechaInicio = fechainicio.valueOf();
+    var valorFechaEntrega = fechafinal.valueOf();
     var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
     var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     for(var i = 0; i<duracion; i++){
@@ -376,6 +376,72 @@ function loadDatepicker (selector) {
             'Noviembre',
             'Diciembre'
         ]
+    });
+}
+function loadDatepickerRange (selectorFrom, selectorTo) {
+    $( selectorFrom ).datepicker({
+        dateFormat:'d MM, yy',  
+        dayNamesMin:[
+            'Do',
+            'Lu',
+            'Ma',
+            'Mi',
+            'Ju',
+            'Vi',
+            'Sá'
+        ],
+        monthNames:[
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ],
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function( selectedDate ) {
+            $( selectorTo ).datepicker( "option", "minDate", selectedDate );
+        }
+    });
+    $( selectorTo ).datepicker({
+        dateFormat:'d MM, yy',  
+        dayNamesMin:[
+            'Do',
+            'Lu',
+            'Ma',
+            'Mi',
+            'Ju',
+            'Vi',
+            'Sá'
+        ],
+        monthNames:[
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ],
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function( selectedDate ) {
+            $( selectorFrom ).datepicker( "option", "maxDate", selectedDate );
+        }
     });
 }
 // Quita los espacion en blanco de las extremos de una cadena

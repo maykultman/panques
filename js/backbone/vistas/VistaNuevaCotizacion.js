@@ -165,7 +165,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		  cotización*/
 		// 'change     #busqueda'     	: 'buscarRepresentante',
 		'click 	   #guardar'	   	: 'guardar',
-		'click     .todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
+		'click     .todos'	     	: 'marcarTodosCheck',
 		'click     #vista-previa' 	: 'vistaPrevia',
 
 		/*Botones del thead los servicios que se están cotizando*/
@@ -173,7 +173,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		'click .span_eliminar_servicio' : 'eliminarServicio',
 		'click .span_toggleAllSee'	 	: 'conmutarServicios',
 		
-		'change     .importe'     : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
+		'change     .importe'     : 'calcularSubtotal',
 
 		'change 	#precio_hora' : 'dispararCambio',
 		'mousewheel #precio_hora' : 'dispararCambio',
@@ -313,7 +313,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		this.calcularTotalHoras();
 	},
-	calcularTotalHoras	: function (argument) {
+	calcularTotalHoras	: function () {
 		var horas = this.$('.horas'),
 			total = 0;
 		this.$('#totalHoras').val(function () {
@@ -551,7 +551,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
 		if (spans.length) { /*Solo si hay servicios marcados*/
 			var here = this;
-			confirmar('¿Los servicios marcados están siendo cotizados, estás seguro de eliminarlos?',
+			confirmar('Los servicios marcados están siendo cotizados, ¿estás seguro de eliminarlos?',
 				function () {
 					for (var i = 0; i < spans.length; i++) {
 						/*Hacemos clic en los span correspondientes a los trs checkeados.
@@ -724,7 +724,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		// Preparamos un id temporal en caso de que
 		// se agreguen nuevos servicios y poder
 		// realizar cálculos con ellos
-		this.idTemporalServ = app.coleccionServicios.establecerIdSiguiente();
+		// this.idTemporalServ = app.coleccionServicios.establecerIdSiguiente();
 		
 		var self = this,
 			// Referenciamos el <div> modal

@@ -1,5 +1,9 @@
 var app = app || {};
 
+app.ModeloRol = Backbone.Model.extend({
+	urlRoot	:'http://crmqualium.com/api_roles'
+});
+
 var ColeccionRoles = Backbone.Collection.extend({
 	model	: app.ModeloRol,
 

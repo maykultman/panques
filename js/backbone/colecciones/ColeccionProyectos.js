@@ -1,5 +1,9 @@
 var app = app || {};
 
+app.ModeloProyecto = Backbone.Model.extend({
+	urlRoot:'http://crmqualium.com/api_proyectos'
+});
+
 var ColeccionProyectos = Backbone.Collection.extend({
 	
 	model	: app.ModeloProyecto,

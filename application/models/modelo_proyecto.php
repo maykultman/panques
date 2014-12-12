@@ -1,6 +1,6 @@
 <?php
-	require_once 'Modelo_crud.php';
-	class Modelo_proyecto extends Modelo_crud
+	// require_once 'Modelo_crud.php';
+	class Modelo_proyecto extends CI_Model
 	{
 		public function __construct(){}
 
@@ -16,9 +16,13 @@
         }
         
         public function get ( $id = FALSE ) 
-        {  
-           $reply = $this->where( $id );  # Ejecutamos el metodo where...      
-           return $this->db->get  ( 'proyectos' )->$reply();  # Este metodo ejecuta get con y sin ID...
+        {   
+            $reply = 'result';
+            if(is_numeric($id)) {
+                $this->db->where('id', $id);
+                $reply = 'row';
+            }
+            return $this->db->get( 'proyectos' )->$reply();  # Este metodo ejecuta get con y sin ID...
         }
 
         public function save (  $id,  $put ) 

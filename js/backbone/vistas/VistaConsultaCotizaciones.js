@@ -6,6 +6,7 @@ app.VistaCotizacion = Backbone.View.extend({
 		'click .span_papelera' 			: 'cambiarVisibilidad',
 		'click .span_restaurar' 		: 'cambiarVisibilidad',
 		'click .span_borrar' 			: 'eliminarPermanente',
+		'click .span_descargar' 		: 'descargar',
 		'click .span_vistaPrevia'		: 'vistaPrevia',
 		'click .span_papeleraVersion'	: 'cambiarVisibilidadVersion',
 		'click .span_vistaPreviaVersion': 'vistaPreviaVersion',
@@ -97,7 +98,7 @@ app.VistaCotizacion = Backbone.View.extend({
 			.off()
 			.cambiarStatus();
 	},
-	cambiarVisibilidad : function () {
+	cambiarVisibilidad 	: function () {
 		var self = this;
 		if (this.model.get('visibilidad') == '1') {
 			confirmar('¿Está seguro de que desea eliminar la cotización <b>'
@@ -119,7 +120,7 @@ app.VistaCotizacion = Backbone.View.extend({
 		vista.setElement($(e.currentTarget).parents('li'));
 		vista.cambiarVisibilidad();
 	},
-	eliminarPermanente : function () {
+	eliminarPermanente 	: function () {
 		var self = this;
 		confirmar('La cotización <b>'
 			+this.model.get('titulo')+
@@ -128,6 +129,9 @@ app.VistaCotizacion = Backbone.View.extend({
 				self.model.eliminarPermanente();
 			},
 			function () {});
+	},
+	descargar 			: function () {
+		window.open("pdf_cotizacion/"+this.model.get('id'));
 	},
 	vistaPrevia : function() {
 		localStorage.clear();
@@ -222,22 +226,25 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		this.$('input[name="descuento"]')
 			.val(this.model.get('descuento'));
 
+		// Tenemos las secciones de los servicios lista,
+		// iteramos sobre el array.
 		for(i in secciones) {
-			if (secciones[i].get('idcotizacion') == idcotizacion) {
-				if (idservicio != secciones[i].get('idservicio')) {
-					idservicio = secciones[i].get('idservicio');
-					this.$('#servicio_'+idservicio).click();
-					this.$el
-						.find('#table_servicio_'+idservicio+' tbody')
-						.html('');
-				};
-				json = secciones[i].toJSON();
-				json.preciohora = preciohora;
-				vSeccion = new VistaSeccion();
-				this.$('#table_servicio_'+idservicio+' tbody')
-					.append( vSeccion.render(json).el );
-
+			// Verificamos que solo se haga click una vez sobre la
+			// lista de servicios, en primer lugar la variable
+			// 'idservicio' contiene una cadena vacia por eso se 
+			// hace le click una sola vez por cada servicio.
+			if (idservicio != secciones[i].get('idservicio')) {
+				idservicio = secciones[i].get('idservicio');
+				this.$('#servicio_'+idservicio).click();
+				this.$el
+					.find('#table_servicio_'+idservicio+' tbody')
+					.html('');
 			};
+			json = secciones[i].toJSON();
+			json.preciohora = preciohora;
+			vSeccion = new VistaSeccion();
+			this.$('#table_servicio_'+idservicio+' tbody')
+				.append( vSeccion.render(json).el );
 		}
 		this.$('#precio_hora')
 			.val(preciohora)

@@ -45,6 +45,10 @@ tbody.scrolltbla {
 	width: 398px;
 	
 }
+/*Datos básicos*/
+	section tbody label {
+		font-weight: normal;
+	}
 #roles {
 	
     background-color: #0492e6;
@@ -135,8 +139,8 @@ tbody.scrolltbla {
 		};
 	}
 .icon-eliminar span{
-	float:left;
-	margin-left: 20px;
+	/*float:left;*/
+	/*margin-left: 20px;*/
 	font-size: 15px;
 	padding: 5px;
 	opacity: 1;
