@@ -89,6 +89,15 @@
 				<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
 				<input type="hidden" name="folio">
 				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">
+				<div class="btn-group input-group" data-toggle="buttons">
+					<span class="input-group-addon">Tipo de plan </span>
+					<label class="btn btn-default">
+						<input type="radio" class="btn_plan" name="plan" value="evento" autocomplete="off"> Por Evento
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" class="btn_plan" name="plan" value="iguala" autocomplete="off"> Iguala Mensual
+					</label>
+				</div>
 			</div>
 			<div class="col-md-8">
 				<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
@@ -132,35 +141,58 @@
 					</thead>
 					<tbody id="tbody_servicios_seleccionados">
 						<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
-					</tbody>        
-					<tfoot style="background : #F9F9F9;">
+					</tbody>
+					<tbody style="background : #F9F9F9;">
 						<tr>
+							<td colspan="3" style="min-width: 361px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label></td>
 							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
-							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
-							<td style="text-align: right;">Total horas</td>
-							<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
 							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
 							<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
 							<td class="iconos-operaciones">
-								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
 								<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
 							</td>
 						</tr>
+					</tbody>
+					<!--SEPARACION--><tbody><tr><td colspan="7" rowspan="" headers=""></td></tr></tbody>
+					<thead class="thead_evento thead_visible thead_oculto" style="background : #F9F9F9;">
 						<tr>
 							<td></td>
 							<td></td>
+							<td style="text-align: right;">Total horas</td>
+							<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1" style="visibility: hidden;"></td>
 							<td style="text-align: right;">Precio/Hora</td>
-							<td>
-								<input type="number" class="form-control input-sm" id="precio_hora" name="preciohora" value="300" min="1">
-							</td>
+							<td><input type="number" class="form-control input-sm" id="precio_hora" name="preciotiempo" value="300" min="1"></td>
 							<td> Subtotal </td>
 							<td>
-								<label id="label_subtotal">$0</label>
-								<input type="text" class="form-control input-sm input-tfoot" id="subtotal" style="display:none;" value="0">
+								<label class="label_subtotal">$0</label>
+								<input type="text" class="form-control input-sm input-tfoot" id="subtotal_evento" style="display:none;" value="0">
 							</td>
-							<td> </td>
+							<td></td>
 						</tr>
+					</thead>
+					<thead class="thead_iguala thead_visible thead_oculto" style="background : #F9F9F9;">
+						<tr>
+							<td style="text-align: right;">Precio/Mes</td>
+							<td><input type="number" class="form-control input-sm input-plan" id="precio_mes" name="preciotiempo" value="3000" min="1"></td>
+							<td style="text-align: right;"># de meses</td>
+							<td><input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1"></td>
+							<td> Subtotal </td>
+							<td>
+								<label class="label_subtotal">$0</label>
+							</td>
+							<td></td>
+						</tr>
+					</thead>
+					<!--SEPARACION--><tbody><tr><td colspan="7" rowspan="" headers=""></td></tr></tbody>
+					<tfoot style="background : #F9F9F9;">
 						<tr>
 							<td></td>
 							<td></td>
@@ -180,7 +212,7 @@
 							<td></td>
 							<td> I.V.A. </td>
 							<td style="position: relative;">
-								<input type="number" class="form-control input-sm input-tfoot" value="16" disabled>
+								<input type="number" id="iva" class="form-control input-sm input-tfoot" value="16" disabled>
 								<span class="icon-percent" style="position: absolute; top: 18px; left: 40px; font-size:10px;"></span>
 							</td>
 							<td></td>
@@ -197,6 +229,7 @@
 							<td></td>
 						</tr>
 					</tfoot>
+					
 				</table>
 			</div>
 		</div>      
@@ -224,7 +257,7 @@
 							<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 						</td>
 						<td>
-							<div class="input-group input-group-sm">
+							<div class="input-group input-group-sm input-group-importe">
 								<span class="input-group-addon">$</span>
 								<input type="text" class="form-control importe" name="importes" disabled>
 							</div>
@@ -236,7 +269,7 @@
 					</tr>
 					<tr id="tr_titulos_secciones">
 						<td></td>
-						<td>Sección</td>
+						<td>Sección/Actividad</td>
 						<td>Observaciones</td>
 						<td>Horas</td>
 						<td></td>
@@ -271,7 +304,7 @@
 		<td><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
 		<td><input type="number"    id=""               class="form-control input-sm number precio_hora" style="visibility:hidden;"     min="1"></td>
 		<td>
-			<div class="input-group input-group-sm">
+			<div class="input-group input-group-sm input-group-constoSeccion">
 				<span class="input-group-addon">$</span>
 				<input type="text" class="form-control costoSeccion" disabled>
 			</div>

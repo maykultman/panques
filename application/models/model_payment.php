@@ -7,15 +7,25 @@
 
  	public function create($post)
  	{
- 		
- 		for ($i=0; $i <count($post['pago']) ; $i++) { 
- 			
+ 		if ( is_array($post['pago']) ) {
+ 			for ($i=0; $i <count($post['pago']) ; $i++) {
+	 			$this->db->insert('pagos', 
+	 				array("idcontrato"=>$post['idcontrato'],
+	 					  "fechapago"=>$post['fechapago'][$i],
+	 					  "pago"=>$post['pago'][$i]
+	 					)
+	 			);
+	 		}
+ 		} else {
  			$this->db->insert('pagos', 
  				array("idcontrato"=>$post['idcontrato'],
- 					  "fechapago"=>$post['fechapago'][$i],
- 					  "pago"=>$post['pago'][$i])
- 				);
+ 					  "fechapago"=>$post['fechapago'],
+ 					  "pago"=>$post['pago']
+ 					)
+ 			);
  		}
+ 		
+
  		return true; //$this->get(false);
  	}
 

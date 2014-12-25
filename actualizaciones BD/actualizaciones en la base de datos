@@ -1,0 +1,10 @@
+ALTER TABLE `servicios_proy` ADD `seccion` TEXT NOT NULL AFTER `idservicio`, ADD `descripcion` TEXT NOT NULL AFTER `seccion`, ADD `horas` INT NOT NULL AFTER `descripcion`;
+
+ALTER TABLE `multimedia` CHANGE `fecha` `fechacreacion` DATE NOT NULL;
+-----------------------------------------------------------------------------------------
+04:13 p. m. 19/12/2014
+ALTER TABLE `cotizaciones` CHANGE `preciohora` `preciotiempo` INT(3) NOT NULL;
+
+ALTER TABLE `cotizaciones` ADD `npagos` INT NOT NULL AFTER `preciotiempo`;
+
+ALTER TABLE `cotizaciones` ADD `plan` VARCHAR(20) NOT NULL AFTER `nombreversion`;

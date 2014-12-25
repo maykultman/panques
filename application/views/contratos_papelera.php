@@ -15,7 +15,7 @@
 									</th>
 									<th class="sorter-false">
 										<!-- Títulos -->
-										<input type="search" class="form-control search input-sm" data-column="1" placeholder="Prestaciones">
+										<input type="search" class="form-control search input-sm" data-column="1" placeholder="Servicio solicitado">
 										<span class="icon-search busqueda"></span>
 									</th>
 									<th class="sorter-false">
@@ -49,7 +49,7 @@
 <!-- plantillas -->
 	<script type="text/template" id="tds_contrato">
 		<td><input type="checkbox" name="todos" value="<%= id %>" /></td>
-		<td>	<%=prestaciones%>									</td>
+		<td>	<%=serviciosolicitado%>									</td>
 		<td>	<%=cliente%>								</td>
 		<td>	<%=empleado%>								</td>
 		<td>	<%=folio%>									</td>
@@ -87,7 +87,7 @@
 			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-4">
-					<input type="text" id="prestacion" class="form-control" name="prestaciones" placeholder="Prestaciones">			
+					<input type="text" id="serviciosolicitado" class="form-control" name="serviciosolicitado" placeholder="Servicio solicitado">			
 				</div>
 				<div class="col-md-4">
 					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará">

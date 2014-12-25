@@ -35,7 +35,11 @@ function  limpiarJSON (objeto) {
     return objeto;
 }
 
-/*Debe recibir un objeto Date*/
+/*Debe recibir un objeto Date.
+  La fecha biene con un día aumentado,
+  por eso se resta un día.
+  Si se usa el plugin datepicker bebe saber
+  que regresa la fecha pero con un día aumentado*/
 function formatearFechaUsuario (fechaBD) {
     var value_of = fechaBD.valueOf();
     value_of = value_of + (1*24*60*60*1000);
@@ -60,6 +64,17 @@ function formatearFechaDB (objDate) {
       return objDate.getFullYear() 
        + "-" + (objDate.getMonth() +1) 
        + "-" + (objDate.getDate() +1);
+}
+
+/*Sirve para restar un día al la fecha*/
+function quitarUnDia (fechaBD) {
+    fechaBD = fechaBD.split('-');
+    fechaBD[2] = parseInt(fechaBD[2]) -1;
+    if (fechaBD[2] < 10) {
+        fechaBD[2] = '0' + fechaBD[2];
+    };
+    fechaBD = fechaBD.join('-');
+    return fechaBD;
 }
 
 function fechaAmigable (fecha) {

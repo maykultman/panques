@@ -1,13 +1,6 @@
 	<section class="container-fluid contenedor_principal_modulos">
-		<!-- <section class="secciones1"> -->
-			<form id="formPrincipal">
-		   	</form>
-		<!-- </section>  -->
-		<!-- <section class="secciones2" style="display:none">
-			<h1>Vispre previa del contrato</h1> <button id="cerrar_vistaPrevia">Cerrar vista previa</button>
-			<div id="divVistapreviaContrato">
-			</div>
-		</section>     -->	 
+		<form id="formPrincipal">
+		</form>
 	</section><!-- /.contenedor_principal_modulos -->            
 </div><!-- /.contenedor_modulo -->
 
@@ -49,10 +42,11 @@
 			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-4">
-					<input type="text" id="prestacion" class="form-control" name="prestaciones" placeholder="Prestaciones">			
+					<input type="text" id="serviciosolicitado" class="form-control" name="serviciosolicitado" placeholder="Servicios solicitados">			
 				</div>
 				<div class="col-md-4">
-					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará">
+					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará...">
+						<option value="">Firmará...</option>
 						<option value="enrique">Enrique</option>
 						<option value="willian">William</option>
 					</select>
@@ -110,60 +104,71 @@
 					<table class="table"> <!-- id="mostrarTabla" -->
 						<thead style="background : #F9F9F9;"><!--comutadores-->
 							<tr>
-							<th colspan="6" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a cotizar</label> <label style="float:right; margin-bottom: 0px;">Importe</label></th>
-							<th class="iconos-operaciones">
-								<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
-								<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
-								<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
-							</th>
-						</tr>
+								<th colspan="6" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a contratar</label> <label style="float:right; margin-bottom: 0px;">Importe</label></th>
+								<th class="iconos-operaciones">
+									<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
+									<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
+									<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
+								</th>
+							</tr>
 						</thead>
 						<tbody id="tbody_servicios_seleccionados">
 							<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
 						</tbody>
-						<tbody style="background : #F9F9F9;"><!--comutadores-->
+						<thead class="thead_evento thead_visible thead_oculto" style="background-color: #f9f9f9!important;">
 							<tr>
-								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
-								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
+								<td></td>
+								<td></td>
 								<td style="text-align: right;">Total horas</td>
 								<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody style="background : #F9F9F9;">
+							<tr>
+								<td colspan="3" style="min-width: 361px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios a contratar</label></td>
+								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
 								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
 								<td><input type="text" class="form-control input-sm" style="visibility: hidden;"></td>
 								<td class="iconos-operaciones">
-									<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 									<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
 									<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
 								</td>
 							</tr>
 						</tbody>
-						<tbody> <!-- Separacion -->
-							<tr>
-								<td colspan="7"></td>
-							</tr>
-						</tbody>
-						<thead id="thead_evento" class="thead_oculto" style="background-color: #f9f9f9!important;">
+						<tbody> <!-- Separacion --><tr><td colspan="7"></td></tr></tbody>
+						<thead class="thead_evento thead_visible thead_oculto" style="background-color: #f9f9f9!important;">
 					    	<tr>
 					    		<td colspan="7"><i>Datos para el contrato <b>por evento</b></i></td>
 					    	</tr>
 					    	<tr>
-								<td colspan="7">
+								<td colspan="6">
 									<div class="row">
 										<div class="col-md-3">
+											<small>Fecha inicio pagos</small>
 											<input id="fechaInicioEvento" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos">
-											<!--<input type="hidden" class="fehcaInicioEvento" name="fechainicio">-->
+										</div>
+										<div class="col-md-2">
+											<small>Plazo en días</small>
+											<input type="number" id="plazo"  class="form-control input-sm" name="plazo" min="1" max="" value="15" placeholder="Plazo en días">	
+										</div>
+										<div class="col-md-2">
+											<small>Núm. plazos</small>
+											<input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1" placeholder="Núm. de plazos">
+										</div>
+										<div class="col-md-2">
+											<small>Precio/Hora</small>
+											<input type="number" class="form-control input-sm" id="precio_hora" name="preciotiempo" value="300" min="1" placeholder="Precio/Hora">
 										</div>
 										<div class="col-md-3">
-											<input type="number" id="plazo"  class="form-control input-sm" name="plazo" min="1" max="" placeholder="Plazo en días">	
-										</div>
-										<div class="col-md-3">
-											<input type="number" class="form-control input-sm n_pagos" name="nplazos" min="1" max="" placeholder="Núm. de plazos">	
-										</div>
-										<div class="col-md-3">
+											<small>Vencimiento</small>
 											<input id="vencimientoPlanEvento" class="form-control input-sm datepicker" disabled type="text" placeholder="Vencimiento">
-											<input id="fechafinalEvento" type="hidden">
 										</div>							
 									</div>
 								</td>
+								<td></td>
 					        </tr>
 					        <tr>
 					        	<td colspan="2">No. de Pago</td>
@@ -174,66 +179,71 @@
 					        	</td>
 					        </tr>
 						</thead>
-						<thead id="thead_iguala" class="thead_oculto" style="background-color: #f9f9f9!important;">
+						<thead class="thead_iguala thead_visible thead_oculto" style="background-color: #f9f9f9!important;">
 					    	<tr>
 					    		<td colspan="7"><i>Datos para el contrato <b>iguala mensual</b></i></td>
 					    	</tr>
 					    	<tr>
-								<td colspan="7">
+								<td colspan="6">
 									<div class="row">
-										<div class="col-md-4">
+										<div class="col-md-3">
+    										<small>Fecha inicio</small>
 											<input id="fechaInicioIguala" class="form-control input-sm datepicker" type="text"  placeholder="Fecha inicio pagos">
-											<!--<input type="hidden" class="fehcaInicioIguala" name="fechainicio">-->
 										</div>
-										<div class="col-md-4">
-											<select class="form-control input-sm n_pagos" name="nplazos" placeholder="Mensualidades...">
-											  <option value="1">1 Mes</option>
-											  <option value="3">3 Meses</option>
-											  <option value="6">6 Meses</option>
-											  <option value="12">12 Meses</option>
-											  <option value="18">18 meses</option>
-											  <option value="24">24 meses</option>
-											  <option value="48">48 meses</option>
-											  <option style="display:none;" selected>Mensualidades...</option>
-											</select>	
+										<div class="col-md-3">
+    										<small>Mensualidade</small>
+											<input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1" placeholder="Mensualidades">
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-3">
+    										<small>Pago por mes</small>
+											<input type="number" class="form-control input-sm input-plan" id="precio_mes" name="preciotiempo" value="3000" min="1" placeholder="Pago por mes">
+										</div>
+										<div class="col-md-3">
+    										<small>Vencimiento</small>
 											<input id="vencimientoPlanIguala" class="form-control input-sm datepicker" disabled type="text" placeholder="Vencimiento">
-											<input id="fechafinalIguala" type="hidden">
-										</div>									
+										</div>
 									</div>
-								</td>	       									          			         
+								</td>
+								<td></td>
 					        </tr>
 					        <tr>
-								<td colspan="1">No. de Pago</td>
-								<td colspan="3">Fecha de pago</td>
-								<td colspan="3">Renta Mensual</td>
+								<td colspan="2">No. de Pago</td>
+								<td colspan="2">Fecha de pago</td>
+								<td colspan="2">Renta Mensual</td>
+								<td></td>
 					        </tr>
 						</thead>
-						<tbody id="tbody_pagos_evento" class="tbody_oculto"></tbody>
-						<tbody id="tbody_pagos_iguala" class="tbody_oculto"></tbody>
-						<tbody> <!-- Separacion -->
-							<tr>
-								<td colspan="7">
-									<!-- -->
-								</td>
-							</tr>
-						</tbody>		
-						<tfoot style="background : #F9F9F9;"><!--Precio/Hora - Subtotal-->
+						<tbody id="tbody_pagos_evento" class="tbody_visible tbody_oculto"></tbody>
+						<tbody id="tbody_pagos_iguala" class="tbody_visible tbody_oculto"></tbody>
+						<tbody> <!-- Separacion --><tr><td colspan="7"></td></tr></tbody>
+						<thead class="thead_evento thead_visible thead_oculto" style="background-color: #f9f9f9!important;">
 							<tr>
 								<td></td>
 								<td></td>
-								<td style="text-align: right;">Precio/Hora</td>
-								<td>
-									<input type="number" class="form-control input-sm" id="precio_hora" name="preciohora" value="300" min="1">
-								</td>
+								<td></td>
+								<td></td>
 								<td> Subtotal </td>
 								<td>
-									<label id="label_subtotal">$0</label>
-									<input type="text" class="form-control input-sm input-tfoot" id="subtotal" style="display:none;" value="0">
+									<label class="label_subtotal">$0</label>
+									<input type="text" class="form-control input-sm input-tfoot" id="subtotal_evento" style="display:none;" value="0">
 								</td>
-								<td> </td>
+								<td></td>
 							</tr>
+						</thead>
+						<thead class="thead_iguala thead_visible thead_oculto" style="background-color: #f9f9f9!important;">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td> Subtotal </td>
+								<td>
+									<label class="label_subtotal">$0</label>
+								</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tfoot style="background : #F9F9F9;">
 							<tr>
 								<td></td>
 								<td></td>
@@ -300,7 +310,7 @@
 								<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 							</td>
 							<td>
-								<div class="input-group input-group-sm">
+								<div class="input-group input-group-sm input-group-importe">
 									<span class="input-group-addon">$</span>
 									<input type="text" class="form-control importe" name="importes" disabled>
 								</div>
@@ -312,7 +322,7 @@
 						</tr>
 						<tr id="tr_titulos_secciones">
 							<td></td>
-							<td>Sección</td>
+							<td>Sección/Actividad</td>
 							<td>Observaciones</td>
 							<td>Horas</td>
 							<td></td>
@@ -347,7 +357,7 @@
 			<td><input type="number" 	id=""				class="form-control input-sm number horas" 	 	min="1" value="1">						</td>
 			<td><input type="number" 	id=""				class="form-control input-sm number precio_hora" style="visibility:hidden;"	 	min="1"></td>
 			<td>
-				<div class="input-group input-group-sm">
+				<div class="input-group input-group-sm input-group-constoSeccion">
 					<span class="input-group-addon">$</span>
 					<input type="text" class="form-control costoSeccion" disabled>
 				</div>
@@ -359,10 +369,10 @@
 	<script type="text/template" id="tr_pagos">
 			<td colspan="2"><%- n %></td>
 			<td colspan="2">
-				<%- fecha %>
-				<input type="hidden" name="fechapago" value="<%- fecha2 %>">
+				<%- fechatabla %>
+				<input type="hidden" name="fechapago" value="<%- fechapago %>">
 			</td>
-			<td colspan="3">
+			<td colspan="2">
 				<div class="input-group input-group-sm">
 					<span class="input-group-addon">$</span>
 					<input type="number" id="<%- id %>" min="1" value="<%- pago %>" class="form-control <%- atrClase %>" <%- disabled %>>
@@ -372,6 +382,7 @@
 					</span>
 				</div>
 			</td>
+			<td></td>
 	</script>
 	<script type="text/template" id="plantilla_contrato">
 		<!--fechacreacion: 			<%- formatearFechaUsuario(new Date(fechacreacion)) %>	<br>

@@ -148,12 +148,6 @@
 				<br>
 				<table>
 					<thead>
-						<tr>
-							<th style="width:55%;">Servicios</th>
-							<th style="text-align: center; width:15%;">Horas</th>
-							<th style="text-align: center; width:15%;">P/por hora</th>
-							<th style="text-align: center; width:15%;"></th>
-						</tr>
 					</thead>
 					<tbody>
 					</tbody>
@@ -182,7 +176,7 @@
 	<h2>Detalle</h2>
 	<%- detalles %><br>
 </script>
-<script type="text/template" id="template-filaServicio">
+<script type="text/template" id="template-filaServicioEvento">
 	<tr>
 		<td>
 			<b><%= servicio %></b>
@@ -191,7 +185,20 @@
 		<td style="text-align: center;">
 			<%= horas %>
 		</td>
-		<td style="text-align: center;"><%= preciohora %></td>						
+		<td style="text-align: center;"><%= preciotiempo %></td>						
+		<td class="importe" style="text-align: center;"> <%= importe %>	</td>
+	<tr>
+</script>
+<script type="text/template" id="template-filaServicioIguala">
+	<tr>
+		<td>
+			<%for (var i = 0; i < servicios.length; i++) {%>
+				<b><%= servicios[i].servicio %></b>
+				<ul><%= servicios[i].descripcion %></ul>
+			<%};%>
+		</td>
+		<td style="text-align: center;"><%= pagos %></td>
+		<td style="text-align: center;"><%= pagomes %></td>						
 		<td class="importe" style="text-align: center;"> <%= importe %>	</td>
 	<tr>
 </script>
@@ -272,12 +279,11 @@
  	el : 'body',
  	plantillas	: {
  		detalles 		: _.template($('#template-detalles').html()),
- 		servicio 	: _.template($('#template-filaServicio').html()),
+ 		servicioEvento 	: _.template($('#template-filaServicioEvento').html()),
+ 		servicioIguala 	: _.template($('#template-filaServicioIguala').html()),
  		totales 	: _.template($('#template-tfoot').html()),
  	},
- 	events : {
- 		'click #imprimir' : 'descargar'
- 	},
+ 	events : { },
 
  	initialize : function() {
  		
@@ -295,69 +301,53 @@
 
  		this.horas = 0,
  		app.coleccionCotizaciones_L.fetch();
- 		this.cargarCotizacion();
  		app.coleccionServicios_L.fetch();
- 		this.cargarServicios();
+ 		this.cargarCotizacion();
 
  		localStorage.clear();
- 	},
- 	descargar 	: function () {
- 		var doc = new jsPDF('p','in','letter')
-			, sizes = [12, 16, 20]
-			, fonts = [['Times','Roman'],['Helvetica',''], ['Times','Italic']]
-			, font, size, lines
-			, margin = 0.5 // inches on a 8.5 x 11 inch sheet.
-			, verticalOffset = margin
-			, loremipsum = $('html').html();
-
-			// Margins:
-			// doc.setDrawColor(0, 255, 0)
-			// 	.setLineWidth(1/72)
-			// 	.line(margin, margin, margin, 11 - margin)
-			// 	.line(8.5 - margin, margin, 8.5-margin, 11-margin);
-
-			// the 3 blocks of text
-			for (var i in fonts){
-				if (fonts.hasOwnProperty(i)) {
-					font = fonts[i];
-					size = sizes[i];
-
-					lines = doc.setFont(font[0], font[1])
-								.setFontSize(size)
-								.splitTextToSize('<!doctype html><html>'+loremipsum+'</html>', 7.5);
-					// Don't want to preset font, size to calculate the lines?
-					// .splitTextToSize(text, maxsize, options)
-					// allows you to pass an object with any of the following:
-					// {
-					// 	'fontSize': 12
-					// 	, 'fontStyle': 'Italic'
-					// 	, 'fontName': 'Times'
-					// }
-					// Without these, .splitTextToSize will use current / default
-					// font Family, Style, Size.
-					doc.text(0.5, verticalOffset + size / 72, lines);
-
-					verticalOffset += (lines.length + 0.5) * size / 72;
-
-					console.log('<!doctype html><html>'+loremipsum+'</html>');
-				}
-			}
-
-		doc.save('Test.pdf');
  	},
  	cargarCotizacion : function(modelo) {
 
  		var json = app.coleccionCotizaciones_L.toJSON()[0];
+ 		this.json = json;
+ 		console.log(json);
 
- 		// json.fecha = formatearFechaUsuario(new Date(json.fecha));
-		// json.nombreComercial = app.coleccionClientes.get({id:json.idcliente}).get('nombreComercial');
-		// json.nombre = app.coleccionRepresentantes.get({id:json.idrepresentante}).get('nombre');
 		this.$('h1').text(json.titulo);
  		this.$('#detalles').html( this.plantillas.detalles(json) );
- 		this.preciohora = Number(json.preciohora);
- 		this.descuento = Number(json.descuento);
+
+
+		this.preciotiempo = Number(json.preciotiempo);
+		this.descuento 	= Number(json.descuento);
+ 		switch(json.plan){
+ 			case 'evento':
+ 				this.$('thead').append('<tr>'+
+							'<th style="width:55%;">Servicios</th>'+
+							'<th style="text-align: center; width:15%;">Horas</th>'+
+							'<th style="text-align: center; width:15%;">P/por hora</th>'+
+							'<th style="text-align: center; width:15%;"></th>'+
+						'</tr>');
+ 				this.cargarServiciosEvento();
+ 				break;
+ 			case 'iguala':
+ 				this.$('thead').append('<tr>'+
+							'<th style="width:55%;">Servicios</th>'+
+							'<th style="text-align: center; width:15%;">Mensualidades</th>'+
+							'<th style="text-align: center; width:15%;">Pago mensual</th>'+
+							'<th style="text-align: center; width:15%;"></th>'+
+						'</tr>');
+
+ 				/*Variables globales*/
+ 				this.horas += json.npagos;
+
+ 				this.cargarServiciosIguala();
+ 				break;
+
+ 			default:
+ 				statements_def
+ 				break;
+ 		}
  	},
- 	cargarServicios : function () {
+ 	cargarServiciosEvento : function () {
  		// obtenemos solo los id's de la coleccion localStorage
  		var idservicios = app.coleccionServicios_L.pluck('idservicio');
  		
@@ -370,11 +360,22 @@
  		// anotaron en el formulario de contizaciones.
  		for (var i = 0; i < idservicios.length; i++) {
 	 		this.$('article table tbody')
-	 			.append( this.plantillas.servicio(this.obtenerServicio(idservicios[i])) );
+	 			.append( this.plantillas.servicioEvento(this.obtenerServicio(idservicios[i])) );
  		};
 
  		this.totales();
- 	},	
+ 	},
+ 	cargarServiciosIguala	: function () {
+ 		var idservicios = app.coleccionServicios_L.pluck('idservicio');
+
+ 		idservicios = _.union(idservicios);
+
+ 		this.$('article table tbody')
+	 			.append( this.plantillas
+	 				.servicioIguala(this.obtenerServicio2(idservicios)) );
+
+ 		this.totales();
+ 	},
  	obtenerServicio : function (idservicio) {
  		var json = {
  				idservicio 	: '',
@@ -383,7 +384,9 @@
  				preciohora  : ''
  			},
  			modelos,
- 			importe = 0;
+ 			importe = 0,
+
+ 			itemLI = '';
 
  		// Buscamos todas las secciones en las que coincida el
  		// id que se ha pasado como perametro ha esta función.
@@ -397,7 +400,22 @@
  		// Iteramos sobre los modelos para contruir un nuevo objeto
  		// que se retornara para contruir el dicumento de cotización.
  		for (var i = 0; i < modelos.length; i++) {
- 			json.descripcion += '<li>'+(modelos[i].get('descripcion')+'</li>');
+ 			// json.descripcion += '<li>'+modelos[i].get('descripcion')+'</li>';
+ 			console.log(modelos[i].toJSON());
+ 			if (modelos[i].get('seccion') != '') {
+ 				itemLI = modelos[i].get('seccion')+'. ';
+ 			};
+ 			if (modelos[i].get('descripcion') != '') {
+ 				itemLI += modelos[i].get('descripcion')+'.';
+ 			};
+ 			if (modelos[i].get('seccion') != '' || modelos[i].get('descripcion') != '') {
+ 				itemLI = itemLI.split('');
+	 			itemLI.unshift('<li>');
+	 			itemLI.push('</li>');
+	 			itemLI = itemLI.join('');
+	 			json.descripcion += itemLI;
+ 			};
+	 		itemLI = '';	
  			json.horas += Number(modelos[i].get('horas'));
  		};
 
@@ -411,7 +429,7 @@
  		// Si la propiedad servicio de json es undefined entronces
  		// tomamos el id del primer modelo de la variable modelos 
  		// porque allí se enuentra el nombre del servicio temporal.
- 		// Sino, la linea anterior devolvio un modelo y tomarías
+ 		// Sino, la línea anterior devolvió un modelo y tomariamos
  		// el nombre de servicio que contiene.
  		if (!json.servicio) {
  			json.servicio = modelos[0].get('idservicio');
@@ -421,27 +439,53 @@
 
  		// El precio es una variable global, así como el 
  		// precio por hora
- 		json.preciohora = '$'+conComas(this.preciohora.toFixed(2));
- 		json.importe = '$'+conComas((json.horas * this.preciohora).toFixed(2));
+ 		json.preciotiempo = '$'+conComas(this.preciotiempo.toFixed(2));
+ 		json.importe = '$'+conComas((json.horas * this.preciotiempo).toFixed(2));
 
  		/*Variables globales*/
  		this.horas += json.horas;
  		
  		return json;
+ 	},
+ 	obtenerServicio2 : function (idservicios) {
+ 		var json = {
+ 				servicios 	: [],
+ 				pagomes		: this.json.preciotiempo,
+				pagos		: this.json.npagos,
+				importe		: parseInt(this.json.npagos) * parseInt(this.json.preciotiempo)
+ 			},
+ 			modelos;
+
+ 		for (var i = 0; i < idservicios.length; i++) {
+ 			json.servicios.push({
+ 				servicio 	: '',
+ 				descripcion : ''
+ 			});
+ 			modelos = app.coleccionServicios_L.where( {idservicio: idservicios[i]} );
+ 			for (var ii = 0; ii < modelos.length; ii++) {
+	 			json.servicios[i].descripcion += '<li>'+(modelos[ii].get('descripcion')+'</li>');
+	 		};
+	 		json.servicios[i].servicio = app.coleccionServicios.get(idservicios[i]);
+ 			
+ 			if (!json.servicios[i].servicio) {
+	 			json.servicios[i].servicio = modelos[0].get('idservicio');
+	 		} else {
+	 			json.servicios[i].servicio = json.servicios[i].servicio.get('nombre');
+	 		};
+ 		};
+ 		return json;
  	}, 
  	totales : function () {
  		var total = 0,
  			json = {};
- 		total = this.horas * this.preciohora;
+ 		total = this.horas * this.preciotiempo;
  				json.subtotal = '$'+conComas(total.toFixed(2));
 				json.descuento = this.descuento;
 				json.valordescuento = '$'+(total * this.descuento/100).toFixed(2);
 		total = total - total * (this.descuento/100).toFixed(2);
-				json.iva = '$'+(total * 0.16).toFixed(2);
+				json.iva = '$'+conComas( (total * 0.16).toFixed(2) );
 		total = total + total * 0.16;
-		// total = '' + total.toFixed(2);
-		// total = total.split('.');
-		// decimales = total[1];
+
 		total = conComas(total.toFixed(2));
 				json.total = '$'+total;
 		

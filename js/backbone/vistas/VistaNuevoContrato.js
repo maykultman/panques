@@ -111,8 +111,10 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 	/*Herencias*/
 	events : {
 		// Eventos orignales de la clase VistaNuevaCotizacion
-			'change     #busqueda'     	: 'buscarRepresentante',     //Cuando escribes una letra, despliega un menu de sugerencias
-			'click     .todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
+			'change     #busqueda'     	: 'buscarRepresentante',
+			'click 	   #guardar'	   	: 'guardar',
+			'click     #cancelar'		: 'cancelar',
+			'click     .todos'	     	: 'marcarTodosCheck',
 			'click     #vista-previa' 	: 'vistaPrevia',
 
 			/*Botones del thead los servicios que se están cotizando*/
@@ -120,7 +122,10 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			'click .span_eliminar_servicio' : 'eliminarServicio',
 			'click .span_toggleAllSee'	 	: 'conmutarServicios',
 			
-			'change     .importe'     : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
+			'change     .importe'     : 'calcularSubtotal',
+			'change     .input-plan'  : 'calcularSubtotal',
+			'mousewheel .input-plan'  : 'calcularSubtotal',
+			'blur       .input-plan'  : 'calcularSubtotal',
 
 			'change 	#precio_hora' : 'dispararCambio',
 			'mousewheel #precio_hora' : 'dispararCambio',
@@ -129,26 +134,25 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			'change 	.input-tfoot' : 'calcularTotal',
 			'mousewheel .input-tfoot' : 'calcularTotal',
 			'blur 		.input-tfoot' : 'calcularTotal',
-
-			'click #cancelar'	: 'cancelar',
+				
+			'change .btn_plan'		  : 'conmutarTablaPlan',
 
 		// Eventos de contrato
-			'change .btn_plan'			: 'conmutarTablaPlan',
 
-			'change .n_pagos'			: 'obtenerValor',
-			'mousewheel .n_pagos'		: 'obtenerValor',
-			'click .n_pagos'		: 'obtenerValor',
-			'keyup .n_pagos'				: 'obtenerValor',
+			'change input[name="npagos"]'		: 'obtenerValor',/*EVENTO IGUALA*/
+			'mousewheel input[name="npagos"]'	: 'obtenerValor',/*EVENTO IGUALA*/
+			/*'click input[name="npagos"]'		: 'obtenerValor',*//*EVENTO IGUALA*/
+			'keyup input[name="npagos"]'		: 'obtenerValor',/*EVENTO IGUALA*/
 
 			'click #btn_recargarPagos'	: 'recargarPagos',
 			'click 	   #guardar'	   	: 'guardar', //Guarda la cotización
 			'click .btn_quitarEnunciado': 'enunciado',
 			'click .btn_anadirEnunciado': 'enunciado',
 
-			'change #plazo'					: 'cambiar_n_pagos',
-			'mousewheel #plazo'				: 'cambiar_n_pagos',
-			'click #plazo'					: 'cambiar_n_pagos',
-			'keyup #plazo'					: 'cambiar_n_pagos',
+			'change #plazo'					: 'cambiar_n_pagos', /*EVENTO*/
+			'mousewheel #plazo'				: 'cambiar_n_pagos', /*EVENTO*/
+			'click #plazo'					: 'cambiar_n_pagos', /*EVENTO*/
+			'keyup #plazo'					: 'cambiar_n_pagos', /*EVENTO*/
 			'change #fechaInicioEvento' 	: 'cambiar_n_pagos',
 			'change #fechaInicioIguala' 	: 'cambiar_n_pagos'
 			// 'click .td_servicio tfoot button' : 'calcularTotal'
@@ -179,6 +183,10 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		this.totalelementos = 0;
 
 		localStorage.clear();
+
+		this.$npagosEvento = this.$el.find('input[name="npagos"]:eq(0)');
+		this.$npagosIguala = this.$el.find('input[name="npagos"]:eq(1)');
+		// this.$el.find('#plazo');
 	},
 	render 					: function () {
 		this.$('#formPrincipal').html( $('#plantilla-formulario').html() );
@@ -189,7 +197,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		this.cargarPlugins();
 
 		// this.$('#fecha').val( formatearFechaUsuario(new Date()) );
-		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#prestacion').val('Contrato No. '+(Math.random()).toFixed(3) *1000);
+		/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/this.$('#serviciosolicitado').val('Contrato No. '+(Math.random()).toFixed(3) *1000);
 
 		/*FOLIO. En la cración de una cotización ocurrira el fetch,
 		  pero cuando se edite una cotización no se realizará*/
@@ -198,41 +206,60 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		};
 		return this;
 	},
-	cambiar_n_pagos : function (e) {
+	cambiar_n_pagos 		: function (e) {
 		var id = $(e.currentTarget).attr('id');
 		if (id == 'plazo' || id == 'fechaInicioEvento')
-			this.$('.n_pagos:eq(0)').trigger('change');
+			if (id=='plazo') {
+				if (this.$('#plazo').val() == 1) {
+					this.$npagosEvento.val(1).trigger('change');
+				} else{
+					this.$npagosEvento.trigger('change');
+				};
+			} else{
+				this.$npagosEvento.trigger('change');
+			};
 		if (id == 'fechaInicioIguala') 
-			this.$('.n_pagos:eq(1)').trigger('change');
+			this.$npagosIguala.trigger('change');
 	},
 	calcularTotal 			: function () {
+		this.bloquearInputs();
+
 		/*Reescribimos esta función para agregar
 		  código. ver [1] en esta función*/
-		var valores = this.$('.input-tfoot');
+		var valores = this.$('.input-tfoot'),
+			self = this;
 		/*El capo Descuento es un input number, por lo que cuando se escribe
 		  un número con letras, el campo lo rechaza y adopta el valor ''*/
 		if ($(valores[1]).val() == '') {
 			alerta('El campo Descuento solo acepta números', function () {});
 			$(valores[1]).val('0');
 		};
-		var	total = Number($(valores[0]).val()),
+		var	total = function () {
+						if (self.tipoPlan == 'evento') {
+							return Number(self.$('#subtotal_evento').val());
+						} else if (self.tipoPlan == 'iguala') {
+							return Number(self.$('#precio_mes').val());
+						};
+					}(),
 			desc  = Number($(valores[1]).val()) / 100,
 			iva   = Number($(valores[2]).val()) / 100,
 			decimales;
 
 		total = total - total * desc;
 		total = total + total * iva;
-		this.total = total.toFixed(2); // Sirve para la clase contrato
-
-		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+		this.total = total.toFixed(2);
+		
 		// [1]
 		// Verificamos que tipo de plan está activo y
 		// disparamos un evento al campo pertinente.
 		if (this.$('#porEvento').is(':checked')) {
-			this.$('.n_pagos:eq(0)').trigger('change');
+			this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+			this.obtenerValor( parseInt( this.$npagosEvento.val() ) );
 		} 
 		else if(this.$('#iguala').is(':checked')){
-			this.$('.n_pagos:eq(1)').trigger('change');
+			var npagos = Number( this.$npagosIguala.val() );
+			this.$('#label_total').text( '$'+conComas( (total * npagos).toFixed(2) ) );
+			this.obtenerValor( npagos );
 		};
 
 		this.calcularTotalHoras();
@@ -280,15 +307,13 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		});
 		e.preventDefault();
 	},
+	cancelar 				: function () {
+		location.href = 'contratos_historial';
+	},
 	guardar 				: function () {
 		if (!this.obtenerDatos()) {
 			return;
 		};
-		// Primero removemos los campos de la tabla
-		// del plan desactivado para no traer sus
-		// datos.
-		// this.$('.thead_oculto').remove();
-		// this.$('.tbody_oculto').remove();
 		
 		var jsonDatos,
 			jsonPagos,
@@ -382,13 +407,15 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		};
 	},
 	obtenerDatos			: function () {
+		this.bloquearInputs();
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('   #prestacion,'
+			json  = pasarAJson(this.$('   #serviciosolicitado,'
 										+'#busqueda,'
 										+'#idrepresentante,'
 										+'#hidden_fechafirma,'
 										+'input[name="plan"]:checked,'
-										+'#select_firmaempleado')
+										+'#select_firmaempleado,'
+										+'#enunciado')
 					.serializeArray()),
 			fechainicio,
 			fechafinal;
@@ -404,6 +431,9 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			} else if( !json.plan ){
 				alerta('Seleccione un tipo de <b>plan</b>', function () {});
 				return false; // Terminamos el flujo del código
+			} else if ( !json.enunciado ) {
+				alerta('Seleccione o escriba los <b>enunciados</b> del contrato', function () {});
+				return false; // Terminamos el flujo del código
 			};
 		json = { secciones : [], datos : '' };
 		// Datos básicos
@@ -413,9 +443,10 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				json.datos.enunciado = json.datos.enunciado.join(',.,');
 		// Validar datos
 			if ( json.datos.plan == 'evento' ){
-				fechainicio = this.$('#fechaInicioEvento').datepicker('getDate');
-				json.datos.fechainicio = formatearFechaDB(fechainicio);
-				json.datos.fechafinal = this.$('#fechafinalEvento').val();
+				
+				json.datos.fechainicio = formatearFechaDB(this.$('#fechaInicioEvento').datepicker('getDate'));
+				json.datos.fechafinal = formatearFechaDB(this.$('#vencimientoPlanEvento').attr('disabled',false).datepicker('getDate'));
+				this.$('#vencimientoPlanEvento').attr('disabled',true);
 				if ( json.datos.plazo == '' ) {
 					alerta('Establezca el <b>plazo en días');
 					return false;
@@ -426,9 +457,10 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				}
 			}
 			if ( json.datos.plan == 'iguala' ) {
-				fechainicio = this.$('#fechaInicioIguala').datepicker('getDate');
-				json.datos.fechainicio = formatearFechaDB(fechainicio);
-				json.datos.fechafinal = this.$('#fechafinalIguala').val();
+				
+				json.datos.fechainicio = formatearFechaDB(this.$('#fechaInicioIguala').datepicker('getDate'));
+				json.datos.fechafinal = formatearFechaDB(this.$('#vencimientoPlanIguala').attr('disabled',false).datepicker('getDate'));
+				this.$('#vencimientoPlanIguala').attr('disabled',true);
 				if ( json.datos.nplazos == '' ) {
 					alerta('Establezca las <b>Mensualidades</b>');
 					return false;
@@ -437,9 +469,9 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 		// Datos pagos
-			json.datos.mensualidadletras 
+			json.datos.totalletra 
 			= 
-			(NumeroALetras(this.total/Number(json.datos.nplazos))).trim();
+			(NumeroALetras(this.total)).trim();
 		// Cortafuego. Debe haber al menos 1 servicio para contratar
 			if (!forms.length) {
 				alerta('Seleccione al menos un <b>servicio</b> para contratar'
@@ -458,48 +490,70 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 		return json;
 	},
-	/*Funciones de contrato*/
-	conmutarTablaPlan		: function (elem) {
-		// Primero quitamos de los dos elementos la clase .thead_visible
-		this.$('.thead_visible').removeClass().addClass('thead_oculto');
-		this.$('.tbody_visible').removeClass().addClass('tbody_oculto');
-		// Acemos visible al los campor del tipo de plan seleccionado
-		this.tipoPlan = $(elem.currentTarget).val();
-		this.$( '#thead_'+this.tipoPlan ).removeClass()
-		.addClass('thead_visible');
-		this.$( '#tbody_pagos_'+this.tipoPlan ).removeClass().addClass('tbody_visible');
+	bloquearInputs : function () {
+		var self = this;
+		setTimeout(function() {
+			jQuery.fn.doOnce = function(func){
+			this.length && func.apply(this);
+				return this;
+			}
 
-		// Para no traer datos repetidos, desactivamos los campos del
-		// plan desactivado
-		switch(this.tipoPlan){
-			case 'iguala':
-				this.$('#fechaInicioEvento,#plazo,.n_pagos:eq(0)').attr('disabled',true);
-				this.$('#fechaInicioIguala,.n_pagos:eq(1)').attr('disabled',false);
-				this.$('#tbody_pagos_evento .hidden_renta').attr('name', '');
-				this.$('#tbody_pagos_iguala .hidden_renta').attr('name', 'pago');
-				this.$('.n_pagos:eq(1)').trigger('change');
-			break;
-			case 'evento':
-				this.$('#fechaInicioEvento,#plazo,.n_pagos:eq(0)').attr('disabled',false);
-				this.$('#fechaInicioIguala,.n_pagos:eq(1)').attr('disabled',true);
-				this.$('#tbody_pagos_evento .hidden_renta').attr('name', 'pago');
-				this.$('#tbody_pagos_iguala .hidden_renta').attr('name', '');
-				this.$('.n_pagos:eq(0)').trigger('change');
-			break;
-		}
+			switch(self.tipoPlan){
+				case 'iguala':
+					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
+						$(this).css('text-decoration','line-through');
+					});
+					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+						$(this).css('opacity','.5');
+					});
 
-		// if( this.$('#tbody_pagos_'+this.tipoPlan).html() == "" ) {
-		// 	this.establecerPagos( 
-		// 		this.$('#thead_'+this.tipoPlan+' .n_pagos').val()
-		// 	);
-		// }
+					self.$('#precio_hora').attr('disabled',true);
+					self.$('#precio_mes').attr('disabled',false);
+
+					this.$('#plazo').attr('disabled',true);
+
+					self.$npagosEvento.attr('disabled',true);
+					self.$npagosIguala.attr('disabled',false);
+
+					self.$(
+						'#tbody_pagos_evento input[name="fechapago"],'+
+						'#tbody_pagos_evento input[name="pago"]'
+						).attr('disabled',true);
+					self.$(
+						'#tbody_pagos_iguala input[name="fechapago"],'+
+						'#tbody_pagos_iguala input[name="pago"]'
+						).attr('disabled',false);
+				break;
+				case 'evento':
+					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
+						$(this).css('text-decoration','initial');
+					});
+
+					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+						$(this).css('opacity','1');
+					});
+					self.$('#precio_mes').attr('disabled',true);
+					self.$('#precio_hora').attr('disabled',false);
+
+					this.$('#plazo').attr('disabled',false);
+
+					self.$npagosEvento.attr('disabled',false);
+					self.$npagosIguala.attr('disabled',true);
+
+					self.$(
+						'#tbody_pagos_evento input[name="fechapago"],'+
+						'#tbody_pagos_evento input[name="pago"]'
+						).attr('disabled',false);
+					self.$(
+						'#tbody_pagos_iguala input[name="fechapago"],'+
+						'#tbody_pagos_iguala input[name="pago"]'
+						).attr('disabled',true);
+				break;
+			}
+		}, 10);
 	},
+	/*Funciones de contrato*/
 	establecerPagos			: function (nPagos) {
-		// alert(tipo);
-		// $('#margen').text(totalNeto);
-		// totalNeto = totalNeto.split('');
-		// totalNeto.shift();
-
 		/*Limpiamos el tbody de pagos cada vez que se entre a esta
 		  función, al igual que el array de pagos*/
 		var plazo = 1,
@@ -507,7 +561,11 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			candado = 'icon-unlock',
 			disabled = '',
 			active = '',
-			objDate;
+			objDate,
+			Modelo;
+
+
+		this.vistaPago = []
 
 		if (this.$('#porEvento').is(':checked')) {
 			plazo = parseInt($('#plazo').val());
@@ -524,6 +582,31 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			$('#fechafinalEvento').val( formatearFechaDB(objDate) );
 
 			candado = 'icon-unlock icon-lock';
+			// ----------------------------------
+			for (var i = 0; i < nPagos; i++) {
+				Modelo = Backbone.Model.extend({
+					defaults	: { 
+						id 		: i,
+						n 		: i+1,
+						fechatabla	: formatearFechaUsuario( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
+						// fechapago	: formatearFechaDB( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
+						// fechatabla	: formatearFechaUsuario( fecha ),
+						fechapago	: formatearFechaDB( fecha ),
+						pago 	: (this.total/nPagos).toFixed(2),
+
+						candado	: candado,
+						active 		: active,
+						disabled	: disabled,
+
+						atrClase	: 'input_renta'
+					}
+				});
+				this.vistaPago[i] = new app.VistaPago({model : new Modelo});
+
+				$('#tbody_pagos_'+this.tipoPlan).append(this.vistaPago[i].render().el);
+
+				fecha = new Date(fecha.getTime() + (plazo*24*60*60*1000));
+			};
 		} else if (this.$('#iguala').is(':checked')){
 			plazo = 30;
 			
@@ -540,33 +623,33 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			candado = 'icon-lock';
 			disabled = 'disabled';
 			active = 'active';
+			// ----------------------------------
+			for (var i = 0; i < nPagos; i++) {
+				Modelo = Backbone.Model.extend({
+					defaults	: { 
+						id 		: i,
+						n 		: i+1,
+						fechatabla	: formatearFechaUsuario( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
+						// fechapago	: formatearFechaDB( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
+						// fechatabla	: formatearFechaUsuario( fecha ),
+						fechapago	: formatearFechaDB( fecha ),
+						pago 	: this.total,
+
+						candado	: candado,
+						active 		: active,
+						disabled	: disabled,
+
+						atrClase	: 'input_renta'
+					}
+				});
+				this.vistaPago[i] = new app.VistaPago({model : new Modelo});
+
+				$('#tbody_pagos_'+this.tipoPlan).append(this.vistaPago[i].render().el);
+
+				fecha = new Date(fecha.getTime() + (plazo*24*60*60*1000));
+			};
 		} else {alerta('Seleccione un tipo de plan para el contrato', function () {});return;};
 
-		var Modelo;
-		this.vistaPago = [];
-
-		for (var i = 0; i < nPagos; i++) {
-			Modelo = Backbone.Model.extend({
-				defaults	: { 
-					id 		: i,
-					n 		: i+1,
-					fecha	: formatearFechaUsuario( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
-					fecha2	: formatearFechaDB( new Date( fecha.getTime() -1*24*60*60*1000 ) ),
-					pago 	: (this.total/nPagos).toFixed(2),
-
-					candado	: candado,
-					active 		: active,
-					disabled	: disabled,
-
-					atrClase	: 'input_renta'
-				}
-			});
-			this.vistaPago[i] = new app.VistaPago({model : new Modelo});
-
-			$('#tbody_pagos_'+this.tipoPlan).append(this.vistaPago[i].render().el);
-
-			fecha = new Date(fecha.getTime() + (plazo*24*60*60*1000));
-		};
 		// Descomentar para mantenimiento
 			/************************/
 			/*this.modificarPagos();*/
@@ -580,6 +663,11 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			self.$('#tbody_pagos_'+self.tipoPlan).html('');
 			self.establecerPagos( n );
 		};
+
+		if (_.isNumber(e)) {
+			resetearPagos(e);
+			return;
+		}
 
 		// solo si el evento es un enter o un cambio
 		if (e.keyCode === 13 || e.type === 'change' || e.type === 'click') {
@@ -607,22 +695,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 					resetearPagos( 
 						parseInt($(e.currentTarget).val()) +1
 					);
-				};
-
-				
-				// if (e.originalEvent.deltaY < 0) {
-				// 	resetearPagos( 
-				// 		parseInt($(e.currentTarget).val()) +1
-				// 	);
-				// } else if ($(e.currentTarget).val() != '1') {
-				// 	resetearPagos( 
-				// 		parseInt($(e.currentTarget).val()) -1
-				// 	);
-				// };
-
-
-
-					
+				};	
 			};
 		};
 	},
@@ -663,7 +736,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 	},
 	recargarPagos 			: function () {
 		this.$('#tbody_pagos_'+this.tipoPlan).html('');
-		$('.n_pagos').first().trigger('change');
+		$('input[name="npagos"]').first().trigger('change');
 	},
 	enunciado 		:function (e) {
 		var longitud = this.$('.campo-enunciado').length;

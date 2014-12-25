@@ -41,24 +41,42 @@ app.CotizacionAContrato = app.VistaNuevoContrato.extend({
 		};
 		return this;
 	},
-	establecerDatos	: function () {
+	establecerDatos : function() {
 		var idcotizacion 	= this.model.get('id'),
-			secciones 		= app.coleccionServiciosCotizados
-								 .where({
-								 	idcotizacion:idcotizacion
-								 }),
+			arrayServicios	= function () {
+				// debido a que los servicios no son ordenados en la 
+				// base de datos en el orden en que son enviados, sino
+				// que el primero que llega la servidor se almacena;
+				// tenemos que ordenarlos manualmente para mostrar la
+				// cotizacion tal cual fue creada, con los servicios y
+				// secciones correspondientes. De lo contrario no se
+				// muestran todas las secciones de la cotización.
+
+				// Funciones Underscorejs: _.where, _.groupBy y _.values
+
+				// Buscamos todos los servicios de la cotización a editar
+				var jsonSecciones = _.where(app.coleccionServiciosCotizados.toJSON(),{
+					idcotizacion:idcotizacion
+				});
+				// Agrupanos los servicios por medio del id de servicios.
+				// Esto da como resultados un json donde la clave es el id
+				// de servicio y el valor es un array que son las secciones
+				// de los servicios.
+				var groposServicios = _.groupBy(jsonSecciones,'idservicio');
+				// Antes de devolver el resultado tenemos que quitar las claves
+				// que la instrucción anterior genero, esto para poder manipular
+				// el array de arrays con mayor facilidad.
+				return _.values(groposServicios);
+			}(),
 			idservicio 		= '',
 			json 			= {},
-			preciohora 		= this.model.get('preciohora'),
+			preciotiempo 	= this.model.get('preciotiempo'),
 			vSeccion,
 			folio,
-			$select = this.$('#busqueda')[0].selectize,
-			// pagos,
-			// pago,
-			// Modelo,
-			// vistaPago = [],
-			// enunciados,
-			self = this;
+			$select = this.$('#busqueda')[0].selectize;
+
+		this.tipoPlan = this.model.get('plan');
+
 		/*La función render de la clase padre no establece
 		el nuevo folio para la nueva versión de la cotización.
 		esto es porque la longitud de la colección es mayor
@@ -66,41 +84,63 @@ app.CotizacionAContrato = app.VistaNuevoContrato.extend({
 		También tenemos que estanblecer el folio que viene
 		desde le servidor, del array de objetos a la coleccion
 		de cotizaciones de Backbone. 
-		/*--DESCOMENTAR SI LOS FOLIO NUNCA DEBEN REPETIRSE--*/
-			// app.coleccionContratos.folio 
-			// 	= app.coleccionDeContratos.folio.folio;
-			folio = app.coleccionContratos.establecerFolio();
+		/*--DESCOMENTAR PARA QUE LOS FOLIO NUNCA SE REPETIRAN--*/
+			/*app.coleccionCotizaciones.folio 
+				= app.coleccionDeCotizaciones.folio.folio;
+			folio = app.coleccionCotizaciones.establecerFolio();*/
 		this.$('#h4_folio')
-				.text( 'Folio: '+ folio )
+				.text( 'Folio: '+ this.model.get('folio') )
 				.fadeIn('fast');
-		this.$('input[name="folio"]').val( folio );
+		this.$('input[name="folio"]').val( this.model.get('folio') );
 
-		this.$('#prestacion').val(this.model.get('titulo'));
+		this.$('#titulo').val(this.model.get('titulo'));
 		$select.setValue(this.model.get('idcliente'));
 		this.$('input[name="idcliente"]').val(this.model.get('idcliente'));
+
+		this.$('input[value="'+this.model.get('plan')+'"]').click();
+
+		this.bloquearInputs();
+
+		this.$('#detalles')
+			.val(this.model.get('detalles'));
+		/*this.$('#caracteristicas')
+			.val(this.model.get('caracteristicas'));*/
+
 
 		this.$('input[name="descuento"]')
 			.val(this.model.get('descuento'));
 
-		for(i in secciones) {
-			if (secciones[i].get('idcotizacion') == idcotizacion) {
-				if (idservicio != secciones[i].get('idservicio')) {
-					idservicio = secciones[i].get('idservicio');
-					this.$('#servicio_'+idservicio).click();
-					this.$el
-						.find('#table_servicio_'+idservicio+' tbody')
-						.html('');
-				};
-				json = secciones[i].toJSON();
-				json.preciohora = preciohora;
+		// Tenemos las json_secciones de los servicios lista,
+		// iteramos sobre el array.
+		for(i in arrayServicios) {
+			// En primer lugar tenemos que apilar el servicio en
+			// la tabla de servicios y borrar las secciones que
+			// apila automaticamente.
+			idservicio = arrayServicios[i][0].idservicio;
+			this.$('#servicio_'+idservicio).click();
+			this.$el.find('#table_servicio_'+idservicio+' tbody').html('');
+			// Apilamos las secciones del servicio en turno y que son propios
+			// de la cotizacion a editar.
+			for(j in arrayServicios[i]){
+				arrayServicios[i][j].preciotiempo = preciotiempo;
 				vSeccion = new VistaSeccion();
 				this.$('#table_servicio_'+idservicio+' tbody')
-					.append( vSeccion.render(json).el );
-			};
+					.append( vSeccion.render(arrayServicios[i][j]).el );
+			}
 		}
-		this.$('#precio_hora')
-			.val(preciohora)
-			.trigger('change');
+
+		switch(this.tipoPlan){
+			case 'iguala':
+				this.$('#precio_mes')
+					.val(preciotiempo)
+					.trigger('change');
+			break;
+			case 'evento':
+				this.$('#precio_hora')
+					.val(preciotiempo)
+					.trigger('change');
+			break;
+		}			
 	},
 	establecerRegreso : function  () {
 		var self = this;
