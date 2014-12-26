@@ -40,22 +40,22 @@ function  limpiarJSON (objeto) {
   por eso se resta un día.
   Si se usa el plugin datepicker bebe saber
   que regresa la fecha pero con un día aumentado*/
-function formatearFechaUsuario (fechaBD) {
-    var value_of = fechaBD.valueOf();
+function formatearFechaUsuario (objDate) {
+    var value_of = objDate.valueOf();
     value_of = value_of + (1*24*60*60*1000);
     fechaFormateada = new Date(value_of);
-    fechaBD = fechaFormateada;
+    objDate = fechaFormateada;
     var fechaFormateada = '';
-    if (fechaBD.getDate() < 10 )
-        fechaFormateada = '0'+ fechaBD.getDate();
+    if (objDate.getDate() < 10 )
+        fechaFormateada = '0'+ objDate.getDate();
     else
-        fechaFormateada = fechaBD.getDate();
-    if ((fechaBD.getMonth() +1) < 10 )
-        fechaFormateada += '/0'+ (fechaBD.getMonth() +1);
+        fechaFormateada = objDate.getDate();
+    if ((objDate.getMonth() +1) < 10 )
+        fechaFormateada += '/0'+ (objDate.getMonth() +1);
     else
-        fechaFormateada +=  '/'+ (fechaBD.getMonth() +1);
+        fechaFormateada +=  '/'+ (objDate.getMonth() +1);
 
-    fechaFormateada +=  '/'+fechaBD.getFullYear();
+    fechaFormateada +=  '/'+objDate.getFullYear();
 
     return fechaFormateada;
 }

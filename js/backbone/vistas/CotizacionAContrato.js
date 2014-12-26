@@ -93,7 +93,7 @@ app.CotizacionAContrato = app.VistaNuevoContrato.extend({
 				.fadeIn('fast');
 		this.$('input[name="folio"]').val( this.model.get('folio') );
 
-		this.$('#titulo').val(this.model.get('titulo'));
+		this.$('#serviciosolicitado').val(this.model.get('titulo'));
 		$select.setValue(this.model.get('idcliente'));
 		this.$('input[name="idcliente"]').val(this.model.get('idcliente'));
 

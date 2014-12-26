@@ -59,8 +59,8 @@
 		<td>	<%=empleado%>								</td>
 		<td>	<%=folio%>									</td>
 		<td>   $<%=total%>									</td>
-		<td>	<%= formatearFechaUsuario(new Date(quitarUnDia(fechacreacion))) %></td>
-		<td>	<%= formatearFechaUsuario(new Date(quitarUnDia(fechafinal))) %></td>
+		<td>	<b><%=fechacreacion%></b><br><%= formatearFechaUsuario(new Date(quitarUnDia(fechacreacion))) %></td>
+		<td>	<b><%=fechafinal%></b><br><%= formatearFechaUsuario(new Date(quitarUnDia(fechafinal))) %></td>
 		<td class="icon-operaciones">
 			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
 			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver contrato"></span>

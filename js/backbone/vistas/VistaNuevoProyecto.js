@@ -128,7 +128,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			for (var i = 0; i < contratos.length; i++) {
 				array.push({
 					id      : contratos[i].id,
-					title   : contratos[i].prestaciones
+					title   : contratos[i].serviciosolicitado
 				});
 			};
 			return array;
@@ -353,7 +353,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			// propiedad mencionada antes
 			var contrato = app.coleccionContratos.get(json_basicos.nombre);
 			if ( !_.isUndefined(contrato) ) {
-				json_basicos.nombre = contrato.get('prestaciones');
+				json_basicos.nombre = contrato.get('serviciosolicitado');
 			};
 			json.proyecto = json_basicos;
 		// <SECCION> PASO 2
