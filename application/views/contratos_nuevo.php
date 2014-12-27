@@ -454,49 +454,6 @@
 		app.coleccionContratos_L = new ColeccionContratos_L();
 	</script>
 <!-- vistas -->
-	<script type="text/javascript">
-		// app = app || {};
-		// var V_HojaContrato = Backbone.View.extend({
-		// 	tagName			: 'div',
-		// 	plantilla	: _.template($('#plantilla_contrato').html()),
-		// 	render		: function () {
-		// 		this.$el.html(this.plantilla(this.model.toJSON()));
-		// 		return this;
-		// 	}
-		// });
-
-		// var Consulta_Hoja	= Backbone.View.extend({
-		// 	el	: '#divVistapreviaContrato',
-		// 	initialize	: function () {
-		// 		this.cargarContratos();
-		// 	},
-		// 	cargarContrato	: function (contrato) {
-		// 		contrato.set({nombreCliente:app.coleccionClientes.get({id:contrato.get('idcliente')}).get('nombreComercial')});
-		// 		contrato.set({nombreRepresentante:app.coleccionRepresentantes.get({id:contrato.get('idrepresentante')}).get('nombre')});
-
-		// 		var precio = 0.0;
-		// 		var descuento = 0.0;
-		// 		var total = 0.0;
-
-		// 		var cantidades = app.coleccionServiciosContrato_LocalStorage.pluck('cantidad');
-		// 		var precios = app.coleccionServiciosContrato_LocalStorage.pluck('precio');
-		// 		var descuentos = app.coleccionServiciosContrato_LocalStorage.pluck('descuento');
-
-		// 		for (var i = 0; i < cantidades[0].length; i++) {
-		// 			precio 		= cantidades[0][i] * precios[0][i];
-		// 			descuento 	=precio * ( descuentos[0][i]/100 );
-		// 			total 		+= parseFloat((precio - descuento).toFixed(2));
-		// 		};
-		// 		console.log((total + (total*app.iva)).toFixed(2));
-		// 		contrato.set({total:(total + (total*app.iva)).toFixed(2)});
-		// 		var vista = new V_HojaContrato({model:contrato});
-		// 		this.$el.html(vista.render().el);
-		// 	},
-		// 	cargarContratos	: function () {
-		// 		app.coleccionContratos_LocalStorage.each(this.cargarContrato, this);
-		// 	}
-		// });
-	</script>
 	<?=
 		script_tag('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
 		script_tag('js/backbone/vistas/VistaNuevaCotizacion.js').

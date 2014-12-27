@@ -1,7 +1,6 @@
 <?php
- require_once 'Modelo_crud.php';
 
- class Model_payment extends Modelo_crud
+ class Model_payment extends CI_Model
  {
  	public function __construct(){}
 
@@ -31,8 +30,13 @@
 
  	public function get ($id=FALSE)
  	{
- 		$reply = $this->where($id);
- 		return $this->db->get( 'pagos')->$reply();
+ 		$reply = 'result';
+		if(is_numeric($id))
+		{
+			$this->db->where(  'id',$id  );
+			$reply = 'row';
+		}
+		return $this->db->get( 'pagos')->$reply();
  	}
 
  	public function save ( $id, $put )

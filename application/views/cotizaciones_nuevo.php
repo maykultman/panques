@@ -229,7 +229,6 @@
 							<td></td>
 						</tr>
 					</tfoot>
-					
 				</table>
 			</div>
 		</div>      

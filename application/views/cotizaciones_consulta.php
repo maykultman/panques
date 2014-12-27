@@ -188,7 +188,7 @@
 						</tr>
 					</tbody>
 					<!--SEPARACION--><tbody><tr><td colspan="7" rowspan="" headers=""></td></tr></tbody>
-					<thead id="thead_evento" class="thead_oculto" style="background : #F9F9F9;">
+					<thead class="thead_evento thead_visible thead_oculto" style="background : #F9F9F9;">
 						<tr>
 							<td></td>
 							<td></td>
@@ -200,7 +200,7 @@
 						</tr>
 						<tr>
 							<td></td>
-							<td></td>
+							<td><input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1" style="visibility: hidden;"></td>
 							<td style="text-align: right;">Precio/Hora</td>
 							<td><input type="number" class="form-control input-sm" id="precio_hora" name="preciotiempo" value="300" min="1"></td>
 							<td> Subtotal </td>
@@ -211,12 +211,12 @@
 							<td></td>
 						</tr>
 					</thead>
-					<thead id="thead_iguala" class="thead_oculto" style="background : #F9F9F9;">
+					<thead class="thead_iguala thead_visible thead_oculto" style="background : #F9F9F9;">
 						<tr>
 							<td style="text-align: right;">Precio/Mes</td>
 							<td><input type="number" class="form-control input-sm input-plan" id="precio_mes" name="preciotiempo" value="3000" min="1"></td>
 							<td style="text-align: right;"># de meses</td>
-							<td><input type="number" class="form-control input-sm input-plan" id="nmeses" name="npagos" value="1" min="1"></td>
+							<td><input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1"></td>
 							<td> Subtotal </td>
 							<td>
 								<label class="label_subtotal">$0</label>
@@ -262,7 +262,6 @@
 							<td></td>
 						</tr>
 					</tfoot>
-					
 				</table>
 			</div>
 		</div>      

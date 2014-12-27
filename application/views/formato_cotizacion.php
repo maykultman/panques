@@ -2,6 +2,11 @@
 <html>
 	<head>
 		<style type="text/css">
+			@page {
+				size: portrait;
+				page-size: letter;
+				margin: 0px 0px;
+			}
 			* {
 				font-family: Open Sans;
 			}
@@ -115,6 +120,24 @@
 				margin: 0px;
 				line-height: 110%;
 			}
+
+			#imprimir {
+				background: orange;
+				border: 3px solid gray;
+				border-radius: 3px 3px;
+				padding: 10px;
+				font-weight: bold;
+			}
+			@media screen {
+			}
+			@media print {
+				#imprimir {
+					display:none;
+				}
+				section {
+					margin: 0px;
+				}
+			}
 		</style>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Cotización</title>	
@@ -125,7 +148,7 @@
 	</head>
 	<body>
 		<section id="contenedor_formato">
-			<button type="button" id="imprimir" class="btn btn-default">Inprimir</button>
+			<button type="button" id="imprimir" onclick="print()" class="btn btn-default">Imprimir...</button>
 			<header>
 				<table>
 					<tr>
@@ -304,7 +327,7 @@
  		app.coleccionServicios_L.fetch();
  		this.cargarCotizacion();
 
- 		localStorage.clear();
+ 		// localStorage.clear();
  	},
  	cargarCotizacion : function(modelo) {
 

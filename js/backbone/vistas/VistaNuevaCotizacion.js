@@ -328,7 +328,16 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		
 		this.total = total.toFixed(2); // Sirve para la clase contrato
 		
-		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+		// [1]
+		// Verificamos que tipo de plan está activo y
+		// disparamos un evento al campo pertinente.
+		if (this.tipoPlan == 'evento') {
+			this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+		} 
+		else if(this.tipoPlan == 'iguala'){
+			var npagos = Number( this.$('input[name="npagos"]:eq(1)').val() );
+			this.$('#label_total').text( '$'+conComas( (total * npagos).toFixed(2) ) );
+		};
 
 		this.calcularTotalHoras();
 	},
@@ -442,7 +451,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		var forms = this.$('.form_servicio'),
 			/*Añadir (, #idrepresentante) si se requiere
 			  al representante*/
-			json  = pasarAJson(this.$('#titulo, #busqueda', '.btn_plan').serializeArray());
+			json  = pasarAJson(this.$('#titulo, #busqueda, .btn_plan').serializeArray());
 			
 		/*Cortafuego para forzar establecer los siguientes datos*/
 			/*Añadir || json.idrepresentante == '' si se requiere al
@@ -516,6 +525,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					});
 					self.$('#precio_hora').attr('disabled',true);
 					self.$('#precio_mes').attr('disabled',false);
+
+					self.$('input[name="npagos"]:eq(0)').attr('disabled',true);
+					self.$('input[name="npagos"]:eq(1)').attr('disabled',false);
 				break;
 				case 'evento':
 					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
@@ -526,6 +538,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					});
 					self.$('#precio_mes').attr('disabled',true);
 					self.$('#precio_hora').attr('disabled',false);
+
+					self.$('input[name="npagos"]:eq(0)').attr('disabled',false);
+					self.$('input[name="npagos"]:eq(1)').attr('disabled',true);
 				break;
 			}
 		}, 10);

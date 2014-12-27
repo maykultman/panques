@@ -290,7 +290,6 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 	obtenerDatos	: function () {
 		var forms = this.$('.form_servicio'),
 			json  = pasarAJson(this.$('#titulo', '.btn_plan').serializeArray());
-			console.log(json);
 		// Cortafuego para forzar establecer el titulo. El cliente y el plan ya,
 		// estan establecidos
 			if (json.titulo == '') {

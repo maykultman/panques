@@ -186,7 +186,6 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 		this.$npagosEvento = this.$el.find('input[name="npagos"]:eq(0)');
 		this.$npagosIguala = this.$el.find('input[name="npagos"]:eq(1)');
-		// this.$el.find('#plazo');
 	},
 	render 					: function () {
 		this.$('#formPrincipal').html( $('#plantilla-formulario').html() );
@@ -701,7 +700,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 	},
 	equilibrarPagos			: function (residuo, idVista) {
 
-		var rentas = this.$('.input_renta');
+		var rentas = this.$('#tbody_pagos_evento .input_renta');
 		
 		var pagoNuevo = 0.0;
 		residuo = residuo/parseFloat(rentas.length);
