@@ -56,9 +56,10 @@ class  Foto extends REST {
         # Ahora guardamos la nueva foto
         if(copy($_FILES[$string]['tmp_name'], $destino))
         {  
-            $config['image_library'] = 'GD';
+            // $config['image_library'] = 'GD';
             $config['source_image'] = $destino;
             $config['maintain_ratio'] = TRUE;
+
             $config['width']    = 150;
             $config['height']   = 150;
 

@@ -10,7 +10,12 @@
 
         public function get ( $id = FALSE ) 
         {  
-          $reply = $this->where($id);
+          $reply = 'result';
+          if($id)
+          {
+            $this->db->where('idcotizacion',$id);  
+            $reply = 'row';
+          }          
           return $this->db->get  ( 'servicios_cotizados' )->$reply();
         } # Fin del metodo get_cotizacion()...
 
