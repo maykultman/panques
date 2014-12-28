@@ -7,22 +7,21 @@
 			<form id="formServicio">
 				<div class="row">
 					<div class="col-md-6">
-						<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
-						<input type="text" id="precio" name="precio" class="form-control" placeholder="Precio">
+						<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre"><br>
+						<input type="text" id="precio" name="precio" class="form-control" placeholder="Precio"><br>
 					</div>
 					<div class="col-md-6">
-						<input type="text" id="concepto" name="concepto" class="form-control" placeholder="Concepto">
-						<input type="text" id="realizacion" name="realizacion" class="form-control" placeholder="Tiempo Estimado">
+						<input type="text" id="concepto" name="concepto" class="form-control" placeholder="Concepto"><br>
+						<input type="text" id="realizacion" name="realizacion" class="form-control" placeholder="Tiempo Estimado"><br>
 					</div>
-				</div>				
-				<div class="desborde"></div>
-				<div class="row">
+											
 					<div class="col-md-12">
-						<textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"></textarea>
+						<textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"></textarea>					
+						<br>		
+						<button id="enviar" style=";" type="button" class="btn btn-default">Guardar</button>
+						<button id="btn_cancelar" type="button" class="btn btn-default">Cancelar</button>	
 					</div>
-				</div>			
-				<button id="enviar" style=";" type="button" class="btn btn-default">Guardar</button>
-				<button id="btn_cancelar" type="button" class="btn btn-default">Cancelar</button>	
+				</div>
 			</form><br>
 			<h3>Servicios</h3>
 			<hr><br>

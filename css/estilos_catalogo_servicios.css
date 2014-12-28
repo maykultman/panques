@@ -1,6 +1,6 @@
-td .oculto2{	display: none;	}
+.oculto2{	display: none;	}
 
-td .visible2{	display: block;	}
+.visible2{	display: block;	}
 
 #descripcion{	width: 100% !important;		height: 85px;	}
 

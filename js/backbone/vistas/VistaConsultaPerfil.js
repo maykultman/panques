@@ -1,7 +1,7 @@
 var app = app || {};
 app.VistaConsultaPerfil = Backbone.View.extend
 ({
-	el : '#misperfiles',
+	el : '#perfiles',
 	plantilla : _.template($('#divperfil').html()),
 
 	events : 
@@ -15,17 +15,10 @@ app.VistaConsultaPerfil = Backbone.View.extend
   		this.listenTo( app.coleccionPerfiles, 'reset', this.cargarPerfil ); 
   		this.cargarPerfil();        
 	}, 
-
-	// editar : function(elemento)
-	// {
-	// 	var id = $(elemento.currentTarget).attr('id');		
-	// 	var nombre = app.coleccionPerfiles.findWhere({'id': id }).toJSON();
-	// 	$('#verpermisos'+id).toggle();
-		
-	// },
 	
 	cargarPerfil : function()
 	{
+		$('#perfiles').html('');
 		app.coleccionPerfiles.each
 		( 	function(perfil)
 			{
@@ -34,10 +27,6 @@ app.VistaConsultaPerfil = Backbone.View.extend
 			,this
 		);
 	},
-	// eliminar : function()
-	// {
-	// 	this.model.destroy();
-	// }
 
 });
 

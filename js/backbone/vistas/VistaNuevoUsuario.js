@@ -10,7 +10,24 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		'keypress #empleado': 'soloLetras',
 		'click .tohead'    : 'resize',
 		'change #idperfil' : 'mispermisos',
+		'click .todos' : 'mark',
+		'change #idpermisos' : 'marcarTodos',
+		'click .pchek' : 'seleccionachek'
 		// 'change #registroUsuario' : 'obtenerFoto1'
+	},
+	mark : function(e)
+	{
+		$(e.currentTarget).children().trigger('click');
+	},
+
+	marcarTodos : function(chek)
+	{
+		markTodos(chek);
+	},
+
+	seleccionachek : function(e)
+	{
+		$(e.currentTarget).children().trigger('click');
 	},
 
 	obtenerFoto1 : function(e)
@@ -22,32 +39,44 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		this.cargarModulo();	
 		this.selectEmpleados();
 		this.cargarSubmodulo();
-		select_Perfil();
+		this.selectPerfil();
+	},
+
+	
+	// 	checkboxs = $('.chek');
+	// 	if ($(chek.currentTarget).is(':checked'))
+	//     {
+	//         for (var i = 0; i < checkboxs.length; i++) {
+	//             checkboxs[i].checked = true;
+	//         }
+	//     }
+	//     else{
+	//         for (var i = 0; i < checkboxs.length; i++) {
+	//             checkboxs[i].checked = false;
+	//         }
+	//     }
+	// },
+
+	selectPerfil : function()
+	{
+		var list = '<% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
+        this.$('#idperfil').append(_.template(list)
+        ({ perfiles : app.coleccionPerfiles.toJSON() }));
 	},
 
 	resize : function(elemento)
 	{
-		var efect = $(elemento.currentTarget).parent().children('.conf').attr('id');	
-		$('#'+efect).slideToggle( 500 );
-		if( $(elemento.currentTarget).children('#fl').children().attr('class') == 'icon-circledown' )
-		{
-			$(elemento.currentTarget).children('#fl').children().removeClass();
-			$(elemento.currentTarget).children('#fl').children().addClass('icon-circleup');
-		}
-		else
-		{
-			$(elemento.currentTarget).children('#fl').children().removeClass();
-			$(elemento.currentTarget).children('#fl').children().addClass('icon-circledown');	
-		}
+		var id = this.$(elemento.currentTarget).parent().children('.conf').attr('id');
+		var spancircle = this.$(elemento.currentTarget).children('i').attr('id');
+		rezise(id, spancircle);	
 	},
 
 	selectEmpleados : function()
     {
     	var list = '<% _.each(empleados, function(empleado) { %> <option disabled id="<%- empleado.id %>" value="<%- empleado.id %>"><%- empleado.nombre %></option> <% }); %>';
-		this.$('#idempleado').
-		append(_.template(list, 
-			{ empleados : app.coleccionEmpleados.toJSON() }
-		));
+		this.$('#idempleado').append(_.template(list)
+		({ empleados : app.coleccionEmpleados.toJSON() }));
+		
 		this.$('#idempleado').selectize({
 			create: true,
 			maxItems: 1
@@ -56,18 +85,21 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	cargarModulo : function()
 	{
-		var list = '<% _.each(modulos, function(modulo){ %> <li><a href="#<%- modulo.modulo %>" role="tab" data-toggle="tab"> <%- modulo.modulo%> </a></li> <% }) %>';
-		this.$('#modulos').append(_.template(list, {modulos : app.coleccionPermisos.toJSON() }));
+		var list = '<% _.each(modulos, function(modulo){ %> <li><a href="#<%- modulo.modulo %>n" role="tab" data-toggle="tab"> <%- modulo.modulo%> </a></li> <% }) %>';
+		this.$('#modulos').append(_.template(list)
+		({ modulos : app.coleccionPermisos.toJSON() }));
 		$("#modulos").children(':first-child').addClass('active');
 	},
 
 	cargarSubmodulo : function()
 	{
 		submodulos = app.coleccionPermisos.toJSON();			
-		var json={};		
+		
+		var json={};
+		json.band = 'n';			
 		for(var x=0; x < submodulos.length;x++)
-		{			
-			json.active = (x==0) ? "active" : "";
+		{	
+			json.active = (x==0) ? "tab-pane active":"tab-pane";
 			json.modulo = submodulos[x].modulo;
 			
 			json.submodulos = submodulos[x].permisos.split(",");			
@@ -77,7 +109,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	
 	mispermisos : function(idperfil)
 	{
-		$('.chek').attr('checked',false);
+		// $('input[type="checkbox"]').attr('checked',false);
 		idperfil = $(idperfil.currentTarget).val();
 		var permisos = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
 		var mispermisos = jQuery.parseJSON(permisos);
@@ -96,7 +128,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 				{
 					for(y in mispermisos[i].submodulos[x].permisos)
 					{
-						inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+' #'+mispermisos[i].submodulos[x].permisos[y]);
+						inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+'n .pchek  #'+mispermisos[i].submodulos[x].permisos[y]);						
 					    $(inputchek).attr('checked',true);												
 					}					
 				}
@@ -105,10 +137,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		
 	},
 
-	marcarTodos : function(elemento)
-	{
-		marcarCheck(elemento);      
-	},
+
 
 	jsonpermisos : function()
 	{

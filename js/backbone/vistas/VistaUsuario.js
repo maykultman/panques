@@ -1,7 +1,8 @@
 var app = app || {};
 app.VistaUsuario = Backbone.View.extend({
 	tagName : 'article',
-	className : 'user-wrapper',//'panel panel-default',
+	// className : 'user-wrapper',//'panel panel-default',
+	className : 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
 	plantilla : Handlebars.compile($('#usuario').html()),
 	modalu  : Handlebars.compile($('#edicion').html()),
 	
@@ -19,13 +20,11 @@ app.VistaUsuario = Backbone.View.extend({
 		return this;
 	},
 
-	perfils : function()
+	perfil : function()
 	{
 		var list = '<% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
         this.$('#idperfil'+this.model.get('id')).
-        html(_.template(list, 
-            { perfiles : app.coleccionPerfiles.toJSON() }
-        ));
+        html(_.template(list)({ perfiles : app.coleccionPerfiles.toJSON() }));
 	},
 
 	modaledit :function()
@@ -152,23 +151,23 @@ app.VistaUsuario = Backbone.View.extend({
 	
 
 
-	// 	// var modeloUsuario = pasarAJson( $('#edicionUsuario'+this.model.get('id')).serializeArray());
-	// 	// console.log(modeloUsuario);
-	// 	// modeloUsuario.idpermisos = JSON.stringify( pasarAJson($('#permisoz'+this.model.get('id')).serializeArray()) );
-	// 	// var self = this;
-	// 	// this.model.save
-	// 	// (
-	// 	// 	modeloUsuario, 
-	// 	// 	{
-	// 	// 		wait:true,
-	// 	// 		patch:true,
-	// 	// 		success: function (exito)
-	// 	// 		{
-	// 	// 			$('#t_usuario'+exito.get('id')).text(modeloUsuario.usuario);
-	// 	// 		}, 
-	// 	// 		error: function (error){}
-	// 	// 	}
-	// 	// );
+		// var modeloUsuario = pasarAJson( $('#edicionUsuario'+this.model.get('id')).serializeArray());
+		// console.log(modeloUsuario);
+		// modeloUsuario.idpermisos = JSON.stringify( pasarAJson($('#permisoz'+this.model.get('id')).serializeArray()) );
+		// var self = this;
+		// this.model.save
+		// (
+		// 	modeloUsuario, 
+		// 	{
+		// 		wait:true,
+		// 		patch:true,
+		// 		success: function (exito)
+		// 		{
+		// 			$('#t_usuario'+exito.get('id')).text(modeloUsuario.usuario);
+		// 		}, 
+		// 		error: function (error){}
+		// 	}
+		// );
 				
 	// }
 
@@ -268,3 +267,33 @@ app.VistaUsuario = Backbone.View.extend({
 // 		events.preventDefault();		
 // 	}
 // });
+
+
+
+// mispermisos : function(idperfil)
+	// {
+	// 	idperfil = $(idperfil.currentTarget).val();
+	// 	var permisos = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
+	// 	var mispermisos = jQuery.parseJSON(permisos);
+	// 	var inputchek;
+	// 	$('.check').attr('checked', false);
+	// 	for(i in mispermisos)
+	// 	{
+	// 		if(
+	// 			  mispermisos[i].nombre=='Clientes' ||mispermisos[i].nombre=='Proyectos'
+	// 			||mispermisos[i].nombre=='Contratos'||mispermisos[i].nombre=='Cotizaciones'
+	// 			||mispermisos[i].nombre=='Proyectos'||mispermisos[i].nombre=='Actividades'
+	// 			||mispermisos[i].nombre=='Catálogos'||mispermisos[i].nombre=='Usuarios'
+	// 		  )
+	// 		{
+	// 			for(x in mispermisos[i].submodulos)
+	// 			{
+	// 				for(y in mispermisos[i].submodulos[x].permisos)
+	// 				{
+	// 					inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+' #'+mispermisos[i].submodulos[x].permisos[y]);
+	// 					$(inputchek).attr('checked',true);												
+	// 				}					
+	// 			}
+	// 		}			
+	// 	}		
+	// }

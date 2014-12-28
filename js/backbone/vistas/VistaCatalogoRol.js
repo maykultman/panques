@@ -21,7 +21,8 @@ app.VistaCatalogoRol = Backbone.View.extend({
 
 	habilitarEdicion : function()
 	{	//..Cambia el class ha visible al campo para editar el rol
-		this.$el.children().children().toggleClass('visibleR');
+		this.$el.children().children('label').toggleClass('ocultoR');
+		this.$el.children().children('input').toggleClass('visibleR');
 	},
 
 	guardarEdicion : function(elemento)

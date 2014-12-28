@@ -1,22 +1,20 @@
 		<section id="catalogo_roles">		    
 		  	<h3>Nuevo Rol</h3>
-		  	<hr><br>
+		  	<hr>
 		  	<div class="row">
 		  		<form id="registro_rol">	  
 			  		<div class="col-md-11">		  			      						
 						<input id="rol" type="text" name="nombre" class="form-control" placeholder="Nombre del rol" style="width:100%;">			   
 			  		</div>
 			  		<div class="col-md-1">
-						<button id="guardar" type="button" class="btn btn-primary"
-						style="margin-top: 15px; margin-left: -15px;" >Guardar</button>
-			       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->   
+						<button id="guardar" type="button" class="btn btn-primary">Guardar</button>			       	    
 			  		</div>
 		  		</form>		  						
-		  	</div><br>			
+		  	</div>
 		    <h3>Roles</h3>
 		  	<hr>	       
-	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search" style="width:100%; ">
-	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>
+	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search">
+	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span><br>
 	        <div class="panel panel-primary" >		     
 		      <div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
 		        <table class="table table-hover" style="margin-bottom: 0px !important">
@@ -37,18 +35,14 @@
 	var app = app || {};
 	app.coleccionDeRoles = <?php echo json_encode($roles)  ?>;
 </script>
-
-<script type = "text/plantilla" id="listaRoles">
-	
+<script type = "text/plantilla" id="listaRoles">	
 	<td>			
-		<label name="<%- nombre %>"  class="ocultoR visibleR"><%- nombre %></label>
+		<label name="<%- nombre %>"  class="visibleR"><%- nombre %></label>
 		<input id="erol" type="text" class="valor ocultoR" value="<%- nombre %>">
 	</td>
-	<td class="icon-operaciones">		
-	<div class="eliminar_permiso">
-		<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-		<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>				
-	</div>
+	<td class="icon-operaciones text-right">		
+		<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
+		<span class="icon-edit"  data-toggle="tooltip"  title="Editar"></span>					
 	</td>
 
 </script>

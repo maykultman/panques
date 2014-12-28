@@ -21,16 +21,15 @@
 </script>
 
 <script type="text/plantilla" id="usuario">
-	<center>
+	<div class='user-wrapper'>	
 		<img class="img-circle" src="<?=base_url()?>{{foto}}" alt="Imagen-Usuario" width="85" height="85">
 		<h4><b>{{usuario}} </b></h4>
 	    <h6><b>{{perfil}}</b></h6> 
 	    <div class="btn-group">       	
 	      	<button class="delete btn btn-default">Eliminar</button>
 	       	<button class="edit btn btn-default" data-toggle="modal" data-target="#myModal{{id}}">Editar</button>
-	    </div>	    
-	</center>
-    
+	    </div>	        
+	</div>
 </script>
 <!-- Modal -->
 <script type="text/plantilla" id="edicion">

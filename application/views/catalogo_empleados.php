@@ -88,9 +88,9 @@
 </script>
 
 <script type="text/plantilla" id="empleado">
-<article style="float:left; position:relative;">
+<article class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 <div class="user-wrapper">
-	<center id="carnet<%-id%>" style="display:block;">
+	<div id="carnet<%-id%>">
 		<img class="img-circle" src="<?=base_url()?>/img/sinfoto.png" alt="Imagen-Usuario" width="65" height="65"><br>
 		<b><%-nombre%></b><br>
 		<small><%-puesto%></small><br>
@@ -98,13 +98,13 @@
 	      	<button id="<%-id%>" class="delete btn btn-default">Eliminar</button>
 	       	<button id="<%-id%>" class="edit btn btn-default">Editar</button>
 	    </div>	    
-	</center>
-	<div id="verinfo<%-id%>" style="display:none;">
-		<label>Nombre</label>				<input type="text" name="" value="<%-nombre%>"><br>
-		<label>Puesto</label>				<input type="text" name="" value="<%-puesto%>"><br>
-		<!--<label>Teléfono</label>			<input type="text" name="" value="<%-telefono%><br">>-->
-		<label>Domicilio</label>			<input type="text" name="" value="<%-direccion%>"><br>
-		<label>Fecha de nacimiento</label>	<input type="text" name="" value="<%-fecha_nacimiento%>"><br>
+	</div>
+	<div id="verinfo<%-id%>" class="editinfo">
+		<label>Nombre</label>				<input type="text" name="" value="<%-nombre%>"><br><br>
+		<label>Puesto</label>				<input type="text" name="" value="<%-puesto%>"><br><br>
+		<!--<label>Teléfono</label>			<input type="text" name="" value="<%-telefono%>"><br>-->
+		<label>Domicilio</label>			<input type="text" name="" value="<%-direccion%>"><br><br>
+		<label>Fecha de nacimiento</label>	<input type="text" name="" value="<%-fecha_nacimiento%>"><br><br>
 		<button id="<%-id%>" class="guardar btn btn-default">Guardar</button>
 		<button id="<%-id%>" class="cancel btn btn-default">Cancelar</button>
 	</div>

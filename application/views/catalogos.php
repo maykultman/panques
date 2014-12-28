@@ -1,54 +1,92 @@
-<?=link_tag('css/estilos_modulo_usuarios.css').
-script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-		script_tag('css/bootstrap-3.1.1-dist/js/transition.js');?>
+<?=link_tag('css/estilos_modulo_usuarios.css');?>
+<style type="text/css">
+@media(max-width:767px){
+	#menucatalogo{
+		display: none;
+		background: #0492e6;
+		position: absolute;
+		width: 100%;
+		z-index: 20;
+		margin-top: 70px;
+	}
+	#menu_modulo{ 
+		background: #0492e6; 
+		position: relative;
+	}
+	#pboton{
+		display: block;
+		right: 2%;
+		font-size: 25px;
+		color: #fff;
+		padding-top: 4%;
+		cursor: pointer;
+		position: absolute;
+		width: 100px;
+		z-index: 30;
+	}
+}
+@media(min-width: 768px){
+#pboton{
+	display: none;
+	}
+	#menucatalogo{
+		display: block!important;
+		background: #0492e6;
+	}
+
+}
+#menucatalogo li a span{
+	font-size: 30px;
+}
+#menucatalogo li{
+	padding: 0%;
+}
+</style>
 <div class="contenedor_modulo">  
 	<section>
 	   <h1 id="titulo_del_modulo"><label>Catálogos</label></h1>
-	   <nav>
-			<ul id="menu_modulo" class="nav nav-pills">
-				<li>
-	            	<a href="catalogo_empleados">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-businesscard2"></span>
-	              	   </div>
-	                   Empleados
-	                </a>
-	            </li>
-				
-				 <li>
-	            	<a href="catalogo_perfiles">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-user"></span>
-	              	   </div>
-	                   Perfiles
-	                </a>
-	            </li>
-			    <li>
-	            	<a href="catalogo_puestos">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class=" icon-avatar2"></span>
-	              	   </div>
-	                   Puestos
-	                </a>
-	            </li>
-	             <li>
-	            	<a href="catalogo_roles">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-friends"></span>
-	              	   </div>
-	                   Roles
-	                </a>
-	            </li>		  			       			
-	 			<li>
-	            	<a href="catalogo_servicios">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-websitebuilder"></span>
-	              	   </div>
-	                   Servicios
-	                </a>
-	            </li>        
-	                                 
-		    </ul> 
+	   	<nav id="menu_modulo" class="container-fluid">
+		   	<div class="row">
+		   		<p id="pboton"><span id="btn-menu" class="glyphicon glyphicon-align-justify"></span>&nbsp;Menu</p>
+				<ul id="menucatalogo" class="nav nav-pills">
+					<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+		            	<a href="catalogo_empleados">		             	   
+		                	 <span class="icon-businesscard2"></span><br>
+		                	 Empleados
+		                </a>
+		            </li>
+					
+					 <li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+		            	<a href="catalogo_perfiles">		             	   
+		                	 <span class="icon-user"></span><br>
+		                	 Perfiles
+		                </a>
+		            </li>
+				    <li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+		            	<a href="catalogo_puestos">
+		                	<span class=" icon-avatar2"></span><br>
+		                	Puestos
+		                </a>
+		            </li>
+		            <li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+		            	<a href="catalogo_roles">
+		             	    <span class="icon-friends"></span><br>
+		             	    Roles
+		                </a>
+		            </li>		  			       			
+		 			<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+		            	<a href="catalogo_servicios">		             	   
+		                	 <span class="icon-websitebuilder"></span><br>
+		                	 Servicios
+		                </a>
+		            </li>        
+		            <li class="hidden-xs col-sm-2 col-md-2 col-lg-7"></li>                     
+			    </ul>			    
+			</div>
 		</nav>	  
     </section>
     <section class="contenedor_principal_modulos"> 
+
+<script type="text/javascript">
+$('#pboton').click(function(){	$('ul.nav-pills').slideToggle('fast');	});
+</script>
