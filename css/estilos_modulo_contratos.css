@@ -4,10 +4,13 @@
 }
 .thead_visible {/* */}
 
-.thead_oculto {
 
+<<<<<<< HEAD
 	display: none;
 }
+=======
+.tbody_visible {/* */}
+>>>>>>> cd23ae992bc06d5622eb41a7dbda5f2e36d720c8
 
 .tbody_oculto {
 

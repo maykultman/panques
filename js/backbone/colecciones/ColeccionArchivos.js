@@ -1,5 +1,15 @@
 var app = app || {};
 
+urlRoot	:'http://crmqualium.com/api_archivos'
+
+app.ModeloArchivo = Backbone.Model.extend({
+	// defaults	: {
+	// 		nombre	: '',
+	// 		  tipo	: '',
+	// 	comentario	: ''
+	// }
+});
+
 var ColeccionArchivos = Backbone.Collection.extend({
 	model	: app.ModeloArchivo,
 
@@ -19,5 +29,3 @@ var ColeccionArchivos = Backbone.Collection.extend({
 		return this.last().get('idArchivo') + 1;
 	}*/
 });
-
-app.coleccionArchivos = new ColeccionArchivos(app.coleccionArchivosCodeIgniter);

@@ -7,15 +7,27 @@
 		
 		function __construct(){	}
 
-		public function insertProyRol($post){ 
-			return $query = $this->db->insert('rol_emp_proy', $post);	}
+		public function insertProyRol($post){
+			// return $query = $this->db->insert('rol_emp_proy', $post);
+
+			$this->db->insert('rol_emp_proy', $post);
+			return $this->getProyRol($this->db->insert_id()); 
+		}
 		# Fin del metodo insertar telefono.
 
 		public function getProyRol($id=FALSE)
 		{
-			($id===FALSE) ? $query = $this->db->get('rol_emp_proy') :
-						    $query = $this->db->get_where('rol_emp_proy', array('idproyecto'=>$id));			
-			return $query->result();
+			// ($id===FALSE) ? $query = $this->db->get('rol_emp_proy') :
+			// 			    $query = $this->db->get_where('rol_emp_proy', array('idproyecto'=>$id));			
+			// return $query->result();
+
+			$reply = 'result';
+			if($id)
+			{
+				$this->db->where('id',$id);  
+				#$reply = 'row';
+			}          
+			return $this->db->get  ( 'rol_emp_proy' )->$reply();
 		}
 
 		public function patchProyRol($id, $put)

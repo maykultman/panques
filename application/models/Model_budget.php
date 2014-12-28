@@ -1,6 +1,5 @@
- <?php
-    require_once 'Modelo_crud.php';
-    class Model_budget extends Modelo_crud
+<?php
+    class Model_budget extends CI_Model
     {   
         public function __construct(){}       
 
@@ -30,16 +29,16 @@
         public function get ( $id = FALSE, $soloCot = FALSE) 
         {   
             if ($soloCot) {
-                $reply = $this->where( $id );
+                $this->db->where( 'id', $id );
+                $reply = 'row';
                 return $this->db->get( 'cotizaciones' )->$reply();
             } else {
-                $reply = $this->where( $id );
                 $this->db->order_by('fechacreacion', 'desc');  
-                $data['cotizaciones'] = $this->db->get  ( 'cotizaciones' )->$reply();
+                $data['cotizaciones'] = $this->db->get( 'cotizaciones' )->result();
                 $this->db->order_by('id', 'desc');
-                $data['folio'] = $this->db->get  ( 'folios_cotizaciones' )->row();
+                $data['folio'] = $this->db->get( 'folios_cotizaciones' )->row();
                 return $data;
-            }           
+            }
         }
 
         public function save (  $id,  $put ) 

@@ -1,4 +1,28 @@
 var app = app || {};
+/*Comentarios de en la funcion modificarPafo de la
+  clase app.VistaNuevoContrato en el archivo del
+  mismo nombre .js*/
+app.VistaPago.prototype.modificarPago = function (e) {
+	clearTimeout(this.timer);
+	var self = this;
+	this.timer = setTimeout(function() {
+		var actual = parseFloat(self.model.get('pago')),
+			idVista = parseInt($(e.currentTarget).attr('id'));
+		var diferencia = (
+			actual - parseFloat( 
+						self.model.set({
+							pago:$(e.currentTarget).val()
+						},{
+							wait:true
+						}).get('pago') )
+					).toFixed(2);
+		self.bloquear(e);
+		app.vistaEdicionContrato.equilibrarPagos(diferencia, idVista);
+		self.desbloquear();
+		self.$('#'+idVista).select();
+	}, 200);
+};
+
 app.VistaContrato = Backbone.View.extend({
 	tagName : 'tr',
 	events : {
@@ -138,6 +162,7 @@ app.VistaContrato = Backbone.View.extend({
 						idcontrato:self.model.get('id')
 					}), 'fechapago')
 				};
+				
 				jsonC.pago 		= jsonP.pago;
 				jsonC.fechapago = jsonP.fechapago;
 				return jsonC;
@@ -188,7 +213,7 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 								 }),
 			idservicio 		= '',
 			json 			= {},
-			preciohora 		= this.model.get('preciohora'),
+			preciotiempo 		= this.model.get('preciotiempo'),
 			vSeccion,
 			folio,
 			$select = this.$('#busqueda')[0].selectize,
@@ -215,7 +240,7 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 				.fadeIn('fast');
 		this.$('input[name="folio"]').val( folio );
 
-		this.$('#prestacion').val(this.model.get('prestaciones'));
+		this.$('#serviciosolicitado').val(this.model.get('serviciosolicitado'));
 		$select.setValue(this.model.get('idcliente'));
 		this.$('input[name="idcliente"]').val(this.model.get('idcliente'));
 
@@ -232,14 +257,14 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 						.html('');
 				};
 				json = secciones[i].toJSON();
-				json.preciohora = preciohora;
+				json.preciotiempo = preciotiempo;
 				vSeccion = new VistaSeccion();
 				this.$('#table_servicio_'+idservicio+' tbody')
 					.append( vSeccion.render(json).el );
 			};
 		}
 		this.$('#precio_hora')
-			.val(preciohora)
+			.val(preciotiempo)
 			.trigger('change');
 
 		this.$('input[value="'+this.model.get('plan')+'"]').click();
@@ -303,13 +328,15 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 		this.cargarEnunciados();
 	},
 	obtenerDatos		: function () {
+		this.bloquearInputs();
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('   #prestacion,'
+			json  = pasarAJson(this.$('   #serviciosolicitado,'
 										+'#busqueda,'
 										+'#idrepresentante,'
 										+'#hidden_fechafirma,'
 										+'input[name="plan"]:checked,'
-										+'#select_firmaempleado')
+										+'#select_firmaempleado,'
+										+'#enunciado')
 					.serializeArray()),
 			fechainicio,
 			fechafinal;
@@ -325,6 +352,9 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 			} else if( !json.plan ){
 				alerta('Seleccione un tipo de <b>plan</b>', function () {});
 				return false; // Terminamos el flujo del código
+			} else if ( !json.enunciado ) {
+				alerta('Seleccione o escriba los <b>enunciados</b> del contrato', function () {});
+				return false; // Terminamos el flujo del código
 			};
 		json = { secciones : [], datos : '' };
 		// Datos básicos
@@ -334,9 +364,10 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 				json.datos.enunciado = json.datos.enunciado.join(',.,');
 		// Validar datos
 			if ( json.datos.plan == 'evento' ){
-				fechainicio = this.$('#fechaInicioEvento').datepicker('getDate');
-				json.datos.fechainicio = formatearFechaDB(fechainicio);
-				json.datos.fechafinal = this.$('#fechafinalEvento').val();
+				
+				json.datos.fechainicio = formatearFechaDB(this.$('#fechaInicioEvento').datepicker('getDate'));
+				json.datos.fechafinal = formatearFechaDB(this.$('#vencimientoPlanEvento').attr('disabled',false).datepicker('getDate'));
+				this.$('#vencimientoPlanEvento').attr('disabled',true);
 				if ( json.datos.plazo == '' ) {
 					alerta('Establezca el <b>plazo en días');
 					return false;
@@ -347,9 +378,10 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 				}
 			}
 			if ( json.datos.plan == 'iguala' ) {
-				fechainicio = this.$('#fechaInicioIguala').datepicker('getDate');
-				json.datos.fechainicio = formatearFechaDB(fechainicio);
-				json.datos.fechafinal = this.$('#fechafinalIguala').val();
+				
+				json.datos.fechainicio = formatearFechaDB(this.$('#fechaInicioIguala').datepicker('getDate'));
+				json.datos.fechafinal = formatearFechaDB(this.$('#vencimientoPlanIguala').attr('disabled',false).datepicker('getDate'));
+				this.$('#vencimientoPlanIguala').attr('disabled',true);
 				if ( json.datos.nplazos == '' ) {
 					alerta('Establezca las <b>Mensualidades</b>');
 					return false;
@@ -358,9 +390,9 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 		// Datos pagos
-			json.datos.mensualidadletras 
+			json.datos.totalletra 
 			= 
-			(NumeroALetras(this.total/Number(json.datos.nplazos))).trim();
+			(NumeroALetras(this.total)).trim();
 		// Cortafuego. Debe haber al menos 1 servicio para contratar
 			if (!forms.length) {
 				alerta('Seleccione al menos un <b>servicio</b> para contratar'
@@ -374,9 +406,7 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 			};
 		// Datos basura
 			delete json.datos.todos;
-		
-		// Comentarios en la funcion que lleva el mismo nombre que esta
-		// en la clase VistaConsultaCotizaciones
+
 		if (this.model.get('version') == '1') {
 			json.datos.version = parseInt(
 				_.max( _.pluck( _.where(app.coleccionContratos.toJSON(),{
@@ -452,7 +482,7 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 				for (var i = 0; i < modelos.length; i++) {
 					horas += Number(modelos[i].get('horas'));
 				};
-				total = horas * Number(model.get('preciohora'));
+				total = horas * Number(model.get('preciotiempo'));
 				total = total - total * Number(model.get('descuento'))/100;
 				total = total + total * 0.16;
 				total = conComas(total.toFixed(2));
@@ -563,14 +593,14 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 		};
 	},
 	editar  			: function(e) {
-		var vista = new EdicionContrato({
+		app.vistaEdicionContrato = new EdicionContrato({
 			model:app.coleccionContratos
 					 .get( $(e.currentTarget)
 						 .children()
 					 .val() )
 		});
-		vista.establecerDatos();
-		vista.establecerRegreso();
+		app.vistaEdicionContrato.establecerDatos();
+		app.vistaEdicionContrato.establecerRegreso();
 	},
 });
 

@@ -1,0 +1,4 @@
+ALTER TABLE `contratos` CHANGE `nplazos` `npagos` INT(10) NOT NULL;
+ALTER TABLE `contratos` CHANGE `preciohora` `preciotiempo` INT(11) NOT NULL;
+ALTER TABLE `contratos` CHANGE `prestaciones` `serviciosolicitado` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `contratos` CHANGE `mensualidadletras` `totalletra` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

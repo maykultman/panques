@@ -6,6 +6,7 @@ app.VistaCotizacion = Backbone.View.extend({
 		'click .span_papelera' 			: 'cambiarVisibilidad',
 		'click .span_restaurar' 		: 'cambiarVisibilidad',
 		'click .span_borrar' 			: 'eliminarPermanente',
+		'click .span_descargar' 		: 'descargar',
 		'click .span_vistaPrevia'		: 'vistaPrevia',
 		'click .span_papeleraVersion'	: 'cambiarVisibilidadVersion',
 		'click .span_vistaPreviaVersion': 'vistaPreviaVersion',
@@ -97,7 +98,7 @@ app.VistaCotizacion = Backbone.View.extend({
 			.off()
 			.cambiarStatus();
 	},
-	cambiarVisibilidad : function () {
+	cambiarVisibilidad 	: function () {
 		var self = this;
 		if (this.model.get('visibilidad') == '1') {
 			confirmar('¿Está seguro de que desea eliminar la cotización <b>'
@@ -119,7 +120,7 @@ app.VistaCotizacion = Backbone.View.extend({
 		vista.setElement($(e.currentTarget).parents('li'));
 		vista.cambiarVisibilidad();
 	},
-	eliminarPermanente : function () {
+	eliminarPermanente 	: function () {
 		var self = this;
 		confirmar('La cotización <b>'
 			+this.model.get('titulo')+
@@ -128,6 +129,9 @@ app.VistaCotizacion = Backbone.View.extend({
 				self.model.eliminarPermanente();
 			},
 			function () {});
+	},
+	descargar 			: function () {
+		window.open("pdf_cotizacion/"+this.model.get('id'));
 	},
 	vistaPrevia : function() {
 		localStorage.clear();
@@ -172,7 +176,9 @@ var VistaSeccion = app.VistaSeccion.extend({
 		/*Establecer el precio en el input escondido para calcular el precio
 		  de la sección*/
 		this.$('.precio_hora').val($('#precio_hora').val());
+		
 		this.calcularSeccion();
+
 		return this;
 	},
 });
@@ -182,18 +188,40 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 	
 	establecerDatos : function() {
 		var idcotizacion 	= this.model.get('id'),
-			secciones 		= app.coleccionServiciosCotizados
-								 .where({
-								 	idcotizacion:idcotizacion
-								 }),
+			arrayServicios	= function () {
+				// debido a que los servicios no son ordenados en la 
+				// base de datos en el orden en que son enviados, sino
+				// que el primero que llega la servidor se almacena;
+				// tenemos que ordenarlos manualmente para mostrar la
+				// cotizacion tal cual fue creada, con los servicios y
+				// secciones correspondientes. De lo contrario no se
+				// muestran todas las secciones de la cotización.
+
+				// Funciones Underscorejs: _.where, _.groupBy y _.values
+
+				// Buscamos todos los servicios de la cotización a editar
+				var jsonSecciones = _.where(app.coleccionServiciosCotizados.toJSON(),{
+					idcotizacion:idcotizacion
+				});
+				// Agrupanos los servicios por medio del id de servicios.
+				// Esto da como resultados un json donde la clave es el id
+				// de servicio y el valor es un array que son las secciones
+				// de los servicios.
+				var groposServicios = _.groupBy(jsonSecciones,'idservicio');
+				// Antes de devolver el resultado tenemos que quitar las claves
+				// que la instrucción anterior genero, esto para poder manipular
+				// el array de arrays con mayor facilidad.
+				return _.values(groposServicios);
+			}(),
 			idservicio 		= '',
 			json 			= {},
-			preciohora 		= this.model.get('preciohora'),
+			preciotiempo 	= this.model.get('preciotiempo'),
 			vSeccion,
 			folio,
 			$select = this.$('#busqueda')[0].selectize;
 
-		
+		this.tipoPlan = this.model.get('plan');
+
 		/*La función render de la clase padre no establece
 		el nuevo folio para la nueva versión de la cotización.
 		esto es porque la longitud de la colección es mayor
@@ -201,7 +229,7 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		También tenemos que estanblecer el folio que viene
 		desde le servidor, del array de objetos a la coleccion
 		de cotizaciones de Backbone. 
-		/*--DESCOMENTAR SI LOS FOLIO DEBEN NUNCA SE REPETIRAN--*/
+		/*--DESCOMENTAR PARA QUE LOS FOLIO NUNCA SE REPETIRAN--*/
 			/*app.coleccionCotizaciones.folio 
 				= app.coleccionDeCotizaciones.folio.folio;
 			folio = app.coleccionCotizaciones.establecerFolio();*/
@@ -214,106 +242,119 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		$select.setValue(this.model.get('idcliente'));
 		this.$('input[name="idcliente"]').val(this.model.get('idcliente'));
 
+		this.$('input[value="'+this.model.get('plan')+'"]').click();
+
+		this.bloquearInputs();
+
 		this.$('#detalles')
 			.val(this.model.get('detalles'));
-		this.$('#caracteristicas')
-			.val(this.model.get('caracteristicas'));
+		/*this.$('#caracteristicas')
+			.val(this.model.get('caracteristicas'));*/
+
 
 		this.$('input[name="descuento"]')
 			.val(this.model.get('descuento'));
 
-		for(i in secciones) {
-			if (secciones[i].get('idcotizacion') == idcotizacion) {
-				if (idservicio != secciones[i].get('idservicio')) {
-					idservicio = secciones[i].get('idservicio');
-					this.$('#servicio_'+idservicio).click();
-					this.$el
-						.find('#table_servicio_'+idservicio+' tbody')
-						.html('');
-				};
-				json = secciones[i].toJSON();
-				json.preciohora = preciohora;
+		// Tenemos las json_secciones de los servicios lista,
+		// iteramos sobre el array.
+		for(i in arrayServicios) {
+			// En primer lugar tenemos que apilar el servicio en
+			// la tabla de servicios y borrar las secciones que
+			// apila automaticamente.
+			idservicio = arrayServicios[i][0].idservicio;
+			this.$('#servicio_'+idservicio).click();
+			this.$el.find('#table_servicio_'+idservicio+' tbody').html('');
+			// Apilamos las secciones del servicio en turno y que son propios
+			// de la cotizacion a editar.
+			for(j in arrayServicios[i]){
+				arrayServicios[i][j].preciotiempo = preciotiempo;
 				vSeccion = new VistaSeccion();
 				this.$('#table_servicio_'+idservicio+' tbody')
-					.append( vSeccion.render(json).el );
-
-			};
+					.append( vSeccion.render(arrayServicios[i][j]).el );
+			}
 		}
-		this.$('#precio_hora')
-			.val(preciohora)
-			.trigger('change');
+
+		switch(this.tipoPlan){
+			case 'iguala':
+				this.$('#precio_mes')
+					.val(preciotiempo)
+					.trigger('change');
+			break;
+			case 'evento':
+				this.$('#precio_hora')
+					.val(preciotiempo)
+					.trigger('change');
+			break;
+		}			
 	},
 	obtenerDatos	: function () {
 		var forms = this.$('.form_servicio'),
-			json  = pasarAJson(this.$('#titulo').serializeArray());
-		/*Cortafuego para forzar establecer los siguientes datos*/
-		if (json.titulo == '' || json.idcliente == '' || json.idrepresentante == '') {
-			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
-			return false; // Terminamos el flujo del código
-		};
-
+			json  = pasarAJson(this.$('#titulo', '.btn_plan').serializeArray());
+		// Cortafuego para forzar establecer el titulo. El cliente y el plan ya,
+		// estan establecidos
+			if (json.titulo == '') {
+				alerta('Escriba un <b>título</b> para la cotización, seleccione un <b>cliente</b> y un tipo de <b>plan</b>', function () {});
+				return false; // Terminamos el flujo del código
+			};
 		json = { secciones : [], datos : '' };
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
 			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
-
-		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
-		if (!forms.length) {
-			alerta('Seleccione al menos un <b>servicio</b> para cotizarlo', function () {});
-			return false; // Terminamos el flujo del código
-		};
-		/*Servicios cotizados*/
+		// Cortafuego. Debe haber al menos 1 servicio para cotizarlo
+			if (!forms.length) {
+				alerta('Seleccione al menos un <b>servicio</b> para cotizarlo', function () {});
+				return false; // Terminamos el flujo del código
+			};
+		// Servicios cotizados
 			for (var i = 0; i < forms.length; i++) {
 				json.secciones.push( pasarAJson($(forms[i]).serializeArray()) );
 			};
-
 		// Dato basura
-		delete json.datos.todos;
-
-		/*preparamos la nueva version antes de devorverla*/
-		json.datos.version = parseInt( this.model.get('version') ) +1;
-		if (this.model.get('idcotizacion') == '0') {
-			json.datos.idcotizacion = this.model.get('id');
-		} else {
-			json.datos.idcotizacion = this.model.get('idcotizacion');
-		};
-
-		// dependiendo de la version de la cotizacion
-		// será como se obtendrá la version siguiente.
-		if (this.model.get('version') == '1') {
-			json.datos.version = parseInt(
-				// primero (_.where): como se trata de la versión original
-				// obtenemos todas las versiones que se crearon a
-				// partir de esta.
-				// segundo (_.pluck): aislamos la propiedad "version" de 
-				// cada modelo recuperado, en un array.
-				// tercero: (_.max): obtenemos numero mayor de en el array 
-				// y le sumamos 1; temenos como resultado la nueva versión.
-				_.max( _.pluck( _.where(app.coleccionCotizaciones.toJSON(),{
-					idcotizacion:this.model.get('id')
-				}),'version' ), function (version) {
-					return version;
-				}) ) +1;
-			// si todo lo anterior no retorno valor, entonces no hay versiones
-			// a partir de la actual. asigmamos la versión manualmente
-			if ( !json.datos.version ) {
-				json.datos.version = parseInt( this.model.get('version') ) +1;
+			delete json.datos.todos;
+		// preparamos la nueva version antes de devorverla
+			json.datos.version = parseInt( this.model.get('version') ) +1;
+			if (this.model.get('idcotizacion') == '0') {
+				json.datos.idcotizacion = this.model.get('id');
+			} else {
+				json.datos.idcotizacion = this.model.get('idcotizacion');
 			};
-			// establecemos el ancestro de la versión a crear
-			json.datos.idcotizacion = this.model.get('id');
-		} else{
-			// sino, se trata de la edicion de una de las versiones. solamente,
-			// cambiamos un parametro el la busqueda de las versiones. El
-			// documento actual se busca a si mismo por la posibilidad de que
-			// existan otras versiones. establecemos la version siguiente.
-			json.datos.version = parseInt(
-				_.max( _.pluck( _.where(app.coleccionCotizaciones.toJSON(),{
-					idcotizacion:this.model.get('idcotizacion')
-				}),'version' ), function (version) {
-					return version;
-				}) ) +1;
-			json.datos.idcotizacion = this.model.get('idcotizacion');
-		};
+		// NÚMERO DE VERSIÓN DE LA NUEVA COTIZACIÓN
+		// dependiendo de la version de la cotizacion que se está
+		// editando se obtendrá la version siguiente.
+			if (this.model.get('version') == '1') {
+				json.datos.version = parseInt(
+					// primero (_.where): como se trata de la versión original
+					// obtenemos todas las versiones que se crearon a
+					// partir de esta.
+					// segundo (_.pluck): aislamos la propiedad "version" de 
+					// cada modelo recuperado, en un array.
+					// tercero: (_.max): obtenemos numero mayor en el array 
+					// y le sumamos 1; temenos como resultado la nueva versión.
+					_.max( _.pluck( _.where(app.coleccionCotizaciones.toJSON(),{
+						idcotizacion:this.model.get('id')
+					}),'version' ), function (version) {
+						return version;
+					}) ) +1;
+				// si todo lo anterior no retorno valor, entonces no hay versiones
+				// a partir de la actual. asigmamos la versión manualmente
+				if ( !json.datos.version ) {
+					json.datos.version = parseInt( this.model.get('version') ) +1;
+				};
+				// establecemos el ancestro de la versión a crear
+				json.datos.idcotizacion = this.model.get('id');
+			} else{
+				// sino, se trata de la edicion de una de las versiones. solamente,
+				// cambiamos un parametro en la busqueda de las versiones. El
+				// documento actual se búsca a si mismo por la posibilidad de que
+				// existan otras versiones. establecemos la version siguiente.
+				json.datos.version = parseInt(
+					_.max( _.pluck( _.where(app.coleccionCotizaciones.toJSON(),{
+						idcotizacion:this.model.get('idcotizacion')
+					}),'version' ), function (version) {
+						return version;
+					}) ) +1;
+				json.datos.idcotizacion = this.model.get('idcotizacion');
+			};
 		
 		return json;
 	},
@@ -368,23 +409,47 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	},
 	cargar 	: function (model, eliminado) {
 		var vista;
-		model.set({    
-	 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
-	 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
-			total    : function () {
-				var modelos = app.coleccionServiciosCotizados.where({idcotizacion:model.get('id')}),
-					horas = 0,
-					total = 0;
-				for (var i = 0; i < modelos.length; i++) {
-					horas += Number(modelos[i].get('horas'));
-				};
-				total = horas * Number(model.get('preciohora'));
-				total = total - total * Number(model.get('descuento'))/100;
-				total = total + total * 0.16;
-				total = conComas(total.toFixed(2));
-				return total;
-			}()
-	 	});
+		switch(model.get('plan')){
+			case 'evento':
+				model.set({    
+			 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
+			 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
+					total    : function () {
+						var modelos = app.coleccionServiciosCotizados.where({idcotizacion:model.get('id')}),
+							horas = 0,
+							total = 0;
+						for (var i = 0; i < modelos.length; i++) {
+							horas += Number(modelos[i].get('horas'));
+						};
+						total = horas * Number(model.get('preciotiempo'));
+						total = total - total * Number(model.get('descuento'))/100;
+						total = total + total * 0.16;
+						total = conComas(total.toFixed(2));
+						return total;
+					}()
+			 	});
+				break;
+			case 'iguala':
+				model.set({    
+			 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
+			 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
+					total    : function () {
+						var modelos = app.coleccionServiciosCotizados.where({idcotizacion:model.get('id')}),
+							total = 0;
+						
+						total = Number(model.get('preciotiempo')) * Number(model.get('npagos'));
+						total = total - total * Number(model.get('descuento'))/100;
+						total = total + total * 0.16;
+						total = conComas(total.toFixed(2));
+						return total;
+					}()
+			 	});
+				break;
+			default:
+				/*case default*/
+				break;
+		}
+				
 		if (eliminado) {
 			vista = new VistaCotizacionEliminada({model : model});
 		} else {

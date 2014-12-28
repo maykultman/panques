@@ -85,7 +85,7 @@
 	nombreComercial: 		<%- nombreComercial %>									<br>
 	nombreRepresentante: 	<%- nombreRepresentante %>								<br>
 	titulo: 				<%- titulo %>											<br>
-	pagomes: 				<%- pagomes %>											<br>
+	pago: 					<%- pago %>											<br>
 	mensualidades:			<%- mensualidades %>									<br>
 </script>
 <script type="text/template">
@@ -112,7 +112,7 @@
 						Se encuentra inscrita ante el Registro Federal de Contribuyentes bajo la clave de identificación <b>QPM1201103S5</b>
 					</li>
 					<li>
-						Atendiendo a su objeto social se dedica, entre otras actividades, a la prestación de servicios de <b><u><%= datos.prestaciones %></u></b>. Además, que conforme a su objeto social le está permitido la celebración del presente Contrato.
+						Atendiendo a su objeto social se dedica, entre otras actividades, a la prestación de servicios de <b><u><%= datos.serviciosolicitado %></u></b>. Además, que conforme a su objeto social le está permitido la celebración del presente Contrato.
 					</li>
 					<li>
 						Conoce plenamente la calidad, características, requisitos, mecanismos, procedimientos y necesidades del objeto del presente contrato; que ha considerado todos los factores que intervienen en su celebración y que cuenta con el personal profesional, equipo de cómputo y recursos económicos suficientes para desarrollar eficazmente dicha labor.
@@ -173,40 +173,108 @@
 						<b>TERCERA.- DEL MONTO Y FORMA DE PAGO.-</b> Las partes acuerdan expresamente que como contraprestación por todas y cada una de las obligaciones que <b>“EL PRESTADOR DE SERVICIOS”</b> asume a su cargo a favor de <b>“EL CLIENTE”</b>, ésta le pagará 
 						
 						<%if (datos.plan == 'iguala') {%>
-							<%if (datos.nplazos == '1'){%>
+							<%if (datos.npagos == '1'){%>
 								una mensualidad
 							<%} else{%>
 								de manera mensual
 							<%};%>
 						<%} else{%>
-							<%if (datos.nplazos == '1'){%>
+							<%if (datos.npagos == '1'){%>
 								unicamente
 							<%} else{%>
 								periodicamente
 							<%};%>
 						<%};%>
 
-						por los servicios objeto de este contrato, la cantidad de <b>$<%= conComas(datos.pagomes) %> (Son: <%= datos.mensualidadletras %> Moneda Nacional)</b> 
-						<%if (datos.plan == 'iguala') {%>
-							<%if (datos.nplazos == '1'){%>
-								<!--por un mes-->.
+						por los servicios objeto de este contrato,
+
+						<%if ( datos.plan == 'iguala' ) {%>
+							la cantidad de<b>
+							<%if ( _.isArray( datos.pago ) ) {%>
+								$<%=conComas(Number(datos.pago[0]).toFixed(2))%></b>
 							<%} else{%>
-								mensuales.
+								$<%=conComas(Number(datos.pago).toFixed(2))%></b>
 							<%};%>
+							
+						<%} else{%>
+							<%if ( _.isArray( datos.pago ) && datos.pago.length > 1 ) {%>
+								las cantidades de<b>
+								<%= (function (pagos) {
+									for (var i = 0; i < pagos.length; i++) {
+										pagos[i] = '$'+conComas(Number(pagos[i]).toFixed(2));
+									};
+									return pagos.join(', ');
+								})(datos.pago) %></b>
+							<%} else if ( _.isArray( datos.pago ) && datos.pago.length == 1 ) {%>
+								la cantidad de<b>
+								$<%=conComas(Number(datos.pago[0]).toFixed(2))%></b>
+							<%} else{%>
+								la cantidad de<b>
+								$<%=conComas(Number(datos.pago).toFixed(2))%></b>
+							<%};%>
+						<%};%>
+
+						<%if ( datos.plan == 'iguala' ) {%>
+							<%if ( datos.npagos == '1' ){%>
+								<b>(Son: <%= datos.totalletra %> Moneda Nacional)</b>.
+							<%} else{%>
+								<b>(Son: <%= datos.totalletra %> Moneda Nacional)</b> mensuales.
+							<%};%>
+						<%} else{%>
+							<%if (datos.npagos == '1'){%>
+								<b>(Son: <%= datos.totalletra %> Moneda Nacional)</b>.
+							<%} else{
+								var pago = function () {
+									var total = 0.0;
+									for (var i = 0; i < datos.pago.length; i++) {
+										total += Number( (function (pago){
+											pago = pago.split(',');
+											return pago.join('');
+										})(datos.pago[i].substring(1)) );
+									};
+									return total;
+								}();%>
+								hasta cubrir la cantidad de <b>$<%=conComas(pago.toFixed(2))%>
+								(Son: <%= datos.totalletra %> Moneda Nacional)</b>
+							<%};%>
+							
 						<%}%>
 					</p>
 					<p>
 						<b>“EL CLIENTE”</b> efectuará el pago a <b>“EL PRESTADOR DE SERVICIOS”</b> de la cantidad a que se refiere el primer párrafo de la presente cláusula, 
 							<%if (datos.plan == 'iguala'){%>
-								<%if ( _.isArray(datos.fechapago) ){%>
-									el día <%= SoloNumerosALetras(datos.fechapago[0].split('-')[2]) %> de cada mes.
+								<%if ( _.isArray(datos.fechapago) && datos.fechapago.length > 1 ){%>
+									el día <%= (function (num){
+										if (num == 'un') {
+											return 'uno'
+										} else{
+											return num;
+										};
+									})(SoloNumerosALetras(datos.fechapago[0].split('-')[2] -1)) %> de cada mes
+									durante <%= SoloNumerosALetras(datos.fechapago.length) %> meses.
+								<%} else if( _.isArray(datos.fechapago) && datos.fechapago.length == 1 ){%>
+									el día <%= (function (num){
+										if (num == 'un') {
+											return 'uno'
+										} else{
+											return num;
+										};
+									})(SoloNumerosALetras(datos.fechapago[0].split('-')[2] -1)) %> del mes de <%= meses[parseInt(datos.fechapago[0].split('-')[1]) -1] %> del <%= datos.fechapago[0].split('-')[0] %>.
 								<%} else{%>
-									el día <%= SoloNumerosALetras(datos.fechapago.split('-')[2]) %> del mes de <%= meses[parseInt(datos.fechapago.split('-')[1]) -1] %>.
+									el día <%= (function (num){
+										if (num == 'un') {
+											return 'uno'
+										} else{
+											return num;
+										};
+									})(SoloNumerosALetras(datos.fechapago.split('-')[2] -1)) %> del mes de <%= meses[parseInt(datos.fechapago.split('-')[1]) -1] %> del <%= datos.fechapago.split('-')[0] %>.
 								<%};%>
 							<%} else{%>
-								<%if ( _.isArray(datos.fechapago) ){%>
-									cada <%= SoloNumerosALetras(datos.plazo) %> días.
-									por <%= SoloNumerosALetras(datos.nplazos) %> periodos.
+								<%if ( _.isArray(datos.fechapago) && datos.fechapago.length > 1 ){%>
+									cada <%= SoloNumerosALetras(datos.plazo) %> días
+									por <%= SoloNumerosALetras(datos.npagos) %> periodos.
+								<%} else if ( _.isArray(datos.fechapago) && datos.fechapago.length == 1 ){%>
+									en un solo pago.
 								<%} else{%>
 									en un solo pago.
 								<%};%>
@@ -217,15 +285,15 @@
 				<p>
 					<b>CUARTA.- DE LA VIGENCIA Y TERMINACIÓN ANTICIPADA.-</b> El presente contrato será por 
 					<%if (datos.plan == 'iguala') {%>
-						<%= SoloNumerosALetras(parseInt(datos.nplazos) * 30) %>
-						<%if ( parseInt(datos.nplazos) * 30 > 1 ){%>
+						<%= SoloNumerosALetras(parseInt(datos.npagos) * 30) %>
+						<%if ( parseInt(datos.npagos) * 30 > 1 ){%>
 							días.
 						<%} else{%>
 							día.
 						<%}%>
 					<%} else {%>
-						<%= SoloNumerosALetras(parseInt(datos.nplazos) * parseInt(datos.plazo)) %>
-						<%if ( parseInt(datos.nplazos) * parseInt(datos.plazo) ){%>
+						<%= SoloNumerosALetras(parseInt(datos.npagos) * parseInt(datos.plazo)) %>
+						<%if ( parseInt(datos.npagos) * parseInt(datos.plazo) ){%>
 							días.
 						<%} else{%>
 							día.
@@ -291,7 +359,14 @@
 
 				</p>
 				<p>
-					<b>DÉCIMA.- DE LA INTERPRETACIÓN Y CUMPLIMIENTO DEL CONTRATO.-</b> Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a las leyes y a la jurisdicción y competencia de los Tribunales del fuero común en la ciudad de Mérida Yucatán renunciando expresamente a cualquier otro fuero que pudiera corresponderles por razón de su domicilio presente o futuro. Leído que fue el presente contrato y enteradas las partes de su contenido y alcance legal, lo firman de conformidad y para constancia, en la ciudad de Mérida, Yucatán, a los <b class="textLowercase"><%= SoloNumerosALetras(datos.fechafirma.split('-')[2]) %> días del mes de <%= meses[parseInt(datos.fechafirma.split('-')[1]) -1] %> del <%= datos.fechafirma.split('-')[0] %></b>.
+					<b>DÉCIMA.- DE LA INTERPRETACIÓN Y CUMPLIMIENTO DEL CONTRATO.-</b> Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a las leyes y a la jurisdicción y competencia de los Tribunales del fuero común en la ciudad de Mérida Yucatán renunciando expresamente a cualquier otro fuero que pudiera corresponderles por razón de su domicilio presente o futuro. Leído que fue el presente contrato y enteradas las partes de su contenido y alcance legal, lo firman de conformidad y para constancia, en la ciudad de Mérida, Yucatán, <b class="textLowercase">
+					<%= (function (num) {
+						if (num == 'un') {
+							return 'al primer día'
+						} else{
+							return 'a los '+ num +' días';
+						};
+					})( SoloNumerosALetras(datos.fechafirma.split('-')[2]) ) %> del mes de <%= meses[parseInt(datos.fechafirma.split('-')[1]) -1] %> del <%= datos.fechafirma.split('-')[0] %></b>.
 				</p>
 			</li>
 		</ol>
@@ -387,7 +462,7 @@
 
 				contrato.representante = app.coleccionRepresentantes.get(contrato.datos.idrepresentante).toJSON();
 
-				var pagomes = 0.0,
+				var pago,
 					mensualidades = '';
 
 				if (_.isArray(contrato.secciones)) {
@@ -399,14 +474,13 @@
 				};
 
 				if ( _.isArray(contrato.datos.pago) ) {
-					pagomes = Number(contrato.datos.pago[0]);
 					mensualidades = contrato.datos.pago.length;
 				} else{
-					pagomes = Number(contrato.datos.pago);
 					mensualidades = 1;
 				};
+				pago = contrato.datos.pago;
 
-				contrato.datos.pagomes = (pagomes).toFixed(2);
+				contrato.datos.pago = pago;
 				contrato.datos.mensualidades = mensualidades;
 				// this.$el.html(JSON.stringify(contrato));return;
 				var vista = new V_HojaContrato();

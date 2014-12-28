@@ -9,13 +9,13 @@ app.VistaSeccion = Backbone.View.extend({
 	events 	: {
 		// 'click .span_eliminar_seccion' : 'eliminarTr',
 
-		'change .number'					: 'calcularSeccion',
-		// 'keyup .number'						: 'calcularSeccion',
-		'mousewheel .number'				: 'calcularSeccion',
-		// 'click .number'				: 'calcularSeccion',
-		'blur .number'				: 'calcularSeccion',
-		'keyup imput[type="text"]' 		: 'actualizarTexto',
-		'keyup textarea'			 		: 'actualizarTexto'
+		'change .number'		: 'calcularSeccion',
+		// 'keyup .number'		: 'calcularSeccion',
+		'mousewheel .number'	: 'calcularSeccion',
+		// 'click .number'		: 'calcularSeccion',
+		'blur .number'			: 'calcularSeccion',
+		'keyup #seccion' 		: 'actualizarTexto',
+		'keyup #descripcion'	: 'actualizarTexto'
 	},
 	initialize 	: function () { },
 	render: function (id) {
@@ -24,7 +24,9 @@ app.VistaSeccion = Backbone.View.extend({
 		/*Establecer el precio en el input escondido para calcular el precio
 		  de la sección*/
 		this.$('.precio_hora').val($('#precio_hora').val());
+		
 		this.calcularSeccion();
+
 		return this;
 	},
 	calcularSeccion : function () {
@@ -50,8 +52,8 @@ app.VistaSeccion = Backbone.View.extend({
 		this.$('input[name="precio_hora"]')		.val(precio_hora);
 	},
 	actualizarTexto : function () {
-		this.$('input[name="seccion"]')		.val(this.$('#seccion')		.val());
-		this.$('input[name="descripcion"]')	.val(this.$('#descripcion')	.val());
+		this.$('input[name="seccion"]').val(this.$('#seccion').val());
+		this.$('input[name="descripcion"]').val(this.$('#descripcion').val());
 	}
 });
 
@@ -163,9 +165,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	events : {
 		/*Descomentar si se requiere al representante en la,
 		  cotización*/
-		// 'change     #busqueda'     	: 'buscarRepresentante',
 		'click 	   #guardar'	   	: 'guardar',
-		'click     .todos'	     	: 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
+		'click     #cancelar'		: 'cancelar',
+		'click     .todos'	     	: 'marcarTodosCheck',
 		'click     #vista-previa' 	: 'vistaPrevia',
 
 		/*Botones del thead los servicios que se están cotizando*/
@@ -173,7 +175,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		'click .span_eliminar_servicio' : 'eliminarServicio',
 		'click .span_toggleAllSee'	 	: 'conmutarServicios',
 		
-		'change     .importe'     : 'calcularSubtotal',   //Escucha los cambios en los inputs numericos y actualiza el total
+		'change     .importe'     : 'calcularSubtotal',
+		'change     .input-plan'  : 'calcularSubtotal',
+		'mousewheel .input-plan'  : 'calcularSubtotal',
+		'blur       .input-plan'  : 'calcularSubtotal',
 
 		'change 	#precio_hora' : 'dispararCambio',
 		'mousewheel #precio_hora' : 'dispararCambio',
@@ -182,11 +187,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		'change 	.input-tfoot' : 'calcularTotal',
 		'mousewheel .input-tfoot' : 'calcularTotal',
 		'blur 		.input-tfoot' : 'calcularTotal',
+			
+		'change .btn_plan'			: 'conmutarTablaPlan',
 
 		// modal nuevo cliente
 		'click #button_saveClient' : 'guardarCliente',
-
-		'click #cancelar'	: 'cancelar'
 	},
 
 	initialize : function () {
@@ -199,8 +204,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		this.listenTo(app.coleccionServicios, 'reset', this.cargarServicios);
 
 		this.render();
-		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
-		// // this.$tablaServicios = this.$('#listaServicios');
+
 		this.contadorAlerta = 1;
 
 		localStorage.clear();
@@ -239,81 +243,105 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		app.coleccionServicios.each(this.cargarServicio, this);
 	},
 	calcularSubtotal 	: function () {
-		var total = 0,
-			decimales;
-		/*Cada cambio en cualquiera de los importes activará los campos,
-		  para que la función serializeArray pueda obtener sus valores,
-		  de lo contrario no funcionará*/          
-		var array = pasarAJson(this.$('.importe').attr('disabled',false).serializeArray());
-		/*Despues de haber obtenido los importes desactivamos nuevamente
-		  los campos*/
-		this.$('.importe').attr('disabled',true);
-		
-		/*...¿Es un array de importes?...*/
-		if($.isArray(array.importes)) {    
-			// ...Si es cierto iteramos sobre los importes....
-			for(i in array.importes)
-				{	
-				// ....Cada posicion la convertimos a número y lo adicionamos al total....
-						total+=Number(array.importes[i]);
-				}
-				// ...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..
-				this.$('#subtotal').val(total.toFixed(2));
+		if (this.tipoPlan == 'evento') {
+			var total = 0,
+				decimales,
+			/*Cada cambio en cualquiera de los importes activará los campos,
+			  para que la función serializeArray pueda obtener sus valores,
+			  de lo contrario no funcionará*/          
+				json_importes = pasarAJson(this.$('.importe').attr('disabled',false).serializeArray());
+			/*Despues de haber obtenido los importes desactivamos nuevamente
+			  los campos*/
+			this.$('.importe').attr('disabled',true);
 
-				/*Formateamos subtotal para mostrarlo*/
-				// total = '' + total.toFixed(2);
-				// total = total.split('.');
-				// decimales = total[1];
-				// total = conComas(total[0].split(''));
-				
-				this.$('#label_subtotal').text( '$'+conComas(total.toFixed(2)) );
-		} else {	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
-			/*Evaluamos si hay algun valor en el objeto.
-			  Si no lo hay colocamos un cero, puesto que
-			  no hay importe que sumar*/
-			if ( _.isUndefined(array.importes) ) {
-				this.$('#label_subtotal').text('$0');
-				this.$('#subtotal').val(0);
-			} else{
-				/*Si hay almenos un importe lo imprimimos
-				  en pantalla en su campo correspondiente*/
-				this.$('#subtotal').val(Number(array.importes).toFixed(2));
-
-				/*Formateamos subtotal para mostrarlo*/
-				// total = '' + Number(array.importes).toFixed(2);
-				// total = total.split('.');
-				// decimales = total[1];
-				// total = conComas(total[0].split(''));
-				
-				/*Formateamos subtotal para mostrarlo*/
-				this.$('#label_subtotal').text( '$'+conComas(Number(array.importes).toFixed(2)) );
-			};
-			
-		}
-		this.calcularTotal();
+			/*...¿Es un array de importes?...*/
+			if($.isArray(json_importes.importes)) {    
+				// ...Si es cierto iteramos sobre los importes....
+				for(i in json_importes.importes)
+					{	
+					// ....Cada posicion la convertimos a número y lo adicionamos al total....
+							total+=Number(json_importes.importes[i]);
+					}
+					// ...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..
+					this.$('#subtotal_evento').val(total.toFixed(2));
+					/*Formateamos subtotal para mostrarlo*/
+					// total = '' + total.toFixed(2);
+					// total = total.split('.');
+					// decimales = total[1];
+					// total = conComas(total[0].split(''));
+					
+					this.$('.label_subtotal:eq(0)').text( '$'+conComas(total.toFixed(2)) );
+			} else {	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
+				/*Evaluamos si hay algun valor en el objeto.
+				  Si no lo hay colocamos un cero, puesto que
+				  no hay importe que sumar*/
+				if ( _.isUndefined(json_importes.importes) ) {
+					this.$('.label_subtotal:eq(0)').text('$0.00');
+					this.$('#subtotal_evento').val(0);
+				} else{
+					/*Si hay almenos un importe lo imprimimos
+					  en pantalla en su campo correspondiente*/
+					this.$('#subtotal_evento').val(Number(json_importes.importes).toFixed(2));
+					
+					/*Formateamos subtotal para mostrarlo*/
+					this.$('.label_subtotal:eq(0)').text( '$'+conComas(Number(json_importes.importes).toFixed(2)) );
+				};
+			}
+			this.calcularTotal();
+		} else if (this.tipoPlan == 'iguala') {
+			var preciotiempo = parseInt( this.$('#precio_mes').val() ),
+				npagos     	  = parseInt( this.$('input[name="npagos"]:eq(1)').val() )
+				total = Number(preciotiempo * npagos).toFixed(2);
+			this.$('.label_subtotal:eq(1)').text( '$'+conComas(total) );
+			this.calcularTotal();
+		} else {
+			alerta('Seleccione un <b>tipo de plan</b> para realizar los cálculos correctamente',function(){});
+		};
 	},
 	calcularTotal 		: function () {
-		var valores = this.$('.input-tfoot');
+		// La siguiente línea debe veficiar que, según el plan
+		// seleccionado, los imputs estén bloqueados o habilitados
+		this.bloquearInputs();
+
+		var $descuento = this.$('input[name="descuento"]'),
+			self = this;
 		/*El capo Descuento es un input number, por lo que cuando se escribe
 		  un número con letras, el campo lo rechaza y adopta el valor ''*/
-		if ($(valores[1]).val() == '') {
+		if ($descuento.val() == '') {
 			alerta('El campo Descuento solo acepta números', function () {});
-			$(valores[1]).val('0');
+			$descuento.val('0');
 		};
-		var	total = Number($(valores[0]).val()),
-			desc  = Number($(valores[1]).val()) / 100,
-			iva   = Number($(valores[2]).val()) / 100,
+
+		var	total = function () {
+						if (self.tipoPlan == 'evento') {
+							return Number(self.$('#subtotal_evento').val());
+						} else if (self.tipoPlan == 'iguala') {
+							return Number(self.$('#precio_mes').val());
+						};
+					}(),
+			desc  = Number($descuento.val()) / 100,
+			iva   = Number(this.$('#iva').val()) / 100,
 			decimales;
 
 		total = total - total * desc;
 		total = total + total * iva;
+		
 		this.total = total.toFixed(2); // Sirve para la clase contrato
 		
-		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+		// [1]
+		// Verificamos que tipo de plan está activo y
+		// disparamos un evento al campo pertinente.
+		if (this.tipoPlan == 'evento') {
+			this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
+		} 
+		else if(this.tipoPlan == 'iguala'){
+			var npagos = Number( this.$('input[name="npagos"]:eq(1)').val() );
+			this.$('#label_total').text( '$'+conComas( (total * npagos).toFixed(2) ) );
+		};
 
 		this.calcularTotalHoras();
 	},
-	calcularTotalHoras	: function (argument) {
+	calcularTotalHoras	: function () {
 		var horas = this.$('.horas'),
 			total = 0;
 		this.$('#totalHoras').val(function () {
@@ -326,7 +354,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	marcarTodosCheck 	: function(e) {        
 			marcarCheck(e, '#tbody_servicios_seleccionados');
 	},
-	/*No se está usando*/buscarRepresentante 		: function (e) {
+	/*se usa en contratos*/
+	buscarRepresentante 		: function (e) {
 		var here = this,
 			representante = app.coleccionRepresentantes.findWhere({ idcliente:$(e.currentTarget).val() });
 		if (representante) {
@@ -341,6 +370,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		var json = this.obtenerDatos(),
 			self = this;
+		// console.log(json); return;
 		/*La función obtenerDatos devuelve un json
 		  de los datos básicos de la cotización y
 		  los datos de las secciones para la coti-
@@ -421,13 +451,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		var forms = this.$('.form_servicio'),
 			/*Añadir (, #idrepresentante) si se requiere
 			  al representante*/
-			json  = pasarAJson(this.$('#titulo, #busqueda').serializeArray()),
-			f = new Date();
+			json  = pasarAJson(this.$('#titulo, #busqueda, .btn_plan').serializeArray());
+			
 		/*Cortafuego para forzar establecer los siguientes datos*/
 			/*Añadir || json.idrepresentante == '' si se requiere al
 			  representante*/
-		if (json.titulo == '' || json.idcliente == '') {
-			alerta('Escriba un <b>título</b> para la cotización y seleccione un <b>cliente</b>', function () {});
+		if (json.titulo == '' || json.idcliente == '' || typeof json.plan == 'undefined') {
+			alerta('Escriba un <b>título</b> para la cotización, seleccione un <b>cliente</b> y un tipo de <b>plan</b>', function () {});
 			return false; // Terminamos el flujo del código
 		};
 		// $('nav:eq(1)').text(JSON.stringify(json));
@@ -451,10 +481,70 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		delete json.datos.todos;
 
 		json.datos.version = 1;
-
 		return json;
 	},
-	/*Funciones creadas por geyser*/
+	conmutarTablaPlan		: function (e) {
+		this.tipoPlan = $(e.currentTarget).val();
+		switch( this.tipoPlan ){
+			case 'evento':
+				this.$('.thead_evento').removeClass('thead_oculto');
+				this.$('.thead_iguala').addClass('thead_oculto');
+
+				this.$('#tbody_pagos_evento').removeClass('tbody_oculto');
+				this.$('#tbody_pagos_iguala').addClass('tbody_oculto');
+				break;
+			case 'iguala':
+				this.$('.thead_evento').addClass('thead_oculto');
+				this.$('.thead_iguala').removeClass('thead_oculto');
+
+				this.$('#tbody_pagos_evento').addClass('tbody_oculto');
+				this.$('#tbody_pagos_iguala').removeClass('tbody_oculto');
+				break;
+			default:
+				/*statements_def*/
+				break;
+		}
+		this.bloquearInputs();
+		this.calcularSubtotal();
+	},
+	bloquearInputs : function () {
+		var self = this;
+		setTimeout(function() {
+			jQuery.fn.doOnce = function(func){
+			this.length && func.apply(this);
+				return this;
+			}
+
+			switch(self.tipoPlan){
+				case 'iguala':
+					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
+						$(this).css('text-decoration','line-through');
+					});
+					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+						$(this).css('opacity','.5');
+					});
+					self.$('#precio_hora').attr('disabled',true);
+					self.$('#precio_mes').attr('disabled',false);
+
+					self.$('input[name="npagos"]:eq(0)').attr('disabled',true);
+					self.$('input[name="npagos"]:eq(1)').attr('disabled',false);
+				break;
+				case 'evento':
+					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
+						$(this).css('text-decoration','initial');
+					});
+					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+						$(this).css('opacity','1');
+					});
+					self.$('#precio_mes').attr('disabled',true);
+					self.$('#precio_hora').attr('disabled',false);
+
+					self.$('input[name="npagos"]:eq(0)').attr('disabled',false);
+					self.$('input[name="npagos"]:eq(1)').attr('disabled',true);
+				break;
+			}
+		}, 10);
+	},
 	guardarSeccion	: function (idCotizacion, secciones) {
 		var self = this;
 		for (var i = 0; i < secciones.length; i++) {
@@ -528,7 +618,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		// this.$('.span_toggleSee').click();
 	},	
 	eliminarServicio 		: function (e) {
-
 		/*Antes de eliminar la vista buscamos el servicio correspondiente en la lista de servicios*/
 		this.$(
 			'#table_servicios #'
@@ -551,7 +640,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		var spans = this.$('input[name="todos"]:checked'); /*Obtenemos todos los checkbox activados*/
 		if (spans.length) { /*Solo si hay servicios marcados*/
 			var here = this;
-			confirmar('¿Los servicios marcados están siendo cotizados, estás seguro de eliminarlos?',
+			confirmar('Los servicios marcados están siendo cotizados, ¿estás seguro de eliminarlos?',
 				function () {
 					for (var i = 0; i < spans.length; i++) {
 						/*Hacemos clic en los span correspondientes a los trs checkeados.
@@ -724,7 +813,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		// Preparamos un id temporal en caso de que
 		// se agreguen nuevos servicios y poder
 		// realizar cálculos con ellos
-		this.idTemporalServ = app.coleccionServicios.establecerIdSiguiente();
+		// this.idTemporalServ = app.coleccionServicios.establecerIdSiguiente();
 		
 		var self = this,
 			// Referenciamos el <div> modal

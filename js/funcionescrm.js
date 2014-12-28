@@ -35,23 +35,27 @@ function  limpiarJSON (objeto) {
     return objeto;
 }
 
-/*Debe recibir un objeto Date*/
-function formatearFechaUsuario (fechaBD) {
-    var value_of = fechaBD.valueOf();
+/*Debe recibir un objeto Date.
+  La fecha biene con un día aumentado,
+  por eso se resta un día.
+  Si se usa el plugin datepicker bebe saber
+  que regresa la fecha pero con un día aumentado*/
+function formatearFechaUsuario (objDate) {
+    var value_of = objDate.valueOf();
     value_of = value_of + (1*24*60*60*1000);
     fechaFormateada = new Date(value_of);
-    fechaBD = fechaFormateada;
+    objDate = fechaFormateada;
     var fechaFormateada = '';
-    if (fechaBD.getDate() < 10 )
-        fechaFormateada = '0'+ fechaBD.getDate();
+    if (objDate.getDate() < 10 )
+        fechaFormateada = '0'+ objDate.getDate();
     else
-        fechaFormateada = fechaBD.getDate();
-    if ((fechaBD.getMonth() +1) < 10 )
-        fechaFormateada += '/0'+ (fechaBD.getMonth() +1);
+        fechaFormateada = objDate.getDate();
+    if ((objDate.getMonth() +1) < 10 )
+        fechaFormateada += '/0'+ (objDate.getMonth() +1);
     else
-        fechaFormateada +=  '/'+ (fechaBD.getMonth() +1);
+        fechaFormateada +=  '/'+ (objDate.getMonth() +1);
 
-    fechaFormateada +=  '/'+fechaBD.getFullYear();
+    fechaFormateada +=  '/'+objDate.getFullYear();
 
     return fechaFormateada;
 }
@@ -60,6 +64,17 @@ function formatearFechaDB (objDate) {
       return objDate.getFullYear() 
        + "-" + (objDate.getMonth() +1) 
        + "-" + (objDate.getDate() +1);
+}
+
+/*Sirve para restar un día al la fecha*/
+function quitarUnDia (fechaBD) {
+    fechaBD = fechaBD.split('-');
+    fechaBD[2] = parseInt(fechaBD[2]) -1;
+    if (fechaBD[2] < 10) {
+        fechaBD[2] = '0' + fechaBD[2];
+    };
+    fechaBD = fechaBD.join('-');
+    return fechaBD;
 }
 
 function fechaAmigable (fecha) {
@@ -193,7 +208,7 @@ function urlFoto () {
     var mensaje = "";
     //hacemos la petición ajax
     var resp = $.ajax({
-        url: 'http://qualium.mx/sites/clientum/api_foto',
+        url: 'http://crmqualium.com/api_foto',
         type: 'POST',
         async:false,
         // Form data
@@ -214,8 +229,8 @@ function urlFoto () {
 
 /*Cálculo de fechas*/
 function calcularDuracion (fechainicio,fechafinal) {
-    var valorFechaInicio = new Date(fechainicio).valueOf();
-    var valorFechaEntrega = new Date(fechafinal).valueOf();
+    var valorFechaInicio = fechainicio.valueOf();
+    var valorFechaEntrega = fechafinal.valueOf();
     var valorFechaActual = new Date().valueOf();
     var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - excluirDias(fechainicio, fechafinal);
     var hoy = new Date();
@@ -232,8 +247,8 @@ function calcularDuracion (fechainicio,fechafinal) {
 };
 function excluirDias (fechainicio, fechafinal) {
     var contador = 0;
-    var valorFechaInicio = new Date(fechainicio).valueOf();
-    var valorFechaEntrega = new Date(fechafinal).valueOf();
+    var valorFechaInicio = fechainicio.valueOf();
+    var valorFechaEntrega = fechafinal.valueOf();
     var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
     var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     for(var i = 0; i<duracion; i++){
@@ -376,6 +391,72 @@ function loadDatepicker (selector) {
             'Noviembre',
             'Diciembre'
         ]
+    });
+}
+function loadDatepickerRange (selectorFrom, selectorTo) {
+    $( selectorFrom ).datepicker({
+        dateFormat:'d MM, yy',  
+        dayNamesMin:[
+            'Do',
+            'Lu',
+            'Ma',
+            'Mi',
+            'Ju',
+            'Vi',
+            'Sá'
+        ],
+        monthNames:[
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ],
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function( selectedDate ) {
+            $( selectorTo ).datepicker( "option", "minDate", selectedDate );
+        }
+    });
+    $( selectorTo ).datepicker({
+        dateFormat:'d MM, yy',  
+        dayNamesMin:[
+            'Do',
+            'Lu',
+            'Ma',
+            'Mi',
+            'Ju',
+            'Vi',
+            'Sá'
+        ],
+        monthNames:[
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ],
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function( selectedDate ) {
+            $( selectorFrom ).datepicker( "option", "maxDate", selectedDate );
+        }
     });
 }
 // Quita los espacion en blanco de las extremos de una cadena

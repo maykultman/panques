@@ -1,8 +1,9 @@
 <?php
-	require_once 'Modelo_crud.php';
-	class Modelo_proyecto extends Modelo_crud
+	// require_once 'Modelo_crud.php';
+	class Modelo_proyecto extends CI_Model
 	{
-		public function __construct(){}
+		public function __construct()
+        {}
 
 		# DATOS DEL MODELO PROYECTO
 		# $post['idcliente'   ], $post['nombre'    ], 
@@ -16,9 +17,13 @@
         }
         
         public function get ( $id = FALSE ) 
-        {  
-           $reply = $this->where( $id );  # Ejecutamos el metodo where...      
-           return $this->db->get  ( 'proyectos' )->$reply();  # Este metodo ejecuta get con y sin ID...
+        {   
+            $reply = 'result';
+            if(is_numeric($id)) {
+                $this->db->where('id', $id);
+                $reply = 'row';
+            }
+            return $this->db->get( 'proyectos' )->$reply();  # Este metodo ejecuta get con y sin ID...
         }
 
         public function save (  $id,  $put ) 
@@ -29,6 +34,15 @@
         /*Anterior mente decia delete y le cambie a destroy*/
         public function destroy (  $id  ) 
         {   
+            // si existe un directorio para los archivos del
+            // proyecto lo eliminamos.
+            // IMPORTANTE. La carpeta debe estas vacia para
+            // eliminarla
+            if ( is_dir("./archivos/proyectos/".$id) ) {
+                /*CI*/$this->load->helper('file');
+                /*CI*/delete_files("./archivos/proyectos/".$id, TRUE);
+                /*PHP*/rmdir("./archivos/proyectos/".$id);
+            }
             return $this->db->delete('proyectos', array('id' => $id)  ); 
         }
 
