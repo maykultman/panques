@@ -39,6 +39,9 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		},
 // -----initialize-------------------------------- 
 	initialize      : function () {
+	// Acciones iniciales
+		this.$('#formularioContacto').fadeToggle();
+
 	// Datos básicos
 		// this.$tipoCliente         = $('.tipo_cliente');
 		this.$nombreFiscal        = $('#nombreComercial');
@@ -59,7 +62,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		// this.$telefonoRepresentante = $('.telefonoRepresentante');
 		// this.$tipoTelefonoRepresentante = $('.tipoTelefonoRepresentante');
 
-	// selectores de servicios de interes y actuales
+	// Selectores de servicios de interes y actuales
 		this.$menuServicios   = $('.menuServicios');
 		this.cargarServicios();
 
@@ -423,8 +426,8 @@ app.VistaNuevoCliente = Backbone.View.extend({
 					confirmar(
 						'¡El cliente ha sido guardado con exito!<br><b>¿Deseas registrar al <b>representante</b> o <b>contactos</b> del cliente?</b>',
 						function (){
-							here.$('.visibleR').toggleClass('ocultoR');
-							window.scrollTo(0,0);
+							here.$('#formularioCliente').fadeToggle();
+							here.$('#formularioContacto').fadeToggle();
 						},
 						function () {
 							location.href = 'consulta_'+here.objetoCliente.tipoCliente+'s';

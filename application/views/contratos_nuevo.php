@@ -38,41 +38,59 @@
 				</div>
 				<div class="col-md-12">
 					<span class="label label-info">Todos los campos son requeridos</span>
+					<br><br>
 				</div>
 			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-4">
-					<input type="text" id="serviciosolicitado" class="form-control" name="serviciosolicitado" placeholder="Servicios solicitados">			
+					<div class="form-group">
+						<label for="serviciosolicitado">Servicio solicitado</label>
+						<input type="text" id="serviciosolicitado" class="form-control" name="serviciosolicitado" placeholder="Servicios solicitados">
+					</div>
 				</div>
 				<div class="col-md-4">
-					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará...">
-						<option value="">Firmará...</option>
-						<option value="enrique">Enrique</option>
-						<option value="willian">William</option>
-					</select>
+					<div class="form-group">
+						<label for="select_firmaempleado">Firma representante Qualium</label>
+						<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará...">
+							<option value="">Firmará...</option>
+							<option value="enrique">Enrique Xacur</option>
+							<option value="willian">William</option>
+						</select>
+					</div>
 				</div>
 				<div class="col-md-4">
-					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha de firmas">
-					<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+					<div class="form-group">
+						<label for="fechaFirma">Fecha firma del contrato</label>
+						<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha de firmas">
+						<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+					</div>
 				</div>
 			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-4">
-					<select id="busqueda" name="idcliente" placeholder="Buscar cliente"></select>
+					<div class="form-group">
+						<label for="busqueda">Cliente</label>
+						<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
+					</div>
 				</div>
 				<div class="col-md-4">
-					<input type="text" id="nombreRepresentante" class="form-control" disabled placeholder="Representante">
-					<input type="hidden" id="idrepresentante" name="idrepresentante">
+					<div class="form-group">
+						<label for="nombreRepresentante">Representante</label>
+						<input type="text" id="nombreRepresentante" class="form-control" disabled placeholder="Representante">
+						<input type="hidden" id="idrepresentante" name="idrepresentante">
+					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="btn-group input-group" data-toggle="buttons">
-						<span class="input-group-addon">Tipo de plan </span>
-						<label class="btn btn-default">
-							<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
-						</label>
-						<label class="btn btn-default">
-							<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
-						</label>
+					<div class="form-group">
+						<label for="">Tipo de plan</label>
+						<div class="btn-group input-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
+							</label>
+						</div>
 					</div>
 				</div>
 				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->

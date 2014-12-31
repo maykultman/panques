@@ -82,29 +82,46 @@
 	<script type="text/template" id="plantilla-formulario">
 		<div class="row">
 			<div class="col-md-4">
-				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
-				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
-				<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
-				<!--<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">          -->
-				<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
-				<input type="hidden" name="folio">
-				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">
-				<div class="btn-group input-group" data-toggle="buttons">
-					<span class="input-group-addon">Tipo de plan </span>
-					<label class="btn btn-default">
-						<input type="radio" class="btn_plan" name="plan" value="evento" autocomplete="off"> Por Evento
-					</label>
-					<label class="btn btn-default">
-						<input type="radio" class="btn_plan" name="plan" value="iguala" autocomplete="off"> Iguala Mensual
-					</label>
+				<div class="form-group">
+					<label for="titulo">Título</label>
+					<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">	
+				</div>
+				
+				<div class="form-group">
+					<label for="nombreversion">Nombre de version</label>
+					<input type="text" id="nombreversion" class="form-control" name="nombreversion" placeholder="Nombre de versión">	
+				</div>
+				
+				<div class="form-group">
+					<label for="busqueda">Cliente</label>
+					<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>	
 				</div>
 			</div>
-			<div class="col-md-8">
-				<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="fecha">Fecha de creación</label>
+					<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
+				</div>
+				
+				<div class="form-group">
+					<label for="">Tipo de plan</label>
+					<div class="btn-group input-group" data-toggle="buttons">
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" value="evento" autocomplete="off"> Por Evento
+						</label>
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" value="iguala" autocomplete="off"> Iguala Mensual
+						</label>
+					</div>
+				</div>
 			</div>
-			<!--<div class="col-md-4">
-				<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
-			</div>-->
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="detalles">Detalles</label>
+					<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" rows="9">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
+				</div>
+			</div>
+			<input type="hidden" name="folio">
 		</div>
 		<div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>

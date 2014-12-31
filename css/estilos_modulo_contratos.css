@@ -1,16 +1,7 @@
-.btn-group	{
-	z-index: 0 !important;
-	 margin-top: -5px;
-}
 .thead_visible {/* */}
 
 
-<<<<<<< HEAD
-	display: none;
-}
-=======
 .tbody_visible {/* */}
->>>>>>> cd23ae992bc06d5622eb41a7dbda5f2e36d720c8
 
 .tbody_oculto {
 
@@ -42,9 +33,6 @@
 	margin-right:10px; 
 	
 }*/
-.selectize-control {
-	margin: 15px 0px;
-}
 
 .color_cabecera  { background-color: #f9f9f9;  color: #333;	}
 
@@ -86,6 +74,10 @@
 .txt{
 
 	text-align: center;
+}
+
+.btn.active {
+	z-index: 0 !important;
 }
 
 

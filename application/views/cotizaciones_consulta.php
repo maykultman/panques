@@ -103,43 +103,60 @@
 	<script type="text/template" id="plantilla-formulario">
 		<button type="button" class="btn btn-default btn_toggle">Regresar</button>
 		<div class="row">
-				<div class="col-lg-10 col-md-9 col-xs-8">
-					<h3>Datos básicos</h3>
-					<hr>
-				</div>
-				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
-					<h3 id="h4_folio"></h3>
-					<hr>
-				</div>
+			<div class="col-lg-10 col-md-9 col-xs-8">
+				<h3>Datos básicos</h3>
+				<hr>
 			</div>
+			<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
+				<h3 id="h4_folio"></h3>
+				<hr>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">
-				<input type="text" class="form-control" name="nombreversion" placeholder="Nombre de versión">
-				<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
-				<input type="hidden" name="idcliente" value="">
-				<!--<input  id="nombreRepresentante" type="text" class="form-control input_datos" placeholder="Representante" disabled="true">          -->
-				<!--<input type="hidden" id="idrepresentante" class="input_datos" name="idrepresentante">-->
-				<input type="hidden" name="folio">
-				<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">
-				<div class="btn-group input-group" data-toggle="buttons">
-					<span class="input-group-addon">Tipo de plan </span>
-					<label class="btn btn-default">
-						<input type="radio" class="btn_plan" name="plan" value="evento" autocomplete="off"> Por Evento
-					</label>
-					<label class="btn btn-default">
-						<input type="radio" class="btn_plan" name="plan" value="iguala" autocomplete="off"> Iguala Mensual
-					</label>
+				<div class="form-group">
+					<label for="titulo">Título</label>
+					<input  type="text" id="titulo" class="form-control input_datos" name="titulo" placeholder="Título (Aparecerá en el PDF)">	
+				</div>
+				
+				<div class="form-group">
+					<label for="nombreversion">Nombre de version</label>
+					<input type="text" id="nombreversion" class="form-control" name="nombreversion" placeholder="Nombre de versión">	
+				</div>
+				
+				<div class="form-group">
+					<label for="busqueda">Cliente</label>
+					<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
+					<input type="hidden" name="idcliente" value="">
 				</div>
 			</div>
-			<div class="col-md-8">
-				<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" style="height: 180px;">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="fecha">Fecha de creación</label>
+					<input id="fecha"   type="text" name="fecha" class="form-control input_datos" disabled="true">	
+				</div>
+				
+				<div class="form-group">
+					<label for="">Tipo de plan</label>
+					<div class="btn-group input-group" data-toggle="buttons">
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" value="evento" autocomplete="off"> Por Evento
+						</label>
+						<label class="btn btn-default">
+							<input type="radio" class="btn_plan" name="plan" value="iguala" autocomplete="off"> Iguala Mensual
+						</label>
+					</div>
+				</div>
 			</div>
-			<!--<div class="col-md-4">
-				<textarea id="caracteristicas" name="caracteristicas" class="form-control input_datos"  placeholder="Caracteristicas" style="height: 180px;">De las diversas clases de títulos de crédito ... Sección Segunda - De los títulos nominativos</textarea>
-			</div>-->
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="detalles">Detalles</label>
+					<textarea id="detalles" name="detalles" class="form-control input_datos" placeholder="Detalles" rows="9">Un título de crédito, también llamado título valor, es aquel "documento necesario para ejercer el derecho literal y autónomo expresado en el mismo"</textarea>
+				</div>
+			</div>
+			<input type="hidden" name="folio">
 		</div>
-	    <div class="desborde"></div>
+		<div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
 		<hr>		
 		<div class="row">
@@ -285,41 +302,60 @@
 				</div>
 				<div class="col-md-12">
 					<span class="label label-info">Todos los campos son requeridos</span>
+					<br><br>
 				</div>
 			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-4">
-					<input type="text" id="serviciosolicitado" class="form-control" name="serviciosolicitado" placeholder="Servicio solicitado">			
+					<div class="form-group">
+						<label for="serviciosolicitado">Servicio solicitado</label>
+						<input type="text" id="serviciosolicitado" class="form-control" name="serviciosolicitado" placeholder="Servicios solicitados">
+					</div>
 				</div>
 				<div class="col-md-4">
-					<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará">
-						<option value="enrique">Enrique</option>
-						<option value="willian">William</option>
-					</select>
+					<div class="form-group">
+						<label for="select_firmaempleado">Firma representante Qualium</label>
+						<select id="select_firmaempleado" name="firmaempleado" placeholder="Firmará...">
+							<option value="">Firmará...</option>
+							<option value="enrique">Enrique Xacur</option>
+							<option value="willian">William</option>
+						</select>
+					</div>
 				</div>
 				<div class="col-md-4">
-					<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha de firmas">
-					<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+					<div class="form-group">
+						<label for="fechaFirma">Fecha firma del contrato</label>
+						<input type="text" id="fechaFirma" class="form-control datepicker" placeholder="Fecha de firmas">
+						<input type="hidden" id="hidden_fechafirma" name="fechafirma">
+					</div>
 				</div>
 			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-4">
-					<select id="busqueda" placeholder="Buscar cliente" disabled></select>
-					<input type="hidden" name="idcliente">
+					<div class="form-group">
+						<label for="busqueda">Cliente</label>
+						<select id="busqueda" placeholder="Buscar cliente..." disabled></select>
+						<input type="hidden" name="idcliente">
+					</div>
 				</div>
 				<div class="col-md-4">
-					<input type="text" id="nombreRepresentante" class="form-control" disabled placeholder="Representante">
-					<input type="hidden" id="idrepresentante" name="idrepresentante">
+					<div class="form-group">
+						<label for="nombreRepresentante">Representante</label>
+						<input type="text" id="nombreRepresentante" class="form-control" disabled placeholder="Representante">
+						<input type="hidden" id="idrepresentante" name="idrepresentante">
+					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="btn-group input-group" data-toggle="buttons">
-						<span class="input-group-addon">Tipo de plan </span>
-						<label class="btn btn-default">
-							<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
-						</label>
-						<label class="btn btn-default">
-							<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
-						</label>
+					<div class="form-group">
+						<label for="">Tipo de plan</label>
+						<div class="btn-group input-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
+							</label>
+						</div>
 					</div>
 				</div>
 				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->

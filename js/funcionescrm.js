@@ -62,19 +62,8 @@ function formatearFechaUsuario (objDate) {
 
 function formatearFechaDB (objDate) {
       return objDate.getFullYear() 
-       + "-" + (objDate.getMonth() +1) 
-       + "-" + (objDate.getDate() +1);
-}
-
-/*Sirve para restar un día al la fecha*/
-function quitarUnDia (fechaBD) {
-    fechaBD = fechaBD.split('-');
-    fechaBD[2] = parseInt(fechaBD[2]) -1;
-    if (fechaBD[2] < 10) {
-        fechaBD[2] = '0' + fechaBD[2];
-    };
-    fechaBD = fechaBD.join('-');
-    return fechaBD;
+       + "-" + (objDate.getMonth() +1) /*Necesariamente debe aumentar uno al mes*/
+       + "-" + objDate.getDate();
 }
 
 function fechaAmigable (fecha) {

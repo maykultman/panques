@@ -410,31 +410,32 @@
                         </div>
                         <div class="modal-body">
                             <span class="label label-info">Todos los campos son requeridos</span>
-                            <br>
+                            <br><br>
                             <form id="formNuevoContacto" role="form">
-                                Tipo de contacto
-                                <!--Revisar los comentarios de la funcion verContactos() 
-                                    del archivo VistaCliente.js para aclarar dudas-->
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="persona" value="representante" style="width:auto;margin: 4px 0 0;margin-left: -20px;"
-                                            <% if (existeRepr) { %>
-                                                disabled
-                                            <% } %>
-                                            > Representante
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="persona" value="contacto" style="width:auto;margin: 4px 0 0;margin-left: -20px;" 
-                                            <% if (existeRepr) { %>
-                                                checked
-                                            <% } %>
-                                            > Contacto
-                                        </label>
-                                    </div>
-                                <!--/fin comentario-->
-                                <br>
+                                <div class="form-group">
+                                    <label for="">Tipo de contacto</label>
+                                    <!--Revisar los comentarios de la funcion verContactos() 
+                                        del archivo VistaCliente.js para aclarar dudas-->
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="persona" value="representante" style="width:auto;margin: 4px 0 0;margin-left: -20px;"
+                                                <% if (existeRepr) { %>
+                                                    disabled
+                                                <% } %>
+                                                > Representante
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="persona" value="contacto" style="width:auto;margin: 4px 0 0;margin-left: -20px;" 
+                                                <% if (existeRepr) { %>
+                                                    checked
+                                                <% } %>
+                                                > Contacto
+                                            </label>
+                                        </div>
+                                    <!--/fin comentario-->
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" placeholder="">
