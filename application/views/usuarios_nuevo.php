@@ -1,4 +1,10 @@
-   <?//=script_tag('js/jquery-ui-1.10.4.custom.js');?>
+   <style>
+   #ajax{
+		border: none;
+		opacity: .2;
+		width: 100px;
+   }
+   </style>
    <section id="datosUsuario"  class="row">
 		<h3 style="margin-bottom:-10px;">Nuevo Usuario</h3>
 		<hr>
@@ -24,7 +30,7 @@
 			</form>	        		
 		</div>
 		
-		<div class="col-md-7">
+		<div id="areaform" class="col-md-7">
 			<div class="todos">
 			  	<input type="checkbox" id="idpermisos" class="btn_marcarTodos">Marcar todos los permisos
 			</div>
@@ -60,8 +66,3 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">       </script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoUsuario.js'?>">	   		    </script>
-<script type="text/javascript">
-	// function markchek(){
-	// 	$('#idpermisos').trigger('click');		
-	// }
-</script>

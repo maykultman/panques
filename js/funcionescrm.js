@@ -256,20 +256,20 @@ function select_Perfil(id)
     id = (id) ? id:'';
 
     var list = '<option selected disabled>--Seleccione su Perfil--</option><% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
-    this.$('#idperfil'+id).html(_.template(list, { perfiles : app.coleccionPerfiles.toJSON() }));
+    this.$('#idperfil'+id).append(_.template(list),({ perfiles : app.coleccionPerfiles.toJSON() }));
 }
 
 
 /*Subir foto*/
 function obtenerFoto2 (e, seletor) {
 
-    // console.log( $("#"+seletor));
     //queremos que esta variable sea global
     this.fileExtension = "";
     //obtenemos un array con los datos del archivo
-    var file = $("#"+seletor)[0].files[0];
+    var file = $("#"+seletor)[0].files[0];     
     //obtenemos el nombre del archivo
     var fileName = file.name;
+
     //obtenemos la extensión del archivo
     this.fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
     //obtenemos el tamaño del archivo
@@ -281,6 +281,7 @@ function obtenerFoto2 (e, seletor) {
 
     addImage(e);
     function addImage(e){
+
         var file = e.target.files[0],
             imageType = /image.*/;
 

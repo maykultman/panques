@@ -21,7 +21,7 @@ class  Usuarios extends REST
         $post = $this->ipost();
         $post['contrasenia'] = md5($post['contrasenia']);
         $query = $this->user->create($post);
-        $this->pre_response($query, 'create');                  
+        $this->pre_response($query, 'create');                        
     }
 
     private function get()

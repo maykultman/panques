@@ -17,8 +17,17 @@ class  Perfil extends REST{
     
     private function create()
     {
-        $query = $this->perfil->create($this->ipost());
-        $this->pre_response($query, 'create');                  
+        $id = $this->uri->segment(2);
+        if(is_numeric($id))
+        {
+            $resp = $this->perfil->usa_perfil($id);
+            echo $resp;
+        }
+        else{
+            $query = $this->perfil->create($this->ipost());
+            $this->pre_response($query, 'create');            
+        }
+                  
     }
 
     private function get()

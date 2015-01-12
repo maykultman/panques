@@ -7,9 +7,16 @@
 
 		public function create($post) 
         {   
-	        $this->db->insert('perfiles', $post);
-	        return $this->get($this->db->insert_id());  
+        	$this->db->insert('perfiles', $post);
+		    return $this->get($this->db->insert_id());  
       	}
+
+      	public function usa_perfil($id)
+        {
+        	$this->db->where('idperfil',$id);
+        	$query = $this->db->get('usuarios');
+        	return ($query->num_rows()>0) ? 1 : 0;        	
+        }
 
       # Este metodo línea hace dos cosas devuelve todos los registros o devuelve el especificado con el ID
       	public function get ( $id = FALSE ) 

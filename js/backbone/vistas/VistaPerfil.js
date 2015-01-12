@@ -16,6 +16,7 @@ app.VistaPerfil = Backbone.View.extend({
 		'click button.delete'	: 'destroy',	
 		'click .pchek'			: 'seleccionachek'	
 	},
+	
 	initialize : function()
 	{
 		this.listenTo(this.model, 'destroy', this.remove); 
@@ -155,10 +156,25 @@ app.VistaPerfil = Backbone.View.extend({
 		events.preventDefault();
 	},
 
-	destroy : function()
+	destroy : function(e)
 	{
 		var self = this;
-		confirmar('<b>¿Esta seguro que desea borrar el perfil?</b>', 
-			function () {	self.model.destroy();	}, function () {});		
+		var perfil = $(e.currentTarget).data('perfil');
+		var api = $(e.currentTarget).data('url');
+		$.ajax({
+			url : api+perfil,
+			type: 'POST',
+			async:false,			
+			success:function(exito){
+				if(exito==1)
+				{
+					alerta('No puede eliminar este perfil');
+				}else{
+					confirmar('<b>¿Esta seguro que desea borrar el perfil?</b>', 
+						function () {	self.model.destroy();}, function () {});	
+				}
+			},
+			error:function(error){ alerta('Hubo un error verifique su conexión'); }
+		});	
 	}
 });

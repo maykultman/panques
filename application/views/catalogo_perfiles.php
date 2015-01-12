@@ -20,7 +20,8 @@
 						    <div class="btn-group" data-toggle="buttons">							    	
 						        <button type="button" id="guardar" class="btn btn-default" data-dismiss="modal">Guardar</button>
 						        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>						           
-					        </div><br>	
+					        </div><div class="clearfix"></div>
+					        <br>
 					        <div class="todos">
 					        	<input type="checkbox" id="idpermisos" class="btn_marcarTodos">Marcar todos los permisos
 					        </div>
@@ -54,7 +55,7 @@
 		<img class="img-circle" src="<?=base_url()?>/img/sinfoto.png" alt="Imagen-Usuario" width="85" height="85">
 		<h4><b><%-nombre%> </b></h4>
 	    <div class="btn-group">       	
-	      	<button class="delete btn btn-default">Eliminar</button>
+	      	<button data-perfil="<%-id%>" data-url="<?=base_url()?>api_perfil/" class="delete btn btn-default">Eliminar</button>
 	       	<button id="<%-id%>" class="edit btn btn-default" data-toggle="modal" data-target="#modaledicion<%-id%>">Editar</button> 
 	    </div>
 	</div>
@@ -74,9 +75,12 @@
 				    <div class="btn-group" data-toggle="buttons">				            
 				        <button id="save" type="button" class="btn btn-default" data-dismiss="modal">Guardar</button>
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>						           
-			        </div>
-				    <div class="posiciontab" style="margin-top:10px;">
+			        </div><div class="clearfix"></div><br>
+			        <div class="todos">
 				      	<input type="checkbox" id="idpermisos" class="btn_marcarTodos"> Marcar todos los permisos
+				    </div>
+				    <div class="posiciontab">				    
+				      	
 					    <ul id="moduloss" class="nav nav-tabs" role="tablist">
 					        <!-- Menu de opciones-->
 					    </ul>

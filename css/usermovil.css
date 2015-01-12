@@ -1,0 +1,6 @@
+@media(max-width: 600px){
+	/*#togglee, #togglen, #toggle*/
+	#togglee{
+		width: 100%!important;
+	}
+}

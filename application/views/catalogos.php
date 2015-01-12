@@ -1,4 +1,5 @@
 <?=link_tag('css/estilos_modulo_usuarios.css');?>
+<link rel="stylesheet" type="text/css" href="<?=base_url()?>css/usermovil.css">
 <style type="text/css">
 @media(max-width:767px){
 	#menucatalogo{

@@ -4,6 +4,7 @@
 
 	link_tag('css/theme.default.css').
 	link_tag('js/plugin/selectize/selectize.default.css');?>
+	<link rel="stylesheet" type="text/css" href="<?=base_url()?>css/usermovil.css">
 
 <div class="contenedor_modulo">  
 	<section>

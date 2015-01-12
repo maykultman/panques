@@ -6,14 +6,14 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	events : 
 	{
-		'click #guardar'   : 'jsonpermisos',			
-		'keypress #empleado': 'soloLetras',
-		'click .tohead'    : 'resize',
-		'change #idperfil' : 'mispermisos',
-		'click .todos' : 'mark',
-		'change #idpermisos' : 'marcarTodos',
-		'click .pchek' : 'seleccionachek'
-		// 'change #registroUsuario' : 'obtenerFoto1'
+		'click #guardar'   		: 'guardar',			
+		'keypress #empleado'	: 'soloLetras',
+		'click .tohead'    		: 'resize',
+		'change #idperfil' 		: 'mispermisos',
+		'click .todos' 			: 'mark',
+		'change #idpermisos' 	: 'marcarTodos',
+		'click .pchek' 			: 'seleccionachek',
+		'change #fotou' : 'obtenerFoto1'
 	},
 	mark : function(e)
 	{
@@ -41,21 +41,6 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		this.cargarSubmodulo();
 		this.selectPerfil();
 	},
-
-	
-	// 	checkboxs = $('.chek');
-	// 	if ($(chek.currentTarget).is(':checked'))
-	//     {
-	//         for (var i = 0; i < checkboxs.length; i++) {
-	//             checkboxs[i].checked = true;
-	//         }
-	//     }
-	//     else{
-	//         for (var i = 0; i < checkboxs.length; i++) {
-	//             checkboxs[i].checked = false;
-	//         }
-	//     }
-	// },
 
 	selectPerfil : function()
 	{
@@ -109,126 +94,45 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	
 	mispermisos : function(idperfil)
 	{
-		// $('input[type="checkbox"]').attr('checked',false);
+		$('#submodulos').html('<div class="text-center"><img id="ajax" src="../../../img/ajax.gif" width:"100";/></div>');
+		var selft=this;
 		idperfil = $(idperfil.currentTarget).val();
 		var permisos = app.coleccionPerfiles.findWhere({id : idperfil }).get('idpermisos');
 		var mispermisos = jQuery.parseJSON(permisos);
 		var inputchek='';		
-		var chek='';
-		for(i in mispermisos)
-		{
-			if(
-				  mispermisos[i].nombre=='Clientes' ||mispermisos[i].nombre=='Proyectos'
-				||mispermisos[i].nombre=='Contratos'||mispermisos[i].nombre=='Cotizaciones'
-				||mispermisos[i].nombre=='Proyectos'||mispermisos[i].nombre=='Actividades'
-				||mispermisos[i].nombre=='Catálogos'||mispermisos[i].nombre=='Usuarios'
-			  )
+		
+		setTimeout(function(){		   
+			
+			$('#submodulos').html('');
+			selft.cargarSubmodulo();
+			for(i in mispermisos)
 			{
-				for(x in mispermisos[i].submodulos)
+				if(
+					  mispermisos[i].nombre=='Clientes' ||mispermisos[i].nombre=='Proyectos'
+					||mispermisos[i].nombre=='Contratos'||mispermisos[i].nombre=='Cotizaciones'
+					||mispermisos[i].nombre=='Proyectos'||mispermisos[i].nombre=='Actividades'
+					||mispermisos[i].nombre=='Catálogos'||mispermisos[i].nombre=='Usuarios'
+				  )
 				{
-					for(y in mispermisos[i].submodulos[x].permisos)
+					for(x in mispermisos[i].submodulos)
 					{
-						inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+'n .pchek  #'+mispermisos[i].submodulos[x].permisos[y]);						
-					    $(inputchek).attr('checked',true);												
-					}					
-				}
-			}		
-		}
+						for(y in mispermisos[i].submodulos[x].permisos)
+						{
+							inputchek = $('#'+mispermisos[i].nombre+mispermisos[i].submodulos[x].nombre+'n .pchek  #'+mispermisos[i].submodulos[x].permisos[y]);						
+						    $(inputchek).attr('checked',true);												
+						}					
+					}
+				}		
+			}
+		}, 500);//setTimeOut
 		
-	},
-
-
-
-	jsonpermisos : function()
-	{
-		var permisos = pasarAJson( this.$("#arraypermisos").serializeArray() ) ;		
-		var mispermisos = 
-			[
-				{
-					nombre:"Clientes", 	
-					submodulos:
-					[
-						{ nombre:"Nuevo",      permisos : permisos.ClientesNuevo	   },
-						{ nombre:"Prospectos", permisos : permisos.ClientesProspectos  },
-						{ nombre:"Clientes",   permisos : permisos.ClientesClientes  },
-						{ nombre:"Papelera",   permisos : permisos.ClientesPapelera  },
-					]
-				},
-
-				{
-					nombre:"Proyectos", 	
-					submodulos:
-					[
-						{ nombre:"nuevo",	   permisos: permisos.ProyectosNuevo      },
-						{ nombre:"Proyectos",  permisos: permisos.ProyectosProyectos  },
-						{ nombre:"Cronograma", permisos: permisos.ProyectosCronograma },
-					]
-				},
-
-				{
-					nombre:"Contratos", 	
-					submodulos:
-					[
-						{ nombre : "nuevo",     permisos: permisos.ContratosNuevo  		 },
-						{ nombre : "Contratos", permisos: permisos.ContratosCotizaciones },
-						{ nombre : "Papelera",  permisos: permisos.ContratosPapelera     }
-					]
-				},
-
-				{
-					nombre:"Cotizaciones", 
-					submodulos:
-					[
-						{ nombre : "Nuevo",        permisos: permisos.CotizacionesNuevo  		},
-						{ nombre : "Cotizaciones", permisos: permisos.CotizacionesCotizaciones },
-						{ nombre : "Papelera",     permisos: permisos.CotizacionesPapelera     }
-					]
-				},
-
-				// {
-				// 	nombre:"Actividades", 	
-				// 	submodulos:
-				// 	[
-				// 		{nombre:"nuevo",permisos:[1]},
-				// 		{nombre:"Proyectos",permisos:[2,3,4]}
-				// 	]
-				// },
-
-				{
-					nombre:"Catálogos",
-					submodulos:
-					[
-						{ nombre:"Empleados", permisos: permisos.Empleados 	},
-						{ nombre:"Perfiles",  permisos: permisos.Perfiles 	},
-						{ nombre:"Puestos",   permisos: permisos.Puestos 	},
-						{ nombre:"Roles",     permisos: permisos.Roles 		},
-						{ nombre:"Servicios", permisos: permisos.Servicios	}
-					]
-				},
-
-				{
-					nombre:"Usuarios",
-					submodulos:
-					[
-						{nombre:"Nuevo",permisos: permisos.UsuariosNuevo},
-						{nombre:"Usuarios",permisos: permisos.UsuariosUsuarios}
-					]
-				}
-			];	
-		
-		
-		for(x in mispermisos)
-		{
-			mispermisos[x] = limpiarJSON(mispermisos[x]);	
-		}
-		return JSON.stringify(mispermisos);
 	},
 
 	guardar	 : function ()
 	{	
 		/*--- si el campo foto del formulario tiene una url de carpeta que contenga un archivo img entonces 
 			  invocamos a la función urlFoto, y le enviamos de parametro formData---*/
-		var foto = ( this.$('#foto').val() ) ? this.urlFoto( new FormData( $("#registroUsuario")[0]) ) : 'img/sinfoto.png';
+		var foto = ( this.$('#fotou').val() ) ? this.urlFoto( new FormData( $("#registroUsuario")[0]) ) : 'img/sinfoto.png';
 		
 		/*-- Si el usuario es un empleado se le asigna su idempleado en caso de que sea un usuario que no es empleado su id=0--*/
 		var ide = ($("#idempleado").val()) ? $("#idempleado").val() : 0;
@@ -236,11 +140,12 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		var modeloUsuario 		= pasarAJson($('#registroUsuario').serializeArray());
 		modeloUsuario 			= limpiarJSON(modeloUsuario); 
 
+		var permisos = pasarAJson(this.$('#arraypermisos').serializeArray());		
 		/*--- asignamos atributos ---*/
 		modeloUsuario.idempleado = ide;
 		modeloUsuario.foto 		 = foto;
 		/*--- la funcion jsonpermisos(); devuelve una cadena de todos los permisos asignados ---*/
-		modeloUsuario.permisos 	= this.jsonpermisos();
+		modeloUsuario.idpermisos 	= jsonpermisos(permisos);
 		
 		$('#registroUsuario')[0].reset();
 
@@ -252,7 +157,9 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 			{
 				wait	: true,
 				success : function (exito) { location.href='usuarios_consulta'; },
-				error 	: function (error) {}
+				error 	: function (error) {
+					alerta('<p style="color:FireBrick"><b>Error al registrar al usuario</b></p>', function(){});
+				}
 			}
 		);
 		Backbone.emulateHTTP = false;
