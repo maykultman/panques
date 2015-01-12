@@ -8,7 +8,7 @@
     					<tr>
     						<th class="sorter-false"><input type="checkbox" class="todos"></th>
     						<th class="sorter-false" colspan="2">
-    							<input class="form-control input-sm search" type="search" placeholder="Nombre comercial" data-column="all">
+    							<input class="form-control input-sm search" type="search" placeholder="Cliente" data-column="all">
     							<span class="icon-search busqueda"></span>
     						</th>
     						<th class="sorter-false">Giro</th>
@@ -104,9 +104,9 @@
                 <div class="modal-dialog">
                     <div id="icon-operaciones2">
                         <div class="btn-group-vertical">
-                            <button type="button" class="btn btn-primary" id="modal_btn_eliminar"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
-                            <button type="button" class="btn btn-primary" id="modal_btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
-                            <button type="button" class="btn btn-primary" id="btn_verContactos"><label class="icon-friends"  data-toggle="tooltip" data-placement="top" title="Contactos"></label></button>
+                            <button type="button" class="btn btn-default" id="modal_btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
+                            <button type="button" class="btn btn-default" id="btn_verContactos"><label class="icon-friends"  data-toggle="tooltip" data-placement="top" title="Contactos"></label></button>
+                            <button type="button" class="btn btn-danger" id="modal_btn_eliminar"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
                         </div>
                     </div>
                     <div class="panel panel-primary">
@@ -378,7 +378,6 @@
                                             <% }; %>
                                         </td>
                                         <td class="respuesta">
-                                            <!--<span class="icon-uniF55C" style="visibility: hidden;"></span>-->
                                             <div id="spin"><div>
                                         </td>
                                     </tr>

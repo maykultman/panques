@@ -50,19 +50,6 @@ tbody.scrolltbla {
 		font-weight: normal;
 	}
 #roles {
-	
-    background-color: #0492e6;
-    border-bottom: 1px solid transparent;
-    border-top-right-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    -webkit-border-top-left-radius: 5px;
-    -moz-border-top-left-radius: 5px;
-    color:white;
-    font-size:120%;
-    padding: 10px 15px;
-    width: 400px;
 }
 
 #div_empleados select{
@@ -212,9 +199,8 @@ tbody.scrolltbla {
 }
 
 
-/*------------------------------MODULO PROYECTO CONSULTA--------------*/
 
-	/*--------Estilos nuevo proyecto--------*/
+	/*estilos nuevo proyecto*/
 		.label_servicio, .label_empleado {
 			padding: 8px;
 			margin-bottom: 0px;
@@ -257,7 +243,6 @@ tbody.scrolltbla {
 			50%   {opacity:1;}
 			100% {opacity:.4;}
 		}
-
 	/* estilos realizados para la seccion de nuevo proyecto */
 		.section_Visible {
 			display: block;
@@ -292,4 +277,62 @@ tbody.scrolltbla {
 				font-size: 100%;
 				height: 100%;
 			}
+		}
+	/*otros estilos*/
+		#color_titulos hr {
+			line-height: 10px;
+		}
+		.trProyecto{
+			height: 51px;
+			width: 100%;
+		}
+
+		/*CSS contruido en el desarrollo frontend */
+			.editar2 {
+				display: none;
+			}
+			.editando2 {
+				display: inline;
+			}
+			option:disabled { /*Color de fondo para los option desactivados*/
+				background: #F1F1f1;
+			}
+
+			span.icon-uniF478:hover {
+				background: red;
+				color: white;
+				border-radius: 3px;
+			}
+		/*CSS contruido en el desarrollo frontend */
+
+		.panel-body span{
+			padding: 5px;
+		}
+		.btn_eliminar_archivo {
+			display: inline-block;
+		}
+		.btn_eliminar_archivo .icon-circledelete:hover{ 
+			background: red;
+			border-radius: 3px;
+			cursor: pointer;
+			color: white;
+		}
+		.icon-circledelete{
+			vertical-align: center;
+		}
+
+
+		#cerrar_modal{
+			margin-top: -25px;
+		}
+
+		.row-success{
+			background: #5cb85c;
+			border-radius: 3px;
+			transition: background .5s;
+		}
+		.row-error{
+			background: #d9534f;
+			border-radius: 3px;
+			transition: background .5s;
 		}

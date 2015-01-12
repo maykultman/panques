@@ -19,7 +19,7 @@
         link_tag('js/plugin/alertify/themes/alertify.core.css').
         link_tag('js/plugin/alertify/themes/alertify.bootstrap.css').
         link_tag('css/bootstrap-3.1.1-dist/css/bootstrap.min.css').
-        link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').
+        /*link_tag('css/bootstrap-3.1.1-dist/css/bootstrap-theme.css').*/
         link_tag('css/jquery-ui.min.css').
         link_tag('css/theme.default.css').
         link_tag('js/plugin/selectize/selectize.default.css').

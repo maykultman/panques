@@ -1,3 +1,3 @@
 app.ModeloRolProyecto = Backbone.Model.extend({
-	urlRoot	:'http://crmqualium.com/api_rolesDeProyecto'
+	urlRoot	:'http://crmqualium.com/api_rolesDeProyecto',
 });

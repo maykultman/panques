@@ -30,4 +30,7 @@
 			</ul>
 		</nav>
 	</section>
-	<section class="contenedor_principal_modulos"> 
+	<section class="contenedor_principal_modulos">
+		<?=	
+			link_tag('css/estilos_modulo_proyectos.css');
+		?>

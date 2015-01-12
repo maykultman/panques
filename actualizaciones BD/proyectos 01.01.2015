@@ -1,0 +1,9 @@
+ALTER TABLE `proyectos` ADD `plan` VARCHAR(11) NOT NULL AFTER `nombre`;
+
+ALTER TABLE `proyectos` CHANGE `descripcion` `descripcion` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `proyectos` ADD `status` INT(1) NOT NULL AFTER `descripcion`;
+
+ALTER TABLE `proyectos` CHANGE `status` `status` BOOLEAN NOT NULL;
+
+ALTER TABLE `proyectos` ADD `entregado` BOOLEAN NOT NULL AFTER `status`;

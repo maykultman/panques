@@ -8,7 +8,7 @@
                         <tr>
                             <th class="sorter-false"><input type="checkbox" class="todos"></th>
                             <th class="sorter-false" colspan="2">
-                                <input class="form-control input-sm search" type="search" placeholder="Nombre comercial" data-column="all">
+                                <input class="form-control input-sm search" type="search" placeholder="Cliente" data-column="all">
                                 <span class="icon-search busqueda"></span>
                             </th>
                             <th class="sorter-false">Giro</th>

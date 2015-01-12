@@ -528,14 +528,7 @@ app.VistaCliente = Backbone.View.extend({
 					{
 						wait    : true,//Esperamos respuesta del server
 						patch   : true,//Evitamos enviar todo el modelo
-						success : function (exito) {//Encaso del exito
-							/*$(elem.currentTarget)//Selector
-								//Nos hubicamos en el padre del selector
-								.parents('tr')
-								//Buscamos al hijo con la clase especificada
-								.children('.respuesta')
-								//Removemos su atributo class
-								.html('<label class="icon-uniF479 exito"></label>');*/
+						success : function (exito) {
 								here.$('#spin').removeClass().addClass('icon-uniF479 exito');
 						},
 						error   : function (error) {//En caso de error

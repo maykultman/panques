@@ -423,8 +423,6 @@
  		// Iteramos sobre los modelos para contruir un nuevo objeto
  		// que se retornara para contruir el dicumento de cotización.
  		for (var i = 0; i < modelos.length; i++) {
- 			// json.descripcion += '<li>'+modelos[i].get('descripcion')+'</li>';
- 			console.log(modelos[i].toJSON());
  			if (modelos[i].get('seccion') != '') {
  				itemLI = modelos[i].get('seccion')+'. ';
  			};

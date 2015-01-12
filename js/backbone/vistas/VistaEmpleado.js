@@ -28,7 +28,6 @@ app.VistaParticipante = Backbone.View.extend({
 	tagName	: 'tr',
 	className : 'info tr-participante',
 	plantillaSeleccionado	: _.template($('#tds_empleado_seleccionado').html()),
-	plantillaRol : _.template($('#input_rol').html()),
 	events	: {
 		'change .select_rol' : 'agregarRol',
 		'click .btn_eliminarRol'	: 'eliminarRol',
@@ -110,7 +109,7 @@ app.VistaParticipante = Backbone.View.extend({
 	    // función setTimeout con 10 ms como minimo.
 	    control.setValue( values );
 	},
-	actualizarItem 	: function (value) {
+	actualizarItem 	: function () {
 		// model contrandrá el rol más recientemente creado
 		// tenga o no tenga valor, respaldamos los valores del select y
 		// obtenemos el objeto control de selectize.

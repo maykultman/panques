@@ -6,7 +6,7 @@
 		<section id="seccion_tabla">
 			<div id="div_fullHeight">    
 		        <div id="posicion_infotd">
-		    		<div id="clientes" class="wrapper"> 
+		    		<div id="" class="wrapper"> 
 					    <table id="tabla_principal" class="table table-striped tablesorter">
 							<thead>
 								<tr>

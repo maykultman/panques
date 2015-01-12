@@ -45,11 +45,13 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 		'click .span_eliminar_servicio' : 'eliminarServicio',
 		'click .span_toggleAllSee'	 	: 'conmutarServicios',
 
+		'change .btn_plan'			: 'conmutarTablaPlan',
+
 		'click #cancelar'	: 'cancelar',
 
 		/*Eventos de proyecto*/
 		'change #busqueda'					: 'obtenerContratos',
-		'change #nombreproyecto' 			: 'establecerProyectoBaseContrato',
+		'change #nombreproyecto' 			: 'establecerDatos',
 
 		'change #fechaEntrega'				: 'calcularDuracion',
 		'change #fechaInicio'				: 'calcularEntrega',
@@ -62,12 +64,14 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 	},
 
 	initialize				: function () {
+		this.html = this.$el.html();
+
 		this.listenTo(app.coleccionRoles, 'add', this.residuos);
 		this.listenTo(app.coleccionServicios, 'add', this.residuos);
 
 		this.$busqueda			= this.$('#busqueda');
 		this.$nombreproyecto 	= this.$('#nombreproyecto');
-		this.$hidden_idCliente	= this.$('#hidden_idCliente');
+		this.$hidden_idcontrato = this.$('#hidden-idcontrato')
 
 		this.$tbody_empleados 	= this.$('#tbody_empleados');
 		this.$tbody_servicios 	= this.$('#tbody_servicios');
@@ -93,6 +97,8 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 		this.arrayResiduos = [];
 		app.contadorAlerta = 1;
 		app.totalelementos = 0;
+
+		
 	},
 	render					: function () {
 		return this;
@@ -104,6 +110,19 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 	/*OK*/cargarServicios		: function () {
 		this.$tbody_servicios.html('');
 		app.coleccionServicios.each( this.cargarServicio, this );
+	},
+	/*OK*/eliminarServicio 		: function (e) {
+		// Comentario en la clase VistaNuevaCotizacion
+		this.$(
+			'#table_servicios #'
+			+this.$(e.currentTarget)
+			.attr('id')
+		)
+		.attr('disabled',false)
+		.attr('checked',false)
+		.parents('tr')
+		.css('color','#333');
+		this.$(e.currentTarget).parents('.td_servicio').remove();
 	},
 	/*OK*/cargarEmpleado		: function (empleado) {
 		/*añadimos una nueva propiedad al modelo de empledo para
@@ -134,8 +153,25 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			return array;
 		}() );
 	},
-	/*OK*/establecerProyectoBaseContrato		: function (e) {
+	/*OK*/establecerDatos		: function (e) {
+		// Antes veficicamos que las operaciones
+		// prosigan si tenemos valor, si no
+		// terminamos la secuencia
+		if ($(e.currentTarget).val() == '') {
+			this.$hidden_idcontrato.val('');
+			e.preventDefault();
+			return;
+		};
+		
 		var idcontrato 	= $(e.currentTarget).val(),
+			arrayServicios	= function () {
+				// Comentario en la clase VistaNuevaCotizacion
+				var jsonSecciones = _.where(app.coleccionServiciosContrato.toJSON(),{
+					idcontrato:idcontrato
+				});
+				var groposServicios = _.groupBy(jsonSecciones,'idservicio');
+				return _.values(groposServicios);
+			}(),
 			contrato 	= app.coleccionContratos.get(idcontrato);
 			secciones 	= app.coleccionServiciosContrato.where({
 				idcontrato:idcontrato
@@ -144,32 +180,41 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 
 		this.$fechaInicio
 			.datepicker( 	"setDate", 
-							new Date( contrato.get('fechainicio') ), 
+							new Date( fechaEstandar( contrato.get('fechainicio') ) ),
 							'd MM, yy' );
 		this.$fechaEntrega
 			.datepicker( 	"setDate", 
-							new Date( contrato.get('fechafinal') ), 
+							new Date( fechaEstandar( contrato.get('fechafinal') ) ),
 							'd MM, yy' ).trigger('change');
 
-		this.$tbody_servicios_seleccionados.html('');
+		this.$duracion.trigger('change');
+
+		this.$('input[value="'+contrato.get('plan')+'"]').click();
+
+		this.$tbody_servicios_seleccionados.find('.span_eliminar_servicio').click();
 
 		// Comentarios en la función 'establecerDatos' la clase,
 		// VistaConsultaCotizaciones del archivo con el mismo nombre
-		for(i in secciones) {
-			if (idservicio != secciones[i].get('idservicio')) {
-				idservicio = secciones[i].get('idservicio');
-				this.$('#servicio_'+idservicio).click();
-				this.$el
-					.find('#table_servicio_'+idservicio+' tbody')
-					.html('');
-			};
-			json = secciones[i].toJSON();
-			json.preciohora = 'preciohora';
-			vSeccion = new VistaSeccion();
-			this.$('#table_servicio_'+idservicio+' tbody')
-				.append( vSeccion.render(json).el );
+		for(i in arrayServicios) {
+			// En primer lugar tenemos que apilar el servicio en
+			// la tabla de servicios y borrar las secciones que
+			// apila automaticamente.
+			idservicio = arrayServicios[i][0].idservicio;
+			this.$('#servicio_'+idservicio).click();
+			this.$el.find('#table_servicio_'+idservicio+' tbody').html('');
+			// Apilamos las secciones del servicio en turno y que son propios
+			// de la cotizacion a editar.
+			for(j in arrayServicios[i]){
+				vSeccion = new VistaSeccion();
+				this.$('#table_servicio_'+idservicio+' tbody')
+					.append( vSeccion.render(arrayServicios[i][j]).el );
+			}
 		}
+
+
 		this.calcularTotalHoras(); // Función heredada
+
+		this.$hidden_idcontrato.val(idcontrato);
 	},
 	/*OK*/calcularDuracion		: function (elem) {
 		var date1 = this.$fechaInicio.datepicker('getDate'),
@@ -179,33 +224,62 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 		this.$duracion.val(calcularDuracion( date1,date2 ).plazo);
 	},
 	/*OK*/calcularEntrega 		: function (e) {
-		// obtenemos los días establecido por el usuario,
-		// obtenemos la fecha de inicio del proyecto y: valor,
-		// calculamos la fecha de entrega: valor (la cual no es real).
-		// por utimo preparamos una variable que contendrá
-		// tendra la verdadera fecha
-		var dias = parseInt( this.$(e.currentTarget).val() ),
-			valorFechaInicio = this.$fechaInicio.datepicker('getDate').valueOf(),
-			valorFechaEntrega = valorFechaInicio + ( dias*24*60*60*1000 ),
-			fechaEntrega;
+		var self = this;
 
-		// necesitamos el valor de la fecha de entrga, para eso,
-		// creamos un objeto Date y obtenemos el valor mediante valueOf()
-		fechaEntrega = new Date(new Date(valorFechaEntrega).valueOf());
-		// la función excluirDias obtiene el numero de días sábados y
-		// domingos del rango de fechas que se pasan como parametro
-		var nsabadosYdomingos = excluirDias(valorFechaInicio, fechaEntrega);
-		// Necesariamente necesitamos saber si los días que el usuario
-		// establece es un número mayor que 10, esto se hace para
-		// establecer correctamente la fecha en que terminará el proyecto
-		if ( dias > 10) {
-			fechaEntrega = new Date(fechaEntrega.valueOf() + ( (nsabadosYdomingos +1)*24*60*60*1000 ));
-		} else {
-			fechaEntrega = new Date(fechaEntrega.valueOf() + ( (nsabadosYdomingos -1)*24*60*60*1000 ));
+		var calcular = function (num) {
+			// obtenemos los días establecido por el usuario,
+			// obtenemos la fecha de inicio del proyecto y: valor,
+			// calculamos la fecha de entrega: valor (la cual no es real).
+			// por utimo preparamos una variable que contendrá
+			// tendra la verdadera fecha
+			var dias = parseInt( num ),
+				valorFechaInicio = function (fechaInicio){
+					if ( fechaInicio.val() != '' ) {
+						return fechaInicio.datepicker('getDate').valueOf();
+					} else{
+						var date = new Date();
+						fechaInicio.datepicker( 'setDate', date );
+						self.$('input[name="fechainicio"]').val(formatearFechaDB(date));
+						return date.valueOf();
+					};
+				}(self.$fechaInicio),
+				valorFechaEntrega = valorFechaInicio + ( dias*24*60*60*1000 ),
+				fechaEntrega;
+
+			// necesitamos el valor de la fecha de entrga, para eso,
+			// creamos un objeto Date y obtenemos el valor mediante valueOf()
+			fechaEntrega = new Date(new Date(valorFechaEntrega).valueOf());
+			// la función excluirDias obtiene el numero de días sábados y
+			// domingos del rango de fechas que se pasan como parametro
+			var nsabadosYdomingos = excluirDias(valorFechaInicio, fechaEntrega);
+			// Necesariamente necesitamos saber si los días que el usuario
+			// establece es un número mayor que 10, esto se hace para
+			// establecer correctamente la fecha en que terminará el proyecto
+			if ( dias > 10) {
+				fechaEntrega = new Date(fechaEntrega.valueOf() + ( (nsabadosYdomingos +1)*24*60*60*1000 ));
+			} else {
+				fechaEntrega = new Date(fechaEntrega.valueOf() + ( (nsabadosYdomingos -1)*24*60*60*1000 ));
+			};
+			// usamos la funcion datepicker de jQueryUI para establecer la fecha
+			// correcta para el termino del proyecto.
+			self.$fechaEntrega.datepicker( "setDate", fechaEntrega, 'd MM, yy' );
+			self.$('input[name="fechafinal"]').val( formatearFechaDB(fechaEntrega) );
 		};
-		// usamos la funcion datepicker de jQueryUI para establecer la fecha
-		// correcta para el termino del proyecto.
-		this.$fechaEntrega.datepicker( "setDate", fechaEntrega, 'd MM, yy' );
+
+		if ( e.type === 'mousewheel' ) {
+			if ( $(e.currentTarget).val() == '' ) {
+				$(e.currentTarget).val('1').trigger('change');
+				e.preventDefault();
+			} else {
+				if (e.originalEvent.wheelDeltaY < 0) {
+					calcular( parseInt($(e.currentTarget).val()) -1 );
+				} else {
+					calcular( parseInt($(e.currentTarget).val()) +1 );
+				};	
+			};
+		} else {
+			calcular( parseInt($(e.currentTarget).val()) );
+		};
 	},
 	/*OK*/eliminarServicios 	: function () {
 		var spans = this.$('input[name="todos"]:checked');
@@ -258,7 +332,15 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			var self = this;
 			$('#block').toggleClass('activo');
 			alerta('¡Proyecto guardado!', function () {
-				location.href = 'proyectos_consulta';
+				confirmar('¿Deseas crear otro proyecto?', function (){
+					// self.$el.html('');
+					self.$el.html(self.html);
+					// setTimeout(function() {
+						self.initialize();
+					// }, 1000);
+				},function (){
+					location.href = 'proyectos_consulta';
+				});
 			});
 		};
 	},
@@ -375,11 +457,11 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 					if ( _.isUndefined(json_participantes[i].idrol) ) {
 						sinrol = true;
 						break;
-					} else {
+					}/* else {
 						if (_.isArray(json_participantes[i].idrol)) {
 							json_participantes[i].idrol = json_participantes[i].idrol.join(',');
 						};
-					};
+					}*/;
 				};
 				return sinrol;
 			};
@@ -396,7 +478,6 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 								json_secciones.length +
 								json_participantes.length +
 								this.$inputArchivos.prop('files').length;
-		console.log(app.totalelementos);
 		return json;
 	},
 	cancelar	: function () {
@@ -543,151 +624,7 @@ app.VistaTablaRoles = Backbone.View.extend({
 	},
 });
 
-app.VistaArchivos = Backbone.View.extend({
+app.VArchivos = app.VistaArchivos.extend({
 	el:'#paso4',
-	plantillaArchivo		: _.template($('#tr_archivo').html()),
-	events 					: {
-		'change #inputArchivos'				: 'cargar',
-		'click #btn_subirArchivo'			: 'subirArchivo',
-		'click #inputArchivos'				: 'eliminarFileList',
-		'click #btn_cancelarArchivo'		: 'cancelarArchivos',
-	},
-	initialize 				: function () {
-		this.listenTo(app.coleccionProyectos, 'add', this.guardar);
-		// this.listenTo(app.coleccionProyectos, 'destroy', this.eliminarArchivos);
-
-		this.$inputArchivos			= this.$('#inputArchivos');
-		this.$tbody					= this.$('tbody');
-		this.$propietarioArchivo 	= this.$('#idpropietario');
-		this.$tablaProyecto 		= this.$('#tabla');
-	},
-	render 					: function () { },
-	cargar					: function (e) {
-		this.$tbody.html('');
-		var archivos = $(e.currentTarget).prop('files');
-		for (var i = 0; i < archivos.length; i++) {
-			this.$tbody.append( this.plantillaArchivo( {i:i, tipo:(archivos[i].type).split('/')[1], nombre:archivos[i].name, tamaño:(archivos[i].size/1024).toFixed() +' KB'} ) );
-		};
-	},
-	/*OK*/guardar 			: function (model) {
-		// obtenemos todos los archivos,
-		// obtenemos el id del proyecto creado recientemente,
-		// preparamos una variable para los objetos formData,
-		// y respaldamos this para acceder a las func. y var.
-		var archivos = this.$inputArchivos.prop('files'),
-			idpropietario = model.get('id'),
-			formData,
-			tabla,
-			self = this;
-
-		tabla = this.establecerTabla(model);
-
-		// verificamos si hay archivos listados para el proy.
-		if (archivos.length) {
-			// (!) tememos que preparar una variable para indicar,
-			// el estado de los achivos (en espera, guardado y no,
-			// guardado). classTr es la fila del archivo en la tabla
-			self.classTr =  archivos.length - 1;
-			for (var i = 0; i < archivos.length; i++) {
-				// colocamos un spin en la fila del archivo para indicar 
-				// que el archivo esta siendo procesado
-				this.$tbody.children('.'+i).children('.icon-eliminar').html('<div class="spin"><div>');
-				// creamos un objeto FormData por cada uno de los archivos
-				// que serán enviados y añadimos las propiedades que
-				// acompañara el archivo en turno
-				formData = new FormData();
-				formData.append('idpropietario',idpropietario);
-				formData.append('tabla',tabla);
-				formData.append('archivo[]',archivos[i]);
-				// enviamos la info a la api de archivos
-				$.ajax({
-		            url: 'http://crmqualium.com/api_archivos',
-		            type: 'POST',
-		            async:true,
-		            data: formData,
-		            //necesario para subir archivos via ajax
-		            cache: false,
-		            contentType: false,
-		            processData: false,
-		            success: function (exito) {
-		            	app.coleccionArchivos.add(exito);
-		            	self.$tbody.children('.'+self.classTr).addClass('success');
-		            	self.$tbody.children('.'+self.classTr).children('.icon-eliminar').html('<div class="has-success"><span class="glyphicon glyphicon-ok form-control-feedback"></span></div>');
-		   				self.classTr--;
-		   				self.guardado();
-		            },
-		            error  : function (error) {
-		            	self.$tbody.children('.'+self.classTr).addClass('danger');
-		            	self.$tbody.children('.'+self.classTr).children('.icon-eliminar').html('<div class="has-error"><span class="glyphicon glyphicon-remove form-control-feedback"></span></div>');
-		   				self.classTr--;
-		   				self.noGuardada();
-		            }
-		        });
-			};
-		} else { 
-			console.log('No hay archivos para enviar');
-		};
-	},
-	guardado				: function () {	/*-tambien en VProyecto-*/
-		if (this.aumentarContador() == app.totalelementos) {
-			var self = this;
-			$('#block').toggleClass('activo');
-			alerta('¡Proyecto guardado!', function () { });
-		};
-	},
-	noGuardada				: function () {	/*-tambien en VProyecto-*/
-		if (this.aumentarContador() == app.totalelementos) {
-			$('#block').toggleClass('activo');
-			alerta('El proyecto ha sido guardado, pero ocurrieron algunos errores<br>Revice el proyecto en la sección de consulta', function () {
-				location.href = 'proyectos_consulta';
-			});
-		};
-	},
-	aumentarContador 	: function() {		/*-tambien en VProyecto-*/
-		return app.contadorAlerta++;
-	},
-	/*OK*/establecerTabla 	: function (model) {
-		var tabla,
-			url = model.url();
-		console.log(url);
-		url = url.split('/');
-		url.pop();
-		url = url.join('/');
-		switch( url ){
-			case 'http://crmqualium.com/api_proyectos':
-				tabla = 'proyectos';
-				break;
-			default:
-				tabla = '';
-				break;
-		}
-
-		return tabla;
-	},
-	eliminarFileItemList	: function () {/*[!]*/},
-	/*OK*/cancelarArchivos	: function () {
-		var here = this;
-		confirmar('Los archivos a subir seran cancelados',
-			function () {
-				here.$inputArchivos.val('');
-				here.$tbody.html('');
-			},
-			function () {});
-	},
-	/*OK*/eliminarArchivos 	: function (model) {
-		var idpropietario = model.get('id'),
-			tabla 		  = this.establecerTabla(model);
-
-		app.coleccionArchivos.each(function (model) {
-			if (model.get('idpropietario') == idpropietario &&
-				model.get('tabla') == tabla
-			) {
-				model.destroy({
-					wait 	: true,
-					success : function () {},
-					error   : function () {}
-				});
-			};
-		});
-	}
-});
+	plantillaArchivo		: _.template($('#tr_archivo').html())
+})

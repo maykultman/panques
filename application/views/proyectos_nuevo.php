@@ -13,40 +13,66 @@
 				<div class="panel panel-default">
 					<div class="panel-heading"><b>Datos básicos</b></div>
 					<div class="panel-body">
-						<form id="formDatosBasicos">		
+						<form id="formDatosBasicos">
+							<input type="hidden" id="hidden-idcontrato" name="idcontrato" value="">
 							<div class="row">
-								<div class="col-md-4">								
+								<div class="col-md-4">
 									<legend><h5><b>Cliente y nombre del proyecto</b></h5></legend>
-									<select id="busqueda" name="idcliente" placeholder="Buscar cliente"></select>
-									<select id="nombreproyecto" name="nombre" placeholder="Nombre del proyecto o contrato origen"></select>						
+									<div class="form-group">
+										<label for="busqueda">Cliente</label>
+										<select id="busqueda" name="idcliente" placeholder="Buscar cliente..."></select>
+									</div>
+									<div class="form-group">
+										<label for="nombreproyecto">Nombre del proyecto o contrato origen</label>
+										<select id="nombreproyecto" name="nombre" placeholder="Nombre del proyecto o contrato origen"></select>
+									</div>
+									<div class="form-group">
+										<label for="">Tipo de plan</label>
+										<div class="btn-group input-group" data-toggle="buttons">
+											<label class="btn btn-default">
+												<input type="radio" class="btn_plan" name="plan" id="porEvento" value="evento" autocomplete="off"> Por Evento
+											</label>
+											<label class="btn btn-default">
+												<input type="radio" class="btn_plan" name="plan" id="iguala" value="iguala" autocomplete="off"> Iguala Mensual
+											</label>
+										</div>
+									</div>
 								</div>
-								<div class="col-md-8">								
-									<legend> <h5><b>Establecer fecha de inicio y fecha de entrega del proyecto</h5></b></legend>
+								<div class="col-md-8">
+									<legend> <h5><b>Establecer fecha de inicio y fecha final del proyecto</h5></b></legend>
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group">
-												<label for="fechaInicio" style="margin-bottom: 7px;">Inicio</label>
+												<label for="fechaInicio">Inicio</label>
 												<input id="fechaInicio" class="form-control datepicker" type="text">
 												<input type="hidden" name="fechainicio">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label for="fechaEntrega" style="margin-bottom: 7px;">Termino</label>
+												<label for="fechaEntrega">Fin</label>
 												<input id="fechaEntrega" class="form-control datepicker" type="text">
 												<input type="hidden" name="fechafinal">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label for="duracion" style="margin-bottom: 7px;">Duración <small><label class="label label-info">días habiles</label></small></label>
+												<label for="duracion">Duración <small><label class="label label-info">días habiles</label></small></label>
 												<input type="number" id="duracion" class="form-control" min="1">
 											</div>
 										</div>
-									</div>								
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<p class="text-info"><b>Nota.</b> Si establece la fecha de inicio y la fecha final, se calculará la duración del proyecto sin tomar en cuenta fines de semana. Si establece la duración, automaticamente se determinará la fecha final diferente de sábado o domingo, a partir del día actual.</p>
+										</div>
+									</div>
 								</div>
 							</div>
-							<textarea class="form-control" rows="4" placeholder="Descripción del proyecto" name="descripcion" style="width: 100% !important;"></textarea>
+							<div class="form-group">
+								<label for="descripcion">Descripción general</label>
+								<textarea id="descripcion" class="form-control" rows="4" placeholder="Descripción general" name="descripcion" style="width: 100% !important;"></textarea>
+							</div>
 						</form>
 					</div><!-- /.panel-body -->
 				</div><!-- /.panel panel-default -->
@@ -58,7 +84,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<legend><h5><b>Seleccionar los servicios que integrarán el proyecto</b></h5></legend>
-							</div>
+							</div>	
 							<div class="col-md-4">
 								<div class="div_table_overflow">
 									<table id="table_servicios" class="table table-hover"><!-- table_proyecto -->
@@ -91,20 +117,52 @@
 									<tbody id="tbody_servicios_seleccionados">
 										<!-- PLANTILLAS DE SERVICIOS COTIZADOS -->
 									</tbody>
-									<tfoot style="background : #F9F9F9;">
+									<thead style="background : #F9F9F9;">
 										<tr>
 											<td colspan="" style="min-width:200px;"><label><input class="todos" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Servicios</label></td>
-											<td colspan="" rowspan="" headers=""><input type="text" class="form-control input-sm hidde" style="visibility:hidden;"></td>
-											<td colspan="" rowspan="" headers=""><input type="text" class="form-control input-sm hidde" style="visibility:hidden;"></td>
-											<td colspan="" rowspan="" headers=""><input type="text" class="form-control input-sm hidde" style="visibility:hidden;"></td>
-											<td style="text-align: right;">Total horas</td>
-											<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
 											<td class="iconos-operaciones">
 												<!-- <span class=" icon-scaleup span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span> -->
 												<span class="icon-uniF4E5 span_toggleAllSee" title="Abrir/Cerrar seleccionados"></span>
 												<span class="icon-circledelete span_deleteAll" title="Eliminar seleccionados"></span>
 											</td>
 										</tr>
+									</thead>
+									<thead class="thead_evento thead_visible thead_oculto">
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td>
+												<div class="row">
+													<div class="col-xs-4 col-xs-offset-4">
+														Total horas
+													</div>
+													<div class="col-xs-4">
+														<input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled>
+													</div>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+									</thead>
+									<thead class="thead_iguala thead_visible thead_oculto">
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</thead>
 								</table>
 							</div>
 						</div>
@@ -173,7 +231,7 @@
 							</div>
 						</div>
 						<label class="btn btn-default input-sm fileinput-button">
-							<span class="icon-paperclip"></span>
+							<i class="glyphicon icon-paperclip"></i>
 							<span>Abrir</span>
 							<input type="file" id="inputArchivos" multiple name="archivo[]">
 						</label>
@@ -189,7 +247,7 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>Archivos a subir</th>
+									<th>Nombre</th>
 									<th>Tipo</th>
 									<th>Tamaño</th>
 									<th></th>
@@ -340,19 +398,6 @@
 	<script type="text/template" id="option_rol">
 		<%= nombre %>
 	</script>
-	<script type="text/template" id="input_rol">
-		<div class="tag_rol">
-			<div class="btn-group btn-group-xs">
-				<button class="btn btn-default btn_eliminarRol" value="<%= id %>">
-					<span class="icon-circledelete"></span>
-				</button>
-				<button type="button" class="btn btn-default" disabled="disabled">
-					<%= nombre %>
-				</button>
-			</div>
-			<input type="hidden" class="rol" name="<%= name %>" value="<%= id %>">
-		</div>
-	</script>
 
 	<script type="text/template" id="tr_archivo">
 		<tr class="<%= i %>">
@@ -396,6 +441,7 @@
 	script_tag('js/backbone/vistas/VistaEmpleado.js').
 	script_tag('js/backbone/vistas/VistaServicio.js').
 	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js').
+	script_tag('js/backbone/vistas/vistaArchivos.js').
 	// script_tag('js/backbone/vistas/VistaConsultaCotizaciones.js').
 	script_tag('js/backbone/vistas/VistaNuevoProyecto.js');
 ?>
@@ -412,7 +458,7 @@
 	</script>
 
 	<script type="text/javascript">
-		var vistaArchivos = new app.VistaArchivos();
+		var vistaArchivos = new app.VArchivos();
 		app.vistaNuevoProyecto = new app.VistaNuevoProyecto();
 		vistaTablaRoles = new app.VistaTablaRoles();
 	</script>

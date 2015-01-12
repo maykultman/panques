@@ -66,21 +66,24 @@ function formatearFechaDB (objDate) {
        + "-" + objDate.getDate();
 }
 
-function fechaAmigable (fecha) {
+function fechaEstandar(textDate) {
+    /*Quita el cero si el número es menor que 10*/
+    textDate = textDate.split('-');
+    textDate = parseInt( textDate[0] ) 
+       + "-" + parseInt( textDate[1] )
+       + "-" + parseInt( textDate[2] );
+    return textDate;
+}
 
-    var fechaFormateada = '';
-    if ((fecha.getDate()) < 10 )
-        fechaFormateada = '0'+(fecha.getDate());
-    else
-        fechaFormateada = (fecha.getDate()+1);
-    // if ((fecha.getMonth() +1) < 10 )
-    fechaFormateada += '/'+meses[fecha.getMonth()];
-    // else
-    // fechaFormateada +=  '/'+mes[fecha.getMonth()];
+function fechaAmigable (objDate) {
+    
+    objDate = [ objDate.getDate(),
+                objDate.getMonth(),
+                objDate.getFullYear()   ];
 
-    fechaFormateada +=  '/'+fecha.getFullYear();
-    // console.log(fechaFormateada);
-    return fechaFormateada;
+    objDate[1] = meses[parseInt(objDate[1])];
+
+    return objDate.join('/');
 }
 
 function alerta(mensaje, callback){
@@ -218,12 +221,11 @@ function urlFoto () {
 
 /*Cálculo de fechas*/
 function calcularDuracion (fechainicio,fechafinal) {
-    var valorFechaInicio = fechainicio.valueOf();
-    var valorFechaEntrega = fechafinal.valueOf();
-    var valorFechaActual = new Date().valueOf();
-    var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - excluirDias(fechainicio, fechafinal);
-    var hoy = new Date();
-    var queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed() - excluirDias(hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate(), fechafinal);
+    var valorFechaInicio = fechainicio.valueOf(),
+        valorFechaEntrega = fechafinal.valueOf(),
+        valorFechaActual = new Date().valueOf(),
+        plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - excluirDias(fechainicio, fechafinal),
+        queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed() - excluirDias(new Date(), fechafinal);
     if (queda == -0) queda = 0;
     var porcentaje = ((100 * queda)/plazo).toFixed();
 
@@ -234,14 +236,14 @@ function calcularDuracion (fechainicio,fechafinal) {
         porcentaje  :porcentaje
     };
 };
-function excluirDias (fechainicio, fechafinal) {
+function excluirDias (objFechaInicio, objFechaFin) {
     var contador = 0;
-    var valorFechaInicio = fechainicio.valueOf();
-    var valorFechaEntrega = fechafinal.valueOf();
+    var valorFechaInicio = objFechaInicio.valueOf();
+    var valorFechaEntrega = objFechaFin.valueOf();
     var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
-    var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     for(var i = 0; i<duracion; i++){
-        var dia = (new Date(new Date(fechainicio).getTime() + i*24*60*60*1000)).getDay();
+        var dia = (new Date(new Date(objFechaInicio).getTime() + i*24*60*60*1000)).getDay();
         if(days[dia] == 'Sunday' || days[dia] == 'Saturday'){
             contador++;
         };

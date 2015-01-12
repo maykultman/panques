@@ -19,7 +19,7 @@
 			if($id)
 			{
 				$this->db->where('id',$id);  
-				#$reply = 'row';
+				$reply = 'row';
 			}          
 			return $this->db->get  ( 'servicios_proy' )->$reply();
 		}

@@ -120,7 +120,7 @@ app.VistaContrato = Backbone.View.extend({
 		var self = this;
 		if (this.model.get('visibilidad') == '1') {
 			confirmar('¿Está seguro de que desea eliminar el contrato <b>'
-						+this.model.get('prestaciones')+
+						+this.model.get('serviciosolicitado')+
 						'<b>?<br>Se enviará a la papelera',
 				function () {
 					self.model.cambiarVisibilidad();
@@ -141,7 +141,7 @@ app.VistaContrato = Backbone.View.extend({
 	eliminarPermanente : function () {
 		var self = this;
 		confirmar('El contrato <b>'
-			+this.model.get('prestaciones')+
+			+this.model.get('serviciosolicitado')+
 			'</b> será eliminada permanentemente',
 			function () {
 				self.model.eliminarPermanente();
@@ -341,7 +341,7 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 			fechainicio,
 			fechafinal;
 		// Cortafuego para forzar establecer los siguientes datos
-			if (   json.prestaciones == '' 
+			if (   json.serviciosolicitado == '' 
 				|| json.idcliente == '' 
 				|| json.idrepresentante == ''
 				|| json.firmaempleado == ''
@@ -553,7 +553,7 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 									},
 									error	: function (error) {
 										error('Error al Borrar a <b>'
-												+error.toJSON().prestaciones+
+												+error.toJSON().serviciosolicitado+
 											'</b>. Intentelo más tarde');
 									}
 								});
@@ -565,7 +565,7 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 								},
 								error	: function (error) {
 									error('Error al Borrar a <b>'
-											+error.toJSON().prestaciones+
+											+error.toJSON().serviciosolicitado+
 										'</b>. Intentelo más tarde');
 								}
 							});

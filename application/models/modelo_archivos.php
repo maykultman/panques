@@ -36,9 +36,6 @@
 
 			public function get($id=FALSE, $idpropietario=FALSE, $tabla=FALSE)
 			{
-				// $this->db->where('tabla', $tabla);
-				// return $this->db->get( 'multimedia' )->result();
-
 				$reply = 'result';
 				if ( is_numeric($idpropietario) && $tabla ) {
 					$this->db->where(  array('idpropietario' => $idpropietario, 'tabla' => $tabla)  );

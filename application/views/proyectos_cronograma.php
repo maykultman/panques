@@ -1,25 +1,39 @@
-<?=link_tag('css/estilos_modulo_proyectos.css').
+<?=
 // <!-- CSS jQuery.Gantt -->
 	link_tag('js/plugin/Gantt/css/style.css');?>
 	<style type="text/css">
       /* Bootstrap 3.x re-reset */
       .fn-gantt *,
       .fn-gantt *:after,
-      .fn-gantt *:before {
+      .fn-gantt *:before {/*No borrar*/
         -webkit-box-sizing: content-box;
            -moz-box-sizing: content-box;
                 box-sizing: content-box;
       }
+      .fn-gantt .leftPanel .fn-label{
+      	font-weight: normal;
+      }
 	.fn-gantt .leftPanel .fn-label:hover{
-		color:blue;
+		color:#006ad5;
+		text-decoration: underline;
 	}
 	</style>
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<div class="page-header">
-				<h1>Cronograma de proyectos</h1>
+			<div class="row">
+				<div class="col-md-4 col-xs-12">
+					<h3>Cronograma de proyectos</h3>
+				</div>
+				<div class="col-md-8 col-xs-12">
+					<br>
+					<span class="label label-default">Con tiempo para iniciar</span>
+					<span class="label label-success">Entre el 50% de avance</span>
+					<span class="label label-warning">Entre el 85% de avance</span>
+					<span class="label label-danger">Entregar / tiempo rebasado</span>	
+				</div>
 			</div>
 			
+				
 			<div class="gantt"></div>
 		</div>
 	</div>
@@ -60,22 +74,41 @@
 		<h3><%- nombre %></h3>
 		<table class="table">
 			<tr>
-				<td> <b>Descripcion: </b> </td>
-				<td><%- descripcion %></td>
-			</tr>
 				<td> <b>Avance: </b> </td>
-				<td><%- 100 - duracion.porcentaje %>%</td>
+				<td>
+					<%if ( duracion.queda >= duracion.plazo ) {%>
+						0%
+					<%} else{%>
+						<%- 100 - duracion.porcentaje %>%
+					<%};%>
+				</td>
 			</tr>
 			<tr>
 				<td> <b>Duración: </b> </td>
-				<td>Queda <%= duracion.queda == 1 ? duracion.queda+' día' : duracion.queda+' días' %> de <%- duracion.plazo %></td>
-			<tr>
+				<td>
+					<%if ( duracion.queda >= duracion.plazo ) {%>
+						<% var comenzarEn = duracion.queda - duracion.plazo; %>
+						Comienza en <%= comenzarEn == 1 ? comenzarEn+' día' : comenzarEn+' días' %>
+					<%} else{%>
+						Queda <%= duracion.queda == 1 ? duracion.queda+' día' : duracion.queda+' días' %> de <%- duracion.plazo %>
+					<%};%>
+				</td>
+			</tr>
 			<tr>
 				<td> <b>Fecha de inicio: </b> </td>
 				<td><%- formatearFechaUsuario( new Date(fechainicio) ) %></td>
+			</tr>
 			<tr>
 				<td> <b>Fecha final: </b> </td>
 				<td><%- formatearFechaUsuario( new Date(fechafinal) ) %></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<b>Descripcion: </b>
+					<p>
+						<%- descripcion %>
+					</p>
+				</td>
 			</tr>
 		</table>
 	</script>
@@ -106,6 +139,9 @@
 		events	: {},
 		initialize	: function () {
 			var here = this;
+			var modelos = app.coleccionProyectos.where({entregado:'0'});
+			app.coleccionProyectos.reset();
+			app.coleccionProyectos.add(modelos);
 			this.carganDiagramaGantt();
 
 				
@@ -134,7 +170,10 @@
 			/*Recorremos la coleccion de proyectos*/
 			app.coleccionProyectos.each(function (model){
 				/*Establecemos la duracion del proyecto en el modelo*/
-				model.set({duracion : here.calcularDuracion(model)});
+				model.set({duracion : calcularDuracion( 
+					new Date( fechaEstandar( model.get('fechainicio') ) ),
+					new Date( fechaEstandar( model.get('fechafinal') ) )
+				)});
 				/*Validamos si el proyecto esta con tiempo suficiente, 
 				mitad de tiempo o por terminar el plazo. Asignamos un
 				color para dicha situación*/
@@ -158,7 +197,13 @@
 					values	:[{
 						from		: new Date(model.get('fechainicio')).valueOf() + 1*24* 60* 60*1000,
 						to			: new Date(model.get('fechafinal')).valueOf() + 1*24* 60* 60*1000,
-						label		: model.get('duracion').queda +'/'+ model.get('duracion').plazo,
+						label		: function (json){
+							if (json.queda < json.plazo) {
+								return 'queda '+json.queda+' día(s) de '+json.plazo
+							} else{
+								return 'comienza en '+(json.queda - json.plazo)+ ' día(s)'
+							};
+						}(model.toJSON().duracion),
 						customClass	: color
 					}],
 				}) );
@@ -171,7 +216,7 @@
 				itemsPerPage	: 10,
 				months			: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],//Meses
 				dow				: ['D','L','M','M','J','V','S'],//Días
-				waitText		: 'Espera por favor...',
+				waitText		: 'Espere por favor...',
 				onRender: function() {
 					if (window.console && typeof console.log === "function") {
 						console.log("chart rendered");
@@ -184,38 +229,7 @@
 			});
 
 
-		},
-		calcularDuracion		: function (model,callback) {
-			var valorFechaInicio = new Date(model.get('fechainicio')).valueOf(),
-				valorFechaEntrega = new Date(model.get('fechafinal')).valueOf(),
-				valorFechaActual = new Date().valueOf(),
-				plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - this.excluirDias(model.get('fechainicio'), model.get('fechafinal')),
-				queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed() - this.excluirDias(new Date(), model.get('fechafinal'));
-			if (queda == -0) queda = 0;
-			var porcentaje = ((100 * queda)/plazo).toFixed();
-
-			// console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
-			return {
-				plazo		:plazo,
-				queda		:queda,
-				porcentaje	:porcentaje
-			};
-			callback();
-		},
-		excluirDias	: function (fechaInicio, fechaFinal) {
-			var contador = 0;
-			var valorFechaInicio = new Date(fechaInicio).valueOf();
-			var valorFechaEntrega = new Date(fechaFinal).valueOf();
-			var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
-			var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-			for(var i = 0; i<duracion; i++){
-				var dia = (new Date(new Date(fechaInicio).getTime() + i*24*60*60*1000)).getDay();
-			   	if(days[dia] == 'Saturday' || days[dia] == 'Sunday'){ 
-			   		contador++;
-			   	};
-			};
-			return contador;
-		},
+		}
 	});
 
 	app.vistaCronograma = new app.VistaCronograma();
