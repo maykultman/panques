@@ -134,8 +134,11 @@
 </script>
 
 <script type="text/plantilla" id="empleado">
+ 	<% 
+ 		var placet = (telefono=='') ? 'Sin Teléfono':'';
+ 		var placec = (movil=='') ? 'Sin Celular':'';
+ 	%>
 	<div class="user-wrapper alto">
-
 		<div class="fotoe">
 			<img class="img-circle2" src="<?=base_url()?>/img/sonrie.jpg" alt="Imagen-Usuario"><br>
 		</div>
@@ -150,8 +153,8 @@
 				<form id="dateEmp">
 				<label class="col-md-3">Nombre</label>		<div class="col-md-9"><input type="text" class="form-control" name="nombre" value="<%-nombre%>"></div><br><br>
 				<label class="col-md-3">Puesto</label>		<div class="col-md-9"><select id="job" class="form-control" name="puesto"></select></div><br><br>
-				<label class="col-md-3">Telefono</label>	<div class="col-md-9"><input type="text" class="form-control" name="telefono" value="<%-telefono%>"></div><br><br>
-				<label class="col-md-3">Celular</label>		<div class="col-md-9"><input type="text" class="form-control" name="movil" value="<%-movil%>"></div><br><br>
+				<label class="col-md-3">Telefono</label>	<div class="col-md-9"><input type="text" class="form-control" name="telefono" value="<%-telefono%>" placeholder="<%-placet%>"></div><br><br>
+				<label class="col-md-3">Celular</label>		<div class="col-md-9"><input type="text" class="form-control" name="movil" value="<%-movil%>" placeholder="<%-placec%>"></div><br><br>
 				<label class="col-md-3">Domicilio</label>	<div class="col-md-9"><input type="text" class="form-control" name="direccion" value="<%-direccion%>"></div><br><br>
 				<label class="col-md-3">Fec. Nac.</label>	<div class="col-md-9"><input type="text" class="form-control" name="fecha_nacimiento" value="<%-fecha_nacimiento%>"></div><br><br>
 				</form>
@@ -255,13 +258,3 @@
 	script_tag('js/backbone/vistas/VistaNuevoEmpleado.js');
 	// script_tag('js/backbone/vistas/VistaCatalogoPuestos.js');
 ?>
-
-<!-- <div id="verinfo<%-id%>" class="editinfo">
-		<label>Nombre</label>				<input type="text" name="" value="<%-nombre%>"><br><br>
-		<label>Puesto</label>				<input type="text" name="" value="<%-puesto%>"><br><br>
-		<!--<label>Teléfono</label>			<input type="text" name="" value="<%-telefono%>"><br>-->
-		<!-- <label>Domicilio</label>			<input type="text" name="" value="<%-direccion%>"><br><br>
-		<label>Fecha de nacimiento</label>	<input type="text" name="" value="<%-fecha_nacimiento%>"><br><br>
-		<button id="<%-id%>" class="guardar btn btn-default">Guardar</button>
-		<button id="<%-id%>" class="cancel btn btn-default">Cancelar</button>
-	</div> -->

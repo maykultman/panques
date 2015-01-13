@@ -7,7 +7,6 @@ app.VistaGetEmpleado = Backbone.View.extend({
 
 	render:function()
 	{
-		console.log(this.model);
 		this.$el.html( this.plantilla( this.model.toJSON() ) );   
 		this.jobs();    
 		return this;

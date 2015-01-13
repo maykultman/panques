@@ -237,46 +237,9 @@ app.VistaConsultaEmpleado = Backbone.View.extend({
 	initialize : function ()
 	{		
 		this.$divEmpleado = this.$('#empleados'); // Div donde se visualiza los datos del empleado			
-		// this.$listaPuesto = this.$('#listaPuesto'); // Lista de opciones de puestos
 		this.cargarPuestos();
 		this.cargarEmpleados();
-		// this.opciones('puesto_1'); //Carga empleados		
 	},
-
-	// opciones : function(evento)
-	// {	
-	// 	var id;
-	// 	if(evento==='puesto_1')
-	// 	{
-	// 		 id = evento.split('_');			 
-	// 	}
-	// 	else
-	// 	{
-	// 		id = ($(evento.currentTarget).attr('id')).split('_');			
-	// 	}
-
-	// 	this.$divEmpleado.html('');		
-	// 	var evens = _.filter(app.coleccionEmpleados.toJSON(), 
-	// 		function(empleado)
-	// 		{ 
-	// 			var validate = false; 
-	// 			if(empleado.puesto == id[1])
-	// 			{
-	// 				validate = true;
-	// 			}
-	// 			return validate;
-
-	// 		});
-
-	// 	for(x in evens)
-	// 	{
-	// 		var employ = app.coleccionEmpleados.where({ id : evens[x].id });
-	// 		var viewEmpleado = new app.VistaCatalogoEmpleado({ model : employ });
-
-	// 		this.$divEmpleado.append(viewEmpleado.render({ empleado : evens[x]}).el);						
-	// 	}
-
-	// },
 
 	cargarEmpleados : function()
 	{
@@ -289,11 +252,15 @@ app.VistaConsultaEmpleado = Backbone.View.extend({
 		app.coleccionEmpleados.each(function(empleado){
 			tab = 'p'+empleado.get('puesto');
 			empleado.set({ 'nompuesto' : puestos.findWhere({ 'id':empleado.get('puesto') }).get('nombre') });
-			tel = telefonos.findWhere({ 'idpropietario':empleado.get('id') , 'tipo':'casa'}).get('numero');
-			cel = telefonos.findWhere({ 'idpropietario':empleado.get('id') , 'tipo':'móvil'}).get('numero');
+			tel = telefonos.findWhere({ 'idpropietario':empleado.get('id'), 'tipo':'casa'});
+			cel = telefonos.findWhere({ 'idpropietario':empleado.get('id'), 'tipo':'móvil'});
+
+			cel = (cel) ? cel = cel.get('numero'):'';
+			tel = (tel) ? tel = tel.get('numero') : '';
+
 			empleado.set({ 'telefono' :  tel});
 			empleado.set({ 'movil' : cel});
-
+			
 			vista = new app.VistaGetEmpleado({ model : empleado});
 			self.$divEmpleado.find('#'+tab).append(vista.render().el);
 		},this);		
