@@ -1,39 +1,41 @@
-		<div id="div_fullHeight">
-			<div id="posicion_infotd">
-				<div id="" class="wrapper">
-					<table id="tabla_principal" class="table table-hover tablesorter">
-						<thead>
-							<tr>
-								<th class="sorter-false"><input type="checkbox" class="todos" style="margin-left: 4px;"></th>
-								<th class="sorter-false">
-									<input class="form-control input-sm search" type="search" placeholder="Cliente" data-column="1">
-									<span class="icon-search busqueda"></span>
-									 
-									<!-- Cliente -->
-								</th>
-								<th class="sorter-false">
-									 <input class="form-control input-sm search" type="search" placeholder="Proyecto" data-column="2">                          
-									 <span class="icon-search busqueda"></span>
-									<!-- Proyecto -->
-								</th>  
-								<!-- <th><input type="text" class="form-control" placeholder="Rsponsable">
-									<span class="icon-search busqueda"></span>
-								</th> -->
-								<th class="sorter-false">Inicio</th>
-								<th class="sorter-false">Entrega</th>     
-								<th class="sorter-false"> Plazo</th>         
-								<th class="sorter-false">Operaciones</th>
-								<th class="sorter-false"></th>
-							</tr>
-						</thead>      
-						<tbody id="tbody_proyectos" style="line-height: 3;">
-						</tbody> 
-					</table>
-				</div><!-- /#wrapper -->
-				<button type="button" id="btn_eliminarVarios" class="btn btn-danger">Eliminar varios</button>
-				<button type="button" id="btn_entregarVarios" class="btn btn-default margin-15px-top">Entregar</button>
-			</div><!-- /#posicion_infotd -->
-		</div><!-- /#div_fullHeight -->
+		<div class="container-fluid">
+			<div id="div_fullHeight">
+				<div id="posicion_infotd">
+					<div id="" class="wrapper">
+						<table id="tabla_principal" class="table table-hover tablesorter">
+							<thead>
+								<tr>
+									<th class="sorter-false"><input type="checkbox" class="todos" style="margin-left: 4px;"></th>
+									<th class="sorter-false">
+										<input class="form-control input-sm search" type="search" placeholder="Cliente" data-column="1">
+										<span class="icon-search busqueda"></span>
+										 
+										<!-- Cliente -->
+									</th>
+									<th class="sorter-false">
+										 <input class="form-control input-sm search" type="search" placeholder="Proyecto" data-column="2">                          
+										 <span class="icon-search busqueda"></span>
+										<!-- Proyecto -->
+									</th>  
+									<!-- <th><input type="text" class="form-control" placeholder="Rsponsable">
+										<span class="icon-search busqueda"></span>
+									</th> -->
+									<th class="sorter-false">Inicio</th>
+									<th class="sorter-false">Entrega</th>     
+									<th class="sorter-false"> Plazo</th>         
+									<th class="sorter-false">Operaciones</th>
+									<th class="sorter-false"></th>
+								</tr>
+							</thead>      
+							<tbody id="tbody_proyectos" style="line-height: 3;">
+							</tbody> 
+						</table>
+					</div><!-- /#wrapper -->
+					<button type="button" id="btn_eliminarVarios" class="btn btn-danger">Eliminar varios</button>
+					<button type="button" id="btn_entregarVarios" class="btn btn-default margin-15px-top">Entregar</button>
+				</div><!-- /#posicion_infotd -->
+			</div><!-- /#div_fullHeight -->
+		</div>
 	</section><!-- /.contenedor_principal_modulos -->
 </div><!-- /.contenedor_modulo -->
 

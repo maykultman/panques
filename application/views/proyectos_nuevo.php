@@ -8,7 +8,8 @@
 				background-size: 100% 100%;
 			}
 		</style>
-		<div class="container-fluid">
+		<div class="container">
+			<br>
 			<section id="paso1" class="section_Visible">
 				<div class="panel panel-default">
 					<div class="panel-heading"><b>Datos básicos</b></div>
@@ -264,7 +265,6 @@
 				<button type="button" id="btn_cancelarProyecto" class="btn btn-default">Cancelar</button>	
 			</div>
 		</div>
-			
 	</section><!-- /.contenedor_principal_modulos -->
 </div> <!-- /.contenedor_modulo -->
 

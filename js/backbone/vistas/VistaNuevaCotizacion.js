@@ -160,7 +160,7 @@ app.VistaTrServ = app.VistaTrServicio.extend({
 
 
 app.VistaNuevaCotizacion = Backbone.View.extend({
-	el : '.contenedor_principal_modulos',
+	el : '#contenedor_principal_modulos',
 
 	events : {
 		/*Descomentar si se requiere al representante en la,

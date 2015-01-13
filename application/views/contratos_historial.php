@@ -45,9 +45,12 @@
 			</div>
 		</section>
 		<section id="section_actualizar">
-			<button type="button" class="btn btn-default btn_toggle">Regresar</button>
-			<form id="formPrincipal">
-		   	</form>
+			<div class="container">
+				<br>
+				<button type="button" class="btn btn-default btn_toggle">Regresar</button>
+				<form id="formPrincipal">
+			   	</form>
+			</div>
 		</section><!-- /.row -->
 	</section><!-- /.contenedor_principal_modulos -->
 </div><!-- /.contenedor_modulo -->

@@ -1,66 +1,65 @@
-<section class="container-fluid contenedor_principal_modulos">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-lg-10 col-md-9 col-xs-8">
-					<h3>Datos básicos</h3>
-					<hr>
-				</div>
-				<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
-					<h3 id="h4_folio"></h3>
-					<hr>
-				</div>
+<div id="contenedor_principal_modulos">
+	<section class="container">
+		<div class="row">
+			<div class="col-lg-10 col-md-9 col-xs-8">
+				<h3>Datos básicos</h3>
+				<hr>
 			</div>
-			<form id="formPrincipal">
-				
-			</form>
+			<div class="col-lg-2 col-md-3 col-xs-4" style="text-align:center;">
+				<h3 id="h4_folio"></h3>
+				<hr>
+			</div>
 		</div>
-	</div>
-	<div class="modal fade" id="modal-newClient">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title">Registro rápido de <b>prospecto</b></h4>
-				</div>
-				<form id="form-newClient" role="form">
-					<input type="hidden" name="tipoCliente" value="prospecto">
-					<input type="hidden" name="foto" value="img/sinfoto.png">
-					<div class="modal-body">
-						<p>
-							<div class="form-group">
-								<label for="nombreC">Nombre comercial <span class="label label-info">Requerido</span></label>
-								<input type="text" class="form-control" id="nombreC" name="nombreComercial" onkeyup="textoObligatorio(this)" placeholder="Nombre comercial">
-							</div>
-							<div class="form-group">
-								<label for="email">Email</label>
-								<input type="text" class="form-control" id="email" name="email" onkeyup="validarEmail(this)" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<label for="telefono">Teléfono (de 10 a 20 dígitos)</label>
-								<div class="row">
-									<input type="hidden" name="tabla" value="clientes">
-									<div class="col-xs-9">
-										<input type="text" class="form-control" id="telefono" name="numero" onkeyup="validarTelefono(this)" placeholder="Teléfono">
-									</div>
-									<div class="col-xs-3">
-										<select class="form-control" name="tipo">
-											<option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
-										</select>
+		<form id="formPrincipal">
+			
+		</form>
+		<div class="modal fade" id="modal-newClient">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">Registro rápido de <b>prospecto</b></h4>
+					</div>
+					<form id="form-newClient" role="form">
+						<input type="hidden" name="tipoCliente" value="prospecto">
+						<input type="hidden" name="foto" value="img/sinfoto.png">
+						<div class="modal-body">
+							<p>
+								<div class="form-group">
+									<label for="nombreC">Nombre comercial <span class="label label-info">Requerido</span></label>
+									<input type="text" class="form-control" id="nombreC" name="nombreComercial" onkeyup="textoObligatorio(this)" placeholder="Nombre comercial">
+								</div>
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="text" class="form-control" id="email" name="email" onkeyup="validarEmail(this)" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label for="telefono">Teléfono (de 10 a 20 dígitos)</label>
+									<div class="row">
+										<input type="hidden" name="tabla" value="clientes">
+										<div class="col-xs-9">
+											<input type="text" class="form-control" id="telefono" name="numero" onkeyup="validarTelefono(this)" placeholder="Teléfono">
+										</div>
+										<div class="col-xs-3">
+											<select class="form-control" name="tipo">
+												<option value="No definido" selected style="display:none;">Tipo</option><option value="Casa">Casa</option><option value="Fax">Fax</option><option value="Movil">Movil</option><option value="Oficina">Oficina</option><option value="Personal">Personal</option><option value="Trabajo">Trabajo</option><option value="Otro">Otro</option>
+											</select>
+										</div>
 									</div>
 								</div>
-							</div>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" id="button_cancelClient" data-dismiss="modal">Cerrar</button>
-						<button type="submit" class="btn btn-primary" id="button_saveClient">Guardar</button>
-					</div>
-				</form>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-</section>
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" id="button_cancelClient" data-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary" id="button_saveClient">Guardar</button>
+						</div>
+					</form>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</section>
+</div>
+	
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">
 			<%if(typeof eliminar != 'undefined'){%>

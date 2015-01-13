@@ -1,7 +1,9 @@
-	<section class="container-fluid contenedor_principal_modulos">
-		<form id="formPrincipal">
-		</form>
-	</section><!-- /.contenedor_principal_modulos -->            
+	<section id="contenedor_principal_modulos">
+		<div class="container">
+			<form id="formPrincipal">
+			</form>
+		</div>
+	</section><!-- /#contenedor_principal_modulos -->            
 </div><!-- /.contenedor_modulo -->
 
 
