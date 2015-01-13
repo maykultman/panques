@@ -133,8 +133,15 @@ display: inline-block;
 	box-shadow: inset 0 1px 0 #fff, inset 0 0 40px rgba(0,0,0,0.05), 0 0 6px rgba(0,0,0,0.1);
 	text-align: center;
 	width: 100%;
+	position: relative;
 }
-
+hr{
+	width: 98%;
+	margin-left: 1%;
+}
+.alto{
+	height: 339px;
+}
 .destroyb
 { 
 	background: #5FC7CD;

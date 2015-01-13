@@ -1,12 +1,11 @@
-<section id="consultaDeUsuarios">
-    <label><b id="cantidadDeUsuarios"></b></label>
+<section id="consultaDeUsuarios" style="padding:0% 2%;">
+    <label style="padding:0% 2%;"><b id="cantidadDeUsuarios"></b></label>
 	<hr style="margin-top: 0px;">
-	<div class="panel-group" id="accordion">
+	<div class="panel-group" id="accordion" >
  		<!-- En Esta sección se renderiza la vista de usuario -->
 	</div>
 </section>
 
-</section>	
 </div> 	<!-- Div General-->
 
 <script type="text/plantilla" id="usuario">

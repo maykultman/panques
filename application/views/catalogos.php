@@ -86,8 +86,8 @@
 			</div>
 		</nav>	  
     </section>
-    <section class="contenedor_principal_modulos"> 
-
+    <section id="contenedor_principal_modulos" class="container"> 
+		<div class="row">
 <script type="text/javascript">
 $('#pboton').click(function(){	$('ul.nav-pills').slideToggle('fast');	});
 </script>

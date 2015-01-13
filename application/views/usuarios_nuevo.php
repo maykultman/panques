@@ -5,7 +5,7 @@
 		width: 100px;
    }
    </style>
-   <section id="datosUsuario"  class="row">
+   <section id="datosUsuario"  style="padding: 0% 2%; margin-bottom:4%;">
 		<h3 style="margin-bottom:-10px;">Nuevo Usuario</h3>
 		<hr>
 		<div class="col-md-5">			    

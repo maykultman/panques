@@ -1,10 +1,9 @@
 
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">
-    <div class="container-fluid">
-    		<div class="row">
-	    	<h3 class="titulo">Perfiles</h3>
-	    	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target="#nuevop">Nuevo Perfil
-			</button>
+      	<h3 class="titulo">Perfiles</h3>
+	   	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target="#nuevop">Nuevo Perfil
+		</button>
+		<hr style="margin-top: 0px !important">
 			 <!-- Modal NUEVO PERFIL-->
             <div class="modal fade" id="nuevop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -38,7 +37,7 @@
 		            <!-- /.modal-content -->
 		        </div><!-- /.modal-dialog -->
 	        </div><!-- /.modal -->
-			<hr style="margin-top: 0px !important">
+			
 
 			<div id="perfiles"><!-- EN ESTA SECCION SE UBICA LA LISTA DE PERFILES --></div> 	              
             
