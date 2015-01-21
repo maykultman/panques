@@ -53,9 +53,19 @@ app.VistaCatalogoRol = Backbone.View.extend({
 		};//..if elemento.keyCode
 	},
 
-	eliminar : function()
+	eliminar : function(e)
 	{
-		this.model.destroy(); //...Destruye un modelo de la lista de roles...
+		var isuser = $(e.currentTarget).data('set');		
+		var self = this;
+		if(isuser==1)
+		{
+			confirmar('<b>El rol '+this.model.get('nombre')+' no se puede eliminar esta siendo utilizado</b>', 
+						function () {}, function () {});
+		}else{
+			confirmar('¿Desea eliminar a este empleado?', function(){
+				//self.model.destroy();
+			},function(){});
+		}
 	}
 
 });
@@ -75,7 +85,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 	initialize : function ()
 	{
 		/* Inicializamos la tabla donde se listaran los roles*/
-        this.$scroll_roles = this.$('#scroll_roles');
+        this.$scroll_roles = this.$('#contenidotbody');
         /*...Una vez lista la tabla le cargamos la lista de roles...*/
         this.cargarRoles();
         this.listenTo( app.coleccionRoles, 'add',   this.cargarRol );
@@ -98,20 +108,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 
 	validarCampo : function(e)
     {
-        key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        especiales = "8-37-39-46";
-        tecla_especial = false
-        for(var i in especiales){
-            if(key == especiales[i]){
-                tecla_especial = true;
-                break;
-            }
-        }
-        if(letras.indexOf(tecla)==-1 && !tecla_especial){
-                return false;
-        }
+        return validarNombre(e);
     },
 
 	buscarRol : function (elemento)
@@ -141,8 +138,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 		 $('#registro_rol')[0].reset();
 		if(modeloRol.nombre)
 		{
-			Backbone.emulateHTTP = true;
-			Backbone.emulateJSON = true;
+			globaltrue();//vease en el archivo funcionescrm.js
 			app.coleccionRoles.create
 			(
 				modeloRol,
@@ -156,20 +152,17 @@ app.VistaNuevoRol = Backbone.View.extend({
 					}
 				}
 			);
-			Backbone.emulateHTTP = false;
-			Backbone.emulateJSON = false;
+			globalfalse();//vease en el archivo funcionescrm.js			
 		}
 		evento.preventDefault();
 	},
 
-	cargarRol : function (rol)
-	{
-		var vistaRol = new app.VistaCatalogoRol({model : rol});
-		this.$scroll_roles.append(vistaRol.render().el);
-	},
 	cargarRoles : function ()
-	{
-		app.coleccionRoles.each(this.cargarRol, this);
+	{	
+		var self=this;
+		app.coleccionRoles.each(function(rol){
+			self.$scroll_roles.append(new app.VistaCatalogoRol({model:rol}).render().el);
+		},this);
 	}
 });
 

@@ -12,12 +12,12 @@
 			<form id="registroUsuario">	 		
 			   	<label class="btn btn-default fileinput-button">
 			    <span class="icon-uniF580"></span><span> Foto</span>
-			    <input type="file" id="fotou" name="logoUsuario">			                    				               
+			    <input type="file" id="fotou" data-url="<?=base_url()?>" name="logoUsuario">			                    				               
 			    </label> 
 			  	<img id="direccion" alt="Mi Foto" class="img-thumbnail" width="100">
 				    	
 			   	<br><br>		
-			  	<select id="idempleado" class="selectized" placeholder="Buscar Empleado" name="idempleado" style="width:369px; height:34px;">
+			  	<select id="idempleado" data-url="<?=base_url()?>" class="selectized" placeholder="Buscar Empleado" name="idempleado" style="width:369px; height:34px;">
 			  	</select> <br>
 			  	<select id="idperfil" name="idperfil" class="form-control ancho_campos">
 			  	<!-- Lista de Opciones de perfil  -->						  

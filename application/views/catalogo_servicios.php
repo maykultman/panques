@@ -1,7 +1,6 @@
-		<?=	link_tag('css/estilos_catalogo_servicios.css').
-			link_tag('css/theme.default.css');
+		<?=link_tag('css/theme.default.css');
 		?>
-		<section id="catalogo_servicio">			
+		<section id="catalogo_servicio" class="container-fluid">			
 			<h3>Nuevo Servicio</h3>
 			<hr><br>
 			<form id="formServicio">
@@ -25,8 +24,8 @@
 			</form><br>
 			<h3>Servicios</h3>
 			<hr><br>
-			<div  id="" class="wrapper">	
-				<table id="" class="tablesorter table-striped">
+			<div class="wrapper">	
+				<table class="table tablesorter table-striped">
 					<thead>
 						<tr>
 							<th class="sorter-false">Todos<input type="checkbox" class="todos"></th>
@@ -41,7 +40,8 @@
 					<tbody class="tbody-servicios">
 					</tbody>					
 				</table>
-			</div><br>
+			</div>
+			<br>
 			<button id="eliminar"  type="button" class="btn btn-danger">  Eliminar varios </button>			
 		</section>
     </section>
@@ -57,7 +57,7 @@
 	<!-- <td> <label class="oculto2 visible2"><%- masiva %> </label><input type="text" name="masiva" value="<%- masiva %>" class="oculto2"> -->
 	<td class="icon-operaciones">
 		<div >
-		<span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+		<span class="icon-trash eliminar2"   data-set="<%-set%>" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
 		<span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
 		</div>
 	</td>

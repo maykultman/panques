@@ -142,6 +142,10 @@ class Escritorio extends REST {
 			{
 				$this->formato();
 			}
+			if($this->ruta()==='configuracion')
+			{
+				$this->configuracion();				
+			}
 		}
 		else
 		{
@@ -149,7 +153,6 @@ class Escritorio extends REST {
 		}
 	}
 	
-
 	public function pdf()
 	{ 	 
 		$this->load->view('pruebapdf');
@@ -375,7 +378,9 @@ class Escritorio extends REST {
 	}
 
 	public function configuracion(){
-		$this->area_Estatica('configuracion');
+		
+		$this->area_Estatica($this->ruta());		
+		// $this->load->view($this->ruta());
 	}
 
 }//FIN DE LA CLASE...

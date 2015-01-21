@@ -43,6 +43,7 @@
 	padding: 0%;
 }
 </style>
+<?=link_tag('css/estilos_catalogo_servicios.css')?>
 <div class="contenedor_modulo">  
 	<section>
 	   <h1 id="titulo_del_modulo"><label>Catálogos</label></h1>

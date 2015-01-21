@@ -1,8 +1,7 @@
 <?=link_tag('css/estilo_dashboard_gustavo.css').
 	link_tag('css/theme.default.css');?>
 <div class="contenedor_modulo">
-	<section style="display: block; position: fixed; z-index: 1; width: 100%;" >
-		 <!--  <h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 1; width: 100%;"> -->
+	<section style="display: block; position: fixed; z-index: 1; width: 100%;" >		 
 	   <h1 id="titulo_del_modulo" ><label>Escritorio</label></h1>
 	   <nav>
 			<ul id="menu_modulo" class="nav nav-pills">
@@ -11,7 +10,7 @@
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-friends"></span>
 	              	   </div>
-	                   dashboard 1
+	                   dashboard 13
 	                </a>
 	            </li>		  
 				<li>

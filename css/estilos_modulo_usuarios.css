@@ -105,7 +105,7 @@ display: inline-block;
 }
 
 .ocultoR{	display: none;	}
-.visibleR{	display: block;	}
+.visibleR{	display: block; z-index: 1;	}
 
 .ocultarform{	display: none;	}
 .mostrarform{	display: block;	}
@@ -139,9 +139,21 @@ hr{
 	width: 98%;
 	margin-left: 1%;
 }
-.alto{
-	height: 339px;
+@media(min-width: 992px){
+	.alto{
+		height: 339px;
+	}	
 }
+@media(max-width: 991px){
+	.edit{
+		top: 97.4%;
+	}
+	
+	.alto{
+		height:410px!important;
+	}
+}
+
 .destroyb
 { 
 	background: #5FC7CD;

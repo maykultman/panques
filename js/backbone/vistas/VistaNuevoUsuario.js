@@ -7,13 +7,26 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	events : 
 	{
 		'click #guardar'   		: 'guardar',			
-		'keypress #empleado'	: 'soloLetras',
+		'keypress .has-options input'	: 'soloLetras',
 		'click .tohead'    		: 'resize',
 		'change #idperfil' 		: 'mispermisos',
 		'click .todos' 			: 'mark',
 		'change #idpermisos' 	: 'marcarTodos',
 		'click .pchek' 			: 'seleccionachek',
-		'change #fotou' : 'obtenerFoto1'
+		'change #fotou' : 'obtenerFoto1',
+		'change #idempleado' : 'foto'
+	},
+	foto : function(e)
+	{
+		var id = $(e.currentTarget).val();		
+		var base = $("#idempleado").data('url');
+		var foto = app.coleccionEmpleados.findWhere({'id': id});
+		var img='';
+		if(foto)
+		{
+			img = foto.get('foto');
+		}		
+		this.$("#direccion").attr('src', base+img);
 	},
 	mark : function(e)
 	{
@@ -32,7 +45,8 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	obtenerFoto1 : function(e)
 	{
-		obtenerFoto2(e, 'fotou');
+		this.$("#direccion").removeAttr('src');
+		obtenerFoto2(e, 'fotou', 'direccion');
 	},
 	initialize : function ()
 	{	
@@ -58,7 +72,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	selectEmpleados : function()
     {
-    	var list = '<% _.each(empleados, function(empleado) { %> <option disabled id="<%- empleado.id %>" value="<%- empleado.id %>"><%- empleado.nombre %></option> <% }); %>';
+    	var list = '<option disabled>Seleccione un empleado</option><% _.each(empleados, function(empleado) { %> <option disabled id="<%- empleado.id %>" value="<%- empleado.id %>"><%- empleado.nombre %></option> <% }); %>';
 		this.$('#idempleado').append(_.template(list)
 		({ empleados : app.coleccionEmpleados.toJSON() }));
 		
@@ -131,9 +145,15 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	guardar	 : function ()
 	{	
 		/*--- si el campo foto del formulario tiene una url de carpeta que contenga un archivo img entonces 
-			  invocamos a la función urlFoto, y le enviamos de parametro formData---*/
-		var foto = ( this.$('#fotou').val() ) ? this.urlFoto( new FormData( $("#registroUsuario")[0]) ) : 'img/sinfoto.png';
-		
+			  invocamos a la función urlFoto, y le enviamos de parametro formData---*/		
+		if( this.$('#fotou').val() )
+		{
+			form = new FormData( this.$("#registro")[0]);
+			empleado.foto = urlFotoCatalgos(form, this.$('#fotou').data('url') );
+		} 
+		else{
+			empleado.foto = 'img/sinfoto.png';
+		}
 		/*-- Si el usuario es un empleado se le asigna su idempleado en caso de que sea un usuario que no es empleado su id=0--*/
 		var ide = ($("#idempleado").val()) ? $("#idempleado").val() : 0;
 		
@@ -149,8 +169,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		
 		$('#registroUsuario')[0].reset();
 
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
+		globaltrue();//vease en el archivo funcionescrm.js|		
 		app.coleccionUsuarios.create
 		(
 			modeloUsuario,
@@ -162,49 +181,13 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 				}
 			}
 		);
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
+		globalfalse();//vease en el archivo funcionescrm.js			|		
 		
 	}, /*... Fin de la función guardar ...*/
 
-	// -----obtenerFoto------------------------------- 
-	urlFoto	: function (formData) 
-	{		
-        //hacemos la petición ajax  
-        var resp = $.ajax({
-            url: 'http://crmqualium.com/api_foto',
-            type: 'POST',
-            async:false,
-            //datos del formulario
-            data: formData,
-            //necesario para subir archivos via ajax
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-
-        return jQuery.parseJSON(resp.responseText);
-    },
-
-    soloLetras : function(e)
+	soloLetras : function(e)
     {
-        key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        especiales = "8-37-39-46";
-
-        tecla_especial = false
-        for(var i in especiales)
-        {
-            if(key == especiales[i])
-            {
-                tecla_especial = true;
-                break;
-            }
-        }
-        if(letras.indexOf(tecla)==-1 && !tecla_especial){
-             return false;
-        }
+        return validarNombre(e);
     }
 
 });

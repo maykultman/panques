@@ -5,3 +5,8 @@
 #descripcion{	width: 100% !important;		height: 85px;	}
 
 input{	width: 100% !important;	}
+
+ #contenidotbody td{
+ 	position: relative;
+	height: 42px;
+ }

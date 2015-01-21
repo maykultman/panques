@@ -7,7 +7,8 @@ app.VistaCatalogoPuesto = Backbone.View.extend({
 	events : {	
 		'click     .icon-edit'  : 'habilitarEdicion', //..Habilita el input para la edición del rol...
 		'keypress   #epuesto'   : 'guardarEdicion',	 //..Guarda la edición del campo...
-		'click     .icon-trash' : 'eliminar'		 //..Elimina un miembro de la lista de roles..
+		'click     .icon-trash' : 'eliminar',		 //..Elimina un miembro de la lista de roles..
+		'glyphicon-floppy-disk' : 'habilitarEdicion'
    },
 
 	initialize : function ()
@@ -21,10 +22,10 @@ app.VistaCatalogoPuesto = Backbone.View.extend({
 		return this;
 	},
 
-	habilitarEdicion : function()
+	habilitarEdicion : function(e)
 	{	//..Cambia el class ha visible al campo para editar el rol
 		this.$el.children().children('label').toggleClass('ocultoR');
-		this.$el.children().children('input').toggleClass('visibleR');
+		this.$el.children().children('input').toggleClass('visibleR');		
 	},
 
 	guardarEdicion : function(elemento)
@@ -55,10 +56,19 @@ app.VistaCatalogoPuesto = Backbone.View.extend({
 		};//..if elemento.keyCode
 	},
 
-	eliminar : function()
+	eliminar : function(e)
 	{
-		// console.log(this.model);
-		this.model.destroy(); //...Destruye un modelo de la lista de roles...
+		var set = $(e.currentTarget).data('set');		
+		var self = this;
+		if(set==1)
+		{
+			confirmar('<b>No puede eliminar este puesto esta siendo utilizado</b>', 
+						function () {}, function () {});
+		}else{
+			confirmar('¿Desea eliminar a este puesto?', function(){
+				self.model.destroy();
+			},function(){});
+		}
 	}
 
 });
@@ -68,8 +78,8 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 
 	events : {
 		'click     #guardar'       : 'guardar',   //...Guardamos el Nuevo rol....
-		'keypress  #buscar_puesto' : 'buscarPuesto', //...Para hacer una busqueda en la lista roles...
-		'keyup     #buscar_puesto' : 'buscarPuesto', //...Al soltar una tecla llamamos a la función buscarRol...		
+		// 'keypress  #buscar_puesto' : 'buscarPuesto', //...Para hacer una busqueda en la lista roles...
+		// 'keyup     #buscar_puesto' : 'buscarPuesto', //...Al soltar una tecla llamamos a la función buscarRol...		
 		'keypress  #puesto'		   : 'validarCampo',
 		'keypress  #buscar_puesto' : 'validarCampo'
 	},
@@ -77,7 +87,7 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 	initialize : function ()
 	{
 		/* Inicializamos la tabla donde se listaran los roles*/
-        this.$scroll_puestos = this.$('#scroll_puestos');
+        this.$scroll_puestos = this.$('#contenidotbody');
         /*...Una vez lista la tabla le cargamos la lista de roles...*/
         this.cargarPuestos();
         this.listenTo( app.coleccionPuestos, 'add',   this.cargarPuesto );
@@ -100,48 +110,35 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 
 	validarCampo : function(e)
     {
-        key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        especiales = "8-37-39-46";
-        tecla_especial = false
-        for(var i in especiales){
-            if(key == especiales[i]){
-                tecla_especial = true;
-                break;
-            }
-        }
-        if(letras.indexOf(tecla)==-1 && !tecla_especial){
-                return false;
-        }
+        return validarNombre(e);
     },
 
-	buscarPuesto : function (elemento)
-	{
-		var buscando = $(elemento.currentTarget).val();
-		if(elemento.keyCode===8)
-		{			
-			app.coleccionPuestos.fetch({
-				reset:true, data:{nombre: buscando}
-			});
-		}
-		app.coleccionPuestos.fetch({
-			reset:true, data:{nombre: buscando}
-		});
+	// buscarPuesto : function (elemento)
+	// {
+	// 	var buscando = $(elemento.currentTarget).val();
+	// 	if(elemento.keyCode===8)
+	// 	{			
+	// 		app.coleccionPuestos.fetch({
+	// 			reset:true, data:{nombre: buscando}
+	// 		});
+	// 	}
+	// 	app.coleccionPuestos.fetch({
+	// 		reset:true, data:{nombre: buscando}
+	// 	});
 
-		this.sinCoincidencias();
+	// 	this.sinCoincidencias();
 
-		this.$scroll_puestos.html('');
-		this.cargarPuestos();	
-	},
+	// 	this.$scroll_puestos.html('');
+	// 	this.cargarPuestos();	
+	// },
 
-	sinCoincidencias	: function () {
-		if (app.coleccionPuestos.length == 0) {
-			app.coleccionPuestos.fetch({
-				reset:true, data:{nombre: ''}
-			});
-		};
-	},
+	// sinCoincidencias	: function () {
+	// 	if (app.coleccionPuestos.length == 0) {
+	// 		app.coleccionPuestos.fetch({
+	// 			reset:true, data:{nombre: ''}
+	// 		});
+	// 	};
+	// },
 	
 	guardar : function(evento)
 	{		
@@ -150,8 +147,7 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 		 $('#registroPuesto')[0].reset();
 		if(modeloPuesto.nombre)
 		{
-			Backbone.emulateHTTP = true;
-			Backbone.emulateJSON = true;		
+			globaltrue();//vease en el archivo funcionescrm.js		
 			app.coleccionPuestos.create
 			(
 				modeloPuesto,
@@ -165,20 +161,17 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 					}
 				}
 			);
-			Backbone.emulateHTTP = false;
-			Backbone.emulateJSON = false;
+			globalfalse();//vease en el archivo funcionescrm.js	
 		}
 		evento.preventDefault();
 	},
 
-	cargarPuesto : function (puesto)
-	{
-		var vistaPuesto = new app.VistaCatalogoPuesto({model : puesto});		
-		this.$scroll_puestos.append(vistaPuesto.render().el);
-	},
 	cargarPuestos : function ()
 	{	
-		app.coleccionPuestos.each(this.cargarPuesto, this);
+		var self=this;
+		app.coleccionPuestos.each(function(puesto){
+			self.$scroll_puestos.append(new app.VistaCatalogoPuesto({model:puesto}).render().el);
+		},this);
 	}
 });
 

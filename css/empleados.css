@@ -1,0 +1,142 @@
+article{
+	overflow: hidden;
+}
+.fulls
+{		 
+	margin-top: 1.8%;
+	background: #fff;
+	box-shadow: inset 0 1px 0 #fff, inset 0 0 40px rgba(0,0,0,0.05), 0 0 6px rgba(0,0,0,0.1);
+	-webkit-transform: translateY(-100%);
+	-moz-transform: translateY(-100%);
+	-ms-transform: translateY(-100%);
+	-o-transform: translateY(-100%);
+	transform: translateY(-100%);
+}
+
+.edit{
+	top: 97%; 
+	z-index: 101;	
+	height: 99%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	border-radius: 4px;
+	text-align: left;
+	padding: 15% 0% 0%;	
+	display: block;	
+}
+.vendrs{
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	-o-transition: .5s;
+	transition: .5s;
+}
+.ed{
+	display: none;
+}
+.edb{
+	display: block;
+}
+.glyphicon-remove{ 
+	position: absolute;
+	right: 5%;
+	top: 5%;
+	cursor: pointer;
+}
+
+#direccion{
+	border-radius: 2px;
+}
+.modal-footer{ text-align: center!important;}
+
+.fotoe
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	width: 100%;
+	height: 70%;
+	overflow: hidden;
+	background: #444;
+}
+.saveUp{
+	position: absolute;
+	bottom: 0;
+	right: 10px;
+	width: 55px;
+	opacity: 0;	
+}
+
+.saveUp i{
+	color: #FFFFFF;
+	cursor: pointer;
+	font-size: 18px;
+	padding: 5%;
+	border-radius: 3px;
+	background: rgba(6, 6, 6, 0.45);
+	float: left;
+	margin: 0 2%;		
+}
+.alto:hover .saveUp{		
+		opacity: 1;		
+}
+
+img{
+	width: 100%;
+	padding: 0px;
+	border: none;
+	border-radius: 1px 1px 0px 0px;
+	opacity: 0.8;			
+}
+.inf{
+	position: absolute;
+	width: 100%;
+	bottom: 50px;		
+}
+@media(max-width: 767px) and (min-width:500px){
+	article{
+		padding: 2% 15%!important;
+	}
+}
+		
+.btn-group{
+	margin-left: 70%;
+}
+.fileinput-button{			
+	display: none;
+}
+.fileinput-button:hover{color:#fff;}
+
+#femp{
+	width: 100%;
+	height: 130px;
+	overflow: hidden;
+	border-radius: 2px;
+	background: #f0f0f0;
+}
+
+#femp:hover .fileinput-button
+{
+	display: block;
+}
+	
+input[type=file]{
+	border: none;
+	/*opacity: 0;*/
+	display: none;
+}
+.icon-circleup{
+	cursor: pointer;
+	font-size: 22px;			
+	position: absolute;
+	left:50%;
+	bottom: 5%;
+	z-index: 100;
+}
+
+.icon-circleup:hover {
+		color: rgb(9, 131, 255);
+	}
+		

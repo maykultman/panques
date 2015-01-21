@@ -1,29 +1,35 @@
-		<section id="catalogo_roles">		    
-		  	<h3>Nuevo Rol</h3>
-		  	<hr>
-		  	<div class="row">
-		  		<form id="registro_rol">	  
-			  		<div class="col-md-11">		  			      						
-						<input id="rol" type="text" name="nombre" class="form-control" placeholder="Nombre del rol" style="width:100%;">			   
-			  		</div>
-			  		<div class="col-md-1">
-						<button id="guardar" type="button" class="btn btn-primary">Guardar</button>			       	    
-			  		</div>
-		  		</form>		  						
-		  	</div>
+<section id="catalogo_roles" class="container-fluid">		    
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+	  		<h3>Nuevo Rol</h3>
+	  		<hr style="margin-left:0; width:100%;"><br>
+			<form id="registro_rol">	  
+		  		<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11" style="padding:0">					   		
+					<input id="rol" type="text" name="nombre" class="form-control" placeholder="Nombre del rol" style="width:100%;">			   
+	  			</div><br class="visible-xs"><br class="visible-xs">
+				<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>			       	    
+				</div>
+			</form>		  						
+		</div>
+		<br><br>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		    <h3>Roles</h3>
-		  	<hr>	       
+		  	<hr style="margin-left:0; width:100%;">	       
 	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search">
 	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span><br>
+	        <br>
 	        <div class="panel panel-primary" >		     
 		      <div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
 		        <table class="table table-hover" style="margin-bottom: 0px !important">
-    				<tbody id="scroll_roles"></tbody>
+    				<tbody id="contenidotbody"></tbody>
 				</table>
 		      </div>
-		    </div>            
-		</section>
+		    </div>
+		</div> 
+	</div>           
 	</section>
+</section>
 <div>
 
 <?=
@@ -38,10 +44,10 @@
 <script type = "text/plantilla" id="listaRoles">	
 	<td>			
 		<label name="<%- nombre %>"  class="visibleR"><%- nombre %></label>
-		<input id="erol" type="text" class="valor ocultoR" value="<%- nombre %>">
+		<input id="erol" type="text" class="form-control ocultoR" value="<%- nombre %>">
 	</td>
 	<td class="icon-operaciones text-right">		
-		<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
+		<span class="icon-trash" data-toggle="tooltip"  title="Eliminar" data-set="<%-asignado%>"></span>
 		<span class="icon-edit"  data-toggle="tooltip"  title="Editar"></span>					
 	</td>
 

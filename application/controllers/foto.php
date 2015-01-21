@@ -60,8 +60,8 @@ class  Foto extends REST {
             $config['source_image'] = $destino;
             $config['maintain_ratio'] = TRUE;
 
-            $config['width']    = 150;
-            $config['height']   = 150;
+            $config['width']    = 350;
+            $config['height']   = 250;
 
             $this->load->library('image_lib', $config); 
 

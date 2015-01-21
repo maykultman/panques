@@ -219,6 +219,43 @@ function urlFoto () {
     };
 };
 
+// funcion llamada desde la vista nuevo usuario y consulta usuario....
+function jsonphone(modelo)
+{
+    var phones='';
+    if(modelo.movil)
+    {
+        phones += '{"movil":"'+modelo.movil+'",';
+    }
+    else{
+        phones += '{"movil":"",'; 
+    }
+    if(modelo.telefono)
+    {
+        phones +='"casa":"'+modelo.telefono+'"}';
+    }else{
+        phones += '"casa":""}';
+    }   
+    return phones;
+}
+
+function urlFotoCatalgos(formData,destino)
+{
+    //hacemos la petición ajax  
+    var resp = $.ajax({
+        url: destino,
+        type: 'POST',
+        async:false,
+        //datos del formulario
+        data: formData,
+        //necesario para subir archivos via ajax
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
+    return jQuery.parseJSON(resp.responseText);
+}
 /*Cálculo de fechas*/
 function calcularDuracion (fechainicio,fechafinal) {
     var valorFechaInicio = fechainicio.valueOf(),
@@ -261,17 +298,16 @@ function select_Perfil(id)
     this.$('#idperfil'+id).append(_.template(list),({ perfiles : app.coleccionPerfiles.toJSON() }));
 }
 
-
 /*Subir foto*/
-function obtenerFoto2 (e, seletor) {
-
+function obtenerFoto2 (e, seletor, contenedor) {
+   
     //queremos que esta variable sea global
     this.fileExtension = "";
     //obtenemos un array con los datos del archivo
     var file = $("#"+seletor)[0].files[0];     
     //obtenemos el nombre del archivo
     var fileName = file.name;
-
+    
     //obtenemos la extensión del archivo
     this.fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
     //obtenemos el tamaño del archivo
@@ -296,8 +332,9 @@ function obtenerFoto2 (e, seletor) {
     }
 
     function fileOnload(e) {
+       
         var result=e.target.result;
-        $('#direccion').attr("src",result);
+        $('#'+contenedor).attr("src",result);
     }
 };
 
@@ -456,3 +493,13 @@ function loadDatepickerRange (selectorFrom, selectorTo) {
 //        cadena=cadena.replace(/^\s+/,'').replace(/\s+$/,'');
 //        return(cadena);
 // }
+function globaltrue()
+{
+    Backbone.emulateHTTP = true;//Variables Globales
+    Backbone.emulateJSON = true;//Variables Globales
+}
+function globalfalse()
+{
+    Backbone.emulateHTTP = false;//Variables Globales
+    Backbone.emulateJSON = false;//Variables Globales
+}

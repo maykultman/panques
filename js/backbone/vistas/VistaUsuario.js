@@ -10,23 +10,27 @@ app.VistaUsuario = Backbone.View.extend({
 		'click button.edit'	    : 'modaledit', // Abre el modal para la edición del usuario
 		'click button.guardar'  : 'editar',	
 		'click .tohead'    		: 'resize',
-		'click .pchek'			: 'seleccionachek',	
-		'click .delete'			: 'delete',
-		// 'change #idperfil'	    : 'getpermisos',
-		// 'click .close' 			: 'editar'
+		'click .pchek'			: 'seleccionachek',	// Seleccionar todos
+		'click .delete'			: 'delete',		
 	},
 
-	render : function (){
-
+	initialize : function()
+	{
+		this.listenTo(this.model, 'destroy', this.remove); 
+	},
+	render : function ()
+	{
 		this.$el.html(this.plantilla(this.model.toJSON()));	
 		return this;
 	},
 
 	seleccionachek : function(e)
 	{
-		$(e.currentTarget).children().trigger('click'); // Al darle click al texto selecciona el checkbox
+		 // Al darle click al texto selecciona el checkbox y activa todos los permisos
+		$(e.currentTarget).children().trigger('click');
 	},
 
+	// Le da animación al icono de cada submodulo
 	resize : function(elemento)
 	{
 		var id = this.$(elemento.currentTarget).parent().children('.conf').attr('id');
@@ -34,6 +38,7 @@ app.VistaUsuario = Backbone.View.extend({
 		rezise(id, spancircle);	
 	},
 
+	// Muestra el select de perfiles.
 	perfil : function()
 	{
 		var list = '<% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
@@ -41,6 +46,7 @@ app.VistaUsuario = Backbone.View.extend({
         html(_.template(list)({ perfiles : app.coleccionPerfiles.toJSON() }));
 	},
 
+	// obtiene los permisos del usuario y activa los checkbox con sus permisos
 	mis_permisos : function(permisos)
 	{		
 		var mod;
@@ -97,8 +103,7 @@ app.VistaUsuario = Backbone.View.extend({
 		// Activamos el primer modulo de la lista.
 		this.$("#moduloss").children(':first-child').addClass('active');	
 
-		submodulos = app.coleccionPermisos.toJSON();
-		// var submodulos = jQuery.parseJSON(this.model.get('idpermisos'));		
+		submodulos = app.coleccionPermisos.toJSON();			
 		// Obtenemos el modal 
 		var delmodal = this.$("#myModal"+this.model.get('id'));
 		
@@ -116,15 +121,15 @@ app.VistaUsuario = Backbone.View.extend({
 			// Ahora pasamos el json a la plantilla donde se mostrarán los submodulos
 			this.$("#submoduloss").append(this.psubmodulos(json));
 		}
-
+		var idpermisos = jQuery.parseJSON(this.model.get('idpermisos'));	
 		// la función mis permisos devuelve los permisos de un determinado perfil
-		// this.mis_permisos( mis_permisos );
 
+		this.mis_permisos( idpermisos );
 		delmodal.on('hidden.bs.modal', function(){
 		 	this.remove();		 	
 		});
 
-		this.modalu.modal({
+		delmodal.modal({
 			keybooard :false,
 			backdrop  :false
 		});
@@ -132,8 +137,9 @@ app.VistaUsuario = Backbone.View.extend({
 	},
 
 	delete : function(e){
+		var self = this;
 		confirmar(	'<b>¿Esta seguro que desea eliminar a este usuario?</b>', 
-					function () {	//self.model.destroy();	
+					function () {	self.model.destroy();	
 					}, 
 					function () {}
 					);	

@@ -9,14 +9,23 @@
 
 		public function create($post)
 		{	
+			var_dump($post); die();
 			$this->db->insert('usuarios', $post);
-            return $this->get($this->db->insert_id());
+            $id = $this->get($this->db->insert_id());
+			die($post['idempleado']);
+            if($post['idempleado'])
+            {
+            	$dato = array('isuser'=>1);
+            	$where = array('id'=>$post['idempleado']);
+            	$this->db->update('empleados', $dato, $where);
+            }
+            return $id;
         }
 
 		public function get($id)
 		{  
 			$reply = $this->where(  $id  );  # Ejecutamos el metodo where...      
-            return $this->db->get  ( 'usuarios' )->$reply();  # Este metodo ejecuta get con y sin ID...
+            return $this->db->get( 'usuarios' )->$reply();  # Este metodo ejecuta get con y sin ID...
 		}		
 
 		public function session($user, $pass)
@@ -47,8 +56,9 @@
 			# Regresa true o false dependiendo de la consulta.
 			return $query;
 		}
-		public function delete_user($id)
+		public function destroy($id)
 		{
+			$this->
 			$query = $this->db->delete('usuarios', array('id' => $id));
 			return $query;
 		}

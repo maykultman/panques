@@ -28,7 +28,7 @@ app.VistaServicio = Backbone.View.extend({
 
 	actualizar	: function (elemento) {
 		if (elemento.keyCode === 13) {
-			var propiedadDelModelo = this.pasarAJson( $(elemento.currentTarget).serializeArray() );
+			var propiedadDelModelo = pasarAJson( $(elemento.currentTarget).serializeArray() );
 
 			this.model.save(
 				propiedadDelModelo, 
@@ -47,27 +47,18 @@ app.VistaServicio = Backbone.View.extend({
 		};
 	},
 
-	eliminar	: function () {
-		this.model.destroy();
-	},
-
-	pasarAJson : function (objSerializado) {
-	    var json = {};
-	    $.each(objSerializado, function () {
-	        if (json[this.name]) {
-	            if (!json[this.name].push) {
-	                json[this.name] = [json[this.name]];
-	            };
-	            json[this.name].push(this.value || '');
-	        } else{
-	            json[this.name] = this.value || '';
-	        };
-	    });
-	    return json;
-	},
-
-	holamundo : function () {
-		alert('Hola');
+	eliminar	: function (e) {
+		var isuser = $(e.currentTarget).data('set');		
+		var self = this;
+		if(isuser==1)
+		{
+			confirmar('<b>El Servico de '+this.model.get('nombre')+' no se puede eliminar esta siendo utilizado</b>', 
+						function () {}, function () {});
+		}else{
+			confirmar('¿Desea eliminar a este empleado?', function(){
+				self.model.destroy();
+			},function(){});
+		}
 	}
 });
 
@@ -98,23 +89,20 @@ app.VistaConsultaServicios = Backbone.View.extend({
 
 	render	: function () {},
 
-	cargarServicio	: function (model) {
-		var vista = new app.VistaServicio( { model:model } );
-		this.$tbody_servicios.append( vista.render().el );
+	cargarServicios : function ()
+	{	
+		var self=this;
+		app.coleccionServicios.each(function(servicio){
+			self.$tbody_servicios.append(new app.VistaServicio({model:servicio}).render().el);
+		},this);
 	},
-
-	cargarServicios	: function () {
-		app.coleccionServicios.each(this.cargarServicio, this);
-	},
-	
 	guardarServicio	: function (elemento) {
 		var modeloServicio = this.obtenerJsonServicio();
 		// console.log(modeloServicio.nombre);
 		 $('#formServicio')[0].reset();		 
 
 		
-		Backbone.emulateHTTP = true; //Variables Globales
-		Backbone.emulateJSON = true; //Variables Globales
+		globaltrue();//vease en el archivo funcionescrm.js		
 		app.coleccionServicios.create(
 			modeloServicio, 
 			{
@@ -135,8 +123,7 @@ app.VistaConsultaServicios = Backbone.View.extend({
 				}
 			}
 		);
-		Backbone.emulateHTTP = false; //Variables Globales
-		Backbone.emulateJSON = false; //Variables Globales
+		globalfalse();//vease en el archivo funcionescrm.js	
        
 		elemento.preventDefault();// para que no recargue la pagina
 

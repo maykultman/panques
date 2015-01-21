@@ -37,7 +37,7 @@
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
-		<a class="anclaMenu" href="#" title="Configuración"><span class="icono icon-uniF00F" style="float:left"></span> <span class="item-text">Configuración</span></a>
+		<a class="anclaMenu" href="configuracion" title="Configuración"><span class="icono icon-uniF00F" style="float:left"></span> <span class="item-text">Configuración</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<li class="item">
