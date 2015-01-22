@@ -1,0 +1,1 @@
+ALTER TABLE `pagos` ADD `status` BOOLEAN NOT NULL AFTER `pago`;

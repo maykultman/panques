@@ -3,7 +3,26 @@ var app = app || {};
 
 /*---------------------------------------------------------------*/
 app.ModeloPago	= Backbone.Model.extend({
-	urlRoot	: 'http://crmqualium.com/api_pagos'
+	urlRoot	: 'http://crmqualium.com/api_pagos',
+	cambiarStatus	: function () {
+		var st;
+		if (this.get('status') == true)
+			st = '0';
+		else
+			st = '1';
+		this.save({
+			status: st
+		},{
+			wait:true, 
+			patch:true,
+			success	:function (exito) {
+				// ok('OK');
+			},
+			error 	:function (error) {
+				error('Error al cambiar el estado del pago, intentelo más tarde');
+			}
+		});
+	},
 });
 var ColeccionPagos= Backbone.Collection.extend({
 	model	: app.ModeloPago,

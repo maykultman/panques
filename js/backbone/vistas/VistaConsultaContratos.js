@@ -23,6 +23,24 @@ app.VistaPago.prototype.modificarPago = function (e) {
 	}, 200);
 };
 
+var Pago = Backbone.View.extend({
+	tagName : 'div',
+	template : _.template( $('#pago').html() ),
+	events:{
+		'change .pagado' : 'conmutar',
+	},
+	initialize : function () {
+		this.listenTo(this.model, 'change', this.render);
+	},
+	render 	: function () {
+		this.$el.html( this.template( this.model.toJSON() ) );
+		return this;
+	},
+	conmutar : function () {
+		this.model.cambiarStatus();
+	}
+});
+
 app.VistaContrato = Backbone.View.extend({
 	tagName : 'tr',
 	events : {
@@ -33,15 +51,22 @@ app.VistaContrato = Backbone.View.extend({
 		'click .span_vistaPrevia'		: 'vistaPrevia',
 		'click .span_papeleraVersion'	: 'cambiarVisibilidadVersion',
 		'click .span_vistaPreviaVersion': 'vistaPreviaVersion',
-		'click .label_statusVersion'	: 'cambiarStatus'
+		'click .label_statusVersion'	: 'cambiarStatus',
+		'click .span_pagos' 			: 'cargarPagos',
 	},
 	initialize : function (){
 		this.listenTo( this.model, 'destroy', this.remove);
 		this.listenTo( this.model, 'change:visibilidad', this.remove);
+
+		
 	},
 	render : function (){
 		this.$el.html(this.plantilla(this.model.toJSON()));
+
+		this.$modalPagos = this.$('.modal-pago .contenedor-pagos');
+
 		this.obtenerVersiones();
+
 		return this;
 	},
 	obtenerVersiones	: function () {
@@ -192,6 +217,15 @@ app.VistaContrato = Backbone.View.extend({
 			model:app.coleccionContratos.get($(e.currentTarget).attr('id'))
 		});
 		vista.vistaPrevia();
+	},
+	cargarPagos 		: function (e) {
+		var pagos = app.coleccionPagos.where({ idcontrato:this.model.get('id') }),
+			vista;
+		this.$modalPagos.html('');
+		for (var i = 0; i < pagos.length; i++) {
+			vista = new Pago({ model:pagos[i] });
+			this.$modalPagos.append( vista.render().el );
+		};
 	}
 });
 

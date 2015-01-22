@@ -33,6 +33,7 @@
 									<th class="sorter-false">creado en</th>
 									<th class="sorter-false">finaliza en</th>
 									<th class="sorter-false">Operaciones</th>
+									<th class="sorter-false"></th>
 								</tr>
 							</thead>					
 							<tbody id="tbody_contratos">
@@ -62,14 +63,14 @@
 		<td>	<%=empleado%>								</td>
 		<td>	<%=folio%>									</td>
 		<td>   $<%=total%>									</td>
-		<td>	<b><%=fechacreacion%></b><br><%= formatearFechaUsuario(new Date(fechacreacion)) %></td>
-		<td>	<b><%=fechafinal%></b><br><%= formatearFechaUsuario(new Date(fechafinal)) %></td>
+		<td>	<b><%= formatearFechaUsuario(new Date(fechacreacion)) %></td>
+		<td>	<b><%= formatearFechaUsuario(new Date(fechafinal)) %></td>
 		<td class="icon-operaciones">
 			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
 			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver contrato"></span>
 			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
 			<span class="icon-redo span_editar" data-toggle="tooltip" data-placement="top" title="Renovar"><input type="hidden" value="<%= id %>"></span>
-			<form>
+			<form><!-- no borrar -->
 				<div class="dropdown">
 					<span class="icon-uniF73E dropdown-toggle versione" id="versiones"		data-toggle="dropdown" data-placement="top" title="Versiones"></span>
 					<ul id="ul-versiones" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="versiones">
@@ -78,9 +79,25 @@
 					</ul>
 				</div>
 			</form>
+			<span class="icon-uniF4E7 span_pagos" data-toggle="modal" data-target=".bs-example-modal-sm<%= id %>" title="Pagos"></span>
+		</td>
+		<td>
+			<div class="modal fade bs-example-modal-sm<%= id %> modal-pago" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h5 class="modal-title">Pagos pendientes y realizados</h5>
+						</div>
+						<div class="modal-body contenedor-pagos">
+							
+						</div>
+					</div>
+				</div>
+			</div>
 		</td>
 	</script>
-	<!-- plantillas para la edicion de contrato -->
+	<!-- plantillas para la edicion de cotizaciones (hacer include's de estas plantillas) -->
 		<script type="text/template" id="tds_servicio">
 			<td style="padding:0px">
 				<label class="label_servicio" for="servicio_<%= id %>"><%= nombre %></label>
@@ -524,6 +541,26 @@
 				<button class="btn btn-default btn_anadirEnunciado" type="button">+</button>
 			</span>
 		</div><!-- /input-group -->
+	</script>
+	<script type="text/template" id="pago">
+		<div class="content-fluid">
+			<%if (status=='0' || status==false) {%>
+				<div class="row">
+			<%} else if (status=='1' || status==true) {%>
+				<div class="row bg-success">
+			<%};%>
+				<div class="col-xs-6"><%= fechaAmigable(new Date(fechapago)) %></div>
+				<div class="col-xs-4">$<%= conComas(Number(pago).toFixed(2)) %></div>
+				<div class="col-xs-2">
+					<%if (status=='0' || status==false) {%>
+						<input type="checkbox" class="pagado">
+					<%} else if (status=='1' || status==true) {%>
+						<input type="checkbox" class="pagado" checked>
+					<%};%>
+				</div>
+			</div>
+		</div>
+			
 	</script>
 
 <?=script_tag('js/backbone/app.js');?>
