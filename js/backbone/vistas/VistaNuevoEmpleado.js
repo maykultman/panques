@@ -163,7 +163,7 @@ app.VistaConsultaEmpleado = Backbone.View.extend({
 
 	initialize : function ()
 	{		
-		this.$divEmpleado = this.$('#empleados'); // Div donde se visualiza los datos del empleado			
+		//this.$divEmpleado = this.$('#empleados'); // Div donde se visualiza los datos del empleado			
 		this.cargarPuestos();
 		this.cargarEmpleados();
 	},
@@ -173,13 +173,15 @@ app.VistaConsultaEmpleado = Backbone.View.extend({
 		var vista;
 		var self=this;
 		var tab;
+		var content;
 		var puestos = app.coleccionPuestos;
+		
 		app.coleccionEmpleados.each(function(empleado){
 			tab = 'p'+empleado.get('puesto');
 			empleado.set({ 'nompuesto' : puestos.findWhere({ 'id':empleado.get('puesto') }).get('nombre') });
-			vista = new app.VistaGetEmpleado({ model : empleado});
-			self.$divEmpleado.find('#'+tab).append(vista.render().el);
-		},this);		
+			vista = new app.VistaGetEmpleado({ model : empleado});			
+			self.$('#empleados #'+tab).append(vista.render().el);			
+		},this);
 	},
 
 	cargarPuestos : function(){
@@ -197,7 +199,7 @@ app.VistaConsultaEmpleado = Backbone.View.extend({
 			active = (i==0) ? 'active' : '';
 			div += '<div id="p'+coleccion[i].id+'" class="tab-pane '+active+'"></div>';
 		}		
-		this.$divEmpleado.append(div);
+		this.$('#empleados').append(div);
 	}
 
 

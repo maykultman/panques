@@ -64,16 +64,22 @@ class Escritorio extends REST {
 				$user  = $this->input->post('user');
 				$pass  = $this->input->post('pass');
 				$query = $this->usuario->session($user, $pass);
-				$perfil = $this->perfil->get($query->idperfil);
+
+
 				if($query == TRUE)
 				{
-					$data = array(
-							'is_logued_in' => TRUE,
-							'id_usuario'   => $query->id,
-							'perfil'	   => $perfil->nombre,
-							'usuario'	   => $query->usuario,
-							'foto'		   => $query->foto
-						);
+					$perfil = $this->perfil->get($query->idperfil);
+					$permisos = json_decode($query->idpermisos, true);
+					//Establecemos el array de permisos.
+					foreach ($permisos as $key=>$mod) {
+						$data[$mod['nombre']] = $mod;
+					}
+					$data['is_logued_in'] = TRUE;
+					$data['id_usuario'] = $query->id;
+					$data['perfil'] = $perfil->nombre;
+					$data['usuario'] = $query->usuario;
+					$data['foto'] = $query->foto;
+					
 					$this->session->set_userdata($data);
 					$this->index();
 				}
@@ -123,12 +129,12 @@ class Escritorio extends REST {
 			}
 			if
 			(   
-				$this->ruta()==='catalogo_servicios'||
-				$this->ruta()==='catalogo_perfiles' ||
-				$this->ruta()==='catalogo_permisos' ||
-				$this->ruta()==='catalogo_empleados'||
-				$this->ruta()==='catalogo_roles'    ||
-				$this->ruta()==='catalogo_puestos'
+				$this->ruta()==='catalogo_Servicios'||
+				$this->ruta()==='catalogo_Perfiles' ||
+				$this->ruta()==='catalogo_Permisos' ||
+				$this->ruta()==='catalogo_Empleados'||
+				$this->ruta()==='catalogo_Roles'    ||
+				$this->ruta()==='catalogo_Puestos'
 			)
 			{
 				$this->catalogos();
@@ -158,46 +164,66 @@ class Escritorio extends REST {
 		$this->load->view('pruebapdf');
 	} 
 	public function dashboard()
-	{ 	 
+	{ 	
+
 		$this->area_Estatica('dashboard_gustavo');
 	} 
 	
+	public function activaCatalogo()
+	{
+		$variable = $this->session->userdata('Catálogos')['submodulos'];
+		$catalogos=array();
+		foreach ($variable as $key => $value) {
+			if(isset($value['permisos']))
+			{
+				$catalogos[] = 'catalogo_'.$value['nombre'];
+			}
+		}			
+		return $catalogos;
+	}
 	public function catalogos()
 	{
 		$this->area_Estatica('catalogos');
 		$this->load->model('Modelo_permisos', 'permisos');
+		$elcatalogo = $this->session->userdata('permisos')[5];
+		$seccion = $this->activaCatalogo();
 		
-		if($this->ruta() == 'catalogo_servicios')
+		
+		if($this->ruta() == 'catalogo_Servicios'&&in_array('catalogo_Servicios', $seccion))
 		{
 			$data['servicios'] = $this->serv->get_s();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_perfiles')
+		if($this->ruta() == 'catalogo_Perfiles'&&in_array('catalogo_Perfiles', $seccion))
 		{
 			$this->load->model('modelo_perfil','perfil');
 			$data['perfiles'] = $this->perfil->get();
 			$data['permisos'] = $this->permisos->get();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_permisos')
+
+		if($this->ruta() == 'catalogo_Permisos'&&in_array('catalogo_Permisos', $seccion))
 		{
 			$data['permisos'] = $this->permisos->get();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_empleados')
+		
+		if($this->ruta() == 'catalogo_Empleados'&&in_array('catalogo_Empleados', $seccion))
 		{
 			$this->load->model('model_puesto', 'puesto');
 			$data['empleados'] = $this->empleado->get();
 			$data['telefonos'] = $this->telefono->get();
 			$data['puestos']   = $this->puesto->get();
-			$this->load->view($this->ruta(), $data);	
+			$this->load->view($this->ruta(), $data);		
 		}
-		if($this->ruta() == 'catalogo_roles')
+
+		
+		if($this->ruta() == 'catalogo_Roles'&&in_array('catalogo_Roles', $seccion))
 		{
 			$data['roles'] = $this->Roles->get();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_puestos')
+		if($this->ruta() == 'catalogo_Puestos'&&in_array('catalogo_Puestos', $seccion))
 		{
 			$this->load->model('model_puesto', 'puesto');
 			$data['puestos']   = $this->puesto->get();
@@ -382,5 +408,16 @@ class Escritorio extends REST {
 		$this->area_Estatica($this->ruta());		
 		// $this->load->view($this->ruta());
 	}
+
+	// public function cargarCatalogo($array)
+	// {
+	// 	foreach ($array as $key=>$valu) {			
+	// 		if(isset($valu['permisos']))
+	// 		{	
+	// 			redirect('escritorio/catalogo_'.$valu['nombre']);
+	// 			break;
+	// 		}
+	// 	}	
+	// }
 
 }//FIN DE LA CLASE...

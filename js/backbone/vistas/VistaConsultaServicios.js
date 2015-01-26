@@ -55,7 +55,7 @@ app.VistaServicio = Backbone.View.extend({
 			confirmar('<b>El Servico de '+this.model.get('nombre')+' no se puede eliminar esta siendo utilizado</b>', 
 						function () {}, function () {});
 		}else{
-			confirmar('¿Desea eliminar a este empleado?', function(){
+			confirmar('¿Desea eliminar este servicio?', function(){
 				self.model.destroy();
 			},function(){});
 		}

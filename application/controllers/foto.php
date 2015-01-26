@@ -30,6 +30,7 @@ class  Foto extends REST {
 
     private function saveLogo($string)
     {
+        // return false;
         $carpeta='img/'.$string.'/';
         # Obtenemos el nombre antigüo de la foto para poder eliminarlo y guardar la nueva
         #$oldImg = $this->ipost(); # con esta función capturamos las variables post...
@@ -44,7 +45,8 @@ class  Foto extends REST {
             # Esta condición se ejecuta cuando el usuario va a actualizar una foto.
             if(array_key_exists('oldFoto', $oldImg))
             {
-                if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
+                // if($oldImg['oldFoto']!= $carpeta.'sinfoto.png')
+                if($oldImg['oldFoto']!= 'img/sinfoto.png')
                 {
                     if(file_exists($oldImg['oldFoto']))
                     {

@@ -91,5 +91,10 @@
     <title></title>
 
 </head>
+<style>
+a:focus{
+    background: none;
+}
+</style>
 <body id="cuerpo">
 

@@ -29,7 +29,7 @@ class  Empleados extends REST {
     }
 
     private function update()
-    {        
+    {   
         # La función put(); Devuelve el array con los campos espicificos para actualizar              
         $query = $this->emp->save($this->id(), $this->put());
              

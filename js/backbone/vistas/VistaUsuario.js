@@ -105,7 +105,7 @@ app.VistaUsuario = Backbone.View.extend({
 
 		submodulos = app.coleccionPermisos.toJSON();			
 		// Obtenemos el modal 
-		var delmodal = this.$("#myModal"+this.model.get('id'));
+		plantedic = this.$("#myModal"+this.model.get('id'));
 		
 		var json={};
 		json.band = 'e';
@@ -125,15 +125,42 @@ app.VistaUsuario = Backbone.View.extend({
 		// la función mis permisos devuelve los permisos de un determinado perfil
 
 		this.mis_permisos( idpermisos );
-		delmodal.on('hidden.bs.modal', function(){
+		plantedic.on('hidden.bs.modal', function(){
 		 	this.remove();		 	
 		});
 
-		delmodal.modal({
+		plantedic.modal({
 			keybooard :false,
 			backdrop  :false
 		});
 		
+	},
+
+	editar : function(e){
+		var usuario={};
+		var form = pasarAJson(this.$('form').serializeArray());	
+		usuario.usuario = form.usuario;
+		if(form.idperfil!=undefined){
+			usuario.idperfil = form.idperfil
+			delete form.idperfil;
+		}
+		delete form.usuario;
+		usuario.idpermisos = jsonpermisos(form);		
+		this.model.save
+		(
+			usuario,
+			{
+				wait:true,
+				patch:true,
+				success: function (exito){
+					alerta('<span class="exito">Edición Guardada con Éxito</span>', function(){});
+				}, 
+				error: function (error){
+					alerta('<span class="error">Ocurrior un error al guardar</span>', function(){});
+				}
+			}
+		);
+		e.preventDefault();
 	},
 
 	delete : function(e){

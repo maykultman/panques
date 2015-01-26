@@ -23,13 +23,12 @@
     $pass = array('name' => 'pass', 'class'=>'password', 'placeholder' => 'Password' );
 ?>
 <div class="page-container">
-    <img src="http://crmqualium.com/img/imglogin/backgrounds/logoq.png" alt="" style="height: 125px; margin-top: -100px;">
-    <!-- <h1>Cliente</h1> -->
+    <img src="<?=base_url()?>img/imglogin/logoq.png" alt="" style="height: 125px; margin-top: -100px;">
     <?=form_open(base_url().'escritorio/login')?>
-        <?=form_input($user)?><p><?=form_error('user')?></p>
-        <?=form_password($pass)?><p><?=form_error('pass')?></p>
+        <?=form_input($user)?><p><br><?=form_error('user')?></p>
+        <?=form_password($pass)?><p><br><?=form_error('pass')?></p>
         <?=form_hidden('token', $token)?>
-        <button type="submit" name="login">Sign me in</button>
+        <button type="submit" name="login">Iniciar Session</button>
         <div class="error"><span>+</span></div>
     <?=form_close()?>
     <p> <?php if($this->session->flashdata('mensaje')){ echo $this->session->flashdata('mensaje'); }?></p>

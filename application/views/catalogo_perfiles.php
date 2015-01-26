@@ -22,7 +22,7 @@
 					        </div><div class="clearfix"></div>
 					        <br>
 					        <div class="todos">
-					        	<input type="checkbox" id="idpermisos" class="btn_marcarTodos">Marcar todos los permisos
+					        	<input type="checkbox" id="idpermisos" class="btn_marcarTodos edperfil">Marcar todos los permisos
 					        </div>
 						    <div class="posiciontab">						      	
 							    <ul id="modulos" class="nav nav-tabs" role="tablist">

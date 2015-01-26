@@ -17,8 +17,7 @@ app.VistaRolPrincipal = Backbone.View.extend({
 	},
 	guardarRol		: function (modelo, callBack) {/**/
 		var esto = this;
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
+		globlatrue();
 		app.coleccionRoles.create(
 			modelo,
 			{
@@ -32,8 +31,7 @@ app.VistaRolPrincipal = Backbone.View.extend({
 				error 	: function (error) {}
 			}
 		);
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
+		globlafalse();
 	}
 });
 

@@ -17,6 +17,7 @@ app.VistaGetEmpleado = Backbone.View.extend({
 	
 	initialize: function(){
 		this.listenTo(this.model, 'destroy', this.remove);
+		var self = this;
 	},
 
 	render:function()
@@ -38,26 +39,37 @@ app.VistaGetEmpleado = Backbone.View.extend({
 
 	updatephoto : function(e)
 	{
-		var foto = this.$('#foto'+this.model.get('id'));
+		var id = this.model.get('id');
+		var foto = this.$('#foto'+id);		
 		var emp;
 		if( foto.val() )
 		{
 			emp = new FormData( this.$("#dateEmp")[0]);
 			emp.foto = urlFotoCatalgos(emp, foto.data('url') );	
-			this.model.save
+			
+			if(emp.foto)
+			{
+				this.model.save
 				(
 					emp, 
 					{
 						wait:true,
 						patch:true,
 						success: function (exito){
-							console.log(exito);
+							self.$('#true'+id).toggleClass('yes');
+							setTimeout(function(){
+							   	$('#true'+id).toggleClass('yes'); 
+							}, 3000);
 						}, 
-						error: function (error){
-							console.log(error);
-						}
+						error: function (error){}
 					}
 				);
+			}else{
+				this.$('#not'+id).toggleClass('yes');
+            	setTimeout(function(){
+                	$('#not'+id).toggleClass('yes'); 
+            	}, 3000);
+			}
 		} 
 	},
 	// Cambia la foto del empleado
@@ -79,23 +91,38 @@ app.VistaGetEmpleado = Backbone.View.extend({
 		this.$('.ed').toggleClass('edb');
 	},
 
-	editar : function(){
-		
+	editar : function()
+	{	
+		// var self = this;
 		var modelo = pasarAJson(this.$('#dateEmp').serializeArray());
 		modelo.telefonos = jsonphone(modelo);		
 		delete modelo.telefono;
 		delete modelo.movil;		
-
 		this.model.save(
 			modelo,
 			{
 				wait:true,
 				patch:true,
-				success:function(exito){
-					alerta('Exito');
+				success:function(exito){					
+
+					self.$('.inf small').html(self.model.get('nompuesto'));										
+					if(modelo.puesto!=undefined)
+					{
+						var puestos = app.coleccionPuestos;	
+						self.model.set({ 'nompuesto' : puestos.findWhere({ 'id':self.model.get('puesto') }).get('nombre') });
+						self.$(".inf b").html(self.model.get('nombre'));
+						var vista = new app.VistaGetEmpleado({ model : self.model});									
+						$('#empleados #p'+modelo.puesto).append(vista.render().el);
+						self.remove();	
+						alerta('Cambios guardados exitosamente se ha removido a la sección del puesto '+self.model.get('nompuesto'), function() {});					
+					}
+					else{
+						alerta('Exito', function() {});	
+					}
+					
 				},
 				error:function(){
-					alerta('error');
+					alerta('error', function() {});
 				}
 			}
 		);
@@ -104,7 +131,7 @@ app.VistaGetEmpleado = Backbone.View.extend({
 	eliminar : function(e)
 	{
 		var isuser = $(e.currentTarget).data('count');		
-		var self = this;
+		// var self = this;
 		if(isuser==1)
 		{
 			confirmar('<b>Este empleado es un usuario del sistema si lo elimina, eliminara sus privilegios</b>', 

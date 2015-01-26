@@ -8,7 +8,7 @@
 		#	$post ['nombre']........$post ['descripcion']
 		
 	  public function create($post) 
-      {   
+      {  
         $this->db->insert('empleados', $post);
         return $this->get($this->db->insert_id());  
       }
@@ -22,6 +22,7 @@
 
       public function save (  $id,  $put ) 
       { 
+         unset($put['oldFoto']); 
         return $this->db->update('empleados', $put, array('id' => $id)  ); 
       }   
       

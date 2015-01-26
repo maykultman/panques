@@ -62,8 +62,8 @@ app.VistaCatalogoRol = Backbone.View.extend({
 			confirmar('<b>El rol '+this.model.get('nombre')+' no se puede eliminar esta siendo utilizado</b>', 
 						function () {}, function () {});
 		}else{
-			confirmar('¿Desea eliminar a este empleado?', function(){
-				//self.model.destroy();
+			confirmar('¿Desea eliminar a este rol?', function(){
+				self.model.destroy();
 			},function(){});
 		}
 	}

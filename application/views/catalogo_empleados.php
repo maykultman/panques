@@ -54,16 +54,32 @@
 	</div>
 </div> 
 </div>  
+<style>
+.yes{
+	-webkit-animation: efectoOpacidad 3s;	
+	opacity: 0;
+	position: absolute;
+	z-index: 1;
+	display: block!important;
+	background: #fff;
+	padding: 1px;
+	border-radius: 50%;
+}
+.icon-uniF479{display: none; color: rgb(8, 142, 239);}
+.icon-uniF478{display: none; color: #f33}
+</style>
 
 <script type="text/plantilla" id="empleado">
  	<%  
  		var placet = (telefono=='') ? 'Sin Teléfono':'';
  		var placec = (movil=='') ? 'Sin Celular':'';
- 	%>
-	<div class="user-wrapper alto">
+ 	%> 	
+	<div class="user-wrapper alto">	
+	<i id="true<%-id%>" class="icon-uniF479"></i>
+	<i id="not<%-id%>" class="icon-uniF478"></i>
 	<form id="dateEmp">
 		<div class="fotoe">
-			<img id="direccion<%-id%>" class="img-circle2" src="<?=base_url()?>/<%-foto%>" alt="Imagen-Usuario">
+			<img id="direccion<%-id%>" class="img-circle2" src="<?=base_url()?><%-foto%>" alt="Imagen-Usuario">
 			<input type="hidden" name="oldFoto" value="<%-foto%>">
 			<div class="vendrs saveUp">
 			<i class="update glyphicon glyphicon-floppy-disk"></i>
@@ -74,15 +90,15 @@
 			</div>			
 		</div>
 		<div class="inf">
-		<b><%-nombre%></b><br>
-		<small><%-nompuesto%></small><br>
+			<b><%-nombre%></b><br>
+			<small><%-nompuesto%></small><br>
 		</div>
 		<i class="vendrs icon-circleup" data-toggle="tooltip" data-placement="bottom" title="Click para ver el contenido"></i>
 		<div class="vendrs edit">
 			<div class="ed">
 				<i class="glyphicon glyphicon-remove"></i>
 				
-				<label class="col-md-3 hidden-xs hidden-sm">Nombre</label>	<div class="col-md-9"><input type="text" class="form-control" name="nombre" value="<%-nombre%>"></div>
+				<label class="col-md-3 hidden-xs hidden-sm">Nombre</label>	<div class="col-md-9"><input type="text" class="form-control nombem" name="nombre" value="<%-nombre%>"></div>
 				<br class="hidden-xs hidden-sm"><br>
 				<label class="col-md-3 hidden-xs hidden-sm">Puesto</label>	<div class="col-md-9"><select id="job" class="form-control" name="puesto"></select></div>
 				<br class="hidden-xs hidden-sm"><br>
@@ -142,16 +158,6 @@
 
 	script_tag('js/backbone/vistas/VistaCatalogoEmpleado.js').
 	script_tag('js/backbone/vistas/VistaNuevoEmpleado.js');
-	// script_tag('js/backbone/vistas/VistaCatalogoPuestos.js');
 ?>
 
-<script>
-// function Mayus(control)
-// {
-// 	var cursor = control.selectionStart;
-// 	var cursor = control.selectionEnd;
-// 	control.value = control.value.toUpperCase();
-// 	control.selectionStart = cursor;
-// 	control.selectionEnd = cursor;
-// }
-</script>
+<!-- <script src="http://CRMQualium.com/js/backbone/vistas/VistaNuevoEmpleado.js" language="javascript" type="text/javascript" /></script> -->

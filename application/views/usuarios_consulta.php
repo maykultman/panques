@@ -40,9 +40,9 @@
 					</div>
 					<div class="clearfix"></div><br><br>
 					<ul id="moduloss" class="nav nav-tabs" role="tablist"></ul>
-					<form id="arraypermisos" class="posiciontab">
+					
 						<div id="submoduloss" class="tab-content heightm"></div>
-					</form>
+					
 	      			<br>		    	  	      						
 				</form>
 		   		<div class="btn-group"> 
