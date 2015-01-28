@@ -229,13 +229,13 @@ class Escritorio extends REST {
 	public function clientes()
 	{
 		$this->area_Estatica('clientes');  # Carga la vista por default + la vista del modulo
-		
+		$submodulo = explode('_', $this->ruta())[1];
 
-		if( $this->ruta() == 'cliente_nuevo'&&(isset($this->session->userdata('Clientes')[0]['permisos'])) )
+		if( $submodulo == 'nuevo'&&(isset($this->session->userdata('Clientes')[0]['permisos'])) )
 		{
 			$this->datosCliente($this->ruta());
 		}
-		$submodulo = explode('_', $this->ruta())[1];
+		
 		# TipoCliente= 'cliente o prospecto' y como los dos cargan los mismos datos entonces lo asignamos a una función
 		# Y simplemente lo llamamos para que nos cargue los datos y la vista.
 		if($submodulo == 'prospectos'&&(isset($this->session->userdata('Clientes')[1]['permisos']))) {	$this->datosCliente($this->ruta());	}
@@ -383,19 +383,19 @@ class Escritorio extends REST {
 	public function usuarios()
 	{
 		$this->area_Estatica('usuarios');
-
+		$submodulo = explode('_', $this->ruta())[1];
 		$this->load->model('Modelo_permisos', 'permisos');
 		
 		$this->load->model('modelo_perfil','perfil');
 		$data['permisos'] = $this->permisos->get();
 		$data['empleados'] = $this->empleado->get();
 		$data['perfiles'] = $this->perfil->get();
-		if($this->ruta() == 'usuarios_nuevo')
+		if($submodulo == 'nuevo')
 		{
 			
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'usuarios_consulta')
+		if($submodulo == 'consulta')
 		{
 						
 			$data['usuarios'] = $this->usuario->get(false);
