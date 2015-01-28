@@ -437,10 +437,6 @@ class Escritorio extends REST {
 			header('Location:actividades');
 		}
 
-	public function actividades(){
-		$this->area_Estatica('actividades.html');
-	}
-
 	public function usuarios()
 	{
 		$this->area_Estatica('usuarios');
