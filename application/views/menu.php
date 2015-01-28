@@ -58,7 +58,7 @@ function permiso($submodulos)
 	$print = permiso($this->session->userdata('Actividades'));
 	if($print==1){?>
 	<li class="item">
-		<a class="anclaMenu" href="#" title="Actividades"><span class="icono icon-calendar2" style="float:left"></span> <span class="item-text">Actividades</span></a>
+		<a class="anclaMenu" href="actividades" title="Actividades"><span class="icono icon-calendar2" style="float:left"></span> <span class="item-text">Actividades</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<?php } 

@@ -24,6 +24,7 @@ $route[ 'escritorio/cotizaciones_nuevo'     ] = 'escritorio/modulo';
 $route[ 'escritorio/cotizaciones_consulta'  ] = 'escritorio/modulo';
 $route[ 'escritorio/cotizaciones_papelera'  ] = 'escritorio/modulo';
 $route[ 'escritorio/formatoCotizacion'      ] = 'escritorio/modulo';
+$route[ 'escritorio/conectar'				] = 'escritorio/conectar';
 $route[ 'escritorio/actividades' 		    ] = 'escritorio/modulo';
 $route[ 'escritorio/pruebapdf'          	] = 'escritorio/pdf';
 $route[ 'escritorio/catalogos'   		    ] = 'escritorio/modulo';
@@ -90,3 +91,6 @@ $route[ 'api_usuarios'           	  ] = 'usuarios/api';
 $route[ 'api_usuarios/(:num)'    	  ] = 'usuarios/api/$1';
 
 $route['escritorio/pdf_cotizacion/(:any)'] = 'pdf_cotizacion/get_cotizacion/$1';
+
+$route['escritorio/api_actividades'] = 'actividades/api';
+$route['escritorio/api_actividades/(:num)'] = 'actividades/api/$1';

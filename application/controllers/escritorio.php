@@ -1,6 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 include 'REST.php';
+require_once '/google-api-php-client-master/autoload.php';
 class Escritorio extends REST {
 	
 	public function __construct() 
@@ -21,6 +22,19 @@ class Escritorio extends REST {
         $this->load->model('Model_budget',           'budget');
         $this->load->model('Modelo_servicioCotizado','SC');
         $this->load->model('modelo_archivos',        'archivo');
+
+
+        $client_id = '266013765630-no4316pgdf96q34c98eb0bit2or9ff0s.apps.googleusercontent.com';
+        $client_secret = '9eMzpa4ags-xnvzPkEGEqrFs';
+        $redirect_uri = 'http://crmqualium.com/escritorio/conectar';
+
+        $this->client = new Google_Client();
+        $this->client->setClientId($client_id);
+        $this->client->setClientSecret($client_secret);
+        $this->client->setRedirectUri($redirect_uri);
+        $this->client->addScope("https://www.googleapis.com/auth/calendar");
+
+        $this->service = new Google_Service_Calendar($this->client);
     }  
 
 	public function index()
@@ -145,6 +159,10 @@ class Escritorio extends REST {
 			if($this->ruta()==='configuracion')
 			{
 				$this->configuracion();				
+			}
+			if($this->ruta()==='actividades')
+			{
+				$this->actividades();
 			}
 		}
 		else
@@ -375,6 +393,49 @@ class Escritorio extends REST {
 		}
 		
 	}
+
+	// functiones de calendar
+		public function actividades(){
+	        $access_token = $this->session->userdata('access_token');
+	        if ( isset( $access_token ) && $access_token ) {
+	            $this->client->setAccessToken( $access_token );
+	        } else {
+	            $authUrl = $this->client->createAuthUrl();
+	        }
+
+	        if ( isset($authUrl) && $authUrl ) {
+	        	$datos = array('authUrl' => $authUrl);
+	        	$this->area_Estatica('actividades', $datos);
+	        } else {
+	        	$this->area_Estatica('actividades');
+	        }
+		}
+		public function conectar () {
+			
+			if ( isset($_GET['code']) ) {
+	            $this->client->authenticate($_GET['code']);
+	            $this->session->set_userdata('access_token', $this->client->getAccessToken());
+	            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+	            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
+	        }
+
+			$interface =
+				'<iframe
+					src="https://www.google.com/calendar/embed?src=f3i1som6133f9j4ul5an2radko%40group.calendar.google.com&ctz=America/Mexico_City"
+					style="border: 0"
+					width="800"
+					height="600"
+					frameborder="0"
+					scrolling="no"
+				></iframe>';
+
+	        $datos = array( 'interface' => $interface );
+	        $this->area_Estatica('actividades', $datos);
+		}
+		public function salir () {
+			$this->session->unset_userdata('access_token');
+			header('Location:actividades');
+		}
 
 	public function actividades(){
 		$this->area_Estatica('actividades.html');
