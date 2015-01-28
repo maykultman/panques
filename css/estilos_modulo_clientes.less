@@ -29,23 +29,6 @@
   margin-top: 0px;
 }
 
-.otroArchivo button, .otroTelefono button, .eliminarCopia button{
-  /*border-radius: 0px 4px 4px 0px;*/
-  /*margin: 0px 0px 0px -1px;*/
-}
-/*button.otroTelefono,
-button.eliminarCopia {
-  float: none !important;
-}*/
-/*.tipoTelefonoCliente,
-.tipoTelefonoRepresentante,
-.tipoTelefonoContacto {
-  font-size: 13px;
-  padding: 0px !important;
-  width: 100px !important;
-  line-height: 2.5 !important;
-  max-height: 34px;
-}*/
 .input_info .btn-group-justified{
   width: 400px;
 }
@@ -59,9 +42,7 @@ button.eliminarCopia {
 .img-rounded {
   border: 1px solid #CCC;
 }
-.telefonosCliente{
-  /*height: 35px;*/
-}
+
 /*Sirve para ordenar los telefonos y sus tipos*/
   .div_telefono,
   .div_tipoTelefono {
@@ -112,10 +93,8 @@ button.eliminarCopia {
 
 #tbla_cliente table tr .atributo,
 .tbla_contacto tr .atributo {
-  /*top: 0px;*/
-  text-align: left !important;
-  width: 170px !important;
-  /*padding: auto 0px auto 0px;*/
+ text-align: left !important;
+  width: 170px !important; 
   vertical-align: text-top !important;
   color: #428bca !important;
 }
@@ -236,8 +215,6 @@ button.eliminarCopia {
   margin-left: -16px;
   margin-top:-15px;
   padding: 0px 5px 0px 5px;
-  /*position: absolute;*/
-
 }
 #menu2-lista{
   padding: 0px 5px 0px 5px;
@@ -267,27 +244,14 @@ button.eliminarCopia {
 .visible{
   visibility: visible;
   opacity: 1;
-  /*height: auto;*/
-  /*transform:none;*/
-  transition:visibility .45s, opacity .45s;
-  /*position: inherit;*/
+  transition:visibility .45s, opacity .45s;  
 }
 .oculto {
   visibility: hidden;
   opacity: 0;
   height: 0px;
-  /*transform:translateX(-2000px);*/
   transition:visibility .6s, opacity .6s, height .6s;
-  z-index: 5;
-  /*position: absolute;*/
-  /*float: left;
-  margin-left: -15px;
-  margin-top: -15px;
-  height: 550px;
-  width: 598px;
-  border: 1px outset #999999;
-  background-color: white;*/
-  /*padding: 20px;*/
+  z-index: 5;  
 }
 
 .editar{
@@ -296,31 +260,6 @@ button.eliminarCopia {
 .editando{
   display: inline;
 }
-
-/*#divcomentarios{
-	 float: left;
-	 margin-left:20px;
-	 margin-top: -20px;
-}*/
-
-
-/*.contactos{
-
-	float: left;
-	margin-left: 20px;
-}*/
-/*
-.divDatoContacto{
-	position: relative;
-	display: inline-block;
-}
-
-.divDatoContacto .atributo{
-	position: absolute;
-	top: 0px;
-}*/
-
-
 
 .foto{
   width: 40px;
@@ -421,9 +360,6 @@ button.eliminarCopia {
 .ocultoR {
   position: absolute;
   margin-top:-5px;
-  /*top: 0px;
-  opacity: 0;
-  z-index: -1;*/
 }
 
 /*-------EFECTO EN CAMBIO DE FORMULARIO---------*/
@@ -489,3 +425,45 @@ button.eliminarCopia {
     cursor: pointer;
   }
 
+/*--- Menu Modulo usuarios---*/
+@media(max-width:767px){
+  #menucatalogo{
+    display: none;
+    background: #0492e6;
+    position: absolute;
+    width: 100%;
+    z-index: 20;
+    margin-top: 70px;
+  }
+  #menu_modulo{ 
+    background: #0492e6; 
+    position: relative;
+  }
+  #pboton{
+    display: block;
+    right: 2%;
+    font-size: 25px;
+    color: #fff;
+    padding-top: 4%;
+    cursor: pointer;
+    position: absolute;
+    width: 100px;
+    z-index: 30;
+  }
+}
+@media(min-width: 768px){
+#pboton{
+  display: none;
+  }
+  #menucatalogo{
+    display: block!important;
+    background: #0492e6;
+  }
+
+}
+#menucatalogo li a span{
+  font-size: 30px;
+}
+#menucatalogo li{
+  padding: 0%;
+}

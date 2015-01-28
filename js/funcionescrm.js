@@ -241,6 +241,9 @@ function jsonphone(modelo)
 
 function urlFotoCatalgos(formData,destino)
 {
+    
+    console.log(destino);
+    return;
     //hacemos la petición ajax  
     var resp = $.ajax({
         url: destino,

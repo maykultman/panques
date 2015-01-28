@@ -1,3 +1,24 @@
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	foreach ($arg as $key => $value) {
+		if($value==$perm)
+		{
+			$resp = $value;
+		}
+	}
+	return $resp;
+}
+if(isset($this->session->userdata('Catálogos')[3]['permisos']))
+{
+	$activa_p[0] = menu($this->session->userdata('Catálogos')[3]['permisos'], 1);
+	$activa_p[1] = menu($this->session->userdata('Catálogos')[3]['permisos'], 2);
+	$activa_p[2] = menu($this->session->userdata('Catálogos')[3]['permisos'], 3);
+	$activa_p[3] = menu($this->session->userdata('Catálogos')[3]['permisos'], 4);
+}
+?>
 <section id="catalogo_roles" class="container-fluid">		    
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
@@ -47,8 +68,8 @@
 		<input id="erol" type="text" class="form-control ocultoR" value="<%- nombre %>">
 	</td>
 	<td class="icon-operaciones text-right">		
-		<span class="icon-trash" data-toggle="tooltip"  title="Eliminar" data-set="<%-asignado%>"></span>
-		<span class="icon-edit"  data-toggle="tooltip"  title="Editar"></span>					
+		<?php if($activa_p[3]=='4'){?><span class="icon-trash" data-toggle="tooltip"  title="Eliminar" data-set="<%-asignado%>"></span><?php }?>
+		<?php if($activa_p[2]=='3'){?><span class="icon-edit"  data-toggle="tooltip"  title="Editar"></span>					<?php }?>
 	</td>
 
 </script>
@@ -56,3 +77,6 @@
 	script_tag('js/backbone/colecciones/ColeccionRoles.js').
 	script_tag('js/backbone/vistas/VistaCatalogoRol.js');
 ?>
+
+
+ <!-- [contact-form to='clientes@qualium.mx%26#x002c; jessy@qualium.mx' subject='Motelmaracay.com'][contact-field label='Nombre' type='name'/][contact-field label='Correo electrónico' type='email' required='1'/][contact-field label='Asunto' type='text'/][contact-field label='Mensaje' type='textarea' required='1'/][/contact-form]  -->

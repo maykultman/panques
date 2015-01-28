@@ -61,8 +61,9 @@ class Escritorio extends REST {
 			}
 			else
 			{
-				$user  = $this->input->post('user');
-				$pass  = $this->input->post('pass');
+				$user  = $this->input->post('user', true);
+				$pass  = $this->input->post('pass', true);
+				$pass = md5($pass);
 				$query = $this->usuario->session($user, $pass);
 
 
@@ -72,12 +73,13 @@ class Escritorio extends REST {
 					$permisos = json_decode($query->idpermisos, true);
 					//Establecemos el array de permisos.
 					foreach ($permisos as $key=>$mod) {
-						$data[$mod['nombre']] = $mod;
+						$data[$mod['nombre']] = $mod['submodulos'];
 					}
 					$data['is_logued_in'] = TRUE;
 					$data['id_usuario'] = $query->id;
 					$data['perfil'] = $perfil->nombre;
 					$data['usuario'] = $query->usuario;
+					// $data['contrasena'] = $query->contrasenia;
 					$data['foto'] = $query->foto;
 					
 					$this->session->set_userdata($data);
@@ -115,32 +117,24 @@ class Escritorio extends REST {
 
 				$this->clientes(); 
 			}
-			if($this->ruta()==='proyectos_consulta'||$this->ruta()==='proyectos_nuevo'||$this->ruta()==='proyectos_cronograma')
+			if(explode('_', $this->ruta())[0]==='proyectos')
 			{
 				$this->proyectos();				
 			}
-			if($this->ruta()==='contratos_nuevo'||$this->ruta()==='contratos_historial'||$this->ruta()==='contratos_papelera')
+			if(explode('_', $this->ruta())[0]==='contratos')
 			{
 				$this->contratos();				
 			}
-			if($this->ruta()==='cotizaciones_nuevo'||$this->ruta()==='cotizaciones_consulta'||$this->ruta()==='cotizaciones_papelera')
+			if(explode('_', $this->ruta())[0]==='cotizaciones')
 			{
 				$this->cotizaciones();				
 			}
-			if
-			(   
-				$this->ruta()==='catalogo_Servicios'||
-				$this->ruta()==='catalogo_Perfiles' ||
-				$this->ruta()==='catalogo_Permisos' ||
-				$this->ruta()==='catalogo_Empleados'||
-				$this->ruta()==='catalogo_Roles'    ||
-				$this->ruta()==='catalogo_Puestos'
-			)
+
+			if( explode('_', $this->ruta())[0] == 'catalogo')
 			{
 				$this->catalogos();
-				
 			}			
-			if($this->ruta()==='usuarios_consulta'||$this->ruta()==='usuarios_nuevo')
+			if(explode('_', $this->ruta())[0]==='usuarios')
 			{
 				$this->usuarios();				
 			}
@@ -171,30 +165,31 @@ class Escritorio extends REST {
 	
 	public function activaCatalogo()
 	{
-		$variable = $this->session->userdata('Catálogos')['submodulos'];
+		$variable = $this->session->userdata('Catálogos');
 		$catalogos=array();
 		foreach ($variable as $key => $value) {
 			if(isset($value['permisos']))
 			{
-				$catalogos[] = 'catalogo_'.$value['nombre'];
+				$catalogos[] = $value['nombre'];
 			}
 		}			
 		return $catalogos;
 	}
 	public function catalogos()
 	{
-		$this->area_Estatica('catalogos');
 		$this->load->model('Modelo_permisos', 'permisos');
+		$catalogo = explode('_', $this->ruta())[1];
+		$this->area_Estatica('catalogos');
+		
 		$elcatalogo = $this->session->userdata('permisos')[5];
 		$seccion = $this->activaCatalogo();
 		
-		
-		if($this->ruta() == 'catalogo_Servicios'&&in_array('catalogo_Servicios', $seccion))
+		if( $catalogo == 'Servicios'&&in_array('Servicios', $seccion))
 		{
 			$data['servicios'] = $this->serv->get_s();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_Perfiles'&&in_array('catalogo_Perfiles', $seccion))
+		if($catalogo == 'Perfiles'&&in_array('Perfiles', $seccion))
 		{
 			$this->load->model('modelo_perfil','perfil');
 			$data['perfiles'] = $this->perfil->get();
@@ -202,13 +197,13 @@ class Escritorio extends REST {
 			$this->load->view($this->ruta(), $data);	
 		}
 
-		if($this->ruta() == 'catalogo_Permisos'&&in_array('catalogo_Permisos', $seccion))
+		if($catalogo == 'Permisos'&&in_array('Permisos', $seccion))
 		{
 			$data['permisos'] = $this->permisos->get();
 			$this->load->view($this->ruta(), $data);	
 		}
 		
-		if($this->ruta() == 'catalogo_Empleados'&&in_array('catalogo_Empleados', $seccion))
+		if($catalogo == 'Empleados'&&in_array('Empleados', $seccion))
 		{
 			$this->load->model('model_puesto', 'puesto');
 			$data['empleados'] = $this->empleado->get();
@@ -218,12 +213,12 @@ class Escritorio extends REST {
 		}
 
 		
-		if($this->ruta() == 'catalogo_Roles'&&in_array('catalogo_Roles', $seccion))
+		if($catalogo == 'Roles'&&in_array('Roles', $seccion))
 		{
 			$data['roles'] = $this->Roles->get();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_Puestos'&&in_array('catalogo_Puestos', $seccion))
+		if($catalogo == 'Puestos'&&in_array('Puestos', $seccion))
 		{
 			$this->load->model('model_puesto', 'puesto');
 			$data['puestos']   = $this->puesto->get();
@@ -234,17 +229,18 @@ class Escritorio extends REST {
 	public function clientes()
 	{
 		$this->area_Estatica('clientes');  # Carga la vista por default + la vista del modulo
+		
 
-		if($this->ruta() == 'cliente_nuevo')
+		if( $this->ruta() == 'cliente_nuevo'&&(isset($this->session->userdata('Clientes')[0]['permisos'])) )
 		{
 			$this->datosCliente($this->ruta());
 		}
+		$submodulo = explode('_', $this->ruta())[1];
 		# TipoCliente= 'cliente o prospecto' y como los dos cargan los mismos datos entonces lo asignamos a una función
 		# Y simplemente lo llamamos para que nos cargue los datos y la vista.
-		
-		if($this->ruta() == 'consulta_clientes')   {	$this->datosCliente($this->ruta());	}
-		if($this->ruta() == 'consulta_prospectos') {	$this->datosCliente($this->ruta());	}
-		if($this->ruta() == 'consulta_clientes_eliminados') {	$this->datosCliente($this->ruta());	}
+		if($submodulo == 'prospectos'&&(isset($this->session->userdata('Clientes')[1]['permisos']))) {	$this->datosCliente($this->ruta());	}
+		if($submodulo == 'clientes'&&(isset($this->session->userdata('Clientes')[2]['permisos'])))   {	$this->datosCliente($this->ruta());	}		
+		if($submodulo == 'clientes_eliminados'&&(isset($this->session->userdata('Clientes')[3]['permisos']))) {	$this->datosCliente($this->ruta());	}
 	
 	} # Fin del metodo clientes...
 
@@ -264,6 +260,8 @@ class Escritorio extends REST {
 
 	public function proyectos()
 	{
+		$submodulo = explode('_', $this->ruta())[1];
+
 		$this->area_Estatica('proyectos');
 		$this->load->model('modelo_servicioProyecto', 'serProy');
 		$this->load->model('modelo_archivos', 'archivos');
@@ -278,14 +276,14 @@ class Escritorio extends REST {
 		$data['archivos'] 		= $this->archivos->get('','proyectos');		# Archivos Relacionados con el proyecto
 		$data['representantes'] = $this->representa->get();
 		
-		if($this->ruta() == 'proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
+		if($submodulo == 'nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
-		if($this->ruta() == 'proyectos_consulta')
+		if($submodulo == 'proyectos_consulta')
 		{			
 			$this->load->view($this->ruta(), $data);			
 		}
 
-		if($this->ruta() == 'proyectos_cronograma')
+		if($submodulo == 'proyectos_cronograma')
 		{	
 			$this->load->view($this->ruta(), $data);			
 		}
@@ -293,22 +291,23 @@ class Escritorio extends REST {
 
 	public function cotizaciones()
 	{
+		$submodulo = explode('_', $this->ruta())[1];
 		$this->area_Estatica('cotizaciones');
 		$data['clientes']		  = $this->customer->get();	# Lista de clientes
 		$data['servicios'] 		  = $this->serv->get_s();  	# Lista de Servicios
 		$data['representantes']	  = $this->representa->get();					# List de representantes
 		$data['empleados']	      = $this->empleado->get();
 		$data['serviciosCotizados'] = $this->SC->get();
-		if($this->ruta() == 'cotizaciones_nuevo')
+		if($submodulo == 'nuevo')
 		{
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'cotizaciones_consulta')
+		if($submodulo == 'consulta')
 		{   
 			$data['cotizaciones'] = $this->budget->get();
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'cotizaciones_papelera')
+		if($submodulo == 'papelera')
 		{   
 			$data['cotizaciones'] = $this->budget->get();
 			$this->load->view($this->ruta(), $data);
@@ -317,17 +316,18 @@ class Escritorio extends REST {
 
 	public function contratos()
 	{
+		$submodulo = explode('_', $this->ruta())[1];
 		$this->area_Estatica('contratos');
 		$data['clientes']		= $this->customer->get_customerProyect($this->ruta());	# Lista de clientes
 		$data['servicios'] 		= $this->serv->get_s();			              	# Lista de Servicios
 		$data['representantes']	= $this->representa->get();
 		$data['empleados']		= $this->empleado->get();		# List de representantes
-		if($this->ruta() == 'contratos_nuevo')
+		if($submodulo == 'nuevo')
 		{
 			// $this->load->view('formularioContrato');
 			$this->load->view($this->ruta(), $data);
 		}
-		if($this->ruta() == 'contratos_historial' || $this->ruta() == 'contratos_papelera')
+		if($submodulo == 'historial' || $this->ruta() == 'papelera')
 		{
 			$this->load->model('Model_ServiceContract');
 			$this->load->model('Model_contract');
@@ -408,16 +408,5 @@ class Escritorio extends REST {
 		$this->area_Estatica($this->ruta());		
 		// $this->load->view($this->ruta());
 	}
-
-	// public function cargarCatalogo($array)
-	// {
-	// 	foreach ($array as $key=>$valu) {			
-	// 		if(isset($valu['permisos']))
-	// 		{	
-	// 			redirect('escritorio/catalogo_'.$valu['nombre']);
-	// 			break;
-	// 		}
-	// 	}	
-	// }
 
 }//FIN DE LA CLASE...

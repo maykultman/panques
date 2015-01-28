@@ -2,49 +2,48 @@
 	script_tag('js/autocompletes.js').
 	link_tag('css/estilos_modulo_contratos.css');
 ?>
-	<section class="container-fluid contenedor_principal_modulos">
-		<section id="seccion_tabla">
-			<div id="div_fullHeight">    
-		        <div id="posicion_infotd">
-		    		<div id="clientes" class="wrapper"> 
-					    <table id="tabla_principal" class="table table-striped tablesorter">
-							<thead>
-								<tr>
-									<th class="sorter-false">
-										<input class="todos" type="checkbox" style="margin-left: 4px;">
-									</th>
-									<th class="sorter-false">
-										<!-- Títulos -->
-										<input type="search" class="form-control search input-sm" data-column="1" placeholder="Servicio solicitado">
-										<span class="icon-search busqueda"></span>
-									</th>
-									<th class="sorter-false">
-										<!-- Cliente -->
-										<input type="search" class="form-control search input-sm" data-column="2" placeholder="Cliente">
-									    <span class="icon-search busqueda"></span>
-									</th>
-									<th class="sorter-false">
-										<!-- Relizado por -->
-										<input type="search" class="form-control search input-sm" data-column="3" placeholder="Relizado por">
-										<span class="icon-search busqueda"></span>
-									</th>
-									<th class="filter-false">Folio</th>
-									<th class="filter-false">Total</th>
-									<th class="sorter-false">creado en</th>
-									<th class="sorter-false">finaliza en</th>
-									<th class="sorter-false">Operaciones</th>
-								</tr>
-							</thead>					
-							<tbody id="tbody_contratos">
-								<!-- Lista de las ultimas cotizaciones-->
-							</tbody>		
-						</table>
-					</div>
-					<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
+	<section id="seccion_tabla">
+		<!-- <div id="div_fullHeight">     -->
+	        <div id="posicion_infotd">
+	    		<div id="clientes" class="wrapper"> 
+				    <table id="tabla_principal" class="table table-striped tablesorter">
+						<thead>
+							<tr>
+								<th class="sorter-false">
+									<input class="todos" type="checkbox" style="margin-left: 4px;">
+								</th>
+								<th class="sorter-false">
+									<!-- Títulos -->
+									<input type="search" class="form-control search input-sm" data-column="1" placeholder="Servicio solicitado">
+									<span class="icon-search busqueda"></span>
+								</th>
+								<th class="sorter-false">
+									<!-- Cliente -->
+									<input type="search" class="form-control search input-sm" data-column="2" placeholder="Cliente">
+								    <span class="icon-search busqueda"></span>
+								</th>
+								<th class="sorter-false">
+									<!-- Relizado por -->
+									<input type="search" class="form-control search input-sm" data-column="3" placeholder="Relizado por">
+									<span class="icon-search busqueda"></span>
+								</th>
+								<th class="filter-false">Folio</th>
+								<th class="filter-false">Total</th>
+								<th class="sorter-false">creado en</th>
+								<th class="sorter-false">finaliza en</th>
+								<th class="sorter-false">Operaciones</th>
+							</tr>
+						</thead>					
+						<tbody id="tbody_contratos">
+							<!-- Lista de las ultimas cotizaciones-->
+						</tbody>		
+					</table>
 				</div>
+				<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
 			</div>
-		</section>
-	</section><!-- /.contenedor_principal_modulos -->
+		<!-- </div> -->
+	</section>
+	
 </div><!-- /.contenedor_modulo -->
 <!-- plantillas -->
 	<script type="text/template" id="tds_contrato">

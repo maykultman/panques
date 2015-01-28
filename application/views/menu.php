@@ -6,14 +6,15 @@
 //$modulos = $this->session->userdata('permisos');
 function permiso($submodulos)
 { 
+
 	$band = 0;
-    foreach ($submodulos as $key) 
+    foreach ($submodulos as $key=>$value) 
     {
-        if(array_key_exists('permisos', $key) )
+        if(isset($value['permisos']) )
         {
             $band = 1;
         }
-    }
+    }    
     return $band;
 }
 ?>
@@ -24,49 +25,48 @@ function permiso($submodulos)
 		<div style="clear:both"></div>
 	</li>
 	<?php
-	// var_dump($this->session->userdata('Clientes')); die();
-		$print = permiso($this->session->userdata('Clientes')['submodulos']);
-	 	if($this->session->userdata('Clientes')['nombre']=='Clientes'&&$print==1){?>	   
+	 $print = permiso($this->session->userdata('Clientes'));
+	 	if($print==1){?>	   
 		<li class="item">
 			<a class="anclaMenu" href="consulta_clientes" title="Clientes"><span class="icono icon-phpbb" style="float:left"></span> <span class="item-text">Clientes</span></a>
 			<div style="clear:both"></div>
 		</li>
 	<?php } 
-	$print = permiso($this->session->userdata('Proyectos')['submodulos']);
+	$print = permiso($this->session->userdata('Proyectos'));
 	
-	if($this->session->userdata('Proyectos')['nombre']=='Proyectos'&&$print==1){?>
+	if($print==1){?>
 	<li class="item">
 		<a class="anclaMenu" href="proyectos_consulta" title="Proyectos"><span class="icono icon-uniF53D" style="float:left"></span> <span class="item-text">Proyectos</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<?php }
-	$print = permiso($this->session->userdata('Contratos')['submodulos']);
-	if($this->session->userdata('Contratos')['nombre']=='Contratos'&&$print==1){?>
+	$print = permiso($this->session->userdata('Contratos'));
+	if($print==1){?>
 	<li class="item">
 		<a class="anclaMenu" href="contratos_historial" title="Contratos"><span class="icono icon-uniF5E2" style="float:left"></span> <span class="item-text">Contratos</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<?php }  
 
-	$print = permiso($this->session->userdata('Cotizaciones')['submodulos']);
-	if($this->session->userdata('Cotizaciones')['nombre']=='Cotizaciones'&&$print==1){?>
+	$print = permiso($this->session->userdata('Cotizaciones'));
+	if($print==1){?>
 	<li class="item">
 		<a class="anclaMenu" href="cotizaciones_consulta" title="Cotización"><span class="icono icon-calculator" style="float:left"></span> <span class="item-text">Cotización</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<?php } 
-	$print = permiso($this->session->userdata('Actividades')['submodulos']);
-	if($this->session->userdata('Actividades')['nombre']=='Actividades'&&$print==1){?>
+	$print = permiso($this->session->userdata('Actividades'));
+	if($print==1){?>
 	<li class="item">
 		<a class="anclaMenu" href="#" title="Actividades"><span class="icono icon-calendar2" style="float:left"></span> <span class="item-text">Actividades</span></a>
 		<div style="clear:both"></div>
 	</li>
 	<?php } 
 	
-	$print = permiso($this->session->userdata('Catálogos')['submodulos']);
-	if($this->session->userdata('Catálogos')['nombre']=='Catálogos'&&$print==1){
+	$print = permiso($this->session->userdata('Catálogos'));
+	if($print==1){
 		$href='';
-		$variable = $this->session->userdata('Catálogos')['submodulos'];		
+		$variable = $this->session->userdata('Catálogos');		
 		foreach ($variable as $key=>$valu) {			
 			if(isset($valu['permisos']))
 			{	$href = 'catalogo_'.$valu['nombre'];
@@ -79,8 +79,8 @@ function permiso($submodulos)
 		<div style="clear:both"></div>
 	</li>
 	<?php } 
-	$print = permiso($this->session->userdata('Usuarios')['submodulos']);
-	if($this->session->userdata('Usuarios')['nombre']=='Usuarios'&&$print==1){?>
+	$print = permiso($this->session->userdata('Usuarios'));
+	if($print==1){?>
 	<li class="item">
 		<a class="anclaMenu" href="usuarios_consulta" title="Usuarios"><span class="icono icon-user" style="float:left"></span> <span class="item-text">Usuarios</span></a>
 		<div style="clear:both"></div>

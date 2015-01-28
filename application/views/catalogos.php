@@ -5,20 +5,17 @@
 $modulos = $this->session->userdata('Catálogos');
 function activaCatalogo($activalink)
 {
-	$variable = $activalink['submodulos'];
 	$catalogos=array();
-	foreach ($variable as $key => $value) {
+	foreach ($activalink as $key => $value) {
 		if(isset($value['permisos']))
 		{
 			$catalogos[] = 'catalogo_'.$value['nombre'];
 		}
 	}			
 	return $catalogos;
-}
-	?>
-<div class="contenedor_modulo">  
-	<section>
-	   <h1 id="titulo_del_modulo"><label>Catálogos</label></h1>
+}?>
+<div class="contenedor_modulo">  	
+	<h1 id="titulo_del_modulo"><label>Catálogos</label></h1>
 	   	<nav id="menu_modulo" class="container-fluid">
 		   	<div class="row">
 		   		<p id="pboton"><span id="btn-menu" class="glyphicon glyphicon-align-justify"></span>&nbsp;Menu</p>
@@ -78,8 +75,7 @@ function activaCatalogo($activalink)
 		            <li class="hidden-xs col-sm-2 col-md-2 col-lg-7"></li>                     
 			    </ul>			    
 			</div>
-		</nav>	  
-    </section>
+		</nav>	      
     <section id="contenedor_principal_modulos" class="container"> 
 		<div class="row">
 <script type="text/javascript">

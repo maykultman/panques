@@ -1,45 +1,41 @@
+<?php $modulos = $this->session->userdata('Clientes'); ?>
 <div class="contenedor_modulo"> 
-<!-- <div id="contenedor"> -->
-	<section>
-		<h1 id="titulo_del_modulo"><label>Clientes</label></h1>
-		 <nav>
-			<ul id="menu_modulo" class="nav nav-pills">
-				<li >
-					<a href="cliente_nuevo">
-						<div class="icono_menu_modulo">
-							<span class="icon-uniF476"></span>
-							</div>
-						Nuevo
-					</a>
-				</li>
-
-				<li>
-					<a href="consulta_prospectos">
-						<div class="icono_menu_modulo">
-							<span class="icon-contact"></span>
-						</div>
-						Prospectos
-					</a>
-				</li>
-
-				<li>
-					<a href="consulta_clientes">
-						<div class="icono_menu_modulo">
-							<span class="icon-phpbb"></span>
-						</div>
-						Clientes
-					</a>
-				</li> 
-
-				<li >
-					<a href="consulta_clientes_eliminados">
-						<div class="icono_menu_modulo">
-							<span class="icon-trash"></span>
-						</div>
-						Papelera
-					</a>
-				</li>        		     
-			</ul>
-		</nav>		  
-	</section>
-<section class="contenedor_principal_modulos"> 
+	<h1 id="titulo_del_modulo"><label>Clientes</label></h1>
+		<nav id="menu_modulo" class="container-fluid">
+		 	<div class="row">
+				<ul id="menucatalogo" class="nav nav-pills">
+					<?php if(isset($modulos[0]['permisos'])){?>
+					<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+						<a href="cliente_nuevo">						
+							<span class="icon-uniF476"></span><br>	
+							Nuevo
+						</a>
+					</li><?php }
+					if(isset($modulos[1]['permisos'])){?>
+					<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+						<a href="consulta_prospectos">						
+							<span class="icon-contact"></span><br>
+							Prospectos
+						</a>
+					</li>
+					<?php }
+					if(isset($modulos[2]['permisos'])){?>
+					<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+						<a href="consulta_clientes">
+							<span class="icon-phpbb"></span><br>
+							Clientes
+						</a>
+					</li> 
+					<?php }
+					if(isset($modulos[2]['permisos'])){?>
+					<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+						<a href="consulta_clientes_eliminados">
+							<span class="icon-trash"></span><br>
+							Papelera
+						</a>
+					</li>  <?php } ?>      		     
+				</ul>
+			</div>
+		</nav>		  	
+<section id="contenedor_principal_modulos" class="container-fluid" style="padding-left:4%;padding-right:3%;"> 
+<div class="row">

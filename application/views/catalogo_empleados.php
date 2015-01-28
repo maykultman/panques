@@ -1,7 +1,28 @@
 <?=link_tag('css/empleados.css')?>
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	foreach ($arg as $key => $value) {
+		if($value==$perm)
+		{
+			$resp = $value;
+		}
+	}
+	return $resp;
+}
+if(isset($this->session->userdata('Catálogos')[0]['permisos']))
+{
+	$activa_p[0] = menu($this->session->userdata('Catálogos')[0]['permisos'], 1);
+	$activa_p[1] = menu($this->session->userdata('Catálogos')[0]['permisos'], 2);
+	$activa_p[2] = menu($this->session->userdata('Catálogos')[0]['permisos'], 3);
+	$activa_p[3] = menu($this->session->userdata('Catálogos')[0]['permisos'], 4);
+}
+?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h3 class="titulo">Empleados</h3> 
-		<button id="nuevo_empleado" class="btn btn-primary" data-toggle="modal" data-target="#modal_nuevo_empleado">
+		<button <?=($activa_p[0]=='1') ? '':'disabled';?>id="nuevo_empleado" class="btn btn-primary" data-toggle="modal" data-target="#modal_nuevo_empleado">
 	 	    	Nuevo
 		</button>	
 		<hr style="margin-top: 0px !important;">			
@@ -93,7 +114,7 @@
 			<b><%-nombre%></b><br>
 			<small><%-nompuesto%></small><br>
 		</div>
-		<i class="vendrs icon-circleup" data-toggle="tooltip" data-placement="bottom" title="Click para ver el contenido"></i>
+		<i <?=($activa_p[2]=='3') ? '':'disabled';?> class="vendrs icon-circleup" data-toggle="tooltip" data-placement="bottom" title="Click para ver el contenido"></i>
 		<div class="vendrs edit">
 			<div class="ed">
 				<i class="glyphicon glyphicon-remove"></i>
@@ -112,8 +133,8 @@
 				<br class="hidden-xs hidden-sm"><br>
 				</form>
 				<div class="btn-group" role="group">       	
-			   		<button id="<%-id%>" type="button" data-count="<%-isuser%>" class="remov btn btn-default"><i class="glyphicon glyphicon-trash"></i></button>		   			
-					<button id="d<%-id%>" type="button" class="edita btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i></button>
+			   		<button <?=($activa_p[3]=='4') ? '':'disabled';?> id="<%-id%>" type="button" data-count="<%-isuser%>" class="remov btn btn-default"><i class="glyphicon glyphicon-trash"></i></button>		   			
+					<button <?=($activa_p[2]=='3') ? '':'disabled';?> id="d<%-id%>" type="button" class="edita btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i></button>					
 				</div>
 			</div>
 		</div>

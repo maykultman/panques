@@ -1,5 +1,25 @@
-		<?=link_tag('css/theme.default.css');
-		?>
+<?php echo link_tag('css/theme.default.css');
+
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	foreach ($arg as $key => $value) {
+		if($value==$perm)
+		{
+			$resp = $value;
+		}
+	}
+	return $resp;
+}
+if(isset($this->session->userdata('Catálogos')[4]['permisos']))
+{
+	$activa_p[0] = menu($this->session->userdata('Catálogos')[4]['permisos'], 1);
+	$activa_p[1] = menu($this->session->userdata('Catálogos')[4]['permisos'], 2);
+	$activa_p[2] = menu($this->session->userdata('Catálogos')[4]['permisos'], 3);
+	$activa_p[3] = menu($this->session->userdata('Catálogos')[4]['permisos'], 4);
+}
+?>
 		<section id="catalogo_servicio" class="container-fluid">			
 			<h3>Nuevo Servicio</h3>
 			<hr><br>

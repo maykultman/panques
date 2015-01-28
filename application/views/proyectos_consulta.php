@@ -1,5 +1,5 @@
-		<div class="container-fluid">
-			<div id="div_fullHeight">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<!-- <div id="div_fullHeight"> -->
 				<div id="posicion_infotd">
 					<div id="" class="wrapper">
 						<table id="tabla_principal" class="table table-hover tablesorter">
@@ -34,7 +34,7 @@
 					<button type="button" id="btn_eliminarVarios" class="btn btn-danger">Eliminar varios</button>
 					<button type="button" id="btn_entregarVarios" class="btn btn-default margin-15px-top">Entregar</button>
 				</div><!-- /#posicion_infotd -->
-			</div><!-- /#div_fullHeight -->
+			<!-- </div>/#div_fullHeight -->
 		</div>
 	</section><!-- /.contenedor_principal_modulos -->
 </div><!-- /.contenedor_modulo -->

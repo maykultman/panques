@@ -104,8 +104,7 @@ app.VistaPerfil = Backbone.View.extend({
 		this.$("#moduloss").children(':first-child').addClass('active');	
 
 		//obtenemos los permisos en formato json
-		submodulos = app.coleccionPermisos.toJSON();		
-
+		submodulos = app.coleccionPermisos.toJSON();				
 		// Creamos un json para la plantilla que mostrará los submodulos
 		for(var x=0; x < submodulos.length;x++)
 		{	

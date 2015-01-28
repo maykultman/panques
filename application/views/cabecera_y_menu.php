@@ -33,6 +33,7 @@
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_clientes.less">
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilo_general.less">
     <link rel="stylesheet/less" type="text/css" href="<?=base_url()?>css/estilos_modulo_cotizaciones.less">
+    <link rel="stylesheet" type="text/css" href="<?=base_url()?>fonts/stylesheet.css">
     <script>
         less = {
             env: "development",

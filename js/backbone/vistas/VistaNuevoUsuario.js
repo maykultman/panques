@@ -92,15 +92,13 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	cargarSubmodulo : function()
 	{
-		submodulos = app.coleccionPermisos.toJSON();			
-		
+		submodulos = app.coleccionPermisos.toJSON();					
 		var json={};
 		json.band = 'n';			
 		for(var x=0; x < submodulos.length;x++)
 		{	
 			json.active = (x==0) ? "tab-pane active":"tab-pane";
-			json.modulo = submodulos[x].modulo;
-			
+			json.modulo = submodulos[x].modulo;			
 			json.submodulos = submodulos[x].permisos.split(",");			
 			this.$("#submodulos").append(this.plantilla(json));				
 		}				
@@ -144,32 +142,35 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	guardar	 : function ()
 	{	
+		var form;
+		var modeloUsuario 		= pasarAJson($('#registroUsuario').serializeArray());
+		modeloUsuario 			= limpiarJSON(modeloUsuario); 
 		/*--- si el campo foto del formulario tiene una url de carpeta que contenga un archivo img entonces 
 			  invocamos a la función urlFoto, y le enviamos de parametro formData---*/		
 		if( this.$('#fotou').val() )
 		{
 			form = new FormData( this.$("#registro")[0]);
-			empleado.foto = urlFotoCatalgos(form, this.$('#fotou').data('url') );
+			modeloUsuario.foto = urlFotoCatalgos(form, this.$('#fotou').data('url') );
 		} 
-		else{
-			empleado.foto = 'img/sinfoto.png';
+		else if(this.$('#direccion').attr('src')!='undefined'){
+			var split = this.$('#direccion').attr('src');
+
+			modeloUsuario.foto = 'img'+split.split('img')[1];
 		}
+		else{
+			modeloUsuario.foto = 'img/sinfoto.png';
+		}		
+		
 		/*-- Si el usuario es un empleado se le asigna su idempleado en caso de que sea un usuario que no es empleado su id=0--*/
 		var ide = ($("#idempleado").val()) ? $("#idempleado").val() : 0;
-		
-		var modeloUsuario 		= pasarAJson($('#registroUsuario').serializeArray());
-		modeloUsuario 			= limpiarJSON(modeloUsuario); 
-
 		var permisos = pasarAJson(this.$('#arraypermisos').serializeArray());		
 		/*--- asignamos atributos ---*/
-		modeloUsuario.idempleado = ide;
-		modeloUsuario.foto 		 = foto;
+		modeloUsuario.idempleado = ide;		
 		/*--- la funcion jsonpermisos(); devuelve una cadena de todos los permisos asignados ---*/
 		modeloUsuario.idpermisos 	= jsonpermisos(permisos);
 		
 		$('#registroUsuario')[0].reset();
-
-		globaltrue();//vease en el archivo funcionescrm.js|		
+		globaltrue();
 		app.coleccionUsuarios.create
 		(
 			modeloUsuario,
@@ -181,7 +182,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 				}
 			}
 		);
-		globalfalse();//vease en el archivo funcionescrm.js			|		
+		globalfalse();
 		
 	}, /*... Fin de la función guardar ...*/
 

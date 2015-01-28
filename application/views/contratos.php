@@ -2,35 +2,28 @@
 	link_tag('css/estilos_modulo_contratos.css');
 ?>
 <div class="contenedor_modulo"> 
- <!-- <div id="contenedor"> -->
-	<section>
-	   <h1 id="titulo_del_modulo"><label>Contratos</label></h1>
-	   <nav>
-			<ul id="menu_modulo" class="nav nav-pills">	  			       			
-	 			<li>
-	            	<a href="contratos_nuevo">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-uniF476"></span>
-	              	   </div>
+    <h1 id="titulo_del_modulo"><label>Contratos</label></h1>
+	<nav id="menu_modulo" class="container-fluid">
+	    <ul id="menucatalogo" class="nav nav-pills">	  			       			
+	 		<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1" style="margin-left:-13px;">
+	           	<a href="contratos_nuevo">
+	              	<span class="icon-uniF476"></span><br>
 	                   Nuevo
-	                </a>
-	            </li>        
-				<li>
-					<a href="contratos_historial">
-						<div class="icono_menu_modulo">
-							<span class="icon-draft"></span>
-					    </div>
-						Historial
-		            </a>
-				</li>
-				<li>
-					<a href="contratos_papelera">
-						<div class="icono_menu_modulo">
-							<span class="icon-trash"></span>
-					    </div>
-						Papelera
-		            </a>
-				</li>	
-		    </ul> 
-		</nav>	  
-	</section>
+	            </a>
+	        </li>        
+			<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+				<a href="contratos_historial">
+					<span class="icon-draft"></span><br>
+					Historial
+		        </a>
+			</li>
+			<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+				<a href="contratos_papelera">
+					<span class="icon-trash"></span><br>			
+					Papelera
+		        </a>
+			</li>	
+		</ul> 
+	</nav>	  
+<section id="contenedor_principal_modulos" class="container-fluid" style="padding-left:4%;padding-right:3%;"> 
+<div class="row">

@@ -1,5 +1,26 @@
-    <div class="container-fluid">
-        <div id="div_fullHeight">
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+    $resp=0;
+    foreach ($arg as $key => $value) {
+        if($value==$perm)
+        {
+            $resp = $value;
+        }
+    }
+    return $resp;
+}
+if(isset($this->session->userdata('Clientes')[1]['permisos']))
+{    
+    $activa_p[0] = menu($this->session->userdata('Clientes')[1]['permisos'], 2);
+    $activa_p[1] = menu($this->session->userdata('Clientes')[1]['permisos'], 3);
+    $activa_p[2] = menu($this->session->userdata('Clientes')[1]['permisos'], 4);
+    $activa_p[4] = menu($this->session->userdata('Clientes')[1]['permisos'], 5);
+}
+?>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <!-- <div id="div_fullHeight"> -->
             <div id="posicion_infotd">
                 <div id="clientes" class="wrapper">                            
                     <table id="tbla_cliente" class="table table-striped tablesorter">
@@ -61,7 +82,7 @@
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
             </div>
-        </div><!-- /div_fullHeight -->
+        <!-- </div>/div_fullHeight -->
     </div>
     <!--  ----------Consulta clientes-------- -->
      <!-- PLANTILLAS -->
@@ -94,11 +115,11 @@
         </td>
         <td class="icon-operaciones">
             
-            <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
-            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
+            <?php if(isset($activa_p[2])=='4'){ ?><span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span><?php }?>
+            <?php if(isset($activa_p[1])=='3'){ ?><span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span><?php }?>
             <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span>
-            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
-            <span class="icon-shortcut" id="tr_btn_actualizarTipo" title="Actualizar a cliente"></span>
+            <?php if(isset($activa_p[0])=='2'){ ?><span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span><?php }?>
+            <?php if(isset($activa_p[0])=='5'){ ?><span class="icon-shortcut" id="tr_btn_actualizarTipo" title="Actualizar a cliente"></span><?php }?>
         </td>
         <td class="td_modal"></td>
     </script>

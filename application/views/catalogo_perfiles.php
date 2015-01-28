@@ -1,8 +1,30 @@
-
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	foreach ($arg as $key => $value) {
+		if($value==$perm)
+		{
+			$resp = $value;
+		}
+	}
+	return $resp;
+}
+if(isset($this->session->userdata('Catálogos')[1]['permisos']))
+{
+	$activa_p[0] = menu($this->session->userdata('Catálogos')[1]['permisos'], 1);
+	$activa_p[1] = menu($this->session->userdata('Catálogos')[1]['permisos'], 2);
+	$activa_p[2] = menu($this->session->userdata('Catálogos')[1]['permisos'], 3);
+	$activa_p[3] = menu($this->session->userdata('Catálogos')[1]['permisos'], 4);
+}
+?>
 <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">
       	<h3 class="titulo">Perfiles</h3>
-	   	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target="#nuevop">Nuevo Perfil
+      	
+	   	<button <?=($activa_p[0]=='1') ? '':'disabled';?> id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target="#nuevop">Nuevo Perfil
 		</button>
+		
 		<hr style="margin-top: 0px !important">
 			 <!-- Modal NUEVO PERFIL-->
             <div class="modal fade" id="nuevop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -53,9 +75,10 @@
 	<div class="user-wrapper">
 		<img class="img-circle" src="<?=base_url()?>/img/sinfoto.png" alt="Imagen-Usuario" width="85" height="85">
 		<h4><b><%-nombre%> </b></h4>
-	    <div class="btn-group">       	
-	      	<button data-perfil="<%-id%>" data-url="<?=base_url()?>api_perfil/" class="delete btn btn-default">Eliminar</button>
-	       	<button id="<%-id%>" class="edit btn btn-default" data-toggle="modal" data-target="#modaledicion<%-id%>">Editar</button> 
+	    <div class="btn-group">  
+	    <button <?=($activa_p[3]=='4') ? '':'disabled';?> data-perfil="<%-id%>" data-url="<?=base_url()?>api_perfil/" class="delete btn btn-default">Eliminar</button>
+	    <button <?=($activa_p[2]=='3') ? '':'disabled';?> id="<%-id%>" class="edit btn btn-default" data-toggle="modal" data-target="#modaledicion<%-id%>">Editar</button> 
+	    
 	    </div>
 	</div>
 <div id="edicion"></div>
@@ -97,7 +120,6 @@
 	var app = app || {};
 	app.coleccionDePerfiles = <?php echo json_encode($perfiles) ?>;
 	app.coleccionDePermisos = <?php echo json_encode($permisos) ?>;	
-	
 </script>
 <?=
 //<!-- MVC -->

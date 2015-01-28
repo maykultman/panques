@@ -1,7 +1,7 @@
 
-	<section class="container-fluid contenedor_principal_modulos">
+	
 		<section id="seccion_tabla">
-			<div id="div_fullHeight">    
+			<!-- <div id="div_fullHeight">     -->
 		        <div id="posicion_infotd">
 		    		<div id="" class="wrapper"> 
 					    <table id="tabla_principal" class="table table-striped tablesorter">
@@ -42,7 +42,7 @@
 					<button  type="button" id="btn_eliminarVarios" class="btn btn-danger">  Borrar varios </button>
 					<button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button> 
 				</div>
-			</div>
+			<!-- </div> -->
 		</section>
 	</section><!-- /.contenedor_principal_modulos -->
 </div>

@@ -16,7 +16,7 @@ app.VistaNuevoPerfil = Backbone.View.extend({
 	},
 
 	initialize : function ()
-	{
+	{		
 	    this.cargarModulo();
 	    $('#submodulos').html();
         this.cargarSubmodulo();
@@ -48,23 +48,20 @@ app.VistaNuevoPerfil = Backbone.View.extend({
 	cargarModulo : function()
 	{
 		var list = '<% _.each(modulos, function(modulo){ %> <li><a href="#<%- modulo.modulo+"n" %>" role="tab" data-toggle="tab"> <%- modulo.modulo%> </a></li> <% }) %>';
-		
 		this.$('#modulos').append(_.template(list)
 		({ modulos : app.coleccionPermisos.toJSON() }));
-
-		$("#modulos").children(':first-child').addClass('active');
+		$("#modulos").children(':first-child').addClass('active');		
 	},
 	cargarSubmodulo : function()
 	{
-		submodulos = app.coleccionPermisos.toJSON();			
-		
+		submodulos = app.coleccionPermisos.toJSON();					
 		var json={};
 		json.band = 'n';			
 		for(var x=0; x < submodulos.length;x++)
 		{	
 			json.active = (x==0) ? "tab-pane active":"tab-pane";
 			json.modulo = submodulos[x].modulo;
-			
+			console.log(submodulos);
 			json.submodulos = submodulos[x].permisos.split(",");			
 			this.$("#submodulos").append(this.plantilla(json));				
 		}				

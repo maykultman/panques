@@ -18,23 +18,23 @@
 		text-decoration: underline;
 	}
 	</style>
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-4 col-xs-12">
-					<h3>Cronograma de proyectos</h3>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-12 col-md-4 col-md-4 col-lg-4">
+						<h3>Cronograma de proyectos</h3>
+					</div>
+					<div class="col-xs-12 col-md-8 col-md-8 col-lg-8">
+						<br>
+						<span class="label label-default">Con tiempo para iniciar</span>
+						<span class="label label-success">Entre el 50% de avance</span>
+						<span class="label label-warning">Entre el 85% de avance</span>
+						<span class="label label-danger">Entregar / tiempo rebasado</span>	
+					</div>
 				</div>
-				<div class="col-md-8 col-xs-12">
-					<br>
-					<span class="label label-default">Con tiempo para iniciar</span>
-					<span class="label label-success">Entre el 50% de avance</span>
-					<span class="label label-warning">Entre el 85% de avance</span>
-					<span class="label label-danger">Entregar / tiempo rebasado</span>	
-				</div>
+				<div class="gantt"></div>
 			</div>
-			
-				
-			<div class="gantt"></div>
 		</div>
 	</div>
 

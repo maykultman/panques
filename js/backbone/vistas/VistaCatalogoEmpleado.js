@@ -93,7 +93,7 @@ app.VistaGetEmpleado = Backbone.View.extend({
 
 	editar : function()
 	{	
-		// var self = this;
+		var self = this;
 		var modelo = pasarAJson(this.$('#dateEmp').serializeArray());
 		modelo.telefonos = jsonphone(modelo);		
 		delete modelo.telefono;
@@ -103,8 +103,7 @@ app.VistaGetEmpleado = Backbone.View.extend({
 			{
 				wait:true,
 				patch:true,
-				success:function(exito){					
-
+				success:function(exito){										
 					self.$('.inf small').html(self.model.get('nompuesto'));										
 					if(modelo.puesto!=undefined)
 					{

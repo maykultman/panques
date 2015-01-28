@@ -1,33 +1,27 @@
-	<div class="contenedor_modulo">
-		<section id="cabecera_modulo">
-			<h1 id="titulo_del_modulo"><label>Cotizaciones</label></h1>
-			<nav>
-				<ul id="menu_modulo" class="nav nav-pills">
-					<li>
-						<a href="cotizaciones_nuevo">
-							<div class="icono_menu_modulo">
-								<span class="icon-uniF476"></span>
-							</div>
-							Nuevo
-						</a>
-					</li>
-					<li>
-						<a href="cotizaciones_consulta">
-							<div class="icono_menu_modulo">
-								<span class="icon-rawaccesslogs"></span>
-							</div>
-							Cotizaciones
-						</a>
-					</li>
-					<li>
-						<a href="cotizaciones_papelera">
-							<div class="icono_menu_modulo">
-								<span class="icon-trash"></span>
-							</div>
-							Papelera
-						</a>
-					</li>
-				</ul>
-			</nav>
-		</section>
+<div class="contenedor_modulo">
+	<h1 id="titulo_del_modulo"><label>Cotizaciones</label></h1>
+	<nav id="menu_modulo" class="container-fluid">
+		<ul id="menucatalogo" class="nav nav-pills">
+			<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1" style="margin-left:-13px;">
+				<a href="cotizaciones_nuevo">
+					<span class="icon-uniF476"></span><br>	
+					Nuevo
+				</a>
+			</li>
+			<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+				<a href="cotizaciones_consulta">
+					<span class="icon-rawaccesslogs"></span><br>
+					Cotizaciones
+				</a>
+			</li>
+			<li class="col-xs-12 col-sm-2 col-md-2 col-lg-1">
+				<a href="cotizaciones_papelera">
+					<span class="icon-trash"></span><br>
+					Papelera
+				</a>
+			</li>
+		</ul>
+	</nav>
+<section id="contenedor_principal_modulos" class="container-fluid" style="padding-left:4%;padding-right:3%;"> 
+<div class="row">
 		

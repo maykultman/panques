@@ -9,10 +9,8 @@
 
 		public function create($post)
 		{	
-			var_dump($post); die();
 			$this->db->insert('usuarios', $post);
-            $id = $this->get($this->db->insert_id());
-			die($post['idempleado']);
+            $id = $this->get($this->db->insert_id());			
             if($post['idempleado'])
             {
             	$dato = array('isuser'=>1);

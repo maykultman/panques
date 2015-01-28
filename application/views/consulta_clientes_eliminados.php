@@ -1,5 +1,24 @@
-    <div class="container-fluid">
-        <div id="div_fullHeight"> 
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+    $resp=0;
+    foreach ($arg as $key => $value) {
+        if($value==$perm)
+        {
+            $resp = $value;
+        }
+    }
+    return $resp;
+}
+if(isset($this->session->userdata('Clientes')[3]['permisos']))
+{    
+    $activa_p[0] = menu($this->session->userdata('Clientes')[3]['permisos'], 4);
+    $activa_p[1] = menu($this->session->userdata('Clientes')[3]['permisos'], 6);
+}
+?>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <!-- <div id="div_fullHeight">  -->
     		<div id="posicion_infotd">
     			<div id="clientes" class="wrapper">                            
     				<table id="tbla_cliente" class="table table-striped tablesorter">
@@ -21,8 +40,8 @@
     					</tbody>
     				</table>
     			</div>   
-    			<button type="button" id="btn_eliminarVarios" class="btn btn-danger">Borrar varios</button>
-    			<button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button> 
+    			<?php if($activa_p[0]=='4'){ ?><button type="button" id="btn_eliminarVarios" class="btn btn-danger">Borrar varios</button><?php } ?>
+    			<?php if($activa_p[1]=='6'){ ?><button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button><?php } ?>
     			<!-- <button type="button" id="desmarcar" class="btn btn-default">Desmarcar todos</button>
     			<button type="button" id="eliminar" class="btn btn-default">Eliminar varios</button> -->
     			
@@ -57,7 +76,7 @@
     				</div><!-- /.modal-dialog -->
     			</div><!-- /.modal -->
     		</div>
-    	</div><!-- /div_fullHeight -->
+    	<!-- </div>/div_fullHeight -->
     </div>
 <!-- PLANTILLAS -->
     <script type="text/templates" id="plantilla_td_de_cliente">
@@ -91,8 +110,8 @@
         </td>
         <td class="td_tablaPricipal icon-operaciones">
             
-            <span class="icon-restore" id="tr_btn_restaurar" data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
-            <span class="icon-circledelete" id="tr_btn_eliminar_permanente" data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
+            <?php if($activa_p[1]=='6'){ ?><span class="icon-restore" id="tr_btn_restaurar" data-toggle="tooltip" data-placement="top" title="Restaurar"></span><?php }?>
+            <?php if($activa_p[0]=='4'){ ?><span class="icon-circledelete" id="tr_btn_eliminar_permanente" data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span><?php }?>
             <!-- <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span> -->
             <!-- <span class="icon-email" data-toggle="modal" data-placement="top" data-target="#modalCorreo" title="Enviar"></span> -->
             <!-- <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span> -->

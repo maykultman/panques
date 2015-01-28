@@ -2,10 +2,10 @@
 	script_tag('js/autocompletes.js').
 	link_tag('css/estilos_modulo_contratos.css');
 ?>
-	<div id="contenedor_principal_modulos">
+	
 		<section class="container-fluid">
 			<section id="seccion_tabla">
-				<div id="div_fullHeight">    
+				<!-- <div id="div_fullHeight">     -->
 			        <div id="posicion_infotd">
 			    		<div id="" class="wrapper"> 
 						    <table id="tabla_principal" class="table table-striped tablesorter">
@@ -45,7 +45,7 @@
 						</div>
 						<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
 					</div>
-				</div>
+				<!-- </div> -->
 			</section>
 		</section>
 		<section id="section_actualizar">
@@ -56,7 +56,7 @@
 			</div>
 		</section>
 	</div><!-- /#contenedor_principal_modulos -->
-		
+	</div><!--row-->	
 </div><!-- /.contenedor_modulo -->
 
 	<script type = "text/plantilla" id="tds_cotizacion">
