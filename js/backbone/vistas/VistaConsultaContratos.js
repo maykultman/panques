@@ -57,8 +57,6 @@ app.VistaContrato = Backbone.View.extend({
 	initialize : function (){
 		this.listenTo( this.model, 'destroy', this.remove);
 		this.listenTo( this.model, 'change:visibilidad', this.remove);
-
-		
 	},
 	render : function (){
 		this.$el.html(this.plantilla(this.model.toJSON()));
@@ -238,7 +236,25 @@ var VistaContratoEliminado = app.VistaContrato.extend({
 
 var EdicionContrato = app.VistaNuevoContrato.extend({
 	el : '#section_actualizar',
+	initialize 				: function () {
+		var self = this;
+		this.listenTo(app.coleccionContratos, 'reset', function () {
+			var folio = app.coleccionContratos.establecerFolio();
+			this.$('input[name="folio"]').val(folio);
+			this.$('#h4_folio').text('Folio: '+ folio).fadeIn('fast');
+		});
 
+		this.render();
+		// // Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar
+		// // this.$tablaServicios = this.$('#listaServicios');
+		this.contadorAlerta = 1;
+		this.totalelementos = 0;
+
+		localStorage.clear();
+
+		this.$npagosEvento = this.$el.find('input[name="npagos"]:eq(0)');
+		this.$npagosIguala = this.$el.find('input[name="npagos"]:eq(1)');
+	},
 	establecerDatos 	: function() {
 		var idcontrato 	= this.model.get('id'),
 			secciones 		= app.coleccionServiciosContrato
@@ -247,10 +263,11 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 								 }),
 			idservicio 		= '',
 			json 			= {},
-			preciotiempo 		= this.model.get('preciotiempo'),
+			preciotiempo 	= this.model.get('preciotiempo'),
 			vSeccion,
 			folio,
-			$select = this.$('#busqueda')[0].selectize,
+			$select 		= this.$('#busqueda'),
+			$selectPlugin 	= this.$('#busqueda')[0].selectize,
 			pagos,
 			pago,
 			Modelo,
@@ -275,8 +292,11 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 		this.$('input[name="folio"]').val( folio );
 
 		this.$('#serviciosolicitado').val(this.model.get('serviciosolicitado'));
-		$select.setValue(this.model.get('idcliente'));
-		this.$('input[name="idcliente"]').val(this.model.get('idcliente'));
+		$selectPlugin.setValue(this.model.get('idcliente'));
+		$selectPlugin.disable();
+		$select.after('<input type="hidden" name="idcliente" value="'+this.model.get('idcliente')+'">');
+		$select.attr('name','');
+		$select.attr('disabled',true);
 
 		this.$('input[name="descuento"]')
 			.val(this.model.get('descuento'));
@@ -422,7 +442,7 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 				}
 			};
 
-			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
+			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '68';
 		// Datos pagos
 			json.datos.totalletra 
 			= 
@@ -497,7 +517,7 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 			$('.btn_toggle').off('click');
 			// Apagamos todos los eventos de la vista
 			// edición
-			self.$el.off();
+			self.undelegateEvents();
 		});
 	},
 });

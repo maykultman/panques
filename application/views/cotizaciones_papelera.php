@@ -44,7 +44,7 @@
 				</div>
 			<!-- </div> -->
 		</section>
-	</section><!-- /.contenedor_principal_modulos -->
+	</section><!-- /#contenedor_principal_modulos -->
 </div>
 
 	<script type = "text/plantilla" id="tds_cotizacion">

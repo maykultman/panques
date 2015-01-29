@@ -35,8 +35,8 @@ app.VistaRolPrincipal = Backbone.View.extend({
 	}
 });
 
-app.VistaRol = app.VistaRolPrincipal.extend({
-	tagName	: 'option',
-	className	: 'optionRol',
-	plantillaDefault : _.template($('#option_rol').html()),
-});
+// app.VistaRol = app.VistaRolPrincipal.extend({
+// 	tagName	: 'option',
+// 	className	: 'optionRol',
+// 	plantillaDefault : _.template($('#option_rol').html()),
+// });

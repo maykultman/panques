@@ -25,5 +25,3 @@
 			</li>	
 		</ul> 
 	</nav>	  
-<section id="contenedor_principal_modulos" class="container-fluid" style="padding-left:4%;padding-right:3%;"> 
-<div class="row">

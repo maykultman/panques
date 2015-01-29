@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.VistaConsultaCP = Backbone.View.extend({
-	el	: '#div_fullHeight',
+	el	: '#clientes',
 	events		: {
 		/*Boton que debe aparecer solo si el usuario tiene
 		  permiso pa ver clientes eliminados*/

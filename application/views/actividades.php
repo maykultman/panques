@@ -16,7 +16,7 @@
 			<hr>
 			<div class="row">
 				<div class="col-md-3">
-					<form action="" method="post" accept-charset="utf-8">
+					<!-- <form action="" method="post" accept-charset="utf-8">
 						<fieldset>
 							<legend>Nuevo evento</legend>
 							<div class="form-group">
@@ -34,7 +34,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- <div class="form-group">
+							<div class="form-group">
 								<div class="checkbox">
 									<label for="">
 										<input type="checkbox" name="" value="">
@@ -77,13 +77,8 @@
 										</div>
 									</div>
 								</div>
-							</div> -->
-							<div class="row">
-								<div class="col-md-6">
-									<input type="text" name="location" value="" placeholder="Introduce una ubicación">
-								</div>
 							</div>
-
+							<input type="text" class="form-control input-sm" name="location" value="" placeholder="Introduce una ubicación">
 						</fieldset>
 						<fieldset>
 							<legend>información del evento</legend>
@@ -99,11 +94,10 @@
 							<input type="checkbox" name="" value=""> Invitar a otros
 							<input type="checkbox" name="" value=""> Ver la lista de invitados
 						</fieldset>
-
-
 						<input type="submit" class="btn btn-primary" name="" value="Crear">
 						<input type="reset" class="btn btn-default" name="" value="Cancelar">
-					</form>
+					</form> -->
+					<button id="getList" type="button">Obtener eventos</button>
 				</div>
 				<div class="col-md-9">
 					<?php
@@ -116,3 +110,4 @@
 		</div>
 	</seccton>
 </div>
+<?= script_tag('js/backbone/vistas/VistaActividades.js'); ?>

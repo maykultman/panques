@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.VistaConsultaProyectos = Backbone.View.extend({
-	el	: '#div_fullHeight',
+	el	: '#div_tabla_proyectos',
 	events	: {
 		'click .todos'	    : 'marcarTodosCheck',
 		'click #btn_eliminarVarios'	: 'eliminarVarios',

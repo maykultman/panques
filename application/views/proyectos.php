@@ -22,6 +22,4 @@
 			</li>
 		</ul>
 	</nav>
-	<section id="contenedor_principal_modulos" class="container-fluid">
-<?=link_tag('css/estilos_modulo_proyectos.css');?>		
-<div class="row">
+<?=link_tag('css/estilos_modulo_proyectos.css');?>	

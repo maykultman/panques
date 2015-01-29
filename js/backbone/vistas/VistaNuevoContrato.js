@@ -173,7 +173,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			// se pueden recuperar en este lugar, debido a que en la 
 			// creación un contrato no se envia la colección
 			// sino hasta que se solicita.
-			this.cargarEnunciados();
+			self.cargarEnunciados();
 		});
 
 		this.render();

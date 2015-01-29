@@ -296,12 +296,12 @@ class Escritorio extends REST {
 		
 		if($submodulo == 'nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
-		if($submodulo == 'proyectos_consulta')
+		if($submodulo == 'consulta')
 		{			
 			$this->load->view($this->ruta(), $data);			
 		}
 
-		if($submodulo == 'proyectos_cronograma')
+		if($submodulo == 'cronograma')
 		{	
 			$this->load->view($this->ruta(), $data);			
 		}
@@ -345,7 +345,7 @@ class Escritorio extends REST {
 			// $this->load->view('formularioContrato');
 			$this->load->view($this->ruta(), $data);
 		}
-		if($submodulo == 'historial' || $this->ruta() == 'papelera')
+		if($submodulo == 'historial' || $submodulo == 'papelera')
 		{
 			$this->load->model('Model_ServiceContract');
 			$this->load->model('Model_contract');

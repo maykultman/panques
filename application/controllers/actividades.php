@@ -6,7 +6,7 @@ class  Actividades extends REST {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Model_Calendar', 'Calendar');
+        $this->load->model('Model_Actividades', 'Actividades');
     }
 
     private function index() { }

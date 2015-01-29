@@ -361,7 +361,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->
+				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="68"><!-- BOORAR CUANDO EXISTAN SESIONES -->
 			</div><!-- /.row -->
 		    <div class="desborde"></div>
 			<h3>Inversión & Tiempo</h3>

@@ -465,7 +465,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
-			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
+			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '68';
 
 		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
 		if (!forms.length) {

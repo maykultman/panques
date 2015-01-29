@@ -31,7 +31,7 @@ var VistaSeccion = app.VistaSeccion.extend({
 	};
 
 app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
-	el						: '.contenedor_principal_modulos',
+	el						: '#contenedor_principal_modulos',
 
 	plantillaServicio 		: _.template($('#tds_servicio').html()),
 

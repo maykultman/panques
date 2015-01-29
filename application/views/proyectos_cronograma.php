@@ -18,46 +18,50 @@
 		text-decoration: underline;
 	}
 	</style>
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-xs-12 col-md-4 col-md-4 col-lg-4">
-						<h3>Cronograma de proyectos</h3>
+	<section id="contenedor_principal_modulos" class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-12 col-md-4 col-md-4 col-lg-4">
+								<h3>Cronograma de proyectos</h3>
+							</div>
+							<div class="col-xs-12 col-md-8 col-md-8 col-lg-8">
+								<br>
+								<span class="label label-default">Con tiempo para iniciar</span>
+								<span class="label label-success">Entre el 50% de avance</span>
+								<span class="label label-warning">Entre el 85% de avance</span>
+								<span class="label label-danger">Entregar / tiempo rebasado</span>	
+							</div>
+						</div>
+						<div class="gantt"></div>
 					</div>
-					<div class="col-xs-12 col-md-8 col-md-8 col-lg-8">
-						<br>
-						<span class="label label-default">Con tiempo para iniciar</span>
-						<span class="label label-success">Entre el 50% de avance</span>
-						<span class="label label-warning">Entre el 85% de avance</span>
-						<span class="label label-danger">Entregar / tiempo rebasado</span>	
-					</div>
-				</div>
-				<div class="gantt"></div>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="myModalLabel">Información del proyecto</h4>
-				</div>
-				<div class="modal-body">
-					<!-- PLANTILLA TABLA INFORMACION DEL PROYECTO -->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
+
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title" id="myModalLabel">Información del proyecto</h4>
+						</div>
+						<div class="modal-body">
+							<!-- PLANTILLA TABLA INFORMACION DEL PROYECTO -->
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.row -->
+	</section><!-- /#contenedor_principal_modulos -->
+</div><!-- /.contenedor_modulo -->
 
 
 <script type="text/javascript">
@@ -135,7 +139,7 @@
 		}
 	});
 	app.VistaCronograma = Backbone.View.extend({
-		el	: '.contenedor_principal_modulos',
+		el	: '#contenedor_principal_modulos',
 		events	: {},
 		initialize	: function () {
 			var here = this;
