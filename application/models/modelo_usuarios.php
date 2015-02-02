@@ -43,11 +43,13 @@
 
 		public function save (  $id,  $put ) 
         {   
+        	
         	return $this->db->update('usuarios', $put, array('id' => $id)  );   
         } 
 
 		public function update_user($id, $put)
 		{
+			var_dump($put); die('update_user');
 			$this->db->where('id', $id);
 			# la variable $put devuelve los campos especificando que datos se actualizaron.
 			$query = $this->db->update('usuarios', $put);
