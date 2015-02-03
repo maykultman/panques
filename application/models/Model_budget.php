@@ -11,9 +11,26 @@
         public function create($post)
         {   
             $post['fechacreacion'] = date('Y-m-d');
-            // var_dump($post); die();
+           
+            $inset = array(
+                'idcliente'=> $post['idcliente'],
+                'idrepresentante'=> $post['idrepresentante'],
+                'idempleado'=> $post['idempleado'],
+                'titulo'=> $post['titulo'],
+                'nombreversion'=> $post['nombreversion'],
+                'plan'=> $post['plan'],
+                'folio'=> $post['folio'],
+                'fechacreacion'=> $post['fechacreacion'],
+                'detalles'=> ['detalles'],
+                'descuento'=> $post['descuento'],
+                'preciotiempo'=> $post['preciotiempo'],
+                'npagos'=> $post['npagos'],
+                'idcotizacion'=> $post['idcotizacion'],
+                'version'=> $post['version'],
+                'status'=> $post['status'],
+                'visibilidad'=> $post['visibilidad'] );
 
-            $this->db->insert('cotizaciones', $post);
+            $this->db->insert('cotizaciones', $inset);
             $dataCot = $this->get($this->db->insert_id(), TRUE);
             
             $query = $this->db->get_where('folios_cotizaciones', array('folio'=>$post['folio']));

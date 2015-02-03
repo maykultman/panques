@@ -32,8 +32,19 @@ class  Usuarios extends REST
 
     private function update()
     {
-        $query = $this->user->save($this->id(), $this->put());
-        $this->pre_response($query, 'update');         
+        $query = $this->put();  
+        $data = array();     
+        if(isset($query['usuario']))
+        {
+            $data['usuario'] = $query['usuario'];
+        }
+        if(isset($query['contrasena']))
+        {
+            $data['contrasenia'] = md5($query['contrasena']);            
+        }        
+        
+        $query = $this->user->save($this->id(), $data);
+        $this->pre_response($data, 'update');         
     }
 
     private function delete()
