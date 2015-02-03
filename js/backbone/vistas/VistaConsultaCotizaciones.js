@@ -299,7 +299,6 @@ var EdicionCotizacion = app.VistaNuevaCotizacion.extend({
 		json = { secciones : [], datos : '' };
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
-			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '68';
 		// Cortafuego. Debe haber al menos 1 servicio para cotizarlo
 			if (!forms.length) {
 				alerta('Seleccione al menos un <b>servicio</b> para cotizarlo', function () {});
@@ -412,8 +411,8 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 		switch(model.get('plan')){
 			case 'evento':
 				model.set({    
-			 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
-			 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
+			 		cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
+			 		empleado : app.coleccionUsuarios.get ( model.get( 'idusuario' ) ).get('usuario'),
 					total    : function () {
 						var modelos = app.coleccionServiciosCotizados.where({idcotizacion:model.get('id')}),
 							horas = 0,
@@ -431,8 +430,8 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 				break;
 			case 'iguala':
 				model.set({    
-			 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
-			 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
+			 		cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
+			 		empleado : app.coleccionUsuarios.get ( model.get( 'idusuario' ) ).get('usuario'),
 					total    : function () {
 						var modelos = app.coleccionServiciosCotizados.where({idcotizacion:model.get('id')}),
 							total = 0;

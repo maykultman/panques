@@ -419,18 +419,19 @@ class Escritorio extends REST {
 	            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
 	        }
 
-			$interface =
-				'<iframe
-					src="https://www.google.com/calendar/embed?src=f3i1som6133f9j4ul5an2radko%40group.calendar.google.com&ctz=America/Mexico_City"
-					style="border: 0"
-					width="800"
-					height="600"
-					frameborder="0"
-					scrolling="no"
-				></iframe>';
+			// $interface =
+			// 	'<iframe
+			// 		src="https://www.google.com/calendar/embed?src=f3i1som6133f9j4ul5an2radko%40group.calendar.google.com&ctz=America/Mexico_City"
+			// 		style="border: 0"
+			// 		width="800"
+			// 		height="600"
+			// 		frameborder="0"
+			// 		scrolling="no"
+			// 	></iframe>';
 
-	        $datos = array( 'interface' => $interface );
-	        $this->area_Estatica('actividades', $datos);
+	        // $datos = array( 'interface' => $interface );
+	        // $this->area_Estatica('actividades', $datos);
+	        $this->area_Estatica('actividades');
 		}
 		public function salir () {
 			$this->session->unset_userdata('access_token');

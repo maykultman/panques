@@ -158,6 +158,7 @@
 				</div>
 			</div>
 			<input type="hidden" name="folio">
+			<input type="hidden" name="idusuario" value=<?php echo $this->session->userdata('id_usuario'); ?>>
 		</div>
 		<div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
@@ -361,7 +362,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="68"><!-- BOORAR CUANDO EXISTAN SESIONES -->
+				<input type="hidden" id="hidden_idEmpleado" name="idusuario" value=<?php echo $this->session->userdata('id_usuario'); ?>>
 			</div><!-- /.row -->
 		    <div class="desborde"></div>
 			<h3>Inversión & Tiempo</h3>
@@ -758,8 +759,9 @@ script_tag('js/numero-a-letras.js');?>
 	script_tag('js/backbone/colecciones/ColeccionContratos.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
-	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+	// script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
 	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+	script_tag('js/backbone/colecciones/ColeccionUsuarios.js').
 
 	script_tag('js/backbone/vistas/VistaServicio.js').
 	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js').
@@ -775,6 +777,9 @@ script_tag('js/numero-a-letras.js');?>
 	app.coleccionServiciosContrato = new ColeccionServiciosContrato();
 	app.coleccionPagos = new ColeccionPagos();
 	app.coleccionContratos_L = new ColeccionContratos_L();
-	
-	app.cotizaciones = new app.CotizacionesVisibles();
+	app.coleccionUsuarios = new ColeccionUsuarios();
+	var ajax = app.coleccionUsuarios.fetch();
+	ajax.then(function(){
+		app.cotizacionesVisibles = new app.CotizacionesVisibles();
+	},function(){});
 </script>
