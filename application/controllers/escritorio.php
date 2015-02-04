@@ -90,7 +90,7 @@ class Escritorio extends REST {
 						$data[$mod['nombre']] = $mod['submodulos'];
 					}
 					$data['is_logued_in'] = TRUE;
-					$data['id_usuario'] = $query->id;
+					$data['id_empleado'] = $query->idempleado;
 					$data['perfil'] = $perfil->nombre;
 					$data['usuario'] = $query->usuario;
 					// $data['contrasena'] = $query->contrasenia;

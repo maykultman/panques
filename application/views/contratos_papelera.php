@@ -515,9 +515,8 @@
 	// <!-- colecciones -->
 		script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	    script_tag('js/backbone/colecciones/ColeccionClientes.js').
-		// script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+		script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
 		script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
-		script_tag('js/backbone/colecciones/ColeccionUsuarios.js').
 		// En la colección contratos están el modelo y coleccion de pagos
 		script_tag('js/backbone/colecciones/ColeccionContratos.js');
 ?>
@@ -525,9 +524,8 @@
     	app.coleccionServiciosContrato 	= new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
         app.coleccionContratos 			= new ColeccionContratos(app.coleccionDeContratos.contratos);
         app.coleccionPagos 				= new ColeccionPagos(app.coleccionDePagos);
-        // app.coleccionEmpleados			= new ColeccionEmpleados(app.coleccionDeEmpleados);
+        app.coleccionEmpleados			= new ColeccionEmpleados(app.coleccionDeEmpleados);
 		app.coleccionContratos_L 		= new ColeccionContratos_L();
-		app.coleccionUsuarios			= new ColeccionUsuarios();
     </script>
 <!-- vistas -->
 <?=	script_tag('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
@@ -537,8 +535,5 @@
 	script_tag('js/backbone/vistas/VistaConsultaContratos.js');
 ?>
 <script>
-	var ajax = app.coleccionUsuarios.fetch();
-	ajax.then(function () {
-		app.contratos = new app.ContratosVisibles();
-	},function () {});
+	app.contratos = new app.ContratosEliminados();
 </script>

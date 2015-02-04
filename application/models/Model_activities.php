@@ -18,16 +18,18 @@
 			$start = new Google_Service_Calendar_EventDateTime();
 			$end = new Google_Service_Calendar_EventDateTime();
 
-			if ( !isset($post['allDay']) ) {
+			if ( isset($post['allDay']) ) {
+				// var_dump($post);die();
 				// $start->setTimeZone('America/Mexico_City');
-				$start->setDateTime( $post['start'] );
-				// $end->setTimeZone('America/Mexico_City');
-				$end->setDateTime( $post['end'] );
-			}else{
-				$start->setTimeZone('America/Mexico_City');
 				$start->setDate( $post['start'] );
-				$end->setTimeZone('America/Mexico_City');
+				// $end->setTimeZone('America/Mexico_City');
 				$end->setDate( $post['end'] );
+			}else{
+				// var_dump($post);die();
+				$start->setTimeZone('America/Mexico_City');
+				$start->setDateTime( $post['start'] );
+				$end->setTimeZone('America/Mexico_City');
+				$end->setDateTime( $post['end'] );
 			}
 
 			$event->setStart( $start );

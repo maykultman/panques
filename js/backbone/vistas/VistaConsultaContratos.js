@@ -526,7 +526,7 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 		var vista;
 		model.set({    
 	 		cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
-	 		empleado : app.coleccionUsuarios.get ( model.get( 'idusuario' ) ).get('usuario'),
+	 		empleado : app.coleccionEmpleados.get ( model.get( 'idempleado' ) ).get('nombre'),
 			total    : function () {
 				var modelos = app.coleccionServiciosContrato.where({idcontrato:model.get('id')}),
 					horas = 0,
@@ -679,7 +679,7 @@ app.ContratosVisibles = app.VistaConsultaContratos.extend({
 	}
 });
 
-app.ContratosEliminadas = app.VistaConsultaContratos.extend({
+app.ContratosEliminados = app.VistaConsultaContratos.extend({
 	initialize : function () {
 		this.$tbodyContratos = this.$('#tbody_contratos');
 		this.obtenerEliminados();

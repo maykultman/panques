@@ -66,7 +66,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" id="hidden_idEmpleado" name="idusuario" value=<?php echo $this->session->userdata('id_usuario'); ?>><!-- BOORAR CUANDO EXISTAN SESIONES -->
+				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value=<?php echo $this->session->userdata('id_empleado'); ?>><!-- BOORAR CUANDO EXISTAN SESIONES -->
 			</div><!-- /.row -->
 		    <div class="desborde"></div>
 			<h3>Inversión & Tiempo</h3>

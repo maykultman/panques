@@ -121,7 +121,8 @@
 				</div>
 			</div>
 			<input type="hidden" name="folio">
-			<input type="hidden" name="idusuario" value=<?php echo $this->session->userdata('id_usuario'); ?>>
+			<input type="hidden" name="idempleado" value=<?php echo $this->session->userdata('id_empleado'); ?>>
+			<input type="hidden" name="idrepresentante" value="0">
 		</div>
 		<div class="desborde"></div>
 		<h3>Inversión & Tiempo</h3>
