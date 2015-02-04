@@ -20,7 +20,7 @@
 			  	<select id="idempleado" data-url="<?=base_url()?>" class="selectized" placeholder="Buscar Empleado" name="idempleado" style="height:34px;">
 			  	</select> <br>
 			  	<select id="idperfil" name="idperfil" class="form-control ancho_campos">
-			  	<!-- Lista de Opciones de perfil  -->						  
+			  	<!-- Lista de Opciones de perfil  --><option id="z" value="z" disabled>--Selecione un perfil--</option> 						  
 				</select><br>
 
 				<input type="text" id="usuario" name="usuario" class="form-control ancho_campos" placeholder="Usuario"><br>

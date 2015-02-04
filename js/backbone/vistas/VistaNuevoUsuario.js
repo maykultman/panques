@@ -58,7 +58,7 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	selectPerfil : function()
 	{
-		var list = '<% _.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
+		var list = '<%_.each(perfiles, function(perfil) { %> <option id="<%- perfil.id %>" value="<%- perfil.id %>"><%- perfil.nombre %></option> <% }); %>';
         this.$('#idperfil').append(_.template(list)
         ({ perfiles : app.coleccionPerfiles.toJSON() }));
 	},
