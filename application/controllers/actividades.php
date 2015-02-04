@@ -6,25 +6,31 @@ class  Actividades extends REST {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Model_Actividades', 'Actividades');
+        $this->load->model('Model_activities', 'Activities');
     }
 
     private function index() { }
     
     public function api() {
-        $metodo = $this->request();
-        // $this->$metodo();
-        var_dump($metodo);
+        $access_token = $this->session->userdata('access_token');
+        if ( isset( $access_token ) && $access_token ) {
 
+            $this->Activities->client->setAccessToken( $access_token );
+
+            $metodo = $this->request();
+            $this->$metodo();
+        } else {
+            $metodo = $this->request();
+            $this->$metodo();
+            echo "No hay access_token";
+        }
     }
     private function create() {
-        $query = $this->Customer->insert_customer($this->ipost());
-        $this->pre_response($query, 'create'); 
+        $this->Activities->create( $this->ipost() );
     }
 
-    private function get($id){
-        $query = $this->Customer->get($id); 
-        $this->pre_response($query, 'get'); 
+    private function get(){
+        return $this->Activities->get($this->id());
     }
 
     private function update($id) {
@@ -32,8 +38,7 @@ class  Actividades extends REST {
         $this->pre_response($query, 'update'); 
     }
 
-    private function delete($id) {
-        $query = $this->Customer->delete_customer($id);
-        $this->pre_response($query, 'delete');
+    private function delete() {
+        return $this->Activities->destroy($this->id());
     }
 } # Fin de la Clase Api_cliente

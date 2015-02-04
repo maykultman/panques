@@ -465,8 +465,6 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 					return false;
 				}
 			};
-
-			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '65';
 		// Datos pagos
 			json.datos.totalletra 
 			= 

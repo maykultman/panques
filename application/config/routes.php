@@ -40,8 +40,8 @@ $route[ 'escritorio/vistaPreviaCotizacion'  ] = 'escritorio/modulo';
 $route['escritorio/configuracion'		 	] = 'escritorio/modulo';
 
 #################-----RUTAS PARA LAS APIS------######################
-$route[ 'api_actividades'        	  ] = 'actividades/api';
-$route[ 'api_actividades/(:num)' 	  ] = 'actividades/api/$1';
+$route[ 'api_actividades'			  ] = 'actividades/api';
+$route[ 'api_actividades/(:any)'	  ] = 'actividades/api/$1';
 $route[ 'api_archivos'                ] = 'archivo/api';
 $route[ 'api_archivos/(:num)'		  ] = 'archivo/api/$1';
 $route[ 'api_cliente'                 ] = 'cliente/api';
@@ -91,6 +91,3 @@ $route[ 'api_usuarios'           	  ] = 'usuarios/api';
 $route[ 'api_usuarios/(:num)'    	  ] = 'usuarios/api/$1';
 
 $route['escritorio/pdf_cotizacion/(:any)'] = 'pdf_cotizacion/get_cotizacion/$1';
-
-$route['escritorio/api_actividades'] = 'actividades/api';
-$route['escritorio/api_actividades/(:num)'] = 'actividades/api/$1';

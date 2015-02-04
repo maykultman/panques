@@ -15,99 +15,80 @@
 			?>
 			<hr>
 			<div class="row">
-				<div class="col-md-3">
-					<!-- <form action="" method="post" accept-charset="utf-8">
+				<div class="col-md-4">
+					<form id="form-nueva-actividad" action="" method="post" accept-charset="utf-8">
 						<fieldset>
 							<legend>Nuevo evento</legend>
 							<div class="form-group">
-								<input type="text" class="form-control input-lg" name="summary" value="" placeholder="Evento sin título">
+								<input type="text" class="form-control input-lg" name="summary" value="Evento X" placeholder="Evento sin título">
 							</div>
 							<div class="form-group">
 								<div class="row">
 									<div class="col-xs-6">
 										De
-										<input type="text" class="form-control input-sm" name="" value="" placeholder="">
+										<input type="text" id="datepickerDe" class="form-control" name="start" value="" placeholder="">
 									</div>
 									<div class="col-xs-6">
 										a
-										<input type="text" class="form-control input-sm" name="" value="" placeholder="">
+										<input type="text" id="datepickerA" class="form-control" name="end" value="" placeholder="">
 									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-1"></div>
+									<div class="col-xs-5"><input type="time" class="form-control input-sm timepicker" name="" value="00:00"></div>
+									<div class="col-xs-1"></div>
+									<div class="col-xs-5"><input type="time" class="form-control input-sm timepicker" name="" value="01:00"></div>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="allDay" name="allDay"> Todo el día
+									</label>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="checkbox">
-									<label for="">
-										<input type="checkbox" name="" value="">
-										Todo el día	
-									</label>
-								</div>
-								<div class="checkbox">
-									<label for="">
-										<input type="checkbox" name="" value="" data-toggle="modal" data-target="#modalRepetir">
-										Repetir...	
-									</label>
-									<div class="modal fade" id="modalRepetir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-												</div>
-												<div class="modal-body">
-													<div class="form-horizontal">
-														<div class="form-group">
-															<label for="" class="col-sm-2 control-label">Se repite</label>
-															<select name="">
-																<option value="">Cada día</option>
-																<option value="">Todos los laborales (de lunes a viernes)</option>
-																<option value="">Todos los lunes, miercoles y viernes</option>
-																<option value="">Todos los martes y jueves</option>
-																<option value="">Cada semana</option>
-																<option value="">Cada mes</option>
-																<option value="">Cada año</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save changes</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								<input type="text" class="form-control" name="location" value="" placeholder="Introduce una ubicación">
 							</div>
-							<input type="text" class="form-control input-sm" name="location" value="" placeholder="Introduce una ubicación">
+							<div class="form-group">
+								<select id="invitados" name="attendees" multiple placeholder="Seleccione invitados">
+								</select>
+							</div>
+							<div class="form-group">
+								<textarea class="form-control" name="description" rows="5"></textarea>
+							</div>
 						</fieldset>
-						<fieldset>
-							<legend>información del evento</legend>
-							<input type="text" name="" value="" placeholder="">
-							<label for="">Creado por "alguien"</label>
-							<textarea name=""></textarea>
-						</fieldset>
-						<fieldset>
-							<legend>Añadir invitados</legend>
-							<input type="text" name="" value="" placeholder="">
-							<legend>Los invitados pueden</legend>
-							<input type="checkbox" name="" value=""> Editar evento
-							<input type="checkbox" name="" value=""> Invitar a otros
-							<input type="checkbox" name="" value=""> Ver la lista de invitados
-						</fieldset>
-						<input type="submit" class="btn btn-primary" name="" value="Crear">
+						<input id="crear" type="submit" class="btn btn-primary" value="Crear">
 						<input type="reset" class="btn btn-default" name="" value="Cancelar">
-					</form> -->
-					<button id="getList" type="button">Obtener eventos</button>
+					</form>
 				</div>
-				<div class="col-md-9">
-					<?php
-						if ( isset($interface) && $interface ) {
-							echo $interface;
-						}
-					?>
+				<div class="col-md-8">
+					<div id="calendar"></div>
+					<div id="loading"></div>
 				</div>
 			</div>
 		</div>
 	</seccton>
 </div>
-<?= script_tag('js/backbone/vistas/VistaActividades.js'); ?>
+<?= 
+	link_tag('js/plugin/fullcalendar/fullcalendar.min.css').
+	link_tag('js/plugin/fullcalendar/fullcalendar.print.css').
+	script_tag('js/plugin/fullcalendar/lib/moment.min.js').
+	script_tag('js/plugin/fullcalendar/fullcalendar.min.js').
+	script_tag('js/plugin/fullcalendar/lang-all.js').
+
+	link_tag('js/plugin/timepicker/jquery.ui.timepicker.css').
+	script_tag('js/plugin/timepicker/jquery.ui.timepicker.js').
+
+	script_tag('js/backbone/modelos/ModeloCliente.js').
+	script_tag('js/backbone/modelos/ModeloEmpleado.js').
+	script_tag('js/backbone/colecciones/ColeccionClientes.js').
+	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+	script_tag('js/backbone/colecciones/ColeccionActividades.js').
+	script_tag('js/backbone/vistas/VistaActividades.js');
+?>
+
+<script type="text/javascript">
+	app.coleccionClientes = new ColeccionClientes();
+	app.coleccionEmpleados = new ColeccionEmpleados();
+	app.coleccionActividades = new ColeccionActividades();
+	app.vistaActividades = new app.VistaActividades();
+</script>

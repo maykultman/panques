@@ -120,7 +120,7 @@
 						</label>
 					</div>
 				</div>
-				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value="65"><!-- BOORAR CUANDO EXISTAN SESIONES -->
+				<input type="hidden" id="hidden_idEmpleado" name="idempleado" value=<?php echo $this->session->userdata('id_usuario'); ?>><!-- BOORAR CUANDO EXISTAN SESIONES -->
 			</div><!-- /.row -->
 		    <div class="desborde"></div>
 			<h3>Inversión & Tiempo</h3>
@@ -515,8 +515,9 @@
 	// <!-- colecciones -->
 		script_tag('js/backbone/colecciones/ColeccionServicios.js').
 	    script_tag('js/backbone/colecciones/ColeccionClientes.js').
-		script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+		// script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
 		script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+		script_tag('js/backbone/colecciones/ColeccionUsuarios.js').
 		// En la colección contratos están el modelo y coleccion de pagos
 		script_tag('js/backbone/colecciones/ColeccionContratos.js');
 ?>
@@ -524,8 +525,9 @@
     	app.coleccionServiciosContrato 	= new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
         app.coleccionContratos 			= new ColeccionContratos(app.coleccionDeContratos.contratos);
         app.coleccionPagos 				= new ColeccionPagos(app.coleccionDePagos);
-        app.coleccionEmpleados			= new ColeccionEmpleados(app.coleccionDeEmpleados);
-		app.coleccionContratos_L = new ColeccionContratos_L();
+        // app.coleccionEmpleados			= new ColeccionEmpleados(app.coleccionDeEmpleados);
+		app.coleccionContratos_L 		= new ColeccionContratos_L();
+		app.coleccionUsuarios			= new ColeccionUsuarios();
     </script>
 <!-- vistas -->
 <?=	script_tag('js/backbone/vistas/VistaServicio.js').// <!-- Heredamos la clase VistaServicio -->
@@ -535,5 +537,8 @@
 	script_tag('js/backbone/vistas/VistaConsultaContratos.js');
 ?>
 <script>
-	app.contratos = new app.ContratosEliminadas();
+	var ajax = app.coleccionUsuarios.fetch();
+	ajax.then(function () {
+		app.contratos = new app.ContratosVisibles();
+	},function () {});
 </script>

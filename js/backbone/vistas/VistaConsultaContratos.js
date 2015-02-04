@@ -441,8 +441,6 @@ var EdicionContrato = app.VistaNuevoContrato.extend({
 					return false;
 				}
 			};
-
-			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '68';
 		// Datos pagos
 			json.datos.totalletra 
 			= 
@@ -527,8 +525,8 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 	cargar 				: function (model, eliminado) {
 		var vista;
 		model.set({    
-	 		cliente  : app.coleccionClientes. get ({ id : model.get( 'idcliente'  )} ).get('nombreComercial'),
-	 		empleado : app.coleccionEmpleados.get ({ id : model.get( 'idempleado' )} ).get('nombre'),
+	 		cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
+	 		empleado : app.coleccionUsuarios.get ( model.get( 'idusuario' ) ).get('usuario'),
 			total    : function () {
 				var modelos = app.coleccionServiciosContrato.where({idcontrato:model.get('id')}),
 					horas = 0,

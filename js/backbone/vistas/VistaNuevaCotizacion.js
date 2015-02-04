@@ -424,7 +424,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		if (!json) {
 			return;
 		};
-
+		// console.log(json);e.preventDefault();return;
 		json.datos.status = true;
 		json.datos.visibilidad = true;
 		// $('nav:eq(1)').text(JSON.stringify(json));
@@ -465,7 +465,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
-			/*BORRAR PARA PRODUCCIÓN (HAY MÁS)*/json.datos.idempleado = '68';
 
 		/*Cortafuego. Debe haber al menos 1 servicio para cotizarlo*/
 		if (!forms.length) {

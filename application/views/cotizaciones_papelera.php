@@ -306,8 +306,9 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/backbone/colecciones/ColeccionCotizaciones.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionServiciosCotizados.js').
-	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
+	// script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
 	script_tag('js/backbone/colecciones/ColeccionRepresentantes.js').
+	script_tag('js/backbone/colecciones/ColeccionUsuarios.js').
 
 	script_tag('js/backbone/vistas/VistaServicio.js').
 	script_tag('js/backbone/vistas/VistaNuevaCotizacion.js').
@@ -316,5 +317,9 @@ script_tag('js/backbone.localStorage.js');?>
 ?>
 <script>
 	app.coleccionCotizaciones = new ColeccionCotizaciones(app.coleccionDeCotizaciones.cotizaciones);
-	app.cotizaciones = new app.CotizacionesEliminadas();
+	app.coleccionUsuarios = new ColeccionUsuarios();
+	var ajax = app.coleccionUsuarios.fetch();
+	ajax.then(function(){
+		app.cotizacionesEliminadas = new app.CotizacionesEliminadas();
+	},function(){});
 </script>
