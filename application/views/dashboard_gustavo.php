@@ -1,14 +1,17 @@
 <?=	link_tag('css/estilo_dashboard_gustavo.css').
 	link_tag('css/theme.default.css');
 ?>
+<style>
+.warning{
+	color:#f89406
+}
+</style>
 <div class="contenedor_modulo">
 	<h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 1; width: 100%;"><label>Escritorio</label></h1>
     
-    <!-- ***************Dashboard 1 *********************-->	     
-	<!-- <section id="contenedor_principal_modulos" style="padding-top: 70px;"> -->
-	<section class="container" style="padding-top: 70px;">
+	<section class="container" style="padding-top:8%;">
 		<div class="row">
-			<h3>Dashboard 1</h3>
+			<!-- <h3></h3> -->
 			<div class="row">
 			  	<div class="col-md-6">
 				  	<div class="panel panel-default">
@@ -25,38 +28,9 @@
 						   		</tr>
 						   	</thead>
 						   	<tbody >
-						   		<tr>
-						   			<td>coliseoyuc.com</td>
-						   			<td>04/05/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>www.clinicadelsureste.com.mx</td>
-						   			<td>04/04/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>postalia.com</td>
-						   			<td>04/04/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>postalia.com</td>
-						   			<td>04/04/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>postalia.com</td>
-						   			<td>04/04/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>postalia.com</td>
-						   			<td>04/04/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>postalia.com</td>
-						   			<td>04/04/14</td>
-						   		</tr>
-						   		<tr>
-						   			<td>postalia.com</td>
-						   			<td>04/04/14</td>
-						   		</tr>
+						   		<?php if(isset($dominios)&&is_array($dominios)): ?>
+						   			<tr><td><?=$dominio;?></td> <td><?=$vencimiento;?></td></tr>
+						   		<?php endif ?>
 						   	</tbody>
 						   </table>
 						</div>
@@ -84,46 +58,13 @@
 									   		</tr>
 									   	</thead>
 									   	<tbody>
+									   		<?php if(isset($pagosxI)&&is_array($pagosxI)):?>
 									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td>$3,000.00</td>
-									   			<td>04/05/14</td>
+									   			<td><?=$cliente;?></td>
+									   			<td><?=$monto;?></td>
+									   			<td><?=$vencimiento;?></td>
 									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
+									   	<?php endif;?>
 									   	</tbody>
 									</table>							
 								</div>
@@ -137,46 +78,14 @@
 									   		</tr>
 									   	</thead>
 									   	<tbody>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td>$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
-									   		<tr>
-									   			<td>clinica merida</td>
-									   			<td >$3,000.00</td>
-									   			<td>04/05/14</td>
-									   		</tr>
+											<?php 
+												if(isset($pagosxE)&&is_array($pagosxE)):?>
+									   			<tr>
+									   				<td><?=$cliente;?></td>
+									   				<td><?=$monto;?></td>
+									   				<td><?=$vencimiento;?></td>
+									   			</tr>
+									   		<?php endif;?>									   		
 									   	</tbody>
 									</table>	
 							    </div>
@@ -185,6 +94,7 @@
 					</div>
 			  	</div>
 			</div>
+
 			<div class="panel panel-default">
 				<div class="panel-heading color" >
 			    	<h3 class="panel-title">Mis Actividades</h3>		    	
@@ -205,31 +115,13 @@
 							   		</tr>
 							   	</thead>
 							   	<tbody>
-							   		<tr>
-							   			<td>Enviar email</td>
-							   			<td>10/06/14</td>
-							   			<td>10:00 am</td>
-							   		</tr>
-							   		<tr>
-							   			<td>Junta qualium</td>
-							   			<td>10/06/14 </td>
-							   			<td>11:00 am</td>
-							   		</tr>
-							   		<tr>
-							   			<td>visitar cliente</td>
-							   			<td>10/06/14</td>
-							   			<td>3:00 pm</td>
-							   		</tr>
-							   		<tr>
-							   			<td>visitar cliente</td>
-							   			<td>10/06/14</td>
-							   			<td>3:00 pm</td>
-							   		</tr>
-							   		<tr>
-							   			<td>visitar cliente</td>
-							   			<td>10/06/14</td>
-							   			<td>3:00 pm</td>
-							   		</tr>
+							   		<?php if(isset($actividades)&&is_array($actividades)) : ?>
+							   			<tr>
+							   				<td><?=$actividad;?></td>
+							   				<td><?=$fecha;?></td>
+							   				<td><?=$hora;?></td>
+							   			</tr>							   		
+							   		<?php endif ?>
 							   	</tbody>
 							</table>	
 			  			</div>
@@ -245,93 +137,27 @@
 				    <table class="table table-striped ">
 					   	<thead>
 					   		<tr>
-					   			<th>Prospecto</th>
-					   			<th>Servicio</th>
-					   			<th>Realizó</th>
-					   			<th>Importe</th>
-					   			<th>Fecha</th>
-					   			<th>Tools</th>
+					   			<th>Prospecto</th><th>Servicio</th>
+					   			<th>Realizó</th><th>Importe</th>
+					   			<th>Fecha</th><th>Tools</th>
 					   		</tr>
 					   	</thead>
 					   	<tbody >
-					   		<tr>
-					   			<td>coliseoyuc.com</td>
-					   			<td>04/05/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>04/05/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span>
-					   				<span class=" icon-preview"></span>
-					   			</td>
-					   			
-					   		</tr>
-					   		<tr>
-					   			<td>www.clinicadelsureste.com.mx</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>04/05/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span></td>
-					   			
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>				   			
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span></td>
-					   			
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span></td>
-					   			
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span>
-					   				
+					   		<?php 
+					   			if(isset($cotizaciones)&&is_array($cotizaciones))
+					   			{
+					   				foreach ($cotizaciones as $key => $value) 
+					   				{?>
 
-					   			</td>
-					   			
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span></td>				   			
-					   			
-
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span></td>
-					   			
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>04/04/14</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td>coliseoyuc.com</td>
-					   			<td><span class="icon-download"></span></td>
-					   			
-					   		</tr>
+					   				<tr>
+					   					<td><?=$cliente;?></td><td><?=$titulo;?></td>
+					   					<td><?=$empleado;?></td><td><?=$importe;?></td>
+					   					<td><?=$fecha;?></td><td>Operaciones</td>
+					   				</tr>
+					   					
+					   				<?php }
+					   			}
+					   		?>
 					   	</tbody>
 					</table>
 				</div>
@@ -353,378 +179,56 @@
 					        </tr>
 						</thead>      
 						<tbody>
-							<tr>							
-								<td>Qualium</td>
-								<td>CrmQualium</td>						
-								<td>04/Agosto/2014</td>
-								<td>			
-									<span class="badge" style="background-color: #f89406; padding: 3px;">
-										Quedan 31 días
-									</span>		
-								</td>      							
-								<td>Dante Cervantes</td> 							        
-					        </tr>
-					        <tr>							
-								<td>Qualium</td>
-								<td>clinica de merida</td>						
-								<td>04/Agosto/2014</td>
-								<td>			
-									<span class="badge" style="background-color: #f89406; padding: 3px;">
-										Quedan 21 días
-									</span>		
-								</td>      							
-								<td>Geyser Ramirez</td> 							        
-					        </tr>
-					        <tr>							
-								<td>Qualium</td>
-								<td>kefda Viajero</td>						
-								<td>04/Agosto/2014</td>
-								<td>			
-									<span class="badge" style="background-color: #d9534f; padding: 3px;">
-										Quedan 5 días
-									</span>		
-								</td>      							
-								<td>Dante Cervantes</td> 							        
-					        </tr>
-					        <tr>							
-								<td>Qualium</td>
-								<td>app farah</td>						
-								<td>04/Agosto/2014</td>
-								<td>			
-									<span class="badge" style="background-color: #d9534f; padding: 3px;">
-										Quedan 5 días
-									</span>		
-								</td>      							
-								<td>Dante Cervantes</td> 							        
-					        </tr>
+							<?php if(isset($proyectos)&&is_array($proyectos)) : ?>
+								<tr>							
+									<td><?=$cliente;?></td>
+									<td><?=$proyecto;?></td>						
+									<td><?=$entrega;?></td>
+									<td>		
+										<span class="badge list-group-item-success">
+										<?=$status;?>
+										</span>		
+									</td>      							
+									<td><?=$responsable;?></td> 							        
+					        	</tr>
+					    	<?php endif; ?>
 				    	</tbody> 
 					</table>
 				</div>
 		    </div>
-	    </div>
-	</section>
-
-	<!------------------------- Dashboard 2 -------------------------->	
-
-<!-- 	<section class="contenedor_principal_modulos">
-		<h3>Dasboard 2</h3>
-		<div class="row">
-			<div class="col-md-6">
-		  		<div class="panel panel-default">
-					<div class="panel-heading color">
-				    	<h3 class="panel-title">Pagos de clientes</h3>
-				    	<span id="icono_panel" class="icon-uniF4E7" ></span>
-				    </div>
-				  	<div class="panel-body" style="height: 250px;">
-					    <ul class="nav nav-tabs" role="tablist">
-						  <li class="active"><a href="#evento" role="tab" data-toggle="tab">Evento</a></li>
-						  <li><a href="#iguala" role="tab" data-toggle="tab">Iguala Mensual</a></li>
-						</ul>
-						<div class="tab-content">
-							<div class="tab-pane fade in active" id="evento" style="overflow: auto; height: 185px;">
-								<table class="table table-striped">
-								   	<thead >
-								   		<tr>
-								   			<th>Cliente</th>
-								   			<th>Monto</th>
-								   			<th>Vencimiento</th>
-								   		</tr>
-								   	</thead>
-								   	<tbody>
-								   		<tr class="danger">
-								   			<td>clinica merida</td>
-								   			<td>$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr class="danger">
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   	</tbody>
-								</table>							
-							</div>
-						    <div class="tab-pane fade" id="iguala" style="overflow: auto; height: 185px;">
-						    	<table class="table table-striped">
-								   	<thead >
-								   		<tr>
-								   			<th>Cliente</th>
-								   			<th>Monto</th>
-								   			<th>Vencimiento</th>
-								   		</tr>
-								   	</thead>
-								   	<tbody>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td>$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   		<tr>
-								   			<td>clinica merida</td>
-								   			<td >$3,000.00</td>
-								   			<td>04/05/14</td>
-								   		</tr>
-								   	</tbody>
-								</table>	
-						    </div>
-					    </div>
-					</div>
+	   	  	<div class="panel panel-default">
+				<div class="panel-heading color">
+				   	<h3 class="panel-title">Ingresos</h3>
+				   	<span id="icono_panel" class="icon-stocks" ></span>
 				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading color">
-				    	<h3 class="panel-title">Entregas/Revisiones</h3>
-				    	<span id="icono_panel" class=" icon-uniF5C7" ></span>
-				    </div>
-				  	<div  class="panel-body" style="overflow: auto; height: 250px;">
-					   <table class="table table-hover ">
-					   	<thead>
-					   		<tr>
-					   			<th>Proyecto</th>
-					   			<th>Tipo</th>
-					   			<th>Fecha</th>
-					   		</tr>
-					   	</thead>
-					   	<tbody >
-					   		<tr>
-					   			<td>coliseoyuc.com</td>
-					   			<td>Revisión</td>
-					   			<td>04/05/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>www.clinicadelsureste.com.mx</td>
-					   			<td>Entrega</td>
-					   			<td>04/04/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Revisión</td>
-					   			<td>04/04/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Entrega</td>
-					   			<td>04/04/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Revisión</td>
-					   			<td>04/04/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Entrega</td>
-					   			<td>04/04/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Entrega</td>
-					   			<td>04/04/14</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Entrega</td>
-					   			<td>04/04/14</td>
-					   		</tr>
+				<div  class="panel-body" style="overflow: auto; height: 560px;">
+				 	<label for="from">From</label>
+					<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
+					<label for="to">to</label>
+					<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
+					<span id="span_ingreso" class="badge">$100,000</span>     
+					<table class="table table-hover ">
+						<thead>
+							<tr>
+								<th>Cliente</th>
+								<th>Servicio</th>
+								<th>Monto</th>
+							</tr>
+						</thead>
+					   	<tbody>
+					   		<?php if(isset($ingresos)&&is_array($ingresos)):?>
+					   			<tr>	
+					   				<td><?=$web;?></td>
+					   				<td><?=$servicio;?></td>
+					   				<td><?=$monto;?></td>
+					   			</tr>
+					   		<?php endif ?>
 					   	</tbody>
 					   </table>
 					</div>
-				</div>
-		  	</div>
-		  	<div class="col-md-6">
-			  	<div class="panel panel-default">
-					<div class="panel-heading color">
-				    	<h3 class="panel-title">Ingresos</h3>
-				    	<span id="icono_panel" class="icon-stocks" ></span>
-				    </div>
-				  	<div  class="panel-body" style="overflow: auto; height: 560px;">
-				  		<label for="from">From</label>
-						<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
-						<label for="to">to</label>
-						<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
-						<span id="span_ingreso" class="badge">$100,000</span>     
-					    <table class="table table-hover ">
-					   	<thead>
-					   		<tr>
-					   			<th>Cliente</th>
-					   			<th>Servicio</th>
-					   			<th>Monto</th>
-					   		</tr>
-					   	</thead>
-					   	<tbody >
-					   		<tr>
-					   			<td>coliseoyuc.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>www.clinicadeMerida.com.mx</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>crmqualium.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-					   		<tr>
-					   			<td>postalia.com</td>
-					   			<td>Página web</td>
-					   			<td>$20,000</td>
-					   		</tr>
-
-					   	</tbody>
-					   </table>
-					</div>
-				</div>
-		  	</div>		  	
+				</div>		  
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading color">
-		    	<h3 class="panel-title">Mis Actividades</h3>		    	
-		    	<span id="icono_panel" class="icon-calendar2" ></span>
-		    </div>
-		  	<div class="panel-body">
-		  		<div class="row">
-		  			<div class="col-md-6" style="width: 25%  !important">
-		  				<div class="datepicker"></div>
-		  			</div>
-		  			<div class="col-md-6" style="width: 75% !important">
-		  				<table class="table table-hover">
-						   	<thead >
-						   		<tr>
-						   			<th>Actividad</th>
-						   			<th>Fecha</th>
-						   			<th>Hora</th>
-						   		</tr>
-						   	</thead>
-						   	<tbody>
-						   		<tr>
-						   			<td>Enviar email</td>
-						   			<td>10/06/14</td>
-						   			<td>10:00 am</td>
-						   		</tr>
-						   		<tr>
-						   			<td>Junta qualium</td>
-						   			<td>10/06/14 </td>
-						   			<td>11:00 am</td>
-						   		</tr>
-						   		<tr>
-						   			<td>visitar cliente</td>
-						   			<td>10/06/14</td>
-						   			<td>3:00 pm</td>
-						   		</tr>
-						   		<tr>
-						   			<td>visitar cliente</td>
-						   			<td>10/06/14</td>
-						   			<td>3:00 pm</td>
-						   		</tr>
-						   		<tr>
-						   			<td>visitar cliente</td>
-						   			<td>10/06/14</td>
-						   			<td>3:00 pm</td>
-						   		</tr>
-						   	</tbody>
-						</table>	
-		  			</div>
-		  		</div>		   
-			</div>
-	    </div>
-    </section>  -->
+	</section>
 </div>  
 <?= 
 	script_tag("js/jquery-ui-1.9.2.custom.min.js").
@@ -757,11 +261,3 @@
     });
   });
 </script>
-
-
-
- 
-
-
-
-		
