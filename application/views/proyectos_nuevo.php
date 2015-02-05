@@ -8,6 +8,7 @@
 				background-size: 100% 100%;
 			}
 		</style>
+	<seccion id="contenedor_principal_modulos">
 		<div class="container">
 			<br>
 			<section id="paso1" class="section_Visible">
@@ -265,7 +266,7 @@
 				<button type="button" id="btn_cancelarProyecto" class="btn btn-default">Cancelar</button>	
 			</div>
 		</div>
-	</section><!-- /.contenedor_principal_modulos -->
+	</section><!-- /#contenedor_principal_modulos -->
 </div> <!-- /.contenedor_modulo -->
 
 
@@ -418,7 +419,8 @@
 </script>
 
 <!-- MV* -->
-<?=  
+<?= 
+	script_tag('js/backbone/lib/backbone.localStorage.js').
 	//  modelos
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloServicio.js').

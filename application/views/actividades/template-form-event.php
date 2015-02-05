@@ -31,7 +31,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" name="location" value="" placeholder="Introduce una ubicación">
+		<input type="text" class="form-control location" name="location" value="" placeholder="Introduce una ubicación">
 	</div>
 	<div class="form-group">
 		<select class="invitados" name="attendees" multiple placeholder="Seleccione invitados">

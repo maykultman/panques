@@ -10,6 +10,9 @@ app.ModeloEvento = Backbone.Model.extend({
 				error('Error al intentar actualizar el evento');
 			}
 		});
+	},
+	delete : function () {
+		return this.destroy({ wait	: true });
 	}
 });
 var ColeccionActividades = Backbone.Collection.extend({

@@ -106,7 +106,7 @@
 				</div>
 			</td>
 		</script>
-		<?php include('proyectos/plantillas/formulario.php'); ?>
+		<?php include('contratos/formulario.php'); ?>
 		<script type="text/template" id="tds_servicio_seleccionado">
 			<td class="td_servicio" colspan="7" style="padding:0px;">
 				<table id="table_servicio_<%= id %>" class="table" style="margin-bottom:0px;">

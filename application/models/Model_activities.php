@@ -36,7 +36,19 @@
 			$event->setEnd( $end );
 
 			if ( isset($post['attendees']) && $post['attendees'] ) {
-				$attendees = $event->attendees = $post['attendees'];
+				$attendees = [];
+				if ( is_array( $post['attendees'] ) ) {
+					foreach ($post['attendees'] as $email) {
+						$attendee = new Google_Service_Calendar_EventAttendee();
+						$attendee->setEmail( $email );
+						array_push( $attendees, $attendee );
+					}
+					$event->attendees = $attendees;
+				} else {
+					$attendee = new Google_Service_Calendar_EventAttendee();
+					$attendee->setEmail( $post['attendees'] );
+					$event->attendees = $attendee;
+				}	
 			}
 
 			$createdEvent = $this->service->events->insert('f3i1som6133f9j4ul5an2radko@group.calendar.google.com', $event);
@@ -54,6 +66,8 @@
 				$event 	= $this->service->events->get($calendarId,$id);
 				$event->start 	= $event->getStart();
 	            $event->end 	= $event->getEnd();
+	            $event->attendees 	= $event->getAttendees();
+	            $event->creator 	= $event->getCreator();
 				
 	            return $this->output->set_output(json_encode( $event ));
 	        } else {
@@ -63,6 +77,8 @@
 	            	foreach ($events->getItems() as $event) {
 	            		$event->start = $event->getStart();
 	            		$event->end = $event->getEnd();
+	            		$event->attendees = $event->getAttendees();
+	            		$event->creator = $event->getCreator();
 
 	            		array_push( $arrayEvents, $event );
 	            		
@@ -81,9 +97,10 @@
 		public function save( $id,  $put ) {}
 		
 		public function destroy( $id ) {
-			var_dump($id);
 			$calendarId = 'f3i1som6133f9j4ul5an2radko@group.calendar.google.com';
-			return $this->service->events->delete($calendarId,$id);
+			$resp = $this->service->events->delete($calendarId,$id);
+			return $this->output->set_output(json_encode( $resp ));
+			
 		}
 
 	    private function inicializarCalendar () {

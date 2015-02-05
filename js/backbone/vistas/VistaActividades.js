@@ -4,18 +4,21 @@ app.Evento = Backbone.View.extend({
 		'click #enviar' : 'enviar',
 		'change .allDay' : 'conmutarAllDay',
 		'click #cancelar' : 'cancelar',
+		'click #eliminar' : 'eliminar'
 	},
 	initialize 	: function () {
 	},
 	prepararObjetos : function () {
-		this.$formEvento = this.$('.form-event');
 		this.$datepickerDe = this.$('.datepickerDe');
+		this.$description = this.$('.description');
 		this.$datepickerA = this.$('.datepickerA');
 		this.$timepicker = this.$('.timepicker');
+		this.$formEvento = this.$('.form-event');
 		this.$invitados = this.$('.invitados');
+		this.$location = this.$('.location');
+		this.$info = this.$('.google-info');
 		this.$titulo = this.$('.titulo');
 		this.$allDay = this.$('.allDay');
-		this.$description = this.$('.description');
 		this.cargarPlugins();
 	},
 	enviar 		: function (e) {
@@ -51,7 +54,7 @@ app.Evento = Backbone.View.extend({
 				success : function (model) {
 					// console.log('se creo: ', model);
 					$('#block').toggleClass('activo');
-					self.$formEvento.reset();
+					self.$formEvento[0].reset();
 				},
 				error 	: function (model) {
 					// console.log('no creo: ', model);
@@ -65,13 +68,23 @@ app.Evento = Backbone.View.extend({
 		e.preventDefault();
 	},
 	cancelar 	: function () {
-		var self = this;
 		if ( !_.isUndefined( this.model ) ) {
 			this.$el.modal('hide');
-			this.$el.on('hidden.bs.modal', function (e) {
-				self.$el.off();
-			});
 		};
+	},
+	eliminar 	: function () {
+		var self = this;
+		$('#block').toggleClass('activo');
+		var ajax = this.model.delete();
+		ajax.then(function () {
+			ok('Evento eliminado');
+			$('#block').toggleClass('activo');
+			self.$el.modal('hide');
+		}, function () {
+			error('Error al intentar eliminar el evento');
+			$('#block').toggleClass('activo');
+			self.$el.modal('hide');
+		});
 	},
 	conmutarAllDay	: function (e) {
 		switch( this.$(e.currentTarget).is(':checked') ){
@@ -87,35 +100,40 @@ app.Evento = Backbone.View.extend({
 		}
 	},
 	establecerDatos : function () {
-		var json = this.model.toJSON(),
-			de,
-			a,
-			hora1,
-			hora2;
-
+		var json = this.model.toJSON(), de, a, hora1, hora2,
+			fn = function (hour,minute) {
+				if (hour 	< 10) { hour 	= '0'+hour };
+				if (minute 	< 10) { minute 	= '0'+minute };
+				return hour+':'+minute;
+			};
 		this.$titulo.val(json.summary);
-		if ( _.isNull( json.start.date ) ) {
-			de 	= new Date( json.start.date );
-			a 	= new Date( json.end.date );
+		if ( json.start.date ) {
+			de 	= new Date( fechaEstandar( json.start.date ) );
+			a 	= new Date( fechaEstandar( json.end.date ) );
 			this.$datepickerDe.datepicker('setDate', de);
 			this.$datepickerA.datepicker('setDate', a);
+			this.$timepicker.eq(0).attr('disabled',true);
+			this.$timepicker.eq(1).attr('disabled',true);
 			this.$allDay.attr('checked',true);
-		} else if(  _.isNull( json.start.dateTime )  ){
+		} else {
 			de 	= new Date( json.start.dateTime );
 			a 	= new Date( json.end.dateTime );
-			hora1 = de.getHours()+':'+de.getMinutes();
-			hora2 = a.getHours()+':'+a.getMinutes();
+			hora1 = fn( de.getHours(), de.getMinutes() );
+			hora2 = fn( a.getHours(), a.getMinutes() );
 			this.$datepickerDe.datepicker('setDate', de);
 			this.$datepickerA.datepicker('setDate', a);
-			this.$timepicker.eq(0).val(hora1);
-			this.$timepicker.eq(1).val(hora2);
-		} else {
-			error('Ocurrio un error en la funcion establecerDatos');
-			return;
+			this.$timepicker.eq(0).attr('disabled',false).val(hora1);
+			this.$timepicker.eq(1).attr('disabled',false).val(hora2);
+			this.$allDay.attr('checked',false);
 		};
-		// this.$invitados
+
+		this.$location.val(json.location);
+		if ( json.attendees ) {
+			console.log(_.pluck(json.attendees,'email'));
+			this.control.setValue( _.pluck(json.attendees,'email') );
+		};
 		this.$description.val(json.description);
-		this.$el.modal('show');
+		this.$info.text('creado por:'+json.creator.displayName+', email:'+json.creator.email);
 	},
 	cargarPlugins : function () {
 		var self = this;
@@ -194,17 +212,20 @@ app.Evento = Backbone.View.extend({
 		        	}
 			    }
 			});
+			this.control = this.$invitados[0].selectize;
 	},
 });
 app.VistaActividades = Backbone.View.extend({
 	el:'#div-form-and-calendar',
 	initialize 	: function () {
 		var self = this;
+		$('#block').toggleClass('activo');
+
 		this.$calendar = this.$('#calendar');
-		var ajax = app.coleccionClientes.fetch();
-		ajax.then(function () {
-			var ajax = app.coleccionEmpleados.fetch();
-			ajax.then(function () {
+		var request1 = app.coleccionClientes.fetch();
+		request1.then(function () {
+			var request2 = app.coleccionEmpleados.fetch();
+			request2.then(function () {
 				var view = new app.Evento();
 				view.setElement( self.$('#div-new-event') );
 				view.prepararObjetos();
@@ -212,19 +233,26 @@ app.VistaActividades = Backbone.View.extend({
 			}, function () {});
 		}, function () {});
 
-		app.coleccionActividades.fetch();
+		var request3 = app.coleccionActividades.fetch();
+		
+		request3.then(function () {
+			$('#block').toggleClass('activo');
+		}, function () {
+			$('#block').toggleClass('activo');
+			alerta('No se pudo realizar la conexión con Google, intente más tarde.');
+		});
 
 		this.listenTo(app.coleccionActividades, 'add', this.cargarEvento);
+		this.listenTo(app.coleccionActividades, 'destroy', this.retirarEvento);
 
 		// para no guardar las vistas de los eventos 
 		// cada vez que abrimos el modal, lo ponemos
 		// en la variable global. no en this, ya que 
 		// no el selector no existe en esta vista.
 		   app.$modal = $('#myModal');
+		   app.$modal.modal({backdrop:false});
+		   app.$modal.modal('hide');
 	},
-	consultar 	: function () {},
-	actualizar 	: function () {},
-	eliminar 	: function () {},
 	cargarPlugins : function () {
 		this.$calendar.fullCalendar({
 			lang : 'es',
@@ -236,17 +264,21 @@ app.VistaActividades = Backbone.View.extend({
 			selectHelper: true,
 			eventLimit: true, // allow "more" link when too many events
 			eventClick: function(event, element) {
-				// event.title = "CLICKED!";
-				// $('#calendar').fullCalendar('updateEvent', event);
 				var view = new app.Evento({
 					model : app.coleccionActividades.get( event._id )
 				});
-				view.prepararObjetos();
 				view.setElement( app.$modal );
-				view.establecerDatos();
-			}
+				view.prepararObjetos();
+				view.$el.on('shown.bs.modal', function (e) {
+					view.establecerDatos();
+				}).on('hidden.bs.modal', function (e) {
+					view.$el.off();
+					app.$modal.off();
+					app.$modal.find('form')[0].reset();
+				});
+				app.$modal.modal('show');
+			},
 		});
-
 	},
 	cargarEvento : function (model) {
 		var jsonModel = model.toJSON();
@@ -266,5 +298,8 @@ app.VistaActividades = Backbone.View.extend({
 		};
 
 		this.$calendar.fullCalendar('renderEvent', json, true);
+	},
+	retirarEvento : function (model) {
+		this.$calendar.fullCalendar('removeEvents', model.get('id'));
 	}
 });

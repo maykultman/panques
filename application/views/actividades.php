@@ -54,12 +54,17 @@
 					</div>
 					<div class="modal-body">
 						<?php include('actividades/template-form-event.php'); ?>
-						<button type="button" class="btn btn-danger btn-delete" title="Elimina el evento totalmente">
+						<button type="button" id="eliminar" class="btn btn-danger btn-delete" title="Elimina el evento totalmente">
 							Borrar
 							<!-- <span class="icon-trash"></span> -->
 						</button>
 					</div>
-					<!-- <div class="modal-footer"></div> -->
+					<div class="modal-footer text-muted">
+						<small>
+							<b>Datos de Google Calendar</b><br>
+							<div class="google-info"></div>
+						</small>
+					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
