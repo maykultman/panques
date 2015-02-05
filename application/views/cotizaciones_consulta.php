@@ -2,7 +2,32 @@
 	script_tag('js/autocompletes.js').
 	link_tag('css/estilos_modulo_contratos.css');
 ?>
-	
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	if(is_array($arg))	
+	{		
+	    foreach ($arg as $key => $value) 
+	    {
+	        if($value==$perm)
+	        {
+	            $resp = $value;
+	        }
+	    }
+	     return $resp;
+	}
+	return $arg;
+}
+if(isset($this->session->userdata('Cotizaciones')[1]['permisos']))
+{    
+    $activa_p[0] = menu($this->session->userdata('Cotizaciones')[1]['permisos'], 1);
+    $activa_p[1] = menu($this->session->userdata('Cotizaciones')[1]['permisos'], 2);
+    $activa_p[2] = menu($this->session->userdata('Cotizaciones')[1]['permisos'], 3);
+    $activa_p[3] = menu($this->session->userdata('Cotizaciones')[1]['permisos'], 4);
+}
+?>
 		<section class="container-fluid">
 			<section id="seccion_tabla">
 				<!-- <div id="div_fullHeight">     -->
@@ -43,13 +68,17 @@
 								</tbody>		
 							</table>
 						</div>
-						<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
+						<?php
+						//Validamos el permiso para eliminar
+						 if($activa_p[3]=='4'){ ?> 
+							<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
+						<?php } ?>
 					</div>
 				<!-- </div> -->
 			</section>
 		</section>
 		<section id="section_actualizar">
-			<div class="container">
+			<div class="container"><h1>
 				<form id="formPrincipal">
 					
 				</form>
@@ -68,10 +97,10 @@
 		<td>   $<%=total%>									</td>
 		<!--<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>-->
 		<td class="icon-operaciones">
-			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
-			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver cotización"></span>
-			<span class="icon-uniF7D5 span_descargar"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
-			<span class="icon-uniF5E2 span_editar"  	data-toggle="tooltip" data-placement="top" title="Pasar a contrato" id="pasaracontrato"><input type="hidden" value="<%= id %>"></span>
+			<?php if($activa_p[3]=='4'){ ?><span class="icon-trash span_papelera" data-toggle="tooltip" data-placement="top" title="Papelera"></span><?php } ?>
+			<?php if($activa_p[1]=='2'){ ?><span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver cotización"></span><?php } ?>
+			<?php if($this->session->userdata('perfil')=='Administrador'){?><span class="icon-uniF7D5 span_descargar"  	data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span><?php } ?>
+			<?php if($activa_p[2]=='3'){ ?><span class="icon-uniF5E2 span_editar"  	data-toggle="tooltip" data-placement="top" title="Pasar a contrato" id="pasaracontrato"><input type="hidden" value="<%= id %>"></span>
 			<span class="icon-edit2 span_editar"    	data-toggle="tooltip" data-placement="top" title="Editar" id="soloeditar"><input type="hidden" value="<%= id %>"></span>
 			<form>
 				<div class="dropdown">
@@ -81,7 +110,7 @@
 						<!--<li role="presentation" class="divider"></li>-->
 					</ul>
 				</div>
-			</form>
+			</form><?php } ?>
 		</td>
 	</script>
 

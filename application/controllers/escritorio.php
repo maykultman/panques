@@ -118,6 +118,11 @@ class Escritorio extends REST {
 
 		if($this->session->userdata('usuario'))
 		{ 
+			$ruta='';
+			if(strpos($this->ruta(),'_'))
+			{
+				$ruta = explode('_', $this->ruta())[0];
+			}
 			if(!$this->ruta())
 			{
 				redirect('escritorio/dashboard');
@@ -126,40 +131,28 @@ class Escritorio extends REST {
 			{
 				$this->dashboard();				
 			}
-			if($this->ruta()==='cliente_nuevo'||$this->ruta()==='consulta_clientes'||$this->ruta()==='consulta_prospectos'||$this->ruta()==='consulta_clientes_eliminados')
+					
+			if($this->ruta()==='cliente_nuevo'||strpos($this->ruta(), 'cliente')||strpos($this->ruta(), 'prospectos'))
 			{
 
 				$this->clientes(); 
 			}
-			if(explode('_', $this->ruta())[0]==='proyectos')
-			{
-				$this->proyectos();				
-			}
-			if(explode('_', $this->ruta())[0]==='contratos')
-			{
-				$this->contratos();				
-			}
-			if(explode('_', $this->ruta())[0]==='cotizaciones')
-			{
-				$this->cotizaciones();				
-			}
+			if($ruta==='proyectos'){	$this->proyectos();	}
 
-			if( explode('_', $this->ruta())[0] == 'catalogo')
-			{
-				$this->catalogos();
-			}			
-			if(explode('_', $this->ruta())[0]==='usuarios')
-			{
-				$this->usuarios();				
-			}
+			if($ruta==='contratos'){	$this->contratos();	}
+
+			if($ruta==='cotizaciones'){	$this->cotizaciones();	}
+
+			if($ruta == 'catalogo'){	$this->catalogos();	}
+
+			if($ruta==='usuarios'){	$this->usuarios();	}
+
 			if($this->ruta()==='formatoCotizacion'||$this->ruta()==='formatoContrato'||$this->ruta()==='vistaPreviaCotizacion')
 			{
 				$this->formato();
 			}
-			if($this->ruta()==='configuracion')
-			{
-				$this->configuracion();				
-			}
+			if($this->ruta()==='configuracion'){	$this->configuracion();	}
+
 			if($this->ruta()==='actividades')
 			{
 				$this->actividades();
@@ -178,7 +171,13 @@ class Escritorio extends REST {
 	public function dashboard()
 	{ 	
 
-		$this->area_Estatica('dashboard_gustavo');
+		$this->load->model('Model_dashboard', 'dash');
+
+		$data['cotizaciones'] = $this->dash->get_budgets();
+		$pagos = $this->dash->get_payments();	
+		$data['pagosxI'] = $pagos['iguala'];
+		$data['pagosxE'] = $pagos['evento'];	
+		$this->area_Estatica('dashboard_gustavo', $data);
 	} 
 	
 	public function activaCatalogo()

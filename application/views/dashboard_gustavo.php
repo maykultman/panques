@@ -1,6 +1,29 @@
 <?=	link_tag('css/estilo_dashboard_gustavo.css').
 	link_tag('css/theme.default.css');
 ?>
+<?php 
+setlocale (LC_TIME, "es_ES"); 
+
+function pagoz($arg)
+{	
+	echo '<table class="table table-striped">
+			<thead><tr><th>Cliente</th><th>Monto</th><th>Vencimiento</th></tr></thead>
+			<tbody>';
+
+	foreach ($arg as $pik => $piv) 
+	{ 	
+		$class = 'alert';
+		$class .= ($piv['fechapago'] < date('Y-m-d')) ? ' alert-danger': ' alert-success';				
+		echo "<tr>
+			<td>".$piv['cliente']."</td>
+			<td>$".number_format($piv['pago'], 2)."</td>
+			<td><span class='".$class."' style='padding:0 5px;'>".strftime('%d, %b %Y',strtotime($piv['fechapago']))."</span>
+			</td>
+		</tr>";
+	}
+	echo "</tbody></table>";
+} 
+?>
 <style>
 .warning{
 	color:#f89406
@@ -28,9 +51,9 @@
 						   		</tr>
 						   	</thead>
 						   	<tbody >
-						   		<?php if(isset($dominios)&&is_array($dominios)): ?>
+						   		<?php if(isset($dominios)&&is_array($dominios)){ ?>
 						   			<tr><td><?=$dominio;?></td> <td><?=$vencimiento;?></td></tr>
-						   		<?php endif ?>
+						   		<?php } ?>
 						   	</tbody>
 						   </table>
 						</div>
@@ -44,50 +67,36 @@
 					    </div>
 					  	<div class="panel-body" style="height: 250px;">
 						    <ul class="nav nav-tabs" role="tablist">
-							  <li class="active"><a href="#evento" role="tab" data-toggle="tab">Evento</a></li>
-							  <li><a href="#iguala" role="tab" data-toggle="tab">Iguala Mensual</a></li>
+						    	<li class="active"><a href="#iguala" role="tab" data-toggle="tab">Iguala Mensual</a></li>
+							  	<li><a href="#evento" role="tab" data-toggle="tab">Evento</a></li>							  
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane fade in active" id="evento" style="overflow: auto; height: 185px;">
-									<table class="table table-striped">
-									   	<thead >
-									   		<tr>
-									   			<th>Cliente</th>
-									   			<th>Monto</th>
-									   			<th>Vencimiento</th>
-									   		</tr>
-									   	</thead>
-									   	<tbody>
-									   		<?php if(isset($pagosxI)&&is_array($pagosxI)):?>
-									   		<tr>
-									   			<td><?=$cliente;?></td>
-									   			<td><?=$monto;?></td>
-									   			<td><?=$vencimiento;?></td>
-									   		</tr>
-									   	<?php endif;?>
-									   	</tbody>
-									</table>							
+								<div class="tab-pane fade in active" id="iguala" style="overflow: auto; height: 185px;">
+									<?php 
+									$div = '<div style="border-radius:0 0 5px 5px;position:absolute;width:100%;background:rgba(0, 0, 0, 0.79);height: 100%;"></div><h3 style="padding:10%0;text-align: center;">No hay pagos pendientes por el momento</h3>';
+									   	if(isset($pagosxI)&&is_array($pagosxI)){
+									   		if(!empty($pagosxI)) {
+									   			pagoz($pagosxI);
+									   		}									   			
+									   	}
+									   	else
+									   	{ 
+									   		echo $div;
+									   	}
+									?>									 
 								</div>
-							    <div class="tab-pane fade" id="iguala" style="overflow: auto; height: 185px;">
-							    	<table class="table table-striped">
-									   	<thead >
-									   		<tr>
-									   			<th>Cliente</th>
-									   			<th>Monto</th>
-									   			<th>Vencimiento</th>
-									   		</tr>
-									   	</thead>
-									   	<tbody>
-											<?php 
-												if(isset($pagosxE)&&is_array($pagosxE)):?>
-									   			<tr>
-									   				<td><?=$cliente;?></td>
-									   				<td><?=$monto;?></td>
-									   				<td><?=$vencimiento;?></td>
-									   			</tr>
-									   		<?php endif;?>									   		
-									   	</tbody>
-									</table>	
+							    <div class="tab-pane fade" id="evento" style="overflow: auto; height: 185px; position:relative">
+							    	<?php 
+										if(isset($pagosxE)&&is_array($pagosxE)){
+											if(!empty($pagosxE)) {
+												pagoz($pagosxE);
+											}
+										}
+										else
+										{ 
+											echo $div;
+										}
+									?>
 							    </div>
 						    </div>
 						</div>
@@ -95,7 +104,7 @@
 			  	</div>
 			</div>
 
-			<div class="panel panel-default">
+		<!-- 	<div class="panel panel-default">
 				<div class="panel-heading color" >
 			    	<h3 class="panel-title">Mis Actividades</h3>		    	
 			    	<span id="icono_panel" class="icon-calendar2" ></span>
@@ -127,7 +136,7 @@
 			  			</div>
 			  		</div>		   
 				</div>
-		    </div>
+		    </div> -->
 		    <div class="panel panel-default">
 				<div class="panel-heading color" >
 			    	<h3 class="panel-title">Cotizaciones Realizadas</h3>
@@ -137,7 +146,7 @@
 				    <table class="table table-striped ">
 					   	<thead>
 					   		<tr>
-					   			<th>Prospecto</th><th>Servicio</th>
+					   			<th>Cliente</th><th>Titulo</th>
 					   			<th>Realizó</th><th>Importe</th>
 					   			<th>Fecha</th><th>Tools</th>
 					   		</tr>
@@ -145,14 +154,14 @@
 					   	<tbody >
 					   		<?php 
 					   			if(isset($cotizaciones)&&is_array($cotizaciones))
-					   			{
+					   			{					   				
 					   				foreach ($cotizaciones as $key => $value) 
 					   				{?>
 
 					   				<tr>
-					   					<td><?=$cliente;?></td><td><?=$titulo;?></td>
-					   					<td><?=$empleado;?></td><td><?=$importe;?></td>
-					   					<td><?=$fecha;?></td><td>Operaciones</td>
+					   					<td><?=$value->idcliente;?></td><td><?=$value->titulo;?></td>
+					   					<td><?=$value->nombre;?></td><td><?='$'.$value->preciotiempo;?></td>
+					   					<td><?=$value->fechacreacion;?></td><td>Operaciones</td>
 					   				</tr>
 					   					
 					   				<?php }
@@ -196,7 +205,8 @@
 					</table>
 				</div>
 		    </div>
-	   	  	<div class="panel panel-default">
+		    <?php if($this->session->userdata('perfil')=='Administrador') : ?>
+	   	  		<div class="panel panel-default">
 				<div class="panel-heading color">
 				   	<h3 class="panel-title">Ingresos</h3>
 				   	<span id="icono_panel" class="icon-stocks" ></span>
@@ -224,9 +234,10 @@
 					   			</tr>
 					   		<?php endif ?>
 					   	</tbody>
-					   </table>
-					</div>
+					</table>
+				</div>
 				</div>		  
+			<?php endif ?>
 		</div>
 	</section>
 </div>  

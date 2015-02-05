@@ -2,6 +2,32 @@
 	script_tag('js/autocompletes.js').
 	link_tag('css/estilos_modulo_contratos.css');
 ?>
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	if(is_array($arg))	
+	{		
+	    foreach ($arg as $key => $value) 
+	    {
+	        if($value==$perm)
+	        {
+	            $resp = $value;
+	        }
+	    }
+	     return $resp;
+	}
+	return $arg;
+}
+if(isset($this->session->userdata('Contratos')[1]['permisos']))
+{    
+    $activa_p[0] = menu($this->session->userdata('Contratos')[1]['permisos'], 1);
+    $activa_p[1] = menu($this->session->userdata('Contratos')[1]['permisos'], 2);
+    $activa_p[2] = menu($this->session->userdata('Contratos')[1]['permisos'], 3);
+    $activa_p[3] = menu($this->session->userdata('Contratos')[1]['permisos'], 4);
+}
+?>
 	<div id="contenedor_principal_modulos" class="container-fluid" style="padding-left:4%;padding-right:3%;">
 		<section id="seccion_tabla">
 			<!-- <div id="div_fullHeight">     -->
@@ -41,7 +67,10 @@
 								</tbody>		
 							</table>
 						</div>
+						
+						<?php if($activa_p[3]=='4'){ ?>
 						<button id="btn_eliminarVarios"  type="button" class="btn btn-danger">Eliminar varios</button>
+						<?php } ?>
 					</div>
 				</div>
 		</section>
@@ -66,20 +95,23 @@
 		<td>	<b><%= formatearFechaUsuario(new Date(fechacreacion)) %></td>
 		<td>	<b><%= formatearFechaUsuario(new Date(fechafinal)) %></td>
 		<td class="icon-operaciones">
-			<span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span>
-			<span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver contrato"></span>
-			<span class="icon-uniF7D5"  				data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span>
-			<span class="icon-redo span_editar" data-toggle="tooltip" data-placement="top" title="Renovar"><input type="hidden" value="<%= id %>"></span>
+			<?php if($activa_p[3]=='4'){ ?><span class="icon-trash span_papelera"		data-toggle="tooltip" data-placement="top" title="Papelera"></span><?php } ?>
+			<?php if($activa_p[1]=='2'){ ?><span class="icon-preview span_vistaPrevia"	data-toggle="tooltip" data-placement="top" title="Ver contrato"></span><?php } ?>
+			<?php if($this->session->userdata('perfil') == 'Administrador'){ ?><span class="icon-uniF7D5" data-toggle="tooltip" data-placement="top" title="Descargar como PDF"></span><?php } ?>
+			<?php if($activa_p[2]=='3'){ ?><span class="icon-redo span_editar" data-toggle="tooltip" data-placement="top" title="Renovar"><input type="hidden" value="<%= id %>"></span>
 			<form><!-- no borrar -->
 				<div class="dropdown">
-					<span class="icon-uniF73E dropdown-toggle versione" id="versiones"		data-toggle="dropdown" data-placement="top" title="Versiones"></span>
+					<span class="icon-uniF73E dropdown-toggle versione" id="versiones" data-toggle="dropdown" data-placement="top" title="Versiones"></span>
 					<ul id="ul-versiones" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="versiones">
 						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Vacío</a></li>
 						<!--<li role="presentation" class="divider"></li>-->
 					</ul>
 				</div>
 			</form>
+			<?php } ?>
+			<?php if($this->session->userdata('perfil') == 'Administrador'){ ?>
 			<span class="icon-uniF4E7 span_pagos" data-toggle="modal" data-target=".bs-example-modal-sm<%= id %>" title="Pagos"></span>
+			<?php } ?>
 		</td>
 		<td>
 			<div class="modal fade bs-example-modal-sm<%= id %> modal-pago" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

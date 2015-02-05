@@ -1,4 +1,10 @@
-
+<?php 
+if(isset($this->session->userdata('Cotizaciones')[2]['permisos']))
+{    
+    $activa_p[0] = $this->session->userdata('Cotizaciones')[2]['permisos'][0];
+    $activa_p[1] = $this->session->userdata('Cotizaciones')[2]['permisos'][1];
+}
+?>
 	
 		<section id="seccion_tabla">
 			<!-- <div id="div_fullHeight">     -->
@@ -39,8 +45,14 @@
 							</tbody>		
 						</table>
 					</div>
-					<button  type="button" id="btn_eliminarVarios" class="btn btn-danger">  Borrar varios </button>
-					<button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button> 
+
+					<?php if($activa_p[1]==4){ ?>
+						<button  type="button" id="btn_eliminarVarios" class="btn btn-danger">Borrar varios </button>
+					<?php } ?>
+					<?php if($activa_p[0]==6){ ?>
+						<button type="button" id="btn_restaurarVarios" class="btn btn-default">Restaurar varios</button> 
+					<?php } ?>
+					
 				</div>
 			<!-- </div> -->
 		</section>
@@ -56,8 +68,8 @@
 		<!--<td>   $<%=total%>									</td>-->
 		<!--<td>	<%=formatearFechaUsuario(new Date(fechacreacion))%>	</td>-->
 		<td class="icon-operaciones">
-			<span class="icon-restore span_restaurar"		data-toggle="tooltip" data-placement="top" title="Restaurar"></span>
-			<span class="icon-circledelete span_borrar"	data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span>
+			<?php if($activa_p[0]==6){ ?><span class="icon-restore span_restaurar"	 data-toggle="tooltip" data-placement="top" title="Restaurar"></span><?php } ?>
+			<?php if($activa_p[1]==4){ ?><span class="icon-circledelete span_borrar" data-toggle="tooltip" data-placement="top" title="Borrar permanentemente"></span><?php } ?>
 		</td>
 	</script>
 	<script type="text/template" id="tds_servicio">
