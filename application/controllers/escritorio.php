@@ -404,35 +404,28 @@ class Escritorio extends REST {
 
 	        if ( isset($authUrl) && $authUrl ) {
 	        	$datos = array('authUrl' => $authUrl);
-	        	$this->area_Estatica('actividades', $datos);
+	        	/*Descomentar la linea siguiente y comentar la subsiguiente
+	        	para proporcionar una url de accesso para un ancla en la vista
+	        	actividades.php. descomentar dicha ancla en la vista.*/
+	        	// $this->area_Estatica('actividades', $datos);
+	        	header('Location:' . filter_var($authUrl, FILTER_SANITIZE_URL));
 	        } else {
 	        	$this->area_Estatica('actividades');
 	        }
 		}
 		public function conectar () {
-			
 			if ( isset($_GET['code']) ) {
 	            $this->client->authenticate($_GET['code']);
 	            $this->session->set_userdata('access_token', $this->client->getAccessToken());
 	            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 	            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
+	        } else {
+	        	$this->actividades();
 	        }
-
-			// $interface =
-			// 	'<iframe
-			// 		src="https://www.google.com/calendar/embed?src=f3i1som6133f9j4ul5an2radko%40group.calendar.google.com&ctz=America/Mexico_City"
-			// 		style="border: 0"
-			// 		width="800"
-			// 		height="600"
-			// 		frameborder="0"
-			// 		scrolling="no"
-			// 	></iframe>';
-
-	        // $datos = array( 'interface' => $interface );
-	        // $this->area_Estatica('actividades', $datos);
-	        $this->area_Estatica('actividades');
 		}
 		public function salir () {
+			/*No borrar esta función. sirve para tener un control manual para
+			salir de la sesion de google calendar.*/
 			$this->session->unset_userdata('access_token');
 			header('Location:actividades');
 		}

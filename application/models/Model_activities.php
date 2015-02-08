@@ -3,12 +3,11 @@
 	* 
 	*/
 	require_once '/google-api-php-client-master/autoload.php';
-	class Model_activities extends CI_Model
-	{
+	class Model_activities extends CI_Model {
 		public function __construct() {
 			$this->inicializarCalendar();
 		}
-		public function create( $post ) {
+		public function create( $post, $update = false ) {
 			$event = new Google_Service_Calendar_Event();
 			$event->setSummary( $post['summary'] );
 			$event->setLocation( $post['location'] );
@@ -48,7 +47,11 @@
 					$attendee = new Google_Service_Calendar_EventAttendee();
 					$attendee->setEmail( $post['attendees'] );
 					$event->attendees = $attendee;
-				}	
+				}
+			}
+
+			if ( $update ) {
+				return $event;
 			}
 
 			$createdEvent = $this->service->events->insert('f3i1som6133f9j4ul5an2radko@group.calendar.google.com', $event);
@@ -64,10 +67,8 @@
 
 			if ( $id ) {
 				$event 	= $this->service->events->get($calendarId,$id);
-				$event->start 	= $event->getStart();
-	            $event->end 	= $event->getEnd();
-	            $event->attendees 	= $event->getAttendees();
-	            $event->creator 	= $event->getCreator();
+				
+				$event = $this->obtenerPropiedades($event);
 				
 	            return $this->output->set_output(json_encode( $event ));
 	        } else {
@@ -75,10 +76,8 @@
 	            $arrayEvents = [];
 	            while (true) {
 	            	foreach ($events->getItems() as $event) {
-	            		$event->start = $event->getStart();
-	            		$event->end = $event->getEnd();
-	            		$event->attendees = $event->getAttendees();
-	            		$event->creator = $event->getCreator();
+	            		
+	            		$event = $this->obtenerPropiedades($event);
 
 	            		array_push( $arrayEvents, $event );
 	            		
@@ -94,15 +93,29 @@
 	            return $this->output->set_output(json_encode( $arrayEvents ));
 	        }
 		}
-		public function save( $id,  $put ) {}
-		
+		public function obtenerPropiedades ($event) {
+			$event->start = $event->getStart();
+			$event->end = $event->getEnd();
+			$event->attendees = $event->getAttendees();
+			$event->creator = $event->getCreator();
+			return $event;
+		}
+		public function save( $put, $id ) {
+			$calendarId = 'f3i1som6133f9j4ul5an2radko@group.calendar.google.com';
+
+			$event = $this->create($put, true);
+			$event = $this->service->events->update($calendarId, $id, $event);
+			if ( $event ) {
+				return $this->get( $id );
+			} else {
+				return 'error';
+			}
+		}
 		public function destroy( $id ) {
 			$calendarId = 'f3i1som6133f9j4ul5an2radko@group.calendar.google.com';
 			$resp = $this->service->events->delete($calendarId,$id);
 			return $this->output->set_output(json_encode( $resp ));
-			
 		}
-
 	    private function inicializarCalendar () {
 	        $client_id = '266013765630-no4316pgdf96q34c98eb0bit2or9ff0s.apps.googleusercontent.com';
 	        $client_secret = '9eMzpa4ags-xnvzPkEGEqrFs';

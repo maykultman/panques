@@ -11,17 +11,15 @@ class  Actividades extends REST {
 
     private function index() { }
     
-    public function api() {
+    public function api( $id = false ) {
         $access_token = $this->session->userdata('access_token');
         if ( isset( $access_token ) && $access_token ) {
 
             $this->Activities->client->setAccessToken( $access_token );
 
             $metodo = $this->request();
-            $this->$metodo();
+            $this->$metodo( $id );
         } else {
-            $metodo = $this->request();
-            $this->$metodo();
             echo "No hay access_token";
         }
     }
@@ -30,12 +28,11 @@ class  Actividades extends REST {
     }
 
     private function get(){
-        return $this->Activities->get($this->id());
+        return $this->Activities->get( $this->id() );
     }
 
-    private function update($id) {
-        $query = $this->Customer->patch_customer($id, $this->put());             
-        $this->pre_response($query, 'update'); 
+    private function update( $id ) {
+        return $this->Activities->save( $this->put(), $id );
     }
 
     private function delete() {

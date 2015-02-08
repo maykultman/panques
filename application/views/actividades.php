@@ -16,15 +16,17 @@
 	<seccton id="contenedor_principal_modulos">
 		<div class="container">
 			<?php 
-				if (isset($authUrl) && $authUrl) {
-					// var_dump($authUrl);
-					echo "<a class='login' href='" . $authUrl . "'>Connect Me!</a>";
-				} else {
-					echo "<a class='logout' href='salir'>Salir</a>";
-				}
+				/*Descomentar si se requiere un control manual para acceder a los datos
+				de google calendar, hay una descripcion en el controlador escritorio, en
+				la funcion actividades para saber que hacer.*/
+				// if (isset($authUrl) && $authUrl) {
+				// 	// var_dump($authUrl);
+				// 	echo "<a class='login' href='" . $authUrl . "'>Connect Me!</a>";
+				// } else {
+				// 	echo "<a class='logout' href='salir'>Salir</a>";
+				// }
 			?>
-			<hr>
-			<div class="row" id="div-form-and-calendar">
+			<div class="row" id="div-form-and-div-calendar">
 				<div class="col-md-4" id="div-new-event">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -45,31 +47,32 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Actualizar Evento</h4>
-					</div>
-					<div class="modal-body">
-						<?php include('actividades/template-form-event.php'); ?>
-						<button type="button" id="eliminar" class="btn btn-danger btn-delete" title="Elimina el evento totalmente">
-							Borrar
-							<!-- <span class="icon-trash"></span> -->
-						</button>
-					</div>
-					<div class="modal-footer text-muted">
-						<small>
-							<b>Datos de Google Calendar</b><br>
-							<div class="google-info"></div>
-						</small>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
 	</seccton>
 </div>
+
+<script type="text/template" id="form-event-update-template">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Actualizar Evento</h4>
+				</div>
+				<div class="modal-body">
+					<?php include('actividades/template-form-event.php'); ?>
+					<button type="button" id="eliminar" class="btn btn-danger btn-delete" title="Elimina el evento totalmente">
+						Borrar
+						<!-- <span class="icon-trash"></span> -->
+					</button>
+				</div>
+				<div class="modal-footer text-muted">
+					<small>
+						<b>Datos de Google Calendar</b><br>
+						<div class="google-info"></div>
+					</small>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+</script>
 
 <?= 
 	link_tag('js/plugin/fullcalendar/fullcalendar.min.css').
