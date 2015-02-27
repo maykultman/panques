@@ -310,7 +310,6 @@ script_tag('js/backbone.localStorage.js');?>
 	script_tag('js/funcionescrm.js').
 	script_tag('js/backbone/modelos/ModeloServicio.js').
 	script_tag('js/backbone/modelos/ModeloCliente.js').
-	script_tag('js/backbone/modelos/ModeloEmpleado.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
 	script_tag('js/backbone/modelos/ModeloServicioCotizado.js').
 

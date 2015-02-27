@@ -1,11 +1,11 @@
 var app = app || {};
 
 app.ModeloUsuario = Backbone.Model.extend({
-	urlRoot	:'http://crmqualium.com/api_usuarios'
+	urlRoot	:location.origin+'/api_usuarios'
 });
 
 var ColeccionUsuarios = Backbone.Collection.extend({
-	url 	:'http://crmqualium.com/api_usuarios',
+	url 	:location.origin+'api_usuarios',
 	model	: app.ModeloUsuario,
 
 });

@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.ModeloTelefono = Backbone.Model.extend({
-	urlRoot	:'http://crmqualium.com/api_telefonos'
+	urlRoot	:location.origin+'/api_telefonos'
 	// defaults	: {
 	// 	idpropietario	: '',
 	// 			tabla	: '',
@@ -11,7 +11,7 @@ app.ModeloTelefono = Backbone.Model.extend({
 });
 
 var ColeccionTelefonos = Backbone.Collection.extend({
-	url 	:'http://crmqualium.com/api_telefonos',
+	url 	:location.origin+'/api_telefonos',
 	model	: app.ModeloTelefono,
 
 	// localStorage	: new Backbone.LocalStorage('telefonos-backbone'),

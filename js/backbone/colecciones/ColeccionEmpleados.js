@@ -1,10 +1,17 @@
 var app = app || {};
 
+app.ModeloEmpleado = Backbone.Model.extend({
+
+	urlRoot	:root+'/api_empleados',
+	
+	defaults	: {},
+});
+
 var ColeccionEmpleados = Backbone.Collection.extend({
 	model	: app.ModeloEmpleado,
 
 	// localStorage	: new Backbone.LocalStorage('clientes-backbone'),
-	url: 'http://crmqualium.com/api_empleados',
+	url: root+'/api_empleados',
 
 	obtenerTodos : function () {
 		return this.filter( function (empleado){

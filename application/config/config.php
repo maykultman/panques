@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://CRMQualium.com';
+$config['base_url']	= $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER['SERVER_NAME'];
 
 /*
 |--------------------------------------------------------------------------

@@ -34,16 +34,13 @@ class  Usuarios extends REST
     {
         $query = $this->put();  
         $data = array();     
-        if(isset($query['usuario']))
-        {
-            $data['usuario'] = $query['usuario'];
-        }
+       
         if(isset($query['contrasena']))
         {
-            $data['contrasenia'] = md5($query['contrasena']);            
-        }        
+            $query['contrasenia'] = md5($query['contrasena']);            
+        }   
         
-        $query = $this->user->save($this->id(), $data);
+        $query = $this->user->save($this->id(), $query);
         $this->pre_response($data, 'update');         
     }
 

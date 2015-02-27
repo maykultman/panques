@@ -344,8 +344,7 @@ if(isset($this->session->userdata('Contratos')[1]['permisos']))
 	    script_tag('js/numero-a-letras.js').
 	// <!-- modelos -->
 		script_tag('js/backbone/modelos/ModeloServicio.js').
-	    script_tag('js/backbone/modelos/ModeloCliente.js').
-		script_tag('js/backbone/modelos/ModeloEmpleado.js').
+	    script_tag('js/backbone/modelos/ModeloCliente.js').		
 		script_tag('js/backbone/modelos/ModeloRepresentante.js').
 	// <!-- colecciones -->
 		script_tag('js/backbone/colecciones/ColeccionServicios.js').

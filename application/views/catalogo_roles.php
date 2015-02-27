@@ -73,7 +73,7 @@ if(isset($this->session->userdata('Catálogos')[3]['permisos']))
 	</td>
 
 </script>
-<?=	script_tag('js/backbone/modelos/ModeloRol.js').
+<?=	
 	script_tag('js/backbone/colecciones/ColeccionRoles.js').
 	script_tag('js/backbone/vistas/VistaCatalogoRol.js');
 ?>

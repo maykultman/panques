@@ -2,7 +2,7 @@ var app = app || {};
 
 app.ModeloRepresentante = Backbone.Model.extend({
 
-	urlRoot	:'http://crmqualium.com/api_representante'
+	urlRoot	:root+'/api_representante'
 	
 	// defaults	: {
 	// 	idCliente : '',

@@ -1,3 +1,29 @@
+<?php 
+$activa_p = array();
+function menu($arg, $perm)
+{
+	$resp=0;
+	if(is_array($arg))	
+	{		
+	    foreach ($arg as $key => $value) 
+	    {
+	        if($value==$perm)
+	        {
+	            $resp = $value;
+	        }
+	    }
+	     return $resp;
+	}
+}
+if(isset($this->session->userdata('Proyectos')[1]['permisos']))
+{    
+    $activa_p[0] = menu($this->session->userdata('Proyectos')[1]['permisos'], 1);
+    $activa_p[1] = menu($this->session->userdata('Proyectos')[1]['permisos'], 2);
+    $activa_p[2] = menu($this->session->userdata('Proyectos')[1]['permisos'], 3);
+    $activa_p[3] = menu($this->session->userdata('Proyectos')[1]['permisos'], 4);
+    // var_dump($activa_p[3]); die();
+}
+?>	
 	<section id="contenedor_principal_modulos" class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -98,11 +124,14 @@
 			</td>
 		<%} else{%>
 			<td class="icon-operaciones">
-				<div class="eliminar_cliente">
-					<span class="icon-circledelete eliminar"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-				</div>
-				<span id="tr_btn_editar" class="icon-edit2"  data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
-				<span id="tr_btn_verInfo" class="icon-eye"  data-toggle="modal" data-target="#modal<%- id %>" title="Ver proyecto"></span>
+
+				<?php if($activa_p[3]== 4){?>
+					<div class="eliminar_cliente">
+				 		<span class="icon-circledelete eliminar"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+					</div>
+				 <?php }?>
+				<?php if($activa_p[2]==3){ ?><span id="tr_btn_editar" class="icon-edit2"  data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span><?php } ?>
+				<?php if($activa_p[1]==2){ ?><span id="tr_btn_verInfo" class="icon-eye"  data-toggle="modal" data-target="#modal<%- id %>" title="Ver proyecto"></span><?php } ?>
 				<span class="icon-raceflag span-conmutar-entrega" title="Entregar"></span>
 			</td>
 		<%};%>
@@ -531,7 +560,6 @@
 		script_tag('js/backbone/modelos/ModeloCliente.js').
 		script_tag('js/backbone/modelos/ModeloRepresentante.js').
 		script_tag('js/backbone/modelos/ModeloServicio.js').
-		script_tag('js/backbone/modelos/ModeloEmpleado.js').
 		script_tag('js/backbone/modelos/ModeloRolProyecto.js').
 		script_tag('js/backbone/modelos/ModeloServicioProyecto.js').
 		// <!-- colecciones -->

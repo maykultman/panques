@@ -1,10 +1,25 @@
 var app = app || {};
+app.ModeloServicio = Backbone.Model.extend({
+
+	urlRoot	:root+'/api_servicios',
+	
+
+	// localStorage 	: new Backbone.LocalStorage('servicios-backbone'),
+	// defaults	: {
+		// id: app.coleccionServicios.obtenerUltimoId() + 1,
+	// 	nombre:'',
+	// 	concepto:'',
+	// 	precio:'',
+	// 	realizacion:'',
+	// 	descripcion:''
+	// }
+});
 
 var ColeccionServicios = Backbone.Collection.extend({
 	model	: app.ModeloServicio,
 
 	// localStorage	: new Backbone.LocalStorage('servicio-backbone'),
-	url 	:'http://crmqualium.com/api_servicios',
+	url 	:root+'/api_servicios',
 
 	obtenerTodos : function () {
 		return this.filter( function (servicio){

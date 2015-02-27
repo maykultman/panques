@@ -4,7 +4,7 @@ var ColeccionClientes = Backbone.Collection.extend({
 	model	: app.ModeloCliente,
 
 	// localStorage	: new Backbone.LocalStorage('clientes-backbone'),
-	url: 'http://crmqualium.com/api_cliente',
+	url: location.origin+'/api_cliente',
 
 	obtenerTodos : function () {
 		return this.filter( function (cliente){

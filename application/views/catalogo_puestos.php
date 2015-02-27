@@ -78,7 +78,6 @@ if(isset($this->session->userdata('Catálogos')[1]['permisos']))
 </script>
 <?=
 //Librerias
-	script_tag('js/backbone/modelos/ModeloPuesto.js').
 	script_tag('js/backbone/colecciones/ColeccionPuestos.js').
 	script_tag('js/backbone/vistas/VistaCatalogoPuestos.js');
 ?>

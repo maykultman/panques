@@ -3,7 +3,7 @@ var app = app || {};
 
 /*---------------------------------------------------------------*/
 app.ModeloPago	= Backbone.Model.extend({
-	urlRoot	: 'http://crmqualium.com/api_pagos',
+	urlRoot	: location.origin+'/api_pagos',
 	cambiarStatus	: function () {
 		var st;
 		if (this.get('status') == true)
@@ -26,10 +26,10 @@ app.ModeloPago	= Backbone.Model.extend({
 });
 var ColeccionPagos= Backbone.Collection.extend({
 	model	: app.ModeloPago,
-	url		: 'http://crmqualium.com/api_pagos'
+	url		: location.origin+'/api_pagos'
 });
 app.ModeloContrato	= Backbone.Model.extend({
-	urlRoot	: 'http://crmqualium.com/api_contratos',
+	urlRoot	: location.origin+'/api_contratos',
 	// defaults	: {
 	// 	fechacreacion : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + (f.getDate() +1)
 	// },
@@ -133,7 +133,7 @@ app.ModeloContrato	= Backbone.Model.extend({
 });
 var ColeccionContratos = Backbone.Collection.extend({
 	model			: app.ModeloContrato,
-	url 	: 'http://crmqualium.com/api_contratos',
+	url 	: location.origin+'/api_contratos',
 	parse : function (response) {
 		this.folio = response.folio.folio;
 
@@ -198,11 +198,11 @@ var ColeccionContratos = Backbone.Collection.extend({
 	}
 });
 app.ModeloServicioContrato	= Backbone.Model.extend({
-	urlRoot	: 'http://crmqualium.com/api_serviciosContrato'
+	urlRoot	: location.origin+'api_serviciosContrato'
 });
 var ColeccionServiciosContrato = Backbone.Collection.extend({
 	model	: app.ModeloServicioContrato,
-	url		: 'http://crmqualium.com/api_serviciosContrato'
+	url		: location.origin+'/api_serviciosContrato'
 });
 /*---------------------------------------------------------------------------------*/
 

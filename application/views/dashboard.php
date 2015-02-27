@@ -1111,3 +1111,59 @@ script('js/tablas/estilo_tabla.js');
 
 
 
+
+
+<!-- <table class="table table-hover ">
+						<thead>
+							<tr>
+								<th>Cliente</th>
+								<th>Servicio</th>
+								<th>Monto</th>
+							</tr>
+						</thead>
+					   	<tbody>
+					   		<?php if(isset($ingresos)&&is_array($ingresos)):?>
+					   			<tr>	
+					   				<td><?=$web;?></td>
+					   				<td><?=$servicio;?></td>
+					   				<td><?=$monto;?></td>
+					   			</tr>
+					   		<?php endif ?>
+					   	</tbody>
+					</table> -->
+
+
+
+							<!-- 	<div class="panel panel-default">
+				<div class="panel-heading color" >
+			    	<h3 class="panel-title">Mis Actividades</h3>		    	
+			    	<span id="icono_panel" class="icon-calendar2" ></span>
+			    </div>
+			  	<div class="panel-body">
+			  		<div class="row">
+			  			<div class="col-md-6" style="width: 25%  !important">
+			  				<div class="datepicker"></div>
+			  			</div>
+			  			<div class="col-md-6" style="width: 75% !important">
+			  				<table class="table table-hover">
+							   	<thead >
+							   		<tr>
+							   			<th>Actividad</th>
+							   			<th>Fecha</th>
+							   			<th>Hora</th>
+							   		</tr>
+							   	</thead>
+							   	<tbody>
+							   		<?php if(isset($actividades)&&is_array($actividades)) : ?>
+							   			<tr>
+							   				<td><?=$actividad;?></td>
+							   				<td><?=$fecha;?></td>
+							   				<td><?=$hora;?></td>
+							   			</tr>							   		
+							   		<?php endif ?>
+							   	</tbody>
+							</table>	
+			  			</div>
+			  		</div>		   
+				</div>
+		    </div> -->

@@ -61,7 +61,6 @@ app.VistaNuevoPerfil = Backbone.View.extend({
 		{	
 			json.active = (x==0) ? "tab-pane active":"tab-pane";
 			json.modulo = submodulos[x].modulo;
-			console.log(submodulos);
 			json.submodulos = submodulos[x].permisos.split(",");			
 			this.$("#submodulos").append(this.plantilla(json));				
 		}				

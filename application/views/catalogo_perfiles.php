@@ -123,7 +123,6 @@ if(isset($this->session->userdata('Catálogos')[1]['permisos']))
 </script>
 <?=
 //<!-- MVC -->
-	script_tag('js/backbone/modelos/ModeloPermiso.js').	
 	script_tag('js/backbone/colecciones/ColeccionPerfiles.js').
 	script_tag('js/backbone/colecciones/ColeccionPermisos.js').
 

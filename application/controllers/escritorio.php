@@ -170,13 +170,17 @@ class Escritorio extends REST {
 	} 
 	public function dashboard()
 	{ 	
-
 		$this->load->model('Model_dashboard', 'dash');
 
+		$data['servicios'] = $this->dash->servicios();
 		$data['cotizaciones'] = $this->dash->get_budgets();
 		$pagos = $this->dash->get_payments();	
 		$data['pagosxI'] = $pagos['iguala'];
 		$data['pagosxE'] = $pagos['evento'];	
+		$data['proyectos'] = $this->dash->proyectos();
+
+
+		$data['clientes'] = $this->dash->clientes();
 		$this->area_Estatica('dashboard_gustavo', $data);
 	} 
 	

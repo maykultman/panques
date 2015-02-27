@@ -53,7 +53,6 @@ app.coleccionDePermisos = <?=json_encode($permisos)?>
 </script>
 <?=
 	//MVC
-	script_tag('js/backbone/modelos/ModeloPermiso.js').	   
 	script_tag('js/backbone/colecciones/ColeccionPermisos.js').
 	script_tag('js/backbone/vistas/VistaPermiso.js').		   
 	script_tag('js/backbone/vistas/VistaNuevoPermiso.js');

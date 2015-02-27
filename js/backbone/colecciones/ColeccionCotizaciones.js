@@ -15,7 +15,7 @@ app.coleccionCotizaciones_L = new ColeccionCotizaciones_L();
 app.coleccionServicios_L = new ColeccionServicios_L();
 /*-----------------------------------------------------------*/
 app.ModeloCotizacion = Backbone.Model.extend({
-	urlRoot : 'http://crmqualium.com/api_cotizaciones',
+	urlRoot : location.origin+'/api_cotizaciones',
 
 	// defaults: {
 	// 	version : 1,
@@ -123,7 +123,7 @@ app.ModeloCotizacion = Backbone.Model.extend({
 });
 
 var ColeccionCotizaciones = Backbone.Collection.extend({
-	url   : 'http://crmqualium.com/api_cotizaciones',
+	url   : location.origin+'/api_cotizaciones',
 	model : app.ModeloCotizacion,
 	parse : function (response) {
 		this.folio = response.folio.folio;

@@ -1,5 +1,5 @@
 var app = app || {};
-
+var root = location.origin;
 var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 var dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'];
 
@@ -200,7 +200,7 @@ function urlFoto () {
     var mensaje = "";
     //hacemos la petición ajax
     var resp = $.ajax({
-        url: 'http://crmqualium.com/api_foto',
+        url: root+'/api_foto',
         type: 'POST',
         async:false,
         // Form data
@@ -241,12 +241,9 @@ function jsonphone(modelo)
 
 function urlFotoCatalgos(formData,destino)
 {
-    
-    console.log(destino);
-    return;
     //hacemos la petición ajax  
     var resp = $.ajax({
-        url: destino,
+        url: root+'/'+destino,
         type: 'POST',
         async:false,
         //datos del formulario

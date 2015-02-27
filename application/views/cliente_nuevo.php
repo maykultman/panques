@@ -273,8 +273,7 @@
 	//MV*
 	script_tag('js/backbone/modelos/ModeloContacto.js').
 	script_tag('js/backbone/modelos/ModeloRepresentante.js').
-	script_tag('js/backbone/modelos/ModeloCliente.js').
-	script_tag('js/backbone/modelos/ModeloTelefono.js').
+	script_tag('js/backbone/modelos/ModeloCliente.js').	
 	script_tag('js/backbone/modelos/ModeloServicio.js').
 	script_tag('js/backbone/modelos/ModeloServicioCliente.js').
    

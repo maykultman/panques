@@ -1,11 +1,10 @@
 var app = app || {};
 
 app.ModeloPerfil = Backbone.Model.extend({
-	urlRoot	:'http://crmqualium.com/api_perfil'
+	urlRoot	: location.origin+'/api_perfil'
 });
 
 var ColeccionPerfiles = Backbone.Collection.extend({
-	url: 'http://crmqualium.com/api_perfil',
 	model	: app.ModeloPerfil,
 });
 

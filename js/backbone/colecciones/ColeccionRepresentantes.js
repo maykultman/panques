@@ -4,7 +4,7 @@ var ColeccionRepresentantes = Backbone.Collection.extend({
 	model	: app.ModeloRepresentante,
 
 	//localStorage	: new Backbone.LocalStorage('contactos-backbone'),
-	url 	:'http://crmqualium.com/api_representante',
+	url 	:location.origin+'/api_representante',
 
 	obtenerTodos : function () {
 		return this.filter( function (representante){

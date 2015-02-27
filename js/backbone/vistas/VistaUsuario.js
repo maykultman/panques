@@ -145,7 +145,8 @@ app.VistaUsuario = Backbone.View.extend({
 			delete form.idperfil;
 		}
 		delete form.usuario;
-		usuario.idpermisos = jsonpermisos(form);		
+		usuario.idpermisos = jsonpermisos(form);	
+		
 		this.model.save
 		(
 			usuario,

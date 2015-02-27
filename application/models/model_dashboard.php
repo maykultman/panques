@@ -51,8 +51,8 @@
 					}
 					else{
 
-						$evento[$cont1]['cliente'] = $resp->cliente;
-						$evento[$cont1]['pagos'] = $value->pagos;
+						$evento[$cont1]['cliente'] = $resp['cliente'];
+						$evento[$cont1]['pago'] = $value->pago;
 						$evento[$cont1]['fechapago'] = $value->fechapago;	
 						$cont2++;
 					}
@@ -77,6 +77,47 @@
 			$resp['cliente'] = $query->nombreComercial;
 			$resp['plan'] = $contratos->plan;
 			return $resp;
+		}
+
+		public function proyectos()
+		{
+			$this->db->select('*');
+			$this->db->where('entregado', 0);
+			$this->db->from('proyectos');
+			$this->db->join('clientes', 'clientes.id=proyectos.idcliente');			
+			return $this->db->get()->result();
+		}
+
+		public function servicios()
+		{
+			$sum = $this->db->query('SELECT idservicio, SUM(idservicio) FROM servicios_x_contrato GROUP BY idservicio ORDER BY SUM(idservicio) DESC')->result_array();
+        				
+			$this->db->select('id,nombre');
+			$query = $this->db->get('servicios')->result();
+
+			foreach ($query as $key => $value) 
+			{
+				foreach ($sum as $sumkey => $sumval) 
+				{
+					if($value->id==$sumval['idservicio'])
+					{
+
+						$query[$key]->cant = intval($sumval["SUM(idservicio)"])/intval($value->id);
+					}
+					else{
+						$query[$key]->cant = 0;
+					}
+				}
+				
+			}
+			return $query;			
+		}
+
+
+		// Consulta de ingresos por cliente.
+		public function clientes()
+		{
+			return $this->db->get('clientes')->result();
 		}
 	}
 

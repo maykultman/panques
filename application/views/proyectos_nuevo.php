@@ -425,8 +425,6 @@
 	script_tag('js/backbone/modelos/ModeloCliente.js').
 	script_tag('js/backbone/modelos/ModeloServicio.js').
 	script_tag('js/backbone/modelos/ModeloServicioProyecto.js').
-	// script_tag('js/backbone/modelos/ModeloRol.js').
-	script_tag('js/backbone/modelos/ModeloEmpleado.js').
 	script_tag('js/backbone/modelos/ModeloRolProyecto.js').
 	// colecciones
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').

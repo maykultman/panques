@@ -4,7 +4,7 @@ var ColeccionRolesProyectos = Backbone.Collection.extend({
 	
 	model	: app.ModeloRolProyecto,
 
-	url: 'http://crmqualium.com/api_rolesDeProyecto',
+	url: root+'/api_rolesDeProyecto',
 	// localStorage	: new Backbone.LocalStorage('proyectos-backbone'),
 
 	// obtenerTodos : function () {

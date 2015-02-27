@@ -40,7 +40,7 @@ if(isset($this->session->userdata('Catálogos')[0]['permisos']))
 					        	<div id="femp">	
 					        		<label class="btn fileinput-button">
 			    						<span class="icon-uniF580"></span>
-			    						<input type="file" id="fotou" data-url="<?=base_url()?>api_foto" name="logoUsuario">			                    				               
+			    						<input type="file" id="fotou" data-url="api_foto" name="logoUsuario">			                    				               
 			    					</label><img id="direccionn" class="" width="100%">
 					        	</div>								        		
 					        </div>						        	
@@ -106,7 +106,7 @@ if(isset($this->session->userdata('Catálogos')[0]['permisos']))
 			<i class="update glyphicon glyphicon-floppy-disk"></i>
 			<label class="cua">				
 				<i class="glyphicon glyphicon-edit"></i>
-				<input type="file" class="botonf" id="foto<%-id%>" data-url="<?=base_url()?>api_foto" name="logoUsuario">			                    				               
+				<input type="file" class="botonf" id="foto<%-id%>" data-url="api_foto" name="logoUsuario">			                    				               
 			</label> 
 			</div>			
 		</div>
@@ -170,9 +170,6 @@ if(isset($this->session->userdata('Catálogos')[0]['permisos']))
 </script>
 <!-- title="Editar"  -->
 <?=
-	script_tag('js/backbone/modelos/ModeloEmpleado.js').
-	script_tag('js/backbone/modelos/ModeloPuesto.js').
-
 	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
 	script_tag('js/backbone/colecciones/ColeccionTelefonos.js').
 	script_tag('js/backbone/colecciones/ColeccionPuestos.js').
@@ -180,5 +177,3 @@ if(isset($this->session->userdata('Catálogos')[0]['permisos']))
 	script_tag('js/backbone/vistas/VistaCatalogoEmpleado.js').
 	script_tag('js/backbone/vistas/VistaNuevoEmpleado.js');
 ?>
-
-<!-- <script src="http://CRMQualium.com/js/backbone/vistas/VistaNuevoEmpleado.js" language="javascript" type="text/javascript" /></script> -->

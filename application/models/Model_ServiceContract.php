@@ -13,7 +13,11 @@
 
  	public function get ()
  	{
- 		return $this->db->get( 'servicios_contrato')->result();
+ 		$this->db->select('*');
+ 		$this->db->from('servicios_x_contrato');
+ 		$this->db->join('servicios_contrato','servicios_contrato.idservicioxcontrato=servicios_x_contrato.id');
+ 		return $this->db->get()->result();
+ 		// return $this->db->get( 'servicios_contrato')->result();
  	}
 
  	public function save ( $id, $put )

@@ -25,9 +25,50 @@ function pagoz($arg)
 } 
 ?>
 <style>
-.warning{
-	color:#f89406
-}
+	.warning{
+		color:#f89406
+	}
+	.nomserv{
+		opacity: 0;
+		position: absolute;
+		background: rgba(39, 42, 47, 0.67);
+		padding: 0 5px;
+		border-radius: 0 0 3px 3px;
+		left: 50%;
+		transform: translateX(-50%);
+		transition:.2s;
+		bottom: -50px;
+		
+	}
+	.trserv td{
+		width:4.1%;
+		cursor: pointer;
+		text-align: center; 
+	}
+	.trserv td:hover{
+		color: #fff;
+		background-color: rgba(39, 42, 47, 0.67);
+	}
+	.trserv td:hover > .nomserv{
+		opacity: 1!important;
+	}
+	.toltip{
+		display: none; 
+		background: rgba(5, 5, 5, 0.87);
+		border-radius: 2px;
+		padding: 1px;
+		position: absolute;
+		left: -15px;
+		font-size: 12px;
+		color: #fff;
+	}
+	.graf{
+		position: relative;
+	}
+	.graf:hover > .toltip{
+		display: block;
+		cursor: pointer;
+	}
 </style>
 <div class="contenedor_modulo">
 	<h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 1; width: 100%;"><label>Escritorio</label></h1>
@@ -88,7 +129,7 @@ function pagoz($arg)
 							    <div class="tab-pane fade" id="evento" style="overflow: auto; height: 185px; position:relative">
 							    	<?php 
 										if(isset($pagosxE)&&is_array($pagosxE)){
-											if(!empty($pagosxE)) {
+											if(!empty($pagosxE)) {												
 												pagoz($pagosxE);
 											}
 										}
@@ -104,39 +145,6 @@ function pagoz($arg)
 			  	</div>
 			</div>
 
-		<!-- 	<div class="panel panel-default">
-				<div class="panel-heading color" >
-			    	<h3 class="panel-title">Mis Actividades</h3>		    	
-			    	<span id="icono_panel" class="icon-calendar2" ></span>
-			    </div>
-			  	<div class="panel-body">
-			  		<div class="row">
-			  			<div class="col-md-6" style="width: 25%  !important">
-			  				<div class="datepicker"></div>
-			  			</div>
-			  			<div class="col-md-6" style="width: 75% !important">
-			  				<table class="table table-hover">
-							   	<thead >
-							   		<tr>
-							   			<th>Actividad</th>
-							   			<th>Fecha</th>
-							   			<th>Hora</th>
-							   		</tr>
-							   	</thead>
-							   	<tbody>
-							   		<?php if(isset($actividades)&&is_array($actividades)) : ?>
-							   			<tr>
-							   				<td><?=$actividad;?></td>
-							   				<td><?=$fecha;?></td>
-							   				<td><?=$hora;?></td>
-							   			</tr>							   		
-							   		<?php endif ?>
-							   	</tbody>
-							</table>	
-			  			</div>
-			  		</div>		   
-				</div>
-		    </div> -->
 		    <div class="panel panel-default">
 				<div class="panel-heading color" >
 			    	<h3 class="panel-title">Cotizaciones Realizadas</h3>
@@ -171,6 +179,7 @@ function pagoz($arg)
 					</table>
 				</div>
 		    </div>
+
 		    <div class="panel panel-default">
 				<div class="panel-heading color" >
 			    	<h3 class="panel-title">Status Proyectos</h3>
@@ -188,64 +197,159 @@ function pagoz($arg)
 					        </tr>
 						</thead>      
 						<tbody>
-							<?php if(isset($proyectos)&&is_array($proyectos)) : ?>
+							<?php if(isset($proyectos)&&is_array($proyectos)) : 
+								foreach ($proyectos as $keyp => $vp) {
+							?>
 								<tr>							
-									<td><?=$cliente;?></td>
-									<td><?=$proyecto;?></td>						
-									<td><?=$entrega;?></td>
+									<td><?=$vp->nombreComercial;?></td>
+									<td><?=$vp->nombre;?></td>						
+									<td><?=$vp->fechafinal;?></td>
 									<td>		
 										<span class="badge list-group-item-success">
-										<?=$status;?>
+										<?=($vp->entregado==0) ? 'En desarrollo':'Entrega';?>
 										</span>		
 									</td>      							
-									<td><?=$responsable;?></td> 							        
+									<td><?php echo 'beto';?></td> 							        
 					        	</tr>
-					    	<?php endif; ?>
+					    	<?php } endif; ?>
 				    	</tbody> 
 					</table>
 				</div>
 		    </div>
+
 		    <?php if($this->session->userdata('perfil')=='Administrador') : ?>
-	   	  		<div class="panel panel-default">
-				<div class="panel-heading color">
-				   	<h3 class="panel-title">Ingresos</h3>
-				   	<span id="icono_panel" class="icon-stocks" ></span>
-				</div>
-				<div  class="panel-body" style="overflow: auto; height: 560px;">
-				 	<label for="from">From</label>
-					<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
-					<label for="to">to</label>
-					<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
-					<span id="span_ingreso" class="badge">$100,000</span>     
-					<table class="table table-hover ">
-						<thead>
-							<tr>
-								<th>Cliente</th>
-								<th>Servicio</th>
-								<th>Monto</th>
-							</tr>
-						</thead>
-					   	<tbody>
-					   		<?php if(isset($ingresos)&&is_array($ingresos)):?>
-					   			<tr>	
-					   				<td><?=$web;?></td>
-					   				<td><?=$servicio;?></td>
-					   				<td><?=$monto;?></td>
-					   			</tr>
-					   		<?php endif ?>
-					   	</tbody>
-					</table>
-				</div>
+		   	  	<div class="panel panel-default">
+					<div class="panel-heading color">
+					   	<h3 class="panel-title">Ingresos por servicios</h3>
+					   	<span id="icono_panel" class="icon-stocks" ></span>
+					</div>
+					<div  class="panel-body" style="overflow: auto; height:400px;">
+					 	<label for="from">From</label>
+						<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
+						<label for="to">to</label>
+						<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
+						<!-- <span id="span_ingreso" class="badge">$100,000</span>      -->
+						
+						<hr>
+						 <ul class="nav nav-tabs" role="tablist">
+							    	<li class="active"><a href="#mensual" role="tab" data-toggle="tab">Mensual</a></li>
+								  	<li><a href="#trimestral" role="tab" data-toggle="tab">Trimestral</a></li>							  
+								  	<li><a href="#semestral" role="tab" data-toggle="tab">Semestral</a></li>
+								  	<li><a href="#anual" role="tab" data-toggle="tab">Anual</a></li>
+								  	<li><a href="#dosa" role="tab" data-toggle="tab">2 años</a></li>
+								</ul>
+								<div class="tab-content" style="position:relative;">
+									<div class="tab-pane fade in active" id="mensual">
+										<table style="margin-top: 15%;">
+										<?php if(isset($servicios)&&is_array($servicios)): ?>
+											<tr class="text-center">
+												<?php foreach ($servicios as $ks1 => $vs1): ?>
+													<td class="graf"><?php if($vs1->cant>0):?>
+														<span class="toltip">$50.00</span>
+														<img src="<?=base_url()?>img/graf.png" width="20px" height="<?php echo 2*($vs1->cant+1)?>">
+														<?php endif; ?>
+													</td>
+
+												<?php endforeach;?>
+											</tr>
+										<tr class="trserv">
+											
+
+											<?php foreach ($servicios as $ks => $vs): ?>
+												<td><?=$vs->id?><div class="nomserv"><?=$vs->nombre?></div></td>
+											<?php endforeach; endif;?>
+										</tr>	
+										</table>
+												
+												
+										
+									</div>
+								    <div class="tab-pane fade" id="trimestral">
+								    	
+								    </div>
+								    <div class="tab-pane fade" id="semestral">
+								    	
+								    </div>
+								    <div class="tab-pane fade" id="anual">
+								    	
+								    </div>
+								    <div class="tab-pane fade" id="dosa">
+								    	
+								    </div>
+							    </div>
+					</div>
+				</div>	
+
+				<div class="panel panel-default">
+					<div class="panel-heading color">
+					   	<h3 class="panel-title">Ingresos por clientes</h3>
+					   	<span id="icono_panel" class="icon-stocks" ></span>
+					</div>
+					<div  class="panel-body" style="overflow: auto; height:400px;">
+					 	<label for="from">From</label>
+						<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
+						<label for="to">to</label>
+						<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
+						<!-- <span id="span_ingreso" class="badge">$100,000</span>      -->
+						
+						<hr>
+						 <ul class="nav nav-tabs" role="tablist">
+							    	<li class="active"><a href="#mensualc" role="tab" data-toggle="tab">Mensual</a></li>
+								  	<li><a href="#trimestralc" role="tab" data-toggle="tab">Trimestral</a></li>							  
+								  	<li><a href="#semestralc" role="tab" data-toggle="tab">Semestral</a></li>
+								  	<li><a href="#anualc" role="tab" data-toggle="tab">Anual</a></li>
+								  	<li><a href="#dosac" role="tab" data-toggle="tab">2 años</a></li>
+								</ul>
+								<div class="tab-content" style="position:relative;">
+									<div class="tab-pane fade in active" id="mensualc">
+										<table style="margin-top: 15%;">
+										<?php if(isset($clientes)&&is_array($clientes)): ?>
+											<tr class="text-center">
+												<?php foreach ($clientes as $ks1 => $vs1): ?>
+													<td><?php
+														?>
+														<!-- <img src="<?=base_url()?>img/graf.png" width="20px" height="echo 2*($vs1->cant+1)?>"> -->
+														<?php  //endif; ?>
+													</td>
+
+												<?php endforeach;?>
+											</tr>
+										<tr class="trserv">
+											
+
+											<?php foreach ($clientes as $kc => $vc): ?>
+												<td><?=$vc->id?><div class="nomserv"><?=$vc->nombreComercial?></div></td>
+											<?php endforeach; endif;?>
+										</tr>	
+										</table>
+												
+												
+										
+									</div>
+								    <div class="tab-pane fade" id="trimestralc">
+								    	
+								    </div>
+								    <div class="tab-pane fade" id="semestralc">
+								    	
+								    </div>
+								    <div class="tab-pane fade" id="anualc">
+								    	
+								    </div>
+								    <div class="tab-pane fade" id="dosac">
+								    	
+								    </div>
+							    </div>
+					</div>
 				</div>		  
 			<?php endif ?>
 		</div>
 	</section>
 </div>  
-<?= 
-	script_tag("js/jquery-ui-1.9.2.custom.min.js").
-	script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-	script_tag('css/bootstrap-3.1.1-dist/js/transition.js').
-	script_tag('css/bootstrap-3.1.1-dist/js/tap.js');
+<? 
+	// script_tag("js/jquery-ui-1.9.2.custom.min.js").
+	// script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
+	// script_tag('css/bootstrap-3.1.1-dist/js/transition.js').
+	// script_tag('css/bootstrap-3.1.1-dist/js/tap.js');
 ?>
 <script>
   $(function() {

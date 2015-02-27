@@ -2,7 +2,6 @@
 	<div id="divLogo">
 		<a href="dashboard"><div id="logo"></div></a>
 	</div>
-
 	<div class="hidden-xs">
 		<ul id="accesosRapidos" class="nav nav-pills">
 			<li class="dropdown">

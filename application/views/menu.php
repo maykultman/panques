@@ -17,6 +17,17 @@ function permiso($submodulos)
     }    
     return $band;
 }
+
+function mlink($modulo, $prefijo)
+{
+	foreach ($modulo as $key=>$valu) 
+		{			
+			if(isset($valu['permisos']) && $valu['nombre']!='Nuevo')
+			{	
+				return strtolower($prefijo.$valu['nombre']);
+			}
+		}
+}
 ?>
 <nav id="menu" role="navigation">
 <ul id="menu-lista">	
@@ -25,10 +36,13 @@ function permiso($submodulos)
 		<div style="clear:both"></div>
 	</li>
 	<?php
-	 $print = permiso($this->session->userdata('Clientes'));
-	 	if($print==1){?>	   
+
+		$print = permiso($this->session->userdata('Clientes'));
+
+	 	if($print==1){ $link = mlink($this->session->userdata('Clientes'), 'consulta_'); 
+	 	?>	   
 		<li class="item">
-			<a class="anclaMenu" href="consulta_clientes" title="Clientes"><span class="icono icon-phpbb" style="float:left"></span> <span class="item-text">Clientes</span></a>
+			<a class="anclaMenu" href="<?=$link?>" title="Clientes"><span class="icono icon-phpbb" style="float:left"></span> <span class="item-text">Clientes</span></a>
 			<div style="clear:both"></div>
 		</li>
 	<?php } 

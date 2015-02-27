@@ -4,7 +4,7 @@ var ColeccionContactos = Backbone.Collection.extend({
 	model	: app.ModeloContacto,
 
 	//localStorage	: new Backbone.LocalStorage('contactos-backbone'),
-	url 	:'http://crmqualium.com/api_contactos',
+	url 	:location.origin+'/api_contactos',
 
 	obtenerTodos : function () {
 		return this.filter( function (contacto){

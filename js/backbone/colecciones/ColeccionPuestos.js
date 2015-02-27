@@ -1,7 +1,11 @@
 var app = app || {};
 
+app.ModeloPuesto = Backbone.Model.extend({
+	urlRoot	: root+'/api_puestos'
+});
+
 var ColeccionPuestos = Backbone.Collection.extend({
-	url: 'http://crmqualium.com/api_puestos',
+	url: root+'/api_puestos',
 	model	: app.ModeloPuesto,
 
 	sync	: function (method, model, options) {

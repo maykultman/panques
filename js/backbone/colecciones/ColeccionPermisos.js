@@ -1,7 +1,11 @@
 var app = app || {};
 
+app.ModeloPermiso = Backbone.Model.extend({
+	urlRoot	:root+'/api_permisos'
+});
+
 var ColeccionPermisos = Backbone.Collection.extend({
-	url: 'http://crmqualium.com/api_permisos',
+	url: location.origin+'/api_permisos',
 	model	: app.ModeloPermiso,
 
 	sync	: function (method, model, options) {

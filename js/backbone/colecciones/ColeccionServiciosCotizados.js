@@ -1,7 +1,7 @@
 var app = app || {};
 
 var ColeccionServiciosCotizados = Backbone.Collection.extend({
-	url 	:'http://crmqualium.com/api_servicioCotizado',
+	url 	:location.origin+'/api_servicioCotizado',
 	model	: app.ModeloServicioCotizado,
 	
 
