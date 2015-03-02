@@ -309,7 +309,7 @@ app.Evento = Backbone.View.extend({
 				],
 				optgroupField: 'class',
 				valueField: 'email',
-			    labelField: 'email',
+			    labelField: 'name',
 			    searchField: ['name'],
 			    render : {
 			    	optgroup_header: function(data, escape) {

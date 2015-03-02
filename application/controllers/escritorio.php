@@ -398,7 +398,7 @@ class Escritorio extends REST {
 	}
 
 	// functiones de calendar
-		public function actividades(){
+		public function actividades (){
 	        $access_token = $this->session->userdata('access_token');
 	        if ( isset( $access_token ) && $access_token ) {
 	            $this->client->setAccessToken( $access_token );
@@ -419,9 +419,10 @@ class Escritorio extends REST {
 		}
 		public function conectar () {
 			if ( isset($_GET['code']) ) {
-	            $this->client->authenticate($_GET['code']);
+	            $variable = $this->client->authenticate($_GET['code']);
 	            $this->session->set_userdata('access_token', $this->client->getAccessToken());
-	            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+	            // $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+	            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/escritorio/actividades';
 	            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
 	        } else {
 	        	$this->actividades();

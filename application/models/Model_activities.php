@@ -1,6 +1,8 @@
 <?php
 	/**
-	* 
+	* El calendario de google de los invitados debe estar en la zona horaria
+	* de la ciudad de México par que los eventos no se muestren con un día de
+	* atraso o de adelanto.
 	*/
 	require_once '/google-api-php-client-master/autoload.php';
 	class Model_activities extends CI_Model {
@@ -33,7 +35,6 @@
 
 			$event->setStart( $start );
 			$event->setEnd( $end );
-
 			if ( isset($post['attendees']) && $post['attendees'] ) {
 				$attendees = [];
 				if ( is_array( $post['attendees'] ) ) {
@@ -42,12 +43,13 @@
 						$attendee->setEmail( $email );
 						array_push( $attendees, $attendee );
 					}
-					$event->attendees = $attendees;
 				} else {
 					$attendee = new Google_Service_Calendar_EventAttendee();
 					$attendee->setEmail( $post['attendees'] );
-					$event->attendees = $attendee;
+					array_push( $attendees, $attendee );
 				}
+
+				$event->attendees = $attendees;
 			}
 
 			if ( $update ) {
