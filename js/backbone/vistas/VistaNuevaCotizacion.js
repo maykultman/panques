@@ -436,10 +436,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		 app.coleccionCotizaciones.create(json.datos, {
 			wait:true,
 			success:function(exito){
-				self.guardarSeccion(exito.get('id'), json.secciones);
+				self.guardarSeccion(exito.get('id'), json.servicios);
 			},
 			error:function(error){
-				// console.log('Fue error ',error);
+				error = 'Ocurrió un error al intentar guardar la cotizacion. pruebe más tarde';
+				alerta(error, function(){});
 			}
 		});
 		Backbone.emulateHTTP = false;
@@ -461,7 +462,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			return false; // Terminamos el flujo del código
 		};
 		// $('nav:eq(1)').text(JSON.stringify(json));
-		json = { secciones : [], datos : '' };
+		json = { servicios : [], datos : '' };
 
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#formPrincipal').serializeArray());
@@ -472,8 +473,37 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			return false; // Terminamos el flujo del código
 		};
 		/*Servicios cotizados*/
+			// obtenemos las secciones
 			for (var i = 0; i < forms.length; i++) {
-				json.secciones.push( pasarAJson($(forms[i]).serializeArray()) );
+				json.servicios.push( pasarAJson($(forms[i]).serializeArray()) );
+			};
+
+			// agrupamos las secciones por id,
+			// luego aislamos tanto los ids como
+			// los valores de la agrupación
+			var grupoPorServ 	= _.groupBy(json.servicios, 'idservicio'),
+				idsServ 		= _.keys(grupoPorServ);
+			grupoPorServ 		= _.values(grupoPorServ);
+
+			json.servicios = []; /*reset al array servicios*/
+			// la posición de los ids de servicios corresponden 
+			// a las posiciones a la posición del array de 
+			// servicios por grupo
+			for (var i = 0; i < idsServ.length; i++) {
+				json.servicios.push({
+					idcotizacion : 'sin especificar',
+					idservicio 	 : idsServ[i],
+					secciones    : function (secciones) {
+						if ( _.isArray( secciones ) ) {
+							for (var i = 0; i < secciones.length; i++) {
+								delete secciones[i].idservicio;
+							}
+						} else{ delete secciones.idservicio; };
+						return JSON.stringify(secciones);
+					}(grupoPorServ[i]) // pasamos la primera posición 
+									   // del array de grupos correspondiente
+									   // a la posicion del array de ids
+				});
 			};
 
 		// Dato basura
@@ -544,22 +574,21 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			}
 		}, 10);
 	},
-	guardarSeccion	: function (idCotizacion, secciones) {
+	guardarSeccion	: function (idCotizacion, servicios) {
 		var self = this;
-		for (var i = 0; i < secciones.length; i++) {
-			secciones[i].idcotizacion = idCotizacion;
+		var crear = function (objeto) {
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;
-			app.coleccionServiciosCotizados.create(secciones[i], {
+			app.coleccionServiciosCotizados.create(objeto, {
 				wait	: true,
 				success	: function (exito) {
-					if (self.aumentarContador() == secciones.length) {
+					if (self.aumentarContador() == servicios.length) {
 						self.guardado();
 					};
 					// ok('La seccion: <b>'+exito.toJSON().seccion+'</b> ha sido guardada');
 				},
 				error	: function (error) {
-					if (self.aumentarContador() == secciones.length) {
+					if (self.aumentarContador() == servicios.length) {
 						self.noGuardada();
 					};
 					// error('Error al guardar seccion: <b>'+error.toJSON().seccion+'</b>');
@@ -567,6 +596,15 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			});
 			Backbone.emulateHTTP = false;
 			Backbone.emulateJSON = false;
+		};
+		if ( _.isArray(servicios) ) {
+			for (var i = 0; i < servicios.length; i++) {
+				servicios[i].idcotizacion = idCotizacion;
+				crear(servicios[i]);
+			};
+		} else{
+			servicios.idcotizacion = idCotizacion;
+			crear(servicios);
 		};
 	},
 	guardado		: function () {
