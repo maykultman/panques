@@ -493,14 +493,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				json.servicios.push({
 					iddocumento : 'sin especificar',
 					idservicio 	 : idsServ[i],
+					documento = 'cotizacion';
 					secciones    : function (secciones) {
 						if ( _.isArray( secciones ) ) {
 							for (var i = 0; i < secciones.length; i++) {
 								delete secciones[i].idservicio;
-								secciones[i].documento = 'cotizacion';
 							}
 						} else{ delete secciones.idservicio; };
-						secciones.documento = 'cotizacion';
 						return JSON.stringify(secciones);
 					}(grupoPorServ[i]) // pasamos la primera posición 
 									   // del array de grupos correspondiente
