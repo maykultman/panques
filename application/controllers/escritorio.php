@@ -33,6 +33,7 @@ class Escritorio extends REST {
         $this->client->setClientSecret($client_secret);
         $this->client->setRedirectUri($redirect_uri);
         $this->client->addScope("https://www.googleapis.com/auth/calendar");
+        $this->client->setAccessType('offline');
 
         $this->service = new Google_Service_Calendar($this->client);
     }  
