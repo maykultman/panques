@@ -78,12 +78,14 @@ $route[ 'api_serviciosInteres'		  ] = 'serviciosInteres/api';
 $route[ 'api_serviciosInteres/(:num)' ] = 'serviciosInteres/api/$1';
 $route[ 'api_serviciosCliente'        ] = 'serviciosCliente/api';
 $route[ 'api_serviciosCliente/(:num)' ] = 'serviciosCliente/api/$1';
-$route[ 'api_servicioCotizado'		  ] = 'servicioCotizado/api';
-$route[ 'api_servicioCotizado/(:num)' ] = 'servicioCotizado/api/$1';
+
+$route[ 'api_servicioCotizado'		  ] = 'servicios_cotejados/api';
+$route[ 'api_servicioCotizado/(:num)' ] = 'servicios_cotejados/api/$1';
+$route[ 'api_serviciosContrato'       ] = 'servicios_cotejados/api';
+$route[ 'api_serviciosContrato/(:num)'] = 'servicios_cotejados/api/$1';
+
 $route[ 'api_serviciosProyecto'       ] = 'serviciosProyecto/api';
 $route[ 'api_serviciosProyecto/(:num)'] = 'serviciosProyecto/api/$1';
-$route[ 'api_serviciosContrato'       ] = 'serviciosDeContrato/api';
-$route[ 'api_serviciosContrato/(:num)'] = 'serviciosDeContrato/api/$1';
 $route[ 'api_telefonos'				  ] = 'telefono/api';
 $route[ 'api_telefonos/(:num)'		  ] = 'telefono/api/$1';
 $route[ 'api_usuarios'           	  ] = 'usuarios/api';

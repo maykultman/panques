@@ -1,0 +1,165 @@
+.parent
+{
+	width: 100%;
+	height: 400px;
+	position: relative;
+	background-color: rgba(9, 131, 255, 0.39);
+}
+
+.child{
+	float: left;
+	position: relative;
+	width: 3%;
+	height: 100%;
+	margin: 0 3px;
+}
+
+.max{
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: rgba(255, 0, 0, 0.75);
+	color: #fff;
+	top: -10px;
+	cursor: pointer;
+	font-weight: bold;
+	left: 50%;
+	text-align: center;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+.tiket{
+	/*opacity: 0!important;*/
+	position: absolute;
+	background-color: black;
+	color: #fff;
+	padding: 1px;
+	border-radius: 2px;
+	z-index: 100;
+	transition: 1s;
+}
+/*.max:hover > .tiket{
+	opacity: 1!important;
+}*/
+
+.barra{
+	height: 50%;
+	float: left;
+	margin: 0;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.58);
+}
+.uno, .dos, .tres,.cuatro,.cinco,
+.seis,.siete,.ocho,.nueve{
+		float: left;
+		margin: 0;
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+}
+
+/*.uno:hover, .dos:hover, .tres:hover,.cuatro:hover,.cinco:hover,
+.seis:hover,.siete:hover,.ocho:hover,.nueve{ opacity: .8; }*/
+
+.uno{
+	height: 30%;			
+	background-color: rgb(46, 48, 36);
+}
+
+.dos{
+	height: 10%;			
+	background-color: rgb(200, 48, 36);
+}
+
+.tres{
+	height: 80%;			
+	background-color: red;
+}
+
+.cuatro{
+	height: 80%;			
+	background-color: chocolate;
+}
+
+.cinco{
+	height: 30%;			
+	background-color: rgb(89, 89, 15);
+}
+
+.seis{
+	height: 70%;			
+	background-color: #4ed;
+}
+
+.siete{
+	height: 40%;			
+	background-color: #99F;
+}
+
+.ocho{
+	height: 90%;			
+	background-color: #ffb;
+}
+
+.nueve{
+	height: 3%;			
+	background-color: #fb0;
+}
+.parent img{
+	position: absolute;
+	width: 50%;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	opacity: .1;
+}
+
+/*-- Estilos dashboard --*/
+	.warning{
+		color:#f89406
+	}
+	.nomserv{
+		opacity: 0;
+		position: absolute;
+		background: rgba(39, 42, 47, 0.67);
+		padding: 0 5px;
+		border-radius: 0 0 3px 3px;
+		left: 50%;
+		transform: translateX(-50%);
+		transition:.2s;
+		bottom: -50px;
+		
+	}
+	.trserv td{
+		width:4.1%;
+		cursor: pointer;
+		text-align: center; 
+	}
+	.trserv td:hover{
+		color: #fff;
+		background-color: rgba(39, 42, 47, 0.67);
+	}
+	.trserv td:hover > .nomserv{
+		opacity: 1!important;
+	}
+	.toltip{
+		display: none; 
+		background: rgba(5, 5, 5, 0.87);
+		border-radius: 2px;
+		padding: 1px;
+		position: absolute;
+		left: -15px;
+		font-size: 12px;
+		color: #fff;
+	}
+	.graf{
+		position: relative;
+	}
+	.graf:hover > .toltip{
+		display: block;
+		cursor: pointer;
+	}

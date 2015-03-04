@@ -16,10 +16,11 @@
             $reply = 'result';
             if(is_numeric($id))
             {
+                $this->db->where('documento','cotizacion');
                 $this->db->where( 'id', $id );
                 $reply = 'row';
             }
-            return $this->db->get  ( 'servicios_cotizados' )->$reply();
+            return $this->db->get  ( 'servicios_cotejados' )->$reply();
         } # Fin del metodo get_cotizacion()...
 
         public function save (  $id,  $put ) 
@@ -32,3 +33,10 @@
           return $this->db->delete('servicios_cotizados', array('id' => $id)  ); 
         }
 }
+
+
+// { 
+//   idcotizacion:5, idservicio:23,{secciones},  
+//   idcotizacion:5, idservicio:24, {secciones},  
+//   idcotizacion:5,  idservicio:23, {secciones}
+// }

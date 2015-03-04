@@ -1,15 +1,32 @@
 <?php
- // require_once 'modelo_crud.php';
 
  class Model_ServiceContract extends CI_Model
  {
  	public function __construct(){}
 
  	public function create($post) 
-        {  
-          $this->db->insert('servicios_contrato', $post);
-          return $this->get($this->db->insert_id());  
-        }# Fin del metodo insert_mcontact()...
+    {  
+    	// Relación servicios x contrato
+    	$rel_sxc = array(
+    			'idcontrato' => $post['idcontrato'],
+    			'idservicio' => $post['idservicio']
+    		);
+
+    	$this->db->insert('servicios_x_contrato', $rel_sxc);
+    	$idrel_sxc = $this->db->insert_id();
+
+    	// Relación servicios contratados
+    	$rel_sc = array(
+    			'seccion'=> $post['seccion'],
+    			'descripcion' => $post['descripcion'],
+    			'horas' => $post['horas'],
+    			'idservicioxcontrato' =>$idrel_sxc
+    		);
+
+        $this->db->insert('secciones_contrato', $rel_sc);
+        return $this->get($this->db->insert_id());  
+
+    }# Fin del metodo insert_mcontact()...
 
  	public function get ()
  	{

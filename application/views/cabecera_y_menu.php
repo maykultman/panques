@@ -57,7 +57,6 @@
     
     <script type="text/javascript" src="<?=base_url()?>js/funcionescrm.js"></script>
     <script type="text/javascript" src="<?=base_url()?>js/validaciones.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>js/autocompletes.js"></script>
 
     <script type="text/javascript" src="<?=base_url()?>js/backbone/lib/handlebars.js"></script>
     <script type="text/javascript" src="<?=base_url()?>js/backbone/lib/underscore.js"></script>

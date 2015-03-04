@@ -1,4 +1,5 @@
 <?=	link_tag('css/estilo_dashboard_gustavo.css').
+	link_tag('css/graficas.css').
 	link_tag('css/theme.default.css');
 ?>
 <?php 
@@ -24,52 +25,7 @@ function pagoz($arg)
 	echo "</tbody></table>";
 } 
 ?>
-<style>
-	.warning{
-		color:#f89406
-	}
-	.nomserv{
-		opacity: 0;
-		position: absolute;
-		background: rgba(39, 42, 47, 0.67);
-		padding: 0 5px;
-		border-radius: 0 0 3px 3px;
-		left: 50%;
-		transform: translateX(-50%);
-		transition:.2s;
-		bottom: -50px;
-		
-	}
-	.trserv td{
-		width:4.1%;
-		cursor: pointer;
-		text-align: center; 
-	}
-	.trserv td:hover{
-		color: #fff;
-		background-color: rgba(39, 42, 47, 0.67);
-	}
-	.trserv td:hover > .nomserv{
-		opacity: 1!important;
-	}
-	.toltip{
-		display: none; 
-		background: rgba(5, 5, 5, 0.87);
-		border-radius: 2px;
-		padding: 1px;
-		position: absolute;
-		left: -15px;
-		font-size: 12px;
-		color: #fff;
-	}
-	.graf{
-		position: relative;
-	}
-	.graf:hover > .toltip{
-		display: block;
-		cursor: pointer;
-	}
-</style>
+
 <div class="contenedor_modulo">
 	<h1 id="titulo_del_modulo" style="display: block; position: fixed; z-index: 1; width: 100%;"><label>Escritorio</label></h1>
     
@@ -223,60 +179,50 @@ function pagoz($arg)
 					   	<h3 class="panel-title">Ingresos por servicios</h3>
 					   	<span id="icono_panel" class="icon-stocks" ></span>
 					</div>
-					<div  class="panel-body" style="overflow: auto; height:400px;">
+					<div  class="panel-body" style="height:570px;">
 					 	<label for="from">From</label>
-						<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
+						<input type="text" class="form-control from" name="from" style="width: 30%; display: inline-block">
 						<label for="to">to</label>
-						<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
-						<!-- <span id="span_ingreso" class="badge">$100,000</span>      -->
+						<input type="text" class="form-control to" name="to" style="width: 30%; display: inline-block">
 						
 						<hr>
-						 <ul class="nav nav-tabs" role="tablist">
-							    	<li class="active"><a href="#mensual" role="tab" data-toggle="tab">Mensual</a></li>
-								  	<li><a href="#trimestral" role="tab" data-toggle="tab">Trimestral</a></li>							  
-								  	<li><a href="#semestral" role="tab" data-toggle="tab">Semestral</a></li>
-								  	<li><a href="#anual" role="tab" data-toggle="tab">Anual</a></li>
-								  	<li><a href="#dosa" role="tab" data-toggle="tab">2 años</a></li>
-								</ul>
-								<div class="tab-content" style="position:relative;">
-									<div class="tab-pane fade in active" id="mensual">
-										<table style="margin-top: 15%;">
-										<?php if(isset($servicios)&&is_array($servicios)): ?>
-											<tr class="text-center">
-												<?php foreach ($servicios as $ks1 => $vs1): ?>
-													<td class="graf"><?php if($vs1->cant>0):?>
-														<span class="toltip">$50.00</span>
-														<img src="<?=base_url()?>img/graf.png" width="20px" height="<?php echo 2*($vs1->cant+1)?>">
-														<?php endif; ?>
-													</td>
-
-												<?php endforeach;?>
-											</tr>
-										<tr class="trserv">
-											
-
-											<?php foreach ($servicios as $ks => $vs): ?>
-												<td><?=$vs->id?><div class="nomserv"><?=$vs->nombre?></div></td>
-											<?php endforeach; endif;?>
-										</tr>	
-										</table>
-												
-												
-										
-									</div>
-								    <div class="tab-pane fade" id="trimestral">
-								    	
-								    </div>
-								    <div class="tab-pane fade" id="semestral">
-								    	
-								    </div>
-								    <div class="tab-pane fade" id="anual">
-								    	
-								    </div>
-								    <div class="tab-pane fade" id="dosa">
-								    	
-								    </div>
-							    </div>
+						<ul class="nav nav-tabs" role="tablist">
+							<ul class="nav nav-tabs" role="tablist">
+						   	<li class="active"><a href="#sEnero" role="tab" data-toggle="tab"> Enero </a></li>
+						  	<li><a href="#sFebrero" role="tab" data-toggle="tab"> Febrero </a></li>							  
+						  	<li><a href="#sMarzo" role="tab" data-toggle="tab"> Marzo </a></li>
+						  	<li><a href="#sAbril" role="tab" data-toggle="tab"> Abril </a></li>
+						  	<li><a href="#sMayo" role="tab" data-toggle="tab"> Mayo </a></li>
+						  	<li><a href="#sJunio" role="tab" data-toggle="tab"> Junio </a></li>
+						  	<li><a href="#sJulio" role="tab" data-toggle="tab"> Julio </a></li>
+						  	<li><a href="#sAgosto" role="tab" data-toggle="tab"> Agosto </a></li>
+						  	<li><a href="#sSeptiembre" role="tab" data-toggle="tab"> Septiembre </a></li>
+						  	<li><a href="#sOctubre" role="tab" data-toggle="tab"> Octubre </a></li>
+						  	<li><a href="#sNoviembre" role="tab" data-toggle="tab"> Noviembre </a></li>
+						  	<li><a href="#sDiciembre" role="tab" data-toggle="tab"> Diciembre </a></li>						
+						</ul>
+						<div class="tab-content" style="position:relative;">
+						
+							<div class="tab-pane fade in active" id="sEnero">
+								<div class="parent">
+									<img src="<?=base_url()?>img/logoQualium.png">
+									<?php $while=0; while($while < 25): ?>
+									<div class="child" data-toggle="tooltip" data-placement="bottom" title="Servicio<?=$while?>"> <div class="barra" style="height:<?=$while?>%"><span class="max" data-toggle="tooltip" data-placement="top" title="$1000.00">$</span> </div> </div>
+									<?php $while++; endwhile;?>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="sFebrero">s1</div>
+							<div class="tab-pane fade" id="sMarzo">s2</div>
+							<div class="tab-pane fade" id="sAbril"></div>
+							<div class="tab-pane fade" id="sMayo"></div>
+							<div class="tab-pane fade" id="sJunio"></div>
+							<div class="tab-pane fade" id="sJulio"></div>
+							<div class="tab-pane fade" id="sAgosto"></div>
+							<div class="tab-pane fade" id="sSeptiembre"></div>
+							<div class="tab-pane fade" id="sOctubre"></div>
+							<div class="tab-pane fade" id="sNoviembre"></div>
+							<div class="tab-pane fade" id="sDiciembre"></div>
+						</div>		
 					</div>
 				</div>	
 
@@ -285,94 +231,93 @@ function pagoz($arg)
 					   	<h3 class="panel-title">Ingresos por clientes</h3>
 					   	<span id="icono_panel" class="icon-stocks" ></span>
 					</div>
-					<div  class="panel-body" style="overflow: auto; height:400px;">
+					<div  class="panel-body" style="overflow: auto; height:600px;">
 					 	<label for="from">From</label>
-						<input type="text" class="form-control" id="from" name="from" style="width: 30%; display: inline-block">
+						<input type="text" class="form-control from" name="from" style="width: 30%; display: inline-block">
 						<label for="to">to</label>
-						<input type="text" class="form-control" id="to" name="to" style="width: 30%; display: inline-block">
+						<input type="text" class="form-control to" name="to" style="width: 30%; display: inline-block">
 						<!-- <span id="span_ingreso" class="badge">$100,000</span>      -->
-						
 						<hr>
-						 <ul class="nav nav-tabs" role="tablist">
-							    	<li class="active"><a href="#mensualc" role="tab" data-toggle="tab">Mensual</a></li>
-								  	<li><a href="#trimestralc" role="tab" data-toggle="tab">Trimestral</a></li>							  
-								  	<li><a href="#semestralc" role="tab" data-toggle="tab">Semestral</a></li>
-								  	<li><a href="#anualc" role="tab" data-toggle="tab">Anual</a></li>
-								  	<li><a href="#dosac" role="tab" data-toggle="tab">2 años</a></li>
-								</ul>
-								<div class="tab-content" style="position:relative;">
-									<div class="tab-pane fade in active" id="mensualc">
-										<table style="margin-top: 15%;">
-										<?php if(isset($clientes)&&is_array($clientes)): ?>
-											<tr class="text-center">
-												<?php foreach ($clientes as $ks1 => $vs1): ?>
-													<td><?php
-														?>
-														<!-- <img src="<?=base_url()?>img/graf.png" width="20px" height="echo 2*($vs1->cant+1)?>"> -->
-														<?php  //endif; ?>
-													</td>
+						<ul class="nav nav-tabs" role="tablist">
+						   	<li class="active"><a href="#cEnero" role="tab" data-toggle="tab"> Enero </a></li>
+						  	<li><a href="#cFebrero" role="tab" data-toggle="tab"> Febrero </a></li>							  
+						  	<li><a href="#cMarzo" role="tab" data-toggle="tab"> Marzo </a></li>
+						  	<li><a href="#cAbril" role="tab" data-toggle="tab"> Abril </a></li>
+						  	<li><a href="#cMayo" role="tab" data-toggle="tab"> Mayo </a></li>
+						  	<li><a href="#cJunio" role="tab" data-toggle="tab"> Junio </a></li>
+						  	<li><a href="#cJulio" role="tab" data-toggle="tab"> Julio </a></li>
+						  	<li><a href="#cAgosto" role="tab" data-toggle="tab"> Agosto </a></li>
+						  	<li><a href="#cSeptiembre" role="tab" data-toggle="tab"> Septiembre </a></li>
+						  	<li><a href="#cOctubre" role="tab" data-toggle="tab"> Octubre </a></li>
+						  	<li><a href="#cNoviembre" role="tab" data-toggle="tab"> Noviembre </a></li>
+						  	<li><a href="#cDiciembre" role="tab" data-toggle="tab"> Diciembre </a></li>
+						</ul>
+						<div class="tab-content" style="position:relative;">
+							<!-- <div class="tab-pane fade in active" id="mensualc">
+								<table style="margin-top: 15%;">
+									<?php //if(isset($clientes)&&is_array($clientes)): ?>
+										<tr class="text-center">
+											<?php //foreach ($clientes as $ks1 => $vs1): ?>
+												<td><?php
+													?>
+													<img src="<?=base_url()?>img/graf.png" width="20px" height="echo 2*($vs1->cant+1)?>">
+													<?php  //endif; ?>
+												</td>
 
-												<?php endforeach;?>
-											</tr>
+											<?php //endforeach;?>
+										</tr>
 										<tr class="trserv">
 											
 
-											<?php foreach ($clientes as $kc => $vc): ?>
-												<td><?=$vc->id?><div class="nomserv"><?=$vc->nombreComercial?></div></td>
-											<?php endforeach; endif;?>
+											<?php //foreach ($clientes as $kc => $vc): ?>
+												<td><?//=$vc->id?><div class="nomserv"><?=$vc->nombreComercial?></div></td>
+											<?php //endforeach; endif;?>
 										</tr>	
-										</table>
-												
-												
-										
-									</div>
-								    <div class="tab-pane fade" id="trimestralc">
-								    	
-								    </div>
-								    <div class="tab-pane fade" id="semestralc">
-								    	
-								    </div>
-								    <div class="tab-pane fade" id="anualc">
-								    	
-								    </div>
-								    <div class="tab-pane fade" id="dosac">
-								    	
-								    </div>
-							    </div>
+								</table>
+							</div> -->
+							
+							<div class="tab-pane fade in active" id="cEnero">c</div>
+							<div class="tab-pane fade" id="cFebrero">c1</div>
+							<div class="tab-pane fade" id="cMarzo">c2</div>
+							<div class="tab-pane fade" id="cAbril"></div>
+							<div class="tab-pane fade" id="cMayo"></div>
+							<div class="tab-pane fade" id="cJunio"></div>
+							<div class="tab-pane fade" id="cJulio"></div>
+							<div class="tab-pane fade" id="cAgosto"></div>
+							<div class="tab-pane fade" id="cSeptiembre"></div>
+							<div class="tab-pane fade" id="cOctubre"></div>
+							<div class="tab-pane fade" id="cNoviembre"></div>
+							<div class="tab-pane fade" id="cDiciembre"></div>
+						</div>
 					</div>
-				</div>		  
+				</div>	<!--panel panel-default-->
 			<?php endif ?>
 		</div>
 	</section>
 </div>  
-<? 
-	// script_tag("js/jquery-ui-1.9.2.custom.min.js").
-	// script_tag('css/bootstrap-3.1.1-dist/js/collapse.js').
-	// script_tag('css/bootstrap-3.1.1-dist/js/transition.js').
-	// script_tag('css/bootstrap-3.1.1-dist/js/tap.js');
-?>
+
 <script>
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-</script>
-<script>
-  $(function() {
-    $( "#from" ).datepicker({
-      defaultDate: "+1w",
-      // changeMonth: true,
-      // numberOfMonths: 3,
-      onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });
-    $( "#to" ).datepicker({
-      defaultDate: "+1w",
-      // changeMonth: true,
-      // numberOfMonths: 3,
-      onClose: function( selectedDate ) {
-        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
-      }
-    });
+  	$(function() {
+	    $( ".to" ).datepicker({dateFormat:'YYY', changeYear: true});
+	  	
+  		$('[data-toggle="tooltip"]').tooltip();
+	    // $( ".from" ).datepicker({
+	    //   	defaultDate: "+1w",
+	    //   	// changeMonth: true,
+	    //   	// numberOfMonths: 3,
+	    //   	onClose: function( selectedDate ) {
+	    //     	// $( ".to" ).datepicker( "option", "minDate", selectedDate );
+	    //     	$(".to").datepicker({changeYear: true});
+	    // 	}
+    	// });
+
+    	// $( ".to" ).datepicker({
+     //  		defaultDate: "+1w",
+     //  		// changeMonth: true,
+     //  		// numberOfMonths: 3,
+     //  		onClose: function( selectedDate ) {
+     //    		$( ".from" ).datepicker( "option", "maxDate", selectedDate );
+     //  		}
+    	// });
   });
 </script>

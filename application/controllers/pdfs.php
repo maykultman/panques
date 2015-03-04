@@ -6,14 +6,14 @@
 	class Pdfs extends CI_Controller
 	{
 		
-		function __construct(argument)
+		function __construct()
 		{
 			# code...
 		}
 
-		public function get_cotizacion()
+		public function get_cotizacion($id=FALSE)
 		{
-			
+			echo $id;
 		}
 
 	}

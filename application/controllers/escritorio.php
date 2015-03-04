@@ -178,8 +178,8 @@ class Escritorio extends REST {
 		$data['pagosxI'] = $pagos['iguala'];
 		$data['pagosxE'] = $pagos['evento'];	
 		$data['proyectos'] = $this->dash->proyectos();
-
-
+		// $data['servgraficas']= $this->dash->graficas();
+		// die();
 		$data['clientes'] = $this->dash->clientes();
 		$this->area_Estatica('dashboard_gustavo', $data);
 	} 

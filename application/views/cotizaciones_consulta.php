@@ -1,7 +1,4 @@
-<?=
-	script_tag('js/autocompletes.js').
-	link_tag('css/estilos_modulo_contratos.css');
-?>
+<?=link_tag('css/estilos_modulo_contratos.css');?>
 <?php 
 $activa_p = array();
 function menu($arg, $perm)

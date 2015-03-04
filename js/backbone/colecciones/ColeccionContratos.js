@@ -198,11 +198,11 @@ var ColeccionContratos = Backbone.Collection.extend({
 	}
 });
 app.ModeloServicioContrato	= Backbone.Model.extend({
-	urlRoot	: location.origin+'api_serviciosContrato'
+	urlRoot	: root+'/api_serviciosContrato'
 });
 var ColeccionServiciosContrato = Backbone.Collection.extend({
 	model	: app.ModeloServicioContrato,
-	url		: location.origin+'/api_serviciosContrato'
+	url		: root+'/api_serviciosContrato'
 });
 /*---------------------------------------------------------------------------------*/
 

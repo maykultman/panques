@@ -119,6 +119,17 @@
 		{
 			return $this->db->get('clientes')->result();
 		}
+
+		public function graficas()
+		{
+			$this->db->select_max('idcliente');
+			$this->db->order_by('idcliente');
+			$query = $this->db->get('cliente_atributo');
+			var_dump($query->result()); die();
+		}
+
+
+
 	}
 
 ?>
