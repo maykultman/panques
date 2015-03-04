@@ -497,7 +497,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 						if ( _.isArray( secciones ) ) {
 							for (var i = 0; i < secciones.length; i++) {
 								delete secciones[i].idservicio;
-								secciones[i].documento = ;
+								secciones[i].documento = 'cotizacion';
 							}
 						} else{ delete secciones.idservicio; };
 						secciones.documento = 'cotizacion';
@@ -576,7 +576,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			}
 		}, 10);
 	},
-	guardarSeccion	: function (iddocumento, servicios) {
+	guardarSeccion	: function (idDocumento, servicios) {
 		var self = this;
 		var crear = function (objeto) {
 			Backbone.emulateHTTP = true;
@@ -601,11 +601,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		};
 		if ( _.isArray(servicios) ) {
 			for (var i = 0; i < servicios.length; i++) {
-				servicios[i].iddocumento = iddocumento;
+				servicios[i].iddocumento = idDocumento;
 				crear(servicios[i]);
 			};
 		} else{
-			servicios.iddocumento = iddocumento;
+			servicios.iddocumento = idDocumento;
 			crear(servicios);
 		};
 	},
