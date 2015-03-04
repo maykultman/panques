@@ -491,14 +491,16 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			// servicios por grupo
 			for (var i = 0; i < idsServ.length; i++) {
 				json.servicios.push({
-					idcotizacion : 'sin especificar',
+					iddocumento : 'sin especificar',
 					idservicio 	 : idsServ[i],
 					secciones    : function (secciones) {
 						if ( _.isArray( secciones ) ) {
 							for (var i = 0; i < secciones.length; i++) {
 								delete secciones[i].idservicio;
+								secciones[i].documento = ;
 							}
 						} else{ delete secciones.idservicio; };
+						secciones.documento = 'cotizacion';
 						return JSON.stringify(secciones);
 					}(grupoPorServ[i]) // pasamos la primera posición 
 									   // del array de grupos correspondiente
@@ -574,7 +576,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			}
 		}, 10);
 	},
-	guardarSeccion	: function (idCotizacion, servicios) {
+	guardarSeccion	: function (iddocumento, servicios) {
 		var self = this;
 		var crear = function (objeto) {
 			Backbone.emulateHTTP = true;
@@ -599,11 +601,11 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		};
 		if ( _.isArray(servicios) ) {
 			for (var i = 0; i < servicios.length; i++) {
-				servicios[i].idcotizacion = idCotizacion;
+				servicios[i].iddocumento = iddocumento;
 				crear(servicios[i]);
 			};
 		} else{
-			servicios.idcotizacion = idCotizacion;
+			servicios.iddocumento = iddocumento;
 			crear(servicios);
 		};
 	},

@@ -54,7 +54,7 @@ app.Evento = Backbone.View.extend({
 			}, function () {
 				$('#block').toggleClass('activo');
 				self.cancelar();
-				error('Error al intentar acutalizar el evento.');
+				error('Error al intentar acutualizar.');
 			});
 		} else{
 			Backbone.emulateHTTP = true;
@@ -62,14 +62,14 @@ app.Evento = Backbone.View.extend({
 			app.coleccionActividades.create(json,{
 				wait 	: true,
 				success : function (model) {
-					// console.log('se creo: ', model);
 					$('#block').toggleClass('activo');
 					self.control.clear();
 					self.$formEvento[0].reset();
 				},
 				error 	: function (model) {
-					// console.log('no creo: ', model);
 					$('#block').toggleClass('activo');
+					model = 'Error. No se ha creado la cotización';
+					alerta(model, function () {});
 				}
 			});
 			Backbone.emulateHTTP = false;
@@ -344,12 +344,12 @@ app.VistaActividades = Backbone.View.extend({
 			$('#block').toggleClass('activo');
 		}, function () {
 			$('#block').toggleClass('activo');
-			alerta('No se pudo realizar la conexión con Google, intente más tarde.');
+			alerta('Error de conexión con Google, intente recargado la página o intente más tarde.');
 		});
 
-		this.listenTo(app.coleccionActividades, 'add', this.cargarEvento);
-		this.listenTo(app.coleccionActividades, 'destroy', this.retirarEvento);
-		this.listenTo(app.coleccionActividades, 'change', this.renderizarEvento);
+		this.listenTo(app.coleccionActividades, 'add', 		this.cargarEvento);
+		this.listenTo(app.coleccionActividades, 'destroy', 	this.retirarEvento);
+		this.listenTo(app.coleccionActividades, 'change', 	this.renderizarEvento);
 	},
 	cargarEvento : function (model) {
 		var jsonModel = model.toJSON();
