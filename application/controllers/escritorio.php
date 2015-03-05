@@ -26,7 +26,7 @@ class Escritorio extends REST {
 
         $client_id = '266013765630-no4316pgdf96q34c98eb0bit2or9ff0s.apps.googleusercontent.com';
         $client_secret = '9eMzpa4ags-xnvzPkEGEqrFs';
-        $redirect_uri = 'http://crmqualium.com/escritorio/conectar';
+        $redirect_uri = 'http://crmqualium.com/escritorio/actividades';
 
         $this->client = new Google_Client();
         $this->client->setClientId($client_id);
@@ -34,6 +34,7 @@ class Escritorio extends REST {
         $this->client->setRedirectUri($redirect_uri);
         $this->client->addScope("https://www.googleapis.com/auth/calendar");
         $this->client->setAccessType('offline');
+        $this->client->setApprovalPrompt('force');
 
         $this->service = new Google_Service_Calendar($this->client);
     }  
@@ -399,35 +400,38 @@ class Escritorio extends REST {
 	}
 
 	// functiones de calendar
-		public function actividades (){
+		public function actividades () {
+			if ( isset($_GET['code']) ) {
+	            $this->client->authenticate($_GET['code']);
+	            $this->session->set_userdata('access_token', $this->client->getAccessToken());
+	            // $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+	            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/escritorio/actividades';
+	            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
+	        }/* else { $this->actividades(); }*/
+
 	        $access_token = $this->session->userdata('access_token');
 	        if ( isset( $access_token ) && $access_token ) {
 	            $this->client->setAccessToken( $access_token );
+	            var_dump( $access_token );
 	        } else {
 	            $authUrl = $this->client->createAuthUrl();
 	        }
 
 	        if ( isset($authUrl) && $authUrl ) {
-	        	$datos = array('authUrl' => $authUrl);
+	        	// $datos = array('authUrl' => $authUrl);
 	        	/*Descomentar la linea siguiente y comentar la subsiguiente
 	        	para proporcionar una url de accesso para un ancla en la vista
 	        	actividades.php. descomentar dicha ancla en la vista.*/
 	        	// $this->area_Estatica('actividades', $datos);
 	        	header('Location:' . filter_var($authUrl, FILTER_SANITIZE_URL));
-	        } else {
-	        	$this->area_Estatica('actividades');
+
+	        	break;
 	        }
+
+        	$datos = array('expire_in' => $access_token->expire_in);
+        	$this->area_Estatica('actividades', $datos);
 		}
 		public function conectar () {
-			if ( isset($_GET['code']) ) {
-	            $variable = $this->client->authenticate($_GET['code']);
-	            $this->session->set_userdata('access_token', $this->client->getAccessToken());
-	            // $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-	            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/escritorio/actividades';
-	            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
-	        } else {
-	        	$this->actividades();
-	        }
 		}
 		public function salir () {
 			/*No borrar esta función. sirve para tener un control manual para

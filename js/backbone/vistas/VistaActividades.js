@@ -68,7 +68,7 @@ app.Evento = Backbone.View.extend({
 				},
 				error 	: function (model) {
 					$('#block').toggleClass('activo');
-					model = 'Error. No se ha creado la cotización';
+					model = 'Error. La actividad no ha sido creada. Intente más tarde';
 					alerta(model, function () {});
 				}
 			});
@@ -350,6 +350,10 @@ app.VistaActividades = Backbone.View.extend({
 		this.listenTo(app.coleccionActividades, 'add', 		this.cargarEvento);
 		this.listenTo(app.coleccionActividades, 'destroy', 	this.retirarEvento);
 		this.listenTo(app.coleccionActividades, 'change', 	this.renderizarEvento);
+
+		setTimeout(function() {
+			location.href;
+		}, 2000);
 	},
 	cargarEvento : function (model) {
 		var jsonModel = model.toJSON();
