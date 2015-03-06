@@ -51,7 +51,14 @@ app.VistaSeccion = Backbone.View.extend({
 	actualizarTexto : function () {
 		this.$('input[name="seccion"]').val(this.$('#seccion').val());
 		this.$('input[name="descripcion"]').val(this.$('#descripcion').val());
-	}
+	},
+	// bloquearInputs 	: function () {
+	// 	if (app.tipoPlan == 'iguala') {
+	// 		this.$('.conmutado-por-plan').addClass('hide');
+	// 	} else if (app.tipoPlan == 'evento') {
+	// 		this.$('.conmutado-por-plan').removeClass('hide');
+	// 	};
+	// },
 });
 
 app.VistaCotizarServicio = Backbone.View.extend({
@@ -79,10 +86,12 @@ app.VistaCotizarServicio = Backbone.View.extend({
 
 		if ( this.model.get('nuevo') ) {
 			this.$('tbody').append( vistaSeccion.render(this.model.get('nombre')).el );
+			
 		} else{
-			this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );	
+			this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );
 		};
-		
+		this.bloquearInputs(1);
+		this.bloquearInputs(vistaSeccion);
 		/*Despues de que el se ha apilado el servicio a cotizar,
 		  calculamos instantaneamente el importe del servicio*/
 		this.carlcularImporte();
@@ -124,7 +133,22 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		setTimeout(function() {
 			here.$('.importe').val(importe).trigger(jQuery.Event('change'));
 		}, 10);		
-	}
+	},
+	bloquearInputs 	: function (who) {
+		var fn = function (who) {
+			if (app.tipoPlan == 'iguala') {
+				who.$('.conmutado-por-plan').addClass('hide');
+			} else if (app.tipoPlan == 'evento') {
+				who.$('.conmutado-por-plan').removeClass('hide');
+			};
+		}
+		if (who === 1) {
+			fn(this);
+		} else{
+			fn(who);
+		};
+		
+	},
 });
 
 app.VistaTrServ = app.VistaTrServicio.extend({
@@ -240,7 +264,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		app.coleccionServicios.each(this.cargarServicio, this);
 	},
 	calcularSubtotal 	: function () {
-		if (this.tipoPlan == 'evento') {
+		if (app.tipoPlan == 'evento') {
 			var total = 0,
 				decimales,
 			/*Cada cambio en cualquiera de los importes activará los campos,
@@ -280,7 +304,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 				};
 			}
 			this.calcularTotal();
-		} else if (this.tipoPlan == 'iguala') {
+		} else if (app.tipoPlan == 'iguala') {
 			var preciotiempo = parseInt( this.$('#precio_mes').val() ),
 				npagos     	  = parseInt( this.$('input[name="npagos"]:eq(1)').val() )
 				total = Number(preciotiempo * npagos).toFixed(2);
@@ -293,7 +317,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	calcularTotal 		: function () {
 		// La siguiente línea debe veficiar que, según el plan
 		// seleccionado, los imputs estén bloqueados o habilitados
-		this.bloquearInputs();
+		// this.bloquearInputs();
 
 		var $descuento = this.$('input[name="descuento"]'),
 			self = this;
@@ -305,9 +329,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		};
 
 		var	total = function () {
-						if (self.tipoPlan == 'evento') {
+						if (app.tipoPlan == 'evento') {
 							return Number(self.$('#subtotal_evento').val());
-						} else if (self.tipoPlan == 'iguala') {
+						} else if (app.tipoPlan == 'iguala') {
 							return Number(self.$('#precio_mes').val());
 						};
 					}(),
@@ -323,10 +347,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		// [1]
 		// Verificamos que tipo de plan está activo y
 		// disparamos un evento al campo pertinente.
-		if (this.tipoPlan == 'evento') {
+		if (app.tipoPlan == 'evento') {
 			this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
 		} 
-		else if(this.tipoPlan == 'iguala'){
+		else if(app.tipoPlan == 'iguala'){
 			var npagos = Number( this.$('input[name="npagos"]:eq(1)').val() );
 			this.$('#label_total').text( '$'+conComas( (total * npagos).toFixed(2) ) );
 		};
@@ -503,8 +527,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		return json;
 	},
 	conmutarTablaPlan		: function (e) {
-		this.tipoPlan = $(e.currentTarget).val();
-		switch( this.tipoPlan ){
+		app.tipoPlan = $(e.currentTarget).val();
+		switch( app.tipoPlan ){
 			case 'evento':
 				this.$('.thead_evento').removeClass('thead_oculto');
 				this.$('.thead_iguala').addClass('thead_oculto');
@@ -533,15 +557,16 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			this.length && func.apply(this);
 				return this;
 			}
-
-			switch(self.tipoPlan){
+			console.log('dsdf');
+			switch(app.tipoPlan){
 				case 'iguala':
-					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-						$(this).css('visibility','hidden');
-					});
+					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+					// 	$(this).css('visibility','hidden');
+					// });
 					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
 					// 	$(this).css('opacity','.5');
 					// });
+					self.$('.conmutado-por-plan').addClass('hide');
 					self.$('#precio_hora').attr('disabled',true);
 					self.$('#precio_mes').attr('disabled',false);
 
@@ -549,12 +574,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					self.$('input[name="npagos"]:eq(1)').attr('disabled',false);
 				break;
 				case 'evento':
-					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-						$(this).css('visibility','initial');
-					});
+					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+					// 	$(this).css('visibility','initial');
+					// });
 					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
 					// 	$(this).css('opacity','1');
 					// });
+					self.$('.conmutado-por-plan').removeClass('hide');
 					self.$('#precio_mes').attr('disabled',true);
 					self.$('#precio_hora').attr('disabled',false);
 

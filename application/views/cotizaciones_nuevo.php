@@ -318,9 +318,9 @@
 		</td>
 		<td><input type="text"      id="seccion"        class="form-control input-sm"               style="min-width:150px;">                   </td>
 		<td><textarea               id="descripcion"    class="form-control" rows="3"               style="min-width:150px;"></textarea>        </td>
-		<td><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
-		<td><input type="number"    id=""               class="form-control input-sm number precio_hora" style="visibility:hidden;"     min="1"></td>
-		<td>
+		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
+		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number precio_hora" style="visibility:hidden;"     min="1"></td>
+		<td class="conmutado-por-plan">
 			<div class="input-group input-group-sm input-group-constoSeccion">
 				<span class="input-group-addon">$</span>
 				<input type="text" class="form-control costoSeccion" disabled>
