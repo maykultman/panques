@@ -68,7 +68,7 @@ function pagoz($arg)
 							  	<li><a href="#evento" role="tab" data-toggle="tab">Evento</a></li>							  
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane fade in active" id="iguala" style="overflow: auto; height: 185px;">
+								<div class="tab-pane fade in active" id="iguala" style="overflow:auto;height:185px;position:relative;">
 									<?php 
 									$div = '<div style="border-radius:0 0 5px 5px;position:absolute;width:100%;background:rgba(0, 0, 0, 0.79);height: 100%;"></div><h3 style="padding:10%0;text-align: center;">No hay pagos pendientes por el momento</h3>';
 									   	if(isset($pagosxI)&&is_array($pagosxI)){

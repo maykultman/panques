@@ -354,12 +354,12 @@ class Escritorio extends REST {
 		}
 		if($submodulo == 'historial' || $submodulo == 'papelera')
 		{
-			$this->load->model('Model_ServiceContract');
+			$this->load->model('Model_servicio_cotejado','servicios_cotejados');
 			$this->load->model('Model_contract');
 			$this->load->model('Model_payment');
 
 			$data['contratos'] = $this->Model_contract->get();
-			$data['serviciosDeContrato'] = $this->Model_ServiceContract->get();
+			$data['serviciosDeContrato'] = $this->servicios_cotejados->get(FALSE,'contratos');
 			$data['pagos'] = $this->Model_payment->get();
 
 			

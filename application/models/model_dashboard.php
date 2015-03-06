@@ -92,25 +92,25 @@
 		{
 			// $sum = $this->db->query('SELECT idservicio, SUM(idservicio) FROM servicios_cotejados GROUP BY idservicio ORDER BY SUM(idservicio) DESC')->result_array();
         				
-			$this->db->select('id,nombre');
-			$query = $this->db->get('servicios')->result();
+			// $this->db->select('id,nombre');
+			// $query = $this->db->get('servicios')->result();
 
-			foreach ($query as $key => $value) 
-			{
-				foreach ($sum as $sumkey => $sumval) 
-				{
-					if($value->id==$sumval['idservicio'])
-					{
+			// foreach ($query as $key => $value) 
+			// {
+			// 	foreach ($sum as $sumkey => $sumval) 
+			// 	{
+			// 		if($value->id==$sumval['idservicio'])
+			// 		{
 
-						$query[$key]->cant = intval($sumval["SUM(idservicio)"])/intval($value->id);
-					}
-					else{
-						$query[$key]->cant = 0;
-					}
-				}
+			// 			$query[$key]->cant = intval($sumval["SUM(idservicio)"])/intval($value->id);
+			// 		}
+			// 		else{
+			// 			$query[$key]->cant = 0;
+			// 		}
+			// 	}
 				
-			}
-			return $query;			
+			// }
+			return FALSE; //$query;			
 		}
 
 
