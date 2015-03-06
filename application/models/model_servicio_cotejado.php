@@ -1,6 +1,4 @@
 <?php
- // require_once 'modelo_crud.php';
-
  	class Model_servicio_cotejado extends CI_Model
  	{
 

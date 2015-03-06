@@ -5,7 +5,7 @@ class ServiciosDeContrato extends REST
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Model_ServiceContract', 'msc');
+		$this->load->model('Model_servicio_cotejado', 'msc');
 	}
 
 	public function api()

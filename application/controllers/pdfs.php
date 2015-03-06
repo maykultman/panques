@@ -5,15 +5,16 @@
 	*/
 	class Pdfs extends CI_Controller
 	{
-		
 		function __construct()
 		{
-			# code...
+			parent::__construct();
+			$this->load->model('Modelo_pdf','cotizacion');
 		}
 
 		public function get_cotizacion($id=FALSE)
 		{
-			echo $id;
+			$query = $this->cotizacion->get_cotizacion($id);
+			$this->load->view('pdf/cotizacion.php',$query);
 		}
 
 	}

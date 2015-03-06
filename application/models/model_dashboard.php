@@ -90,7 +90,7 @@
 
 		public function servicios()
 		{
-			$sum = $this->db->query('SELECT idservicio, SUM(idservicio) FROM servicios_x_contrato GROUP BY idservicio ORDER BY SUM(idservicio) DESC')->result_array();
+			// $sum = $this->db->query('SELECT idservicio, SUM(idservicio) FROM servicios_cotejados GROUP BY idservicio ORDER BY SUM(idservicio) DESC')->result_array();
         				
 			$this->db->select('id,nombre');
 			$query = $this->db->get('servicios')->result();
