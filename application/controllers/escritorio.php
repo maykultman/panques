@@ -185,7 +185,7 @@ class Escritorio extends REST {
 		// $data['servgraficas']= $this->dash->graficas();
 		// die();
 		$data['clientes'] = $this->dash->clientes();
-		$this->area_Estatica('dashboard_gustavo', $data);
+		$this->area_Estatica('dashboard', $data);
 	} 
 	
 	public function activaCatalogo()
