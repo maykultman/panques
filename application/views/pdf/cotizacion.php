@@ -5,8 +5,8 @@ require_once 'dom/dompdf_config.inc.php';
 $trserv = '';
 $hrs=0;
 $subtotal=0;
-$cd=1;	
-$des = array();
+$cont=0;	
+$hight = '';
 // Procesa primero \r\n así no es convertido dos veces.
 $order   = array("\r\n", "\n", "\r");
 foreach ($servicios as $key => $val) 
@@ -19,6 +19,18 @@ foreach ($servicios as $key => $val)
 		$enter = ( !empty( $sv->seccion ) ) ? '<br>' :'';
 		$trserv .= $sv->seccion.' '.$sv->descripcion.$enter;
 		$hrs += $sv->horas;
+
+		if($cont<13)
+		{
+			
+			if($cont==12)
+			{
+				$hight = "margin-top:80%;";
+			}else{
+				$hight = "position:absolute;bottom:80px;";
+			}
+			$cont++;
+		}
 	}
 
 	$trserv .= '</td><td>'.$hrs.'</td>';
@@ -35,12 +47,6 @@ $trserv .= '<tr><td></td><td></td><td>IVA</td><td>$'.$iva.'</td></tr>';
 $trserv .= '<tr><td></td><td></td><td>Precio Neto:</td><td>$'.( $subtotal + $iva ).'</td></tr>';
 
 $html = '<html><style>
-@page
-{
-			size: portrait;
-			page-size: letter;
-			margin: 2.5cm 3cm;
-		}
 html, body{
 	margin: 0;
 	font-family:sans-serif;
@@ -65,8 +71,7 @@ html, body{
 .body, .terminos{
 	padding: 0 10%;
 }
-.terminos{
-	margin-top:80%;
+.terminos{'.$hight.'
 	width:100%;
 }
 .body table{
