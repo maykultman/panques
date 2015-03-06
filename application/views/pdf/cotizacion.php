@@ -11,36 +11,36 @@ $des = array();
 $order   = array("\r\n", "\n", "\r");
 foreach ($servicios as $key => $val) 
 {
-	$trserv .='<tr><td style="padding-left:10px;"><strong>'.$val->nombre.'</strong>';
+	$trserv .='<tr><td style="padding-left:10px;"><strong>'.$val->nombre.'</strong><br>';
 	$secciones = json_decode( $val->secciones );
-	// foreach ($secciones as $sk => $sv) {
 
-	// 	$trserv .= '<br><strong>'.$sv->seccion.'</strong><br>';
+	foreach ($secciones as $sk => $sv) {
 
-	// 	$trserv .= str_replace($order, '<br/>', $sv->descripcion);		
-	// 	$hrs += $sv->horas;
-		
-	// }
-	$trserv .= '</td><td>'.( $hrs * $cotizacion->preciotiempo).'</td>';
-	$trserv .= '<td>'.$hrs.'</td>';
-	$trserv .= '<td> $'.$cotizacion->preciotiempo.'</td>';
+		$enter = ( !empty( $sv->seccion ) ) ? '<br>' :'';
+		$trserv .= $sv->seccion.' '.$sv->descripcion.$enter;
+		$hrs += $sv->horas;
+	}
+
+	$trserv .= '</td><td>'.$hrs.'</td>';
+	$trserv .= '<td>$'.$cotizacion->preciotiempo.'</td>';
 	$trserv .= '<td>$'.( $hrs * $cotizacion->preciotiempo ).'</td>';
 	$trserv .='</td></tr>';
 	$subtotal += ( $hrs * $cotizacion->preciotiempo );
+	$hrs =0;
 }	
-// die($trserv);
-$iva = round( ( $subtotal - ($subtotal / 1.16 ) ) , 2);
-$trserv .= '<tr><td></td><td></td><td>Total:</td><td>'.$subtotal.'</td></tr>';
-$trserv .= '<tr><td></td><td></td><td>IVA</td><td>'.$iva.'</td></tr>';
-$trserv .= '<tr><td></td><td></td><td>Precio Neto:</td><td>'.( $subtotal + $iva ).'</td></tr>';
 
+$iva = round( ( $subtotal * 0.16 ), 2);
+$trserv .= '<tr><td></td><td></td><td>Total:</td><td>$'.$subtotal.'</td></tr>';
+$trserv .= '<tr><td></td><td></td><td>IVA</td><td>$'.$iva.'</td></tr>';
+$trserv .= '<tr><td></td><td></td><td>Precio Neto:</td><td>$'.( $subtotal + $iva ).'</td></tr>';
 
-$html = '<html>
-<head>
-<title>
-</title>
-</head>
-<style>
+$html = '<html><style>
+@page
+{
+			size: portrait;
+			page-size: letter;
+			margin: 2.5cm 3cm;
+		}
 html, body{
 	margin: 0;
 	font-family:sans-serif;
@@ -50,7 +50,7 @@ html, body{
 .header{
 	background: rgba(64, 64, 64, 1);
 	color: white;
-	height: 150px;
+	height: 130px;
 	padding-top:1%;
 }
 .footer{
@@ -66,12 +66,11 @@ html, body{
 	padding: 0 10%;
 }
 .terminos{
-	position:absolute;
+	margin-top:80%;
 	width:100%;
-	bottom:80px;
 }
 .body table{
-	margin: 5% auto;
+	margin: 2% auto;
 	width: 100%;
 	border:none;
 }
@@ -96,9 +95,16 @@ html, body{
 	width:33%;
 	float: left;
 }
+
 .detalles p{
 	color:#000;
-	margin-bottom:5px;
+}
+.detalles h4, .detalles p{
+	padding:0;
+	margin:0;
+}
+.detalles h4{
+	margin-top:15px;
 }
 .tit{
 	margin-left: 2cm;
@@ -112,23 +118,17 @@ html, body{
 }
 </style>
 <body>
-	<div class="header">
-		<table>
-		<tr>
-			<td width="280px">
-				<h1 class="tit">'.$cotizacion->titulo.'</h1>
-			</td>
-			
-			<td width="160px" style="padding-left:10px;">
-				<img width="100" src="'.base_url().'img/logoQualium.png">
-			</td>
-			<td width="200px" class="datosq"><p>
-				<b>Qualium Puplicidad y Marqueting</b><br>
-				RFC:QPM1201103S5<br>
-				Email: <u>contacto@qualium.mx</u><br>
-				Teléfono: (999)2852274<br>
-				Dirección: Calle 22 #52 x 7 y 9 México Norte, C.P. 97128. Mérida, Yucatán
-			</p></td>
+	<div class="header"><table ><tr><td width="280px"><h1 class="tit">'.$cotizacion->titulo.'</h1></td>
+		<td width="160px" style="padding-left:10px;">
+			<img width="100" src="'.base_url().'img/logoQualium.png">
+		</td>
+		<td width="200px" class="datosq"><p>
+			<b>Qualium Puplicidad y Marqueting</b><br>
+			RFC:QPM1201103S5<br>
+			Email: <u>contacto@qualium.mx</u><br>
+			Teléfono: (999)2852274<br>
+			Dirección: Calle 22 #52 x 7 y 9 México Norte, C.P. 97128. Mérida, Yucatán
+		</p></td>
 		</tr>
 		</table>
 	</div>
@@ -146,11 +146,8 @@ html, body{
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>'.$trserv.'
-			</tbody>
-		</table>
-
-	</div>
+			<tbody>'.$trserv.'</tbody></table>
+	</div><br><br><br>
 	<div class="terminos">		
 		<ul>
 			<h4>Términos y condiciones</h4> 
@@ -162,11 +159,9 @@ html, body{
 			<li>El archivo final es propiedad del cliente, el proyecto no.</li>
 			<li>El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
 
-		</ul>
-	</div>
-	<div class="footer"></div>
-</body>
-</html>';
+		</ul></div><div class="footer"></div></body></html>';
+
+// die($html);
 # Instanciamos un objeto de la clase DOMPDF.
 $mipdf = new DOMPDF();
  
