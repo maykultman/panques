@@ -2,7 +2,6 @@ var app = app || {};
 
 app.VistaSeccion = Backbone.View.extend({
 	tagName	: 'tr',
-	// className : 'tr_seccion',
 	plantillas : {
 		plantillaTrSeccion :  _.template( $('#td_seccion').html() )
 	},
@@ -10,9 +9,7 @@ app.VistaSeccion = Backbone.View.extend({
 		// 'click .span_eliminar_seccion' : 'eliminarTr',
 
 		'change .number'		: 'calcularSeccion',
-		// 'keyup .number'		: 'calcularSeccion',
 		'mousewheel .number'	: 'calcularSeccion',
-		// 'click .number'		: 'calcularSeccion',
 		'blur .number'			: 'calcularSeccion',
 		'keyup #seccion' 		: 'actualizarTexto',
 		'keyup #descripcion'	: 'actualizarTexto'
@@ -264,11 +261,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					}
 					// ...Por fin tenemos el total y se lo asignamos a la etiqueta total para que se vea el cambio..
 					this.$('#subtotal_evento').val(total.toFixed(2));
-					/*Formateamos subtotal para mostrarlo*/
-					// total = '' + total.toFixed(2);
-					// total = total.split('.');
-					// decimales = total[1];
-					// total = conComas(total[0].split(''));
 					
 					this.$('.label_subtotal:eq(0)').text( '$'+conComas(total.toFixed(2)) );
 			} else {	/*..¡A no fue un arreglo!..Bueno entonces paso directo el importe al total....*/
@@ -392,13 +384,10 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 						success:function(exito) {
 							if (self.aumentarContador() == json.secciones.length) {
 								self.contadorAlerta = 1;
-								window.open("formatoCotizacion");
+								window.open("formato_cotizacion");
 							};
-							// console.log('Fue exito');
 						},
-						error:function(error) {
-							// console.log('Fue error ',error);
-						}
+						error:function(error) { }
 					});
 				};
 			},
@@ -547,12 +536,12 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 			switch(self.tipoPlan){
 				case 'iguala':
-					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
-						$(this).css('text-decoration','line-through');
-					});
 					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-						$(this).css('opacity','.5');
+						$(this).css('visibility','hidden');
 					});
+					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+					// 	$(this).css('opacity','.5');
+					// });
 					self.$('#precio_hora').attr('disabled',true);
 					self.$('#precio_mes').attr('disabled',false);
 
@@ -560,12 +549,12 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					self.$('input[name="npagos"]:eq(1)').attr('disabled',false);
 				break;
 				case 'evento':
-					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
-						$(this).css('text-decoration','initial');
-					});
 					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-						$(this).css('opacity','1');
+						$(this).css('visibility','initial');
 					});
+					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
+					// 	$(this).css('opacity','1');
+					// });
 					self.$('#precio_mes').attr('disabled',true);
 					self.$('#precio_hora').attr('disabled',false);
 
@@ -945,8 +934,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 			// Si no!, la filtración ha resultados. en tal caso, se deja de
 			// escuchar el evento keypress del campo de busqueda y 
-			// escundemos las instrucciones al usuario.
-			if (!self.$('#table_servicios tbody tr:visible').length) {
+			// escondemos las instrucciones al usuario.
+			if (self.$('.search-services').val() != '') {
 				self.$('.search-services').on('keypress', function (e) {
 					self.guardarNuevoServ(e);
 					self.$('.search-services').off('keypress');

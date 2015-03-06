@@ -56,7 +56,7 @@
 				return $event;
 			}
 
-			$createdEvent = $this->service->events->insert('f3i1som6133f9j4ul5an2radko@group.calendar.google.com',,TRUE, $event);
+			$createdEvent = $this->service->events->insert('f3i1som6133f9j4ul5an2radko@group.calendar.google.com','',TRUE, $event);
 			
 			if ( $createdEvent ) {
 				return $this->get( $createdEvent->getId() );

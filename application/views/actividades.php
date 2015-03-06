@@ -93,7 +93,7 @@
 ?>
 
 <script type="text/javascript">
-	var expire_in = <%?= $expire_in; %>;
+	var expires_in = <?= $expires_in; ?>;
 	app.coleccionClientes = new ColeccionClientes();
 	app.coleccionEmpleados = new ColeccionEmpleados();
 	app.coleccionActividades = new ColeccionActividades();

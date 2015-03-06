@@ -352,8 +352,11 @@ app.VistaActividades = Backbone.View.extend({
 		this.listenTo(app.coleccionActividades, 'change', 	this.renderizarEvento);
 
 		setTimeout(function() {
-			location.href;
-		}, 2000);
+			var url = location.origin+'/escritorio/newAccessToken';
+			$.get(url, function (resp) {
+				console.log('Realizado');
+			});
+		}, expires_in*1000);/**/
 	},
 	cargarEvento : function (model) {
 		var jsonModel = model.toJSON();

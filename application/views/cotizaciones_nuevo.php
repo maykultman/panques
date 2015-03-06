@@ -267,13 +267,13 @@
 						<td>
 							<textarea class="form-control" rows="1" style="min-width:150px; visibility: hidden;" disabled></textarea>
 						</td>
-						<td>
+						<td class="conmutado-por-plan">
 							<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 						</td>
-						<td>
+						<td class="conmutado-por-plan">
 							<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 						</td>
-						<td>
+						<td class="conmutado-por-plan">
 							<div class="input-group input-group-sm input-group-importe">
 								<span class="input-group-addon">$</span>
 								<input type="text" class="form-control importe" name="importes" disabled>
@@ -288,9 +288,9 @@
 						<td></td>
 						<td>Sección/Actividad</td>
 						<td>Observaciones</td>
-						<td>Horas</td>
-						<td></td>
-						<td>Costo</td>
+						<td class="conmutado-por-plan">Horas</td>
+						<td class="conmutado-por-plan"></td>
+						<td class="conmutado-por-plan">Costo</td>
 						<td></td>
 					</tr>
 				</thead>
