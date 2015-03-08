@@ -234,9 +234,9 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			$(valores[1]).val('0');
 		};
 		var	total = function () {
-						if (self.tipoPlan == 'evento') {
+						if (app.tipoPlan == 'evento') {
 							return Number(self.$('#subtotal_evento').val());
-						} else if (self.tipoPlan == 'iguala') {
+						} else if (app.tipoPlan == 'iguala') {
 							return Number(self.$('#precio_mes').val());
 						};
 					}(),
@@ -321,22 +321,23 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 
 		// traemos todos los datos del contrato
 		jsonDatos = this.obtenerDatos();
+			// console.log(jsonDatos);return;
 		// separamos los pagos y las fechas de pagos
 		jsonPagos = _.pick(jsonDatos.datos, 'fechapago', 'pago');
-		// separamos las secciones de del lo que se contrato
-		secciones = jsonDatos.secciones;
+		// separamos los servicios de del lo que se contrato
+		servicios = jsonDatos.servicios;
 
 		// eliminamos los datos del json general
 		delete jsonDatos.datos.fechapago;
 		delete jsonDatos.datos.pago;
-		delete jsonDatos.secciones;
+		delete jsonDatos.servicios;
 		jsonDatos = jsonDatos.datos;
 
 
 		jsonDatos.status = true;
 		jsonDatos.visibilidad = true;
 
-		this.totalelementos = secciones.length + 1;
+		this.totalelementos = servicios.length + 1;
 
 		$('#block').toggleClass('activo');
 		 Backbone.emulateHTTP = true;
@@ -347,7 +348,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 			success:function(exito){
 				jsonPagos.idcontrato = exito.get('id');
 				self.guardarPagos(jsonPagos);
-				self.guardarSeccion(exito.get('id'), secciones);
+				self.guardarSeccion(exito.get('id'), servicios);
 			},
 			error:function(error){ }
 		});
@@ -355,13 +356,13 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		Backbone.emulateJSON = false;
 		localStorage.clear();
 	},
-	guardarSeccion			: function (idContrato, secciones) {
+	guardarSeccion			: function (idContrato, servicios) {
 		var self = this;
-		for (var i = 0; i < secciones.length; i++) {
-			secciones[i].idcontrato = idContrato;
+		for (var i = 0; i < servicios.length; i++) {
+			servicios[i].iddocumento = idContrato;
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;
-			app.coleccionServiciosContrato.create(secciones[i], {
+			app.coleccionServiciosContrato.create(servicios[i], {
 				wait	: true,
 				success	: function (exito) {
 					// if (self.aumentarContador() == this.totalelementos) {
@@ -434,7 +435,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				alerta('Seleccione o escriba los <b>enunciados</b> del contrato', function () {});
 				return false; // Terminamos el flujo del código
 			};
-		json = { secciones : [], datos : '' };
+		json = { servicios : [], datos : '' };
 		// Datos básicos
 			json.datos = pasarAJson(this.$('#formPrincipal')
 						.serializeArray());
@@ -475,11 +476,40 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 						, function () {});
 				return false; // Terminamos el flujo del código
 			};		
-		// Servicios cotizados
+		// Servicios contratados
+			// obtenemos las secciones
 			for (var i = 0; i < forms.length; i++) {
-				json.secciones.push( pasarAJson($(forms[i])
-									 .serializeArray()) );
+				json.servicios.push( pasarAJson($(forms[i]).serializeArray()) );
 			};
+			
+			// agrupamos las secciones por id,
+			// luego aislamos tanto los ids como
+			// los valores de la agrupación
+			var grupoPorServ 	= _.groupBy(json.servicios, 'idservicio'),
+				idsServ 		= _.keys(grupoPorServ);
+			grupoPorServ 		= _.values(grupoPorServ);
+
+			json.servicios = []; /*reset al array servicios*/
+				// la posición de los ids de servicios corresponden 
+				// a las posiciones a la posición del array de 
+				// servicios por grupo
+				for (var i = 0; i < idsServ.length; i++) {
+					json.servicios.push({
+						iddocumento : 'sin especificar',
+						idservicio 	 : idsServ[i],
+						documento : 'contrato',
+						secciones    : function (secciones) {
+							if ( _.isArray( secciones ) ) {
+								for (var i = 0; i < secciones.length; i++) {
+									delete secciones[i].idservicio;
+								}
+							} else{ delete secciones.idservicio; };
+							return JSON.stringify(secciones);
+						}(grupoPorServ[i]) // pasamos la primera posición 
+										   // del array de grupos correspondiente
+										   // a la posicion del array de ids
+					});
+				};
 		// Datos basura
 			delete json.datos.todos;
 		
@@ -495,14 +525,9 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				return this;
 			}
 
-			switch(self.tipoPlan){
+			switch(app.tipoPlan){
 				case 'iguala':
-					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
-						$(this).css('text-decoration','line-through');
-					});
-					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-						$(this).css('opacity','.5');
-					});
+					self.$('.conmutado-por-plan').addClass('hide');
 
 					self.$('#precio_hora').attr('disabled',true);
 					self.$('#precio_mes').attr('disabled',false);
@@ -522,13 +547,8 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 						).attr('disabled',false);
 				break;
 				case 'evento':
-					self.$('.horas, .costoSeccion, .importe').doOnce(function(){
-						$(this).css('text-decoration','initial');
-					});
+					self.$('.conmutado-por-plan').removeClass('hide');
 
-					self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-						$(this).css('opacity','1');
-					});
 					self.$('#precio_mes').attr('disabled',true);
 					self.$('#precio_hora').attr('disabled',false);
 
@@ -600,7 +620,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				});
 				this.vistaPago[i] = new app.VistaPago({model : new Modelo});
 
-				$('#tbody_pagos_'+this.tipoPlan).append(this.vistaPago[i].render().el);
+				$('#tbody_pagos_'+app.tipoPlan).append(this.vistaPago[i].render().el);
 
 				fecha = new Date(fecha.getTime() + (plazo*24*60*60*1000));
 			};
@@ -641,7 +661,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 				});
 				this.vistaPago[i] = new app.VistaPago({model : new Modelo});
 
-				$('#tbody_pagos_'+this.tipoPlan).append(this.vistaPago[i].render().el);
+				$('#tbody_pagos_'+app.tipoPlan).append(this.vistaPago[i].render().el);
 
 				fecha = new Date(fecha.getTime() + (plazo*24*60*60*1000));
 			};
@@ -657,7 +677,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		// las dos lineas siguientes seran utilizadas frencuentemente
 		// por ello las respaldamos en una variable
 		var resetearPagos = function (n) {
-			self.$('#tbody_pagos_'+self.tipoPlan).html('');
+			self.$('#tbody_pagos_'+app.tipoPlan).html('');
 			self.establecerPagos( n );
 		};
 
@@ -732,7 +752,7 @@ app.VistaNuevoContrato = app.VistaNuevaCotizacion.extend({
 		Backbone.emulateJSON = false;
 	},
 	recargarPagos 			: function () {
-		this.$('#tbody_pagos_'+this.tipoPlan).html('');
+		this.$('#tbody_pagos_'+app.tipoPlan).html('');
 		$('input[name="npagos"]').first().trigger('change');
 	},
 	enunciado 		:function (e) {

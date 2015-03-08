@@ -2,11 +2,11 @@
 <html>
 	<head>
 		<style type="text/css">
-			@page {
+			/*@page {
 				size: portrait;
 				page-size: letter;
-				margin: 0px 0px;
-			}
+				margin: 0cm 0cm 2.5cm 0cm;
+			}*/
 			* {
 				font-family: Open Sans;
 			}
@@ -333,7 +333,6 @@
 
  		var json = app.coleccionCotizaciones_L.toJSON()[0];
  		this.json = json;
- 		console.log(json);
 
 		this.$('h1').text(json.titulo);
  		this.$('#detalles').html( this.plantillas.detalles(json) );
@@ -409,7 +408,8 @@
  			modelos,
  			importe = 0,
 
- 			itemLI = '';
+ 			itemLI = '',
+ 			secciones;
 
  		// Buscamos todas las secciones en las que coincida el
  		// id que se ha pasado como perametro ha esta función.
@@ -421,23 +421,41 @@
 
 
  		// Iteramos sobre los modelos para contruir un nuevo objeto
- 		// que se retornara para contruir el dicumento de cotización.
+ 		// que se retornara para contruir el documento de cotización.
  		for (var i = 0; i < modelos.length; i++) {
- 			if (modelos[i].get('seccion') != '') {
- 				itemLI = modelos[i].get('seccion')+'. ';
+ 			if (modelos[i].get('secciones') != '') {
+ 				secciones = jQuery.parseJSON(modelos[i].get('secciones'));
+ 				if ( _.isArray(secciones) ) {
+ 					for (var i = 0; i < secciones.length; i++) {
+ 						itemLI = secciones[i].seccion+'. ';
+			 			if (secciones[i].descripcion != '') {
+			 				itemLI += secciones[i].descripcion+'.';
+			 			};
+			 			if (secciones.seccion != '' || secciones[i].descripcion != '') {
+			 				itemLI = itemLI.split('');
+				 			itemLI.unshift('<li>');
+				 			itemLI.push('</li>');
+				 			itemLI = itemLI.join('');
+				 			json.descripcion += itemLI;
+			 			};
+						json.horas += parseInt(secciones[i].horas);
+ 					};
+ 				} else{
+ 					itemLI = secciones.seccion+'. ';
+ 					if (secciones.descripcion != '') {
+		 				itemLI += secciones.descripcion+'.';
+		 			};
+		 			if (secciones.seccion != '' || secciones.descripcion != '') {
+		 				itemLI = itemLI.split('');
+			 			itemLI.unshift('<li>');
+			 			itemLI.push('</li>');
+			 			itemLI = itemLI.join('');
+			 			json.descripcion += itemLI;
+		 			};
+		 			json.horas += parseInt(secciones.horas);
+ 				};
  			};
- 			if (modelos[i].get('descripcion') != '') {
- 				itemLI += modelos[i].get('descripcion')+'.';
- 			};
- 			if (modelos[i].get('seccion') != '' || modelos[i].get('descripcion') != '') {
- 				itemLI = itemLI.split('');
-	 			itemLI.unshift('<li>');
-	 			itemLI.push('</li>');
-	 			itemLI = itemLI.join('');
-	 			json.descripcion += itemLI;
- 			};
-	 		itemLI = '';	
- 			json.horas += Number(modelos[i].get('horas'));
+ 			itemLI = '';
  		};
 
  		// Biscamos el nombre del servicio por medio del id

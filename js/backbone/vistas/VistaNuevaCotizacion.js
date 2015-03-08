@@ -52,13 +52,6 @@ app.VistaSeccion = Backbone.View.extend({
 		this.$('input[name="seccion"]').val(this.$('#seccion').val());
 		this.$('input[name="descripcion"]').val(this.$('#descripcion').val());
 	},
-	// bloquearInputs 	: function () {
-	// 	if (app.tipoPlan == 'iguala') {
-	// 		this.$('.conmutado-por-plan').addClass('hide');
-	// 	} else if (app.tipoPlan == 'evento') {
-	// 		this.$('.conmutado-por-plan').removeClass('hide');
-	// 	};
-	// },
 });
 
 app.VistaCotizarServicio = Backbone.View.extend({
@@ -315,10 +308,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		};
 	},
 	calcularTotal 		: function () {
-		// La siguiente línea debe veficiar que, según el plan
-		// seleccionado, los imputs estén bloqueados o habilitados
-		// this.bloquearInputs();
-
 		var $descuento = this.$('input[name="descuento"]'),
 			self = this;
 		/*El capo Descuento es un input number, por lo que cuando se escribe
@@ -402,13 +391,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		app.coleccionCotizaciones_L.create(json.datos, {
 			wait: true,
 			success: function (exito) {
-				for(i in json.secciones) {   
-					app.coleccionServicios_L.create(json.secciones[i], { 
+				for(i in json.servicios) {   
+					app.coleccionServicios_L.create(json.servicios[i], { 
 						wait:true,
 						success:function(exito) {
-							if (self.aumentarContador() == json.secciones.length) {
+							if (self.aumentarContador() == json.servicios.length) {
 								self.contadorAlerta = 1;
-								window.open("formato_cotizacion");
+								window.open("formatoCotizacion");
 							};
 						},
 						error:function(error) { }
@@ -557,15 +546,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			this.length && func.apply(this);
 				return this;
 			}
-			console.log('dsdf');
 			switch(app.tipoPlan){
 				case 'iguala':
-					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-					// 	$(this).css('visibility','hidden');
-					// });
-					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-					// 	$(this).css('opacity','.5');
-					// });
 					self.$('.conmutado-por-plan').addClass('hide');
 					self.$('#precio_hora').attr('disabled',true);
 					self.$('#precio_mes').attr('disabled',false);
@@ -574,12 +556,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					self.$('input[name="npagos"]:eq(1)').attr('disabled',false);
 				break;
 				case 'evento':
-					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-					// 	$(this).css('visibility','initial');
-					// });
-					// self.$('.horas, .input-group-constoSeccion, .input-group-importe').doOnce(function(){
-					// 	$(this).css('opacity','1');
-					// });
 					self.$('.conmutado-por-plan').removeClass('hide');
 					self.$('#precio_mes').attr('disabled',true);
 					self.$('#precio_hora').attr('disabled',false);

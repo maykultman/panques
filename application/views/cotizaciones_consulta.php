@@ -622,6 +622,7 @@ if(isset($this->session->userdata('Cotizaciones')[1]['permisos']))
 					</div>
 				</td>
 		</script>
+		<script type="text/template" id="pago"><?php /*solo para no causar conflictos*/ ?></script>
 	<script type="text/template" id="tds_servicio_seleccionado">
 		<td class="td_servicio" colspan="7" style="padding:0px;">
 			<table id="table_servicio_<%= id %>" class="table" style="margin-bottom:0px;">

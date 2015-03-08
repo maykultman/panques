@@ -38,13 +38,13 @@
 							<td>
 								<textarea class="form-control" rows="1" style="min-width:150px; visibility: hidden;" disabled></textarea>
 							</td>
-							<td>
+							<td class="conmutado-por-plan">
 								<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 							</td>
-							<td>
+							<td class="conmutado-por-plan">
 								<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 							</td>
-							<td>
+							<td class="conmutado-por-plan">
 								<div class="input-group input-group-sm input-group-importe">
 									<span class="input-group-addon">$</span>
 									<input type="text" class="form-control importe" name="importes" disabled>
@@ -59,9 +59,9 @@
 							<td></td>
 							<td>Sección/Actividad</td>
 							<td>Observaciones</td>
-							<td>Horas</td>
-							<td></td>
-							<td>Costo</td>
+							<td class="conmutado-por-plan">Horas</td>
+							<td class="conmutado-por-plan"></td>
+							<td class="conmutado-por-plan">Costo</td>
 							<td></td>
 						</tr>
 					</thead>
@@ -89,9 +89,9 @@
 			</td>
 			<td><input type="text" 		id="seccion"		class="form-control input-sm" 			 	style="min-width:150px;">					</td>
 			<td><textarea 				id="descripcion"	class="form-control" rows="3" 			 	style="min-width:150px;"></textarea>		</td>
-			<td><input type="number" 	id=""				class="form-control input-sm number horas" 	 	min="1" value="1">						</td>
-			<td><input type="number" 	id=""				class="form-control input-sm number precio_hora" style="visibility:hidden;"	 	min="1"></td>
-			<td>
+			<td class="conmutado-por-plan"><input type="number" 	id=""				class="form-control input-sm number horas" 	 	min="1" value="1">						</td>
+			<td class="conmutado-por-plan"><input type="number" 	id=""				class="form-control input-sm number precio_hora" style="visibility:hidden;"	 	min="1"></td>
+			<td class="conmutado-por-plan">
 				<div class="input-group input-group-sm input-group-constoSeccion">
 					<span class="input-group-addon">$</span>
 					<input type="text" class="form-control costoSeccion" disabled>

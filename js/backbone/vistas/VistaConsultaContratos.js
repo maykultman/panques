@@ -59,13 +59,96 @@ app.VistaContrato = Backbone.View.extend({
 		this.listenTo( this.model, 'change:visibilidad', this.remove);
 	},
 	render : function (){
-		this.$el.html(this.plantilla(this.model.toJSON()));
+		this.$el.html(this.plantilla(this.prepararModelo(this.model)));
 
 		this.$modalPagos = this.$('.modal-pago .contenedor-pagos');
 
 		this.obtenerVersiones();
 
 		return this;
+	},
+	prepararModelo 		: function (model) {
+		/*
+		variables -> _horas = 0, _total = 0, _servicios, _secciones.
+		Calcular total:
+			plan por vento:
+				obtener los servicios con iddomento = al idcotizacion.
+				almacenar los servicios obtenidos en _servicios.
+				Si _servicios es un arreglo
+					entonces:
+						Iterar sobre el arreglo de _servicios:
+							apuntar a _servicios.secciones,
+							pasar su valor al formato json,
+							almacenar el valor en _secciones.
+							Si _secciones contiene un arreglo
+								entonces:
+									Iterar sobre el arreglo _secciones y
+									hacer _horas += _secciones.horas.
+								de lo contrario:
+									hacer _horas += _secciones.horas.
+					de lo contrario:
+						Hacer lo anterior sin iterar _secciones
+			plan iguala:
+				Obtener la propiedad preciotiempo de la cotizacion
+				Obtener la propiedad npagos de la cotizacion
+				multiplicar preciotiempo x npagos.
+		*/
+		model.set({    
+			cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
+			empleado : app.coleccionEmpleados.get ( model.get( 'idempleado' ) ).get('nombre')
+		});
+		var horas = 0,
+			total = 0;
+		switch(model.get('plan')){
+			case 'evento':
+				model.set({
+					total    : function () {
+						var servicios = app.coleccionServiciosContrato.where({iddocumento:model.get('id')}),
+							fn = function (servicio) {
+								var h = 0,
+									sec = jQuery.parseJSON(( servicio.toJSON() ).secciones);
+								if ( _.isArray(sec) ) {
+									for (var i = 0; i < sec.length; i++) {
+										h += Number(sec[i].horas);
+									};
+								} else{
+									h += Number(sec.horas);
+								};
+								return h;
+							};
+						if ( _.isArray( servicios ) ) {
+							for (var i = 0; i < servicios.length; i++) {
+								horas += fn(servicios[i]);
+							};
+						} else{
+							horas += fn(servicios);
+						};
+						
+						total = horas * Number(model.get('preciotiempo'));
+						total = total - total * Number(model.get('descuento'))/100;
+						total = total + total * 0.16;
+						total = conComas(total.toFixed(2));
+						return total;
+					}()
+			 	});
+				break;
+			case 'iguala':
+				model.set({
+					total    : function () {
+						total = Number(model.get('preciotiempo')) * Number(model.get('npagos'));
+						total = total - total * Number(model.get('descuento'))/100;
+						total = total + total * 0.16;
+						total = conComas(total.toFixed(2));
+						return total;
+					}()
+			 	});
+				break;
+			default:
+				/*case default*/
+				break;
+		};
+		console.log(model.toJSON());
+		return model.toJSON();
 	},
 	obtenerVersiones	: function () {
 		var original = [],
@@ -524,23 +607,7 @@ app.VistaConsultaContratos = app.VistaConsultaCotizaciones.extend({
 	el 		: '#seccion_tabla',
 	cargar 				: function (model, eliminado) {
 		var vista;
-		model.set({    
-	 		cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
-	 		empleado : app.coleccionEmpleados.get ( model.get( 'idempleado' ) ).get('nombre'),
-			total    : function () {
-				var modelos = app.coleccionServiciosContrato.where({idcontrato:model.get('id')}),
-					horas = 0,
-					total = 0;
-				for (var i = 0; i < modelos.length; i++) {
-					horas += Number(modelos[i].get('horas'));
-				};
-				total = horas * Number(model.get('preciotiempo'));
-				total = total - total * Number(model.get('descuento'))/100;
-				total = total + total * 0.16;
-				total = conComas(total.toFixed(2));
-				return total;
-			}()
-	 	});
+		
 		if (eliminado) {
 			vista = new VistaContratoEliminado({model : model});
 		} else {
