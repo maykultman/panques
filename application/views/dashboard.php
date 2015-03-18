@@ -3,12 +3,13 @@
 	link_tag('css/theme.default.css');
 ?>
 <?php 
-setlocale (LC_TIME, "es_ES"); 
+// setlocale (LC_TIME, "es_ES"); 
+
 
 function pagoz($arg)
 {	
 	echo '<table class="table table-striped">
-			<thead><tr><th>Cliente</th><th>Monto</th><th>Vencimiento</th></tr></thead>
+			<thead><tr><th>Cliente</th><th>Monto</th><th>Vencimiento</th><th>Pagar</th></tr></thead>
 			<tbody>';
 
 	foreach ($arg as $pik => $piv) 
@@ -19,11 +20,27 @@ function pagoz($arg)
 			<td>".$piv['cliente']."</td>
 			<td>$".number_format($piv['pago'], 2)."</td>
 			<td><span class='".$class."' style='padding:0 5px;'>".strftime('%d, %b %Y',strtotime($piv['fechapago']))."</span>
-			</td>
+			</td><td><span class='icon-uniF4E7 span_pagos' data-toggle='modal' data-target='bs-example-modal-sm2' title='Pagos'></span></td>
 		</tr>";
 	}
 	echo "</tbody></table>";
 } 
+
+function toMoney($val)
+{
+	$symbol='$'; $r=2;
+
+    $n = $val; 
+    $c = is_float($n) ? 1 : number_format($n,$r);
+    $d = '.';
+    $t = ',';
+    $sign = ($n < 0) ? '-' : '';
+    $i = $n=number_format(abs($n),$r); 
+    $j = (($j = count($i)) > 3) ? $j % 3 : 0; 
+
+   return  $symbol.$sign .($j ? substr($i,0, $j) + $t : '').preg_replace('/(\d{3})(?=\d)/',"$1" + $t,substr($i,$j)) ;
+
+}
 ?>
 
 <div class="contenedor_modulo">
@@ -108,7 +125,7 @@ function pagoz($arg)
 			    	<span id="icono_panel" class="icon-calculator" ></span>
 			    </div>
 			  	<div class="panel-body">
-				    <table class="table table-striped ">
+				    <table class="table table-striped">
 					   	<thead>
 					   		<tr>
 					   			<th>Cliente</th><th>Titulo</th>
@@ -190,6 +207,8 @@ function pagoz($arg)
 						<ul class="nav nav-tabs" role="tablist">
 							<?php 
 								$meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+								// $mesesi = array('January' ,'February' ,'March' ,'April' ,'May' ,'June' ,'July' ,'August' ,'September' ,'October' ,'November' ,'December');
+								$mesesi = array('01','02','03','04','05','06','07','08','09','10','11','12');
 								$servmes =0;
 							?>
 							<?php while( $servmes < 12 ): ?>
@@ -230,10 +249,23 @@ function pagoz($arg)
 					   	<span id="icono_panel" class="icon-stocks" ></span>
 					</div>
 					<div  class="panel-body" style="height:600px;">
-					 	<label for="from">From</label>
+						
+						<div class="col-md-4">
+							<select class="form-control">
+								<?php $cont=1;?>
+								<?php while($cont < 20):?>
+									<option value="<?=( 2014 + $cont)?>"><?=( 2014 + $cont)?></option>
+								<?php $cont++; endwhile; ?>
+							</select>
+						</div>
+						<div class="col-md-4">
+							<div class="btn btn-default">Buscar</div>
+						</div>
+						<div class="clearfix"></div>
+					 	<!-- <label for="from">From</label>
 						<input type="text" class="form-control from" name="from" style="width: 30%; display: inline-block">
 						<label for="to">to</label>
-						<input type="text" class="form-control to" name="to" style="width: 30%; display: inline-block">
+						<input type="text" class="form-control to" name="to" style="width: 30%; display: inline-block"> -->
 						<hr>
 						<ul class="nav nav-tabs" role="tablist">
 							<?php $servmes=0;?>
@@ -244,7 +276,10 @@ function pagoz($arg)
 							<?php $servmes++; endwhile;?>
 						</ul>
 						<div class="tab-content" style="position:relative;">
-							<?php $servmes=0;?>
+							<?php 
+								$servmes=0; 
+								$fecha = date('Y-m');
+							?>
 							<?php while( $servmes < 12 ): ?>
 								<div id="c<?=$meses[$servmes];?>" 
 									<?php 
@@ -256,16 +291,28 @@ function pagoz($arg)
 										{
 											echo 'class="tab-pane fade"';
 										}
-									?> >
-									<div class="parent">
-										<?php foreach($clientes as $gck => $gcv):?>
-											<div class="child" data-toggle="tooltip" data-placement="bottom" title="<?=$gcv->nombreComercial;?>"> 
-												<div class="barra" style="height:30%"><span class="max" data-toggle="tooltip" data-placement="top" title="$<?=$gcv->pago;?>.00">$</span> 
-											</div></div>
-										<?php endforeach;?>
-									</div>
+								?> >
+									
+									<table class="table table-striped">
+										<thead>
+											<th>Cliente</th>
+											<th>Ingresos</th>
+										</thead>
+										<tbody>
+											<?php foreach($clientes as $gck => $gcv):?>
+												<?php if( $mesesi[$servmes] ==  explode('-',$gcv->fechapago)[1] ):?>
+													<tr>
+														<td><?=$gcv->nombreComercial;?></td><td><?=toMoney($gcv->pago);?></td>
+													</tr>
+												<?php endif;?>
+											<?php endforeach; ?>
+										</tbody>
+									</table>
+
 								</div>
 							<?php $servmes++; endwhile;?>
+							
+							
 						</div>
 					</div>
 				</div>	<!--panel panel-default-->

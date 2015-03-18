@@ -397,7 +397,6 @@ function loadSelectize_Client (selector,args,options) {
 }
 
 function loadDatepicker (selector) {
-    nombres = dia_mes();
     $(selector).datepicker({ 
         dateFormat:'d MM, yy',  
         dayNamesMin: short_dias,

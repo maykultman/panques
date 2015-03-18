@@ -140,14 +140,28 @@
 
 
 		// Consulta de ingresos por cliente.
-		public function clientes()
-		{
-			$this->db->select('pago,nombreComercial,');
+		public function clientes($fecha=NULL)
+		{ 
+			$anio = (!$fecha) ? date('Y') : $fecha;
+			$this->db->select('fechapago,pago,nombreComercial');
 			$this->db->from('clientes');
-			$this->db->group_by('idcliente');			
+			$this->db->group_by('idcliente');
+			$this->db->group_by('fechapago');			
 			$this->db->select_sum('pago');
 			$this->db->from('pagos');
+			$this->db->like('fechapago', $anio,'after');
+			$this->db->where('pagos.status',1);
 			$this->db->join('contratos','contratos.idcliente=clientes.id and contratos.id=pagos.idcontrato');
+			// $this->db->get()->result();
+			// echo $this->db->last_query();
+			
+			// $query = $this->db->get()->result();
+			// foreach ($query as $key => $value) {
+
+			// 	echo $value->fechapago.'---'.$value->pago.'---'.$value->nombreComercial.'<br>';
+			// }
+			// die();
+			// // var_dump($query); die();
 			return $this->db->get()->result();
 	
 		}

@@ -93,10 +93,27 @@ app.VistaContrato = Backbone.View.extend({
 				Obtener la propiedad npagos de la cotizacion
 				multiplicar preciotiempo x npagos.
 		*/
-		model.set({    
-			cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
-			empleado : app.coleccionEmpleados.get ( model.get( 'idempleado' ) ).get('nombre')
-		});
+		/*--- Beto ---*/
+			// var getCliente = app.coleccionClientes. get ( model.get( 'idcliente'  ) );//.get('nombreComercial')
+			// var getEmpleado = app.coleccionEmpleados.get ( model.get( 'idempleado' ) );
+			var sunombre = ''; var suempleado = '';
+			if( app.coleccionClientes. get ( model.get( 'idcliente'  ) ) )
+			{
+				sunombre = app.coleccionClientes. get( model.get( 'idcliente'  ) ).get('nombreComercial');
+			}
+			if( app.coleccionEmpleados.get ( model.get( 'idempleado' ) ) )
+			{
+				suempleado = app.coleccionEmpleados.get( model.get( 'idempleado' ) ).get('nombre');
+			}
+			model.set({
+				cliente : sunombre,
+				empleado :suempleado
+			});
+		/*--- Beto ---*/
+		// model.set({    
+		// 	cliente  : app.coleccionClientes. get ( model.get( 'idcliente'  ) ).get('nombreComercial'),
+		// 	empleado : app.coleccionEmpleados.get ( model.get( 'idempleado' ) ).get('nombre')
+		// });
 		var horas = 0,
 			total = 0;
 		switch(model.get('plan')){
