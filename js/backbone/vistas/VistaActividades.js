@@ -67,6 +67,7 @@ app.Evento = Backbone.View.extend({
 					self.$formEvento[0].reset();
 				},
 				error 	: function (model) {
+					console.log(model);
 					$('#block').toggleClass('activo');
 					model = 'Error. La actividad no ha sido creada. Intente más tarde';
 					alerta(model, function () {});
