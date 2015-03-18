@@ -75,9 +75,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 	el : '#catalogo_roles',
 
 	events : {
-		'click     #guardar'    : 'guardar',   //...Guardamos el Nuevo rol....
-		'keypress  #buscar_rol' : 'buscarRol', //...Para hacer una busqueda en la lista roles...
-		'keyup     #buscar_rol' : 'buscarRol', //...Al soltar una tecla llamamos a la función buscarRol...
+		'click     #guardar'    : 'guardar',   //...Guardamos el Nuevo rol...
 		'keypress  #rol '		: 'validarCampo',
 		'keypress  #buscar_rol' : 'validarCampo'
 	},
@@ -110,27 +108,6 @@ app.VistaNuevoRol = Backbone.View.extend({
     {
         return validarNombre(e);
     },
-
-	buscarRol : function (elemento)
-	{
-		var buscando = $(elemento.currentTarget).val();
-		app.coleccionRoles.fetch({
-			reset:true, data:{nombre: buscando}
-		});
-
-		this.sinCoincidencias();
-
-		this.$scroll_roles.html('');
-		this.cargarRoles();
-	},
-
-	sinCoincidencias	: function () {
-		if (app.coleccionRoles.length == 0) {
-			app.coleccionRoles.fetch({
-				reset:true, data:{nombre: ''}
-			});
-		};
-	},
 
 	guardar : function(evento)
 	{

@@ -7,16 +7,21 @@
  *
  */
 
-
+html{ height: 100%; }
 body { 
-    background: #000;   
+    background: url(../../img/imglogin/fondo.jpg) no-repeat;   
+    background-size: cover;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     text-align: center;
     color: #fff;
 }
 
 .page-container {
-    margin: 190px auto 0 auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
 
 h1 {

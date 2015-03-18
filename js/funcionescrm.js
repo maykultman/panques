@@ -2,6 +2,10 @@ var app = app || {};
 var root = location.origin;
 var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 var dias = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'];
+var short_dias= [ 'Do','Lu','Ma','Mi','Ju','Vi','Sá'];
+var short_mes = [ 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+
 
 function pasarAJson (objSerializado) {
     var json = {};
@@ -392,62 +396,19 @@ function loadSelectize_Client (selector,args,options) {
     }(/*Los parentesis para ejecutar la función*/));
 }
 
-
-
 function loadDatepicker (selector) {
+    nombres = dia_mes();
     $(selector).datepicker({ 
         dateFormat:'d MM, yy',  
-        dayNamesMin:[
-            'Do',
-            'Lu',
-            'Ma',
-            'Mi',
-            'Ju',
-            'Vi',
-            'Sá'
-        ],
-        monthNames:[
-            'Enero',
-            'Febrero',
-            'Marzo',
-            'Abril',
-            'Mayo',
-            'Junio',
-            'Julio',
-            'Agosto',
-            'Septiembre',
-            'Octubre',
-            'Noviembre',
-            'Diciembre'
-        ]
+        dayNamesMin: short_dias,
+        monthNames: short_mes
     });
 }
 function loadDatepickerRange (selectorFrom, selectorTo) {
     $( selectorFrom ).datepicker({
-        dateFormat:'d MM, yy',  
-        dayNamesMin:[
-            'Do',
-            'Lu',
-            'Ma',
-            'Mi',
-            'Ju',
-            'Vi',
-            'Sá'
-        ],
-        monthNames:[
-            'Enero',
-            'Febrero',
-            'Marzo',
-            'Abril',
-            'Mayo',
-            'Junio',
-            'Julio',
-            'Agosto',
-            'Septiembre',
-            'Octubre',
-            'Noviembre',
-            'Diciembre'
-        ],
+        dateFormat:'d MM, yy', 
+        dayNamesMin: short_dias,
+        monthNames: short_mes,
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 3,
@@ -457,29 +418,8 @@ function loadDatepickerRange (selectorFrom, selectorTo) {
     });
     $( selectorTo ).datepicker({
         dateFormat:'d MM, yy',  
-        dayNamesMin:[
-            'Do',
-            'Lu',
-            'Ma',
-            'Mi',
-            'Ju',
-            'Vi',
-            'Sá'
-        ],
-        monthNames:[
-            'Enero',
-            'Febrero',
-            'Marzo',
-            'Abril',
-            'Mayo',
-            'Junio',
-            'Julio',
-            'Agosto',
-            'Septiembre',
-            'Octubre',
-            'Noviembre',
-            'Diciembre'
-        ],
+        dayNamesMin: short_dias,
+        monthNames: short_mes,
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 3,
@@ -503,3 +443,39 @@ function globalfalse()
     Backbone.emulateHTTP = false;//Variables Globales
     Backbone.emulateJSON = false;//Variables Globales
 }
+// La siguiente función hace busquedas en la tablas de los catálogos
+$(document).ready(function(){
+    $('#search').keyup(function(){
+        
+        var tableReg = document.getElementById('tabla-c');
+        var searchText = document.getElementById('search').value.toLowerCase();
+        var cellsOfRow="";
+        var found=false;
+        var compareWith="";
+            
+            // Recorremos todas las filas con contenido de la tabla
+        for (var i = 1; i < tableReg.rows.length; i++)
+        {
+            cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            found = false;
+            // Recorremos todas las celdas
+            for (var j = 0; j < cellsOfRow.length && !found; j++)
+            {
+                compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                // Buscamos el texto en el contenido de la celda
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
+                {
+                    found = true;
+                }
+            }
+            if(found)
+            {
+                tableReg.rows[i].style.display = '';
+            } else {
+                // si no ha encontrado ninguna coincidencia, esconde la
+                // fila de la tabla
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
+    });//Fin de la función de busqueda
+});

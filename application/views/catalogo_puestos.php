@@ -37,12 +37,12 @@ if(isset($this->session->userdata('Catálogos')[1]['permisos']))
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			    <h3>Lista de puestos</h3>
 				<hr style="margin-left:0; width:100%;">
-				<input id="buscar_puesto" type="search" class="form-control" placeholder="Busqueda">
+				<input id="search" type="search" class="form-control" placeholder="Busqueda">
 		        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>
 		        <br>
 		        <div class="panel panel-primary" >		     
 			      	<div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
-			        	<table class="table table-hover" data-column="all" style="margin-bottom: 0px !important; width:100%;">
+			        	<table id="tabla-c" class="table table-hover" data-column="all" style="margin-bottom: 0px !important; width:100%;">
 			  				<tbody id="contenidotbody">																									
 							</tbody>									
 						</table>

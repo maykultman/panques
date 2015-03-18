@@ -326,7 +326,7 @@ class Font_Metrics {
     if ( isset($families[$fontname]) ) {
       $entry = $families[$fontname];
     }
-    
+
     $local_file = DOMPDF_FONT_DIR . md5($remote_file);
     $cache_entry = $local_file;
     $local_file .= ".ttf";
@@ -337,7 +337,6 @@ class Font_Metrics {
       $entry[$style_string] = $cache_entry;
       
       Font_Metrics::set_font_family($fontname, $entry);
-      
       // Download the remote file
       if ( !is_file($local_file) ) {
         file_put_contents($local_file, file_get_contents($remote_file));

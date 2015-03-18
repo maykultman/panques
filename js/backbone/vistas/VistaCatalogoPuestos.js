@@ -78,8 +78,6 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 
 	events : {
 		'click     #guardar'       : 'guardar',   //...Guardamos el Nuevo rol....
-		// 'keypress  #buscar_puesto' : 'buscarPuesto', //...Para hacer una busqueda en la lista roles...
-		// 'keyup     #buscar_puesto' : 'buscarPuesto', //...Al soltar una tecla llamamos a la función buscarRol...		
 		'keypress  #puesto'		   : 'validarCampo',
 		'keypress  #buscar_puesto' : 'validarCampo'
 	},
@@ -113,33 +111,6 @@ app.VistaNuevoPuesto = Backbone.View.extend({
         return validarNombre(e);
     },
 
-	// buscarPuesto : function (elemento)
-	// {
-	// 	var buscando = $(elemento.currentTarget).val();
-	// 	if(elemento.keyCode===8)
-	// 	{			
-	// 		app.coleccionPuestos.fetch({
-	// 			reset:true, data:{nombre: buscando}
-	// 		});
-	// 	}
-	// 	app.coleccionPuestos.fetch({
-	// 		reset:true, data:{nombre: buscando}
-	// 	});
-
-	// 	this.sinCoincidencias();
-
-	// 	this.$scroll_puestos.html('');
-	// 	this.cargarPuestos();	
-	// },
-
-	// sinCoincidencias	: function () {
-	// 	if (app.coleccionPuestos.length == 0) {
-	// 		app.coleccionPuestos.fetch({
-	// 			reset:true, data:{nombre: ''}
-	// 		});
-	// 	};
-	// },
-	
 	guardar : function(evento)
 	{		
 		var modeloPuesto = pasarAJson($('#registroPuesto').serializeArray());

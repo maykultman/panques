@@ -175,7 +175,7 @@ class Escritorio extends REST {
 	public function dashboard()
 	{ 	
 		$this->load->model('Model_dashboard', 'dash');
-
+		// $data['dominios'] = $this->dash->dominios();
 		$data['servicios'] = $this->dash->servicios();
 		$data['cotizaciones'] = $this->dash->get_budgets();
 		$pagos = $this->dash->get_payments();	

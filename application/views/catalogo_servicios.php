@@ -1,4 +1,4 @@
-<?php echo link_tag('css/theme.default.css');
+<?php 
 
 $activa_p = array();
 function menu($arg, $perm)
@@ -43,9 +43,12 @@ if(isset($this->session->userdata('Catálogos')[4]['permisos']))
 				</div>
 			</form><br>
 			<h3>Servicios</h3>
-			<hr><br>
-			<div class="wrapper">	
-				<table class="table tablesorter table-striped">
+			<hr>
+			<div class="col-xs-1"><label>Buscar:</label></div>
+			<div class="col-xs-8"><input type="text" id="search" class="form-control"></div> 
+			<br><hr>
+			<div class="col-xs-12 wrapper">	
+				<table id="tabla-c" class="table tablesorter table-striped">
 					<thead>
 						<tr>
 							<th class="sorter-false">Todos<input type="checkbox" class="todos"></th>
@@ -66,6 +69,7 @@ if(isset($this->session->userdata('Catálogos')[4]['permisos']))
 		</section>
     </section>
 </div>	
+
 <!--Plantillas -->
 <script type="text/plantilla" id="plantilla_servicio">
 	<td><input type="checkbox" name="todos" value="<%= id %>"></td>

@@ -22,10 +22,9 @@ foreach ($servicios as $key => $val)
 
 		if($cont<13)
 		{
-			
 			if($cont==12)
 			{
-				$hight = "margin-top:80%;";
+				$hight = "margin-top:74%;";
 			}else{
 				$hight = "position:absolute;bottom:80px;";
 			}
@@ -49,8 +48,8 @@ $trserv .= '<tr><td></td><td></td><td>Precio Neto:</td><td>$'.( $subtotal + $iva
 $html = '<html><style>
 html, body{
 	margin: 0;
-	font-family:sans-serif;
-	font-size:12px;
+	font-size:14px;
+	font-family:mifont;
 	color:#555;
 }
 .header{
@@ -163,10 +162,8 @@ html, body{
 			<li>Anticipo del 50% y saldo contra entrega del 50%. Anticipo no reembolsable.</li>
 			<li>El archivo final es propiedad del cliente, el proyecto no.</li>
 			<li>El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
+	</ul></div><div class="footer"></div></body></html>';
 
-		</ul></div><div class="footer"></div></body></html>';
-
-// die($html);
 # Instanciamos un objeto de la clase DOMPDF.
 $mipdf = new DOMPDF();
  

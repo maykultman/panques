@@ -90,8 +90,33 @@
 
 		public function servicios()
 		{
-			// $sum = $this->db->query('SELECT idservicio, SUM(idservicio) FROM servicios_cotejados GROUP BY idservicio ORDER BY SUM(idservicio) DESC')->result_array();
-        				
+			// $sum = $this->db->query('SELECT idservicio`, `servicios.nombre` SUM(`servicios_cotejados.idservicio`) GROUP BY `servicios_cotejados.idservicio` ORDER BY SUM(`servicios_cotejados.idservicio`) DESC FROM servicios_cotejados, servicios WHERE `servicios_cotejados.idservicio` = `servicios.id`')->result_array();
+			// $sum = $this->db->query('SELECT sc.idservicio, 
+			// 						SUM(sc.idservicio) as suma, s.nombre as servicio
+			// 						FROM servicios_cotejados as sc
+			// 						inner join servicios as s on s.id = sc.idservicio
+			// 						GROUP BY idservicio 
+			// 						ORDER BY SUM(idservicio) DESC')->result_array();
+        		
+
+			$this->db->select('sc.idservicio, s.nombre, s.id');
+			$this->db->group_by('sc.idservicio');
+			$this->db->order_by('sc.idservicio','DESC');
+			$this->db->select_sum('sc.idservicio');
+			$this->db->from('servicios_cotejados as sc');
+			$this->db->join('servicios as s','s.id=sc.idservicio');
+			return $this->db->get()->result_array();
+			// var_dump($sum); die();
+
+        	// $table = '<table border="1"><tr><th>Nombre</th><th>idservicio</th><th>Repetidos</th><tr>';
+        	
+        	// foreach ($sum as $key => $value) {
+        		
+        	// 	// $table .= '<tr><td>'.$value['idservicio'].'</td><td>'.($value['SUM(idservicio)'] / $value['idservicio']).'</td></tr>';
+        	// 	$table .= '<tr><td>'.$value['nombre'].'</td><td>'.$value['id'].'</td><td>'.($value['idservicio'] / $value['id']).'</td></tr>';
+        	// }
+        	// $table.= '</table>';
+        	// die($table);
 			// $this->db->select('id,nombre');
 			// $query = $this->db->get('servicios')->result();
 
@@ -110,14 +135,21 @@
 			// 	}
 				
 			// }
-			return FALSE; //$query;			
+			// return FALSE; //$query;			
 		}
 
 
 		// Consulta de ingresos por cliente.
 		public function clientes()
 		{
-			return $this->db->get('clientes')->result();
+			$this->db->select('pago,nombreComercial,');
+			$this->db->from('clientes');
+			$this->db->group_by('idcliente');			
+			$this->db->select_sum('pago');
+			$this->db->from('pagos');
+			$this->db->join('contratos','contratos.idcliente=clientes.id and contratos.id=pagos.idcontrato');
+			return $this->db->get()->result();
+	
 		}
 
 		public function graficas()

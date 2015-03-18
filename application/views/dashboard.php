@@ -31,7 +31,6 @@ function pagoz($arg)
     
 	<section class="container" style="padding-top:8%;">
 		<div class="row">
-			<!-- <h3></h3> -->
 			<div class="row">
 			  	<div class="col-md-6">
 				  	<div class="panel panel-default">
@@ -44,6 +43,8 @@ function pagoz($arg)
 						   	<thead>
 						   		<tr>
 						   			<th>Dominio</th>
+						   			<th>Cliente</th>
+						   			<th>Monto</th>
 						   			<th>Vencimiento</th>
 						   		</tr>
 						   	</thead>
@@ -70,7 +71,7 @@ function pagoz($arg)
 							<div class="tab-content">
 								<div class="tab-pane fade in active" id="iguala" style="overflow:auto;height:185px;position:relative;">
 									<?php 
-									$div = '<div style="border-radius:0 0 5px 5px;position:absolute;width:100%;background:rgba(0, 0, 0, 0.79);height: 100%;"></div><h3 style="padding:10%0;text-align: center;">No hay pagos pendientes por el momento</h3>';
+									$div = '<div style="border-radius:0 0 5px 5px;position:absolute;width:100%;height: 100%;"></div><h3 style="padding:10%0;text-align: center;">No hay pagos pendientes por el momento</h3>';
 									   	if(isset($pagosxI)&&is_array($pagosxI)){
 									   		if(!empty($pagosxI)) {
 									   			pagoz($pagosxI);
@@ -187,41 +188,38 @@ function pagoz($arg)
 						
 						<hr>
 						<ul class="nav nav-tabs" role="tablist">
-							<ul class="nav nav-tabs" role="tablist">
-						   	<li class="active"><a href="#sEnero" role="tab" data-toggle="tab"> Enero </a></li>
-						  	<li><a href="#sFebrero" role="tab" data-toggle="tab"> Febrero </a></li>							  
-						  	<li><a href="#sMarzo" role="tab" data-toggle="tab"> Marzo </a></li>
-						  	<li><a href="#sAbril" role="tab" data-toggle="tab"> Abril </a></li>
-						  	<li><a href="#sMayo" role="tab" data-toggle="tab"> Mayo </a></li>
-						  	<li><a href="#sJunio" role="tab" data-toggle="tab"> Junio </a></li>
-						  	<li><a href="#sJulio" role="tab" data-toggle="tab"> Julio </a></li>
-						  	<li><a href="#sAgosto" role="tab" data-toggle="tab"> Agosto </a></li>
-						  	<li><a href="#sSeptiembre" role="tab" data-toggle="tab"> Septiembre </a></li>
-						  	<li><a href="#sOctubre" role="tab" data-toggle="tab"> Octubre </a></li>
-						  	<li><a href="#sNoviembre" role="tab" data-toggle="tab"> Noviembre </a></li>
-						  	<li><a href="#sDiciembre" role="tab" data-toggle="tab"> Diciembre </a></li>						
+							<?php 
+								$meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+								$servmes =0;
+							?>
+							<?php while( $servmes < 12 ): ?>
+								<li <?php if($servmes==0){ echo 'class="active"';}?> >
+									<a href="#s<?=$meses[$servmes];?>" role="tab" data-toggle="tab"><?=$meses[$servmes]?></a>
+								</li>
+							<?php $servmes++; endwhile;?>
 						</ul>
 						<div class="tab-content" style="position:relative;">
-						
-							<div class="tab-pane fade in active" id="sEnero">
-								<div class="parent">
-									<img src="<?=base_url()?>img/logoQualium.png">
-									<?php $while=0; while($while < 25): ?>
-									<div class="child" data-toggle="tooltip" data-placement="bottom" title="Servicio<?=$while?>"> <div class="barra" style="height:<?=$while?>%"><span class="max" data-toggle="tooltip" data-placement="top" title="$1000.00">$</span> </div> </div>
-									<?php $while++; endwhile;?>
+							<img src="<?=base_url()?>img/logoQualium.png">
+							<?php $servmes=0;?>
+							<?php while( $servmes < 12 ): ?>
+								<div id="s<?=$meses[$servmes];?>" 
+									<?php 
+										if($servmes==0)
+										{ 
+											echo 'class="tab-pane fade in active"'; 
+										}
+										else
+										{
+											echo 'class="tab-pane fade"';
+										}
+								?> >
+									<div class="parent">									
+										<?php $while=0; foreach($servicios as $sk => $sv): ?>
+											<div class="child" data-toggle="tooltip" data-placement="bottom" title="Servicio<?=$sv['nombre']?>"> <div class="barra" style="height:<?=($sv['idservicio'] / $sv['id'])?>%"><span class="max" data-toggle="tooltip" data-placement="top" title="$1000.00">$</span> </div> </div>
+										<?php $while++; endforeach;?>
+									</div> 
 								</div>
-							</div>
-							<div class="tab-pane fade" id="sFebrero">s1</div>
-							<div class="tab-pane fade" id="sMarzo">s2</div>
-							<div class="tab-pane fade" id="sAbril"></div>
-							<div class="tab-pane fade" id="sMayo"></div>
-							<div class="tab-pane fade" id="sJunio"></div>
-							<div class="tab-pane fade" id="sJulio"></div>
-							<div class="tab-pane fade" id="sAgosto"></div>
-							<div class="tab-pane fade" id="sSeptiembre"></div>
-							<div class="tab-pane fade" id="sOctubre"></div>
-							<div class="tab-pane fade" id="sNoviembre"></div>
-							<div class="tab-pane fade" id="sDiciembre"></div>
+							<?php $servmes++; endwhile;?>
 						</div>		
 					</div>
 				</div>	
@@ -231,63 +229,43 @@ function pagoz($arg)
 					   	<h3 class="panel-title">Ingresos por clientes</h3>
 					   	<span id="icono_panel" class="icon-stocks" ></span>
 					</div>
-					<div  class="panel-body" style="overflow: auto; height:600px;">
+					<div  class="panel-body" style="height:600px;">
 					 	<label for="from">From</label>
 						<input type="text" class="form-control from" name="from" style="width: 30%; display: inline-block">
 						<label for="to">to</label>
 						<input type="text" class="form-control to" name="to" style="width: 30%; display: inline-block">
-						<!-- <span id="span_ingreso" class="badge">$100,000</span>      -->
 						<hr>
 						<ul class="nav nav-tabs" role="tablist">
-						   	<li class="active"><a href="#cEnero" role="tab" data-toggle="tab"> Enero </a></li>
-						  	<li><a href="#cFebrero" role="tab" data-toggle="tab"> Febrero </a></li>							  
-						  	<li><a href="#cMarzo" role="tab" data-toggle="tab"> Marzo </a></li>
-						  	<li><a href="#cAbril" role="tab" data-toggle="tab"> Abril </a></li>
-						  	<li><a href="#cMayo" role="tab" data-toggle="tab"> Mayo </a></li>
-						  	<li><a href="#cJunio" role="tab" data-toggle="tab"> Junio </a></li>
-						  	<li><a href="#cJulio" role="tab" data-toggle="tab"> Julio </a></li>
-						  	<li><a href="#cAgosto" role="tab" data-toggle="tab"> Agosto </a></li>
-						  	<li><a href="#cSeptiembre" role="tab" data-toggle="tab"> Septiembre </a></li>
-						  	<li><a href="#cOctubre" role="tab" data-toggle="tab"> Octubre </a></li>
-						  	<li><a href="#cNoviembre" role="tab" data-toggle="tab"> Noviembre </a></li>
-						  	<li><a href="#cDiciembre" role="tab" data-toggle="tab"> Diciembre </a></li>
+							<?php $servmes=0;?>
+							<?php while( $servmes < 12 ): ?>
+								<li <?php if($servmes==0){ echo 'class="active"';}?> >
+									<a href="#c<?=$meses[$servmes];?>" role="tab" data-toggle="tab"><?=$meses[$servmes]?></a>
+								</li>
+							<?php $servmes++; endwhile;?>
 						</ul>
 						<div class="tab-content" style="position:relative;">
-							<!-- <div class="tab-pane fade in active" id="mensualc">
-								<table style="margin-top: 15%;">
-									<?php //if(isset($clientes)&&is_array($clientes)): ?>
-										<tr class="text-center">
-											<?php //foreach ($clientes as $ks1 => $vs1): ?>
-												<td><?php
-													?>
-													<img src="<?=base_url()?>img/graf.png" width="20px" height="echo 2*($vs1->cant+1)?>">
-													<?php  //endif; ?>
-												</td>
-
-											<?php //endforeach;?>
-										</tr>
-										<tr class="trserv">
-											
-
-											<?php //foreach ($clientes as $kc => $vc): ?>
-												<td><?//=$vc->id?><div class="nomserv"><?=$vc->nombreComercial?></div></td>
-											<?php //endforeach; endif;?>
-										</tr>	
-								</table>
-							</div> -->
-							
-							<div class="tab-pane fade in active" id="cEnero">c</div>
-							<div class="tab-pane fade" id="cFebrero">c1</div>
-							<div class="tab-pane fade" id="cMarzo">c2</div>
-							<div class="tab-pane fade" id="cAbril"></div>
-							<div class="tab-pane fade" id="cMayo"></div>
-							<div class="tab-pane fade" id="cJunio"></div>
-							<div class="tab-pane fade" id="cJulio"></div>
-							<div class="tab-pane fade" id="cAgosto"></div>
-							<div class="tab-pane fade" id="cSeptiembre"></div>
-							<div class="tab-pane fade" id="cOctubre"></div>
-							<div class="tab-pane fade" id="cNoviembre"></div>
-							<div class="tab-pane fade" id="cDiciembre"></div>
+							<?php $servmes=0;?>
+							<?php while( $servmes < 12 ): ?>
+								<div id="c<?=$meses[$servmes];?>" 
+									<?php 
+										if($servmes==0)
+										{ 
+											echo 'class="tab-pane fade in active"'; 
+										}
+										else
+										{
+											echo 'class="tab-pane fade"';
+										}
+									?> >
+									<div class="parent">
+										<?php foreach($clientes as $gck => $gcv):?>
+											<div class="child" data-toggle="tooltip" data-placement="bottom" title="<?=$gcv->nombreComercial;?>"> 
+												<div class="barra" style="height:30%"><span class="max" data-toggle="tooltip" data-placement="top" title="$<?=$gcv->pago;?>.00">$</span> 
+											</div></div>
+										<?php endforeach;?>
+									</div>
+								</div>
+							<?php $servmes++; endwhile;?>
 						</div>
 					</div>
 				</div>	<!--panel panel-default-->

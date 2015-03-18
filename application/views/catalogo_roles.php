@@ -37,12 +37,12 @@ if(isset($this->session->userdata('Catálogos')[3]['permisos']))
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		    <h3>Roles</h3>
 		  	<hr style="margin-left:0; width:100%;">	       
-	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search">
+	        <input id="search" type="search" class="form-control" placeholder="Search">
 	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span><br>
 	        <br>
 	        <div class="panel panel-primary" >		     
 		      <div class="panel-body" style="overflow: auto; height: 253px; padding: 0px !important;">
-		        <table class="table table-hover" style="margin-bottom: 0px !important">
+		        <table id="tabla-c" class="table table-hover" style="margin-bottom: 0px !important">
     				<tbody id="contenidotbody"></tbody>
 				</table>
 		      </div>
@@ -77,6 +77,3 @@ if(isset($this->session->userdata('Catálogos')[3]['permisos']))
 	script_tag('js/backbone/colecciones/ColeccionRoles.js').
 	script_tag('js/backbone/vistas/VistaCatalogoRol.js');
 ?>
-
-
- <!-- [contact-form to='clientes@qualium.mx%26#x002c; jessy@qualium.mx' subject='Motelmaracay.com'][contact-field label='Nombre' type='name'/][contact-field label='Correo electrónico' type='email' required='1'/][contact-field label='Asunto' type='text'/][contact-field label='Mensaje' type='textarea' required='1'/][/contact-form]  -->
