@@ -82,7 +82,7 @@
     }
 
     function validarTelefono (elem) {
-        if( (/^\d{10,20}$/.test($(elem).val().trim())) || $(elem).val().trim() == '' ) {
+        if( (/^[0-9]{2,3}-? ?[0-9]{6,7}$/.test($(elem).val().trim())) || $(elem).val().trim() == '' ) {
             $(elem).parents('.form-group').removeClass('has-error');
             return false;
         } else{

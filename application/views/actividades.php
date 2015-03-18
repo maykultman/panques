@@ -85,7 +85,7 @@
 	script_tag('js/plugin/timepicker/jquery.ui.timepicker.js').
 
 	script_tag('js/backbone/modelos/ModeloCliente.js').
-	script_tag('js/backbone/modelos/ModeloEmpleado.js').
+	// script_tag('js/backbone/modelos/ModeloEmpleado.js').
 	script_tag('js/backbone/colecciones/ColeccionClientes.js').
 	script_tag('js/backbone/colecciones/ColeccionEmpleados.js').
 	script_tag('js/backbone/colecciones/ColeccionActividades.js').
