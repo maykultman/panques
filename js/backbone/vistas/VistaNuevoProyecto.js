@@ -103,15 +103,15 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 	render					: function () {
 		return this;
 	},
-	/*OK*/cargarServicio		: function (servicio) {
+	cargarServicio		: function (servicio) {
 		var vistaTrServ = new app.VistaTrServ({ model:servicio });
 		this.$tbody_servicios.append( vistaTrServ.render().el );
 	},
-	/*OK*/cargarServicios		: function () {
+	cargarServicios		: function () {
 		this.$tbody_servicios.html('');
 		app.coleccionServicios.each( this.cargarServicio, this );
 	},
-	/*OK*/eliminarServicio 		: function (e) {
+	eliminarServicio 		: function (e) {
 		// Comentario en la clase VistaNuevaCotizacion
 		this.$(
 			'#table_servicios #'
@@ -124,7 +124,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 		.css('color','#333');
 		this.$(e.currentTarget).parents('.td_servicio').remove();
 	},
-	/*OK*/cargarEmpleado		: function (empleado) {
+	cargarEmpleado		: function (empleado) {
 		/*añadimos una nueva propiedad al modelo de empledo para
 		tener en cada formulario rol el id del proyecto, de esta 
 		manera es más facil enviar los roles a la api de roles de 
@@ -133,10 +133,10 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 		var vistaEmpleado = new app.VistaEmpleado({ model:empleado });
 		this.$tbody_empleados.append( vistaEmpleado.render().el );
 	},
-	/*OK*/cargarEmpleados		: function () {
+	cargarEmpleados		: function () {
 		app.coleccionEmpleados.each( this.cargarEmpleado, this );
 	},
-	/*OK*/obtenerContratos 		: function (e) {
+	obtenerContratos 		: function (e) {
 		var control = this.$nombreproyecto[0].selectize;
 		control.clearOptions();
 		var contratos =  _.where(app.coleccionContratos.toJSON() ,{
@@ -153,7 +153,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			return array;
 		}() );
 	},
-	/*OK*/establecerDatos		: function (e) {
+	establecerDatos		: function (e) {
 		// Antes veficicamos que las operaciones
 		// prosigan si tenemos valor, si no
 		// terminamos la secuencia
@@ -167,15 +167,25 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			arrayServicios	= function () {
 				// Comentario en la clase VistaNuevaCotizacion
 				var jsonSecciones = _.where(app.coleccionServiciosContrato.toJSON(),{
-					idcontrato:idcontrato
+					iddocumento:idcontrato
 				});
-				var groposServicios = _.groupBy(jsonSecciones,'idservicio');
-				return _.values(groposServicios);
+				// var groposServicios = _.groupBy(jsonSecciones,'idservicio');
+				// return _.values(groposServicios);
+				return _.pluck( jsonSecciones, 'idservicio' );
 			}(),
 			contrato 	= app.coleccionContratos.get(idcontrato);
-			secciones 	= app.coleccionServiciosContrato.where({
-				idcontrato:idcontrato
-			}),
+			secciones 	= function () {
+				var jsonSecciones = _.where(app.coleccionServiciosContrato.toJSON(),{
+					iddocumento:idcontrato
+				});
+				return function (arrayStrJson) {
+					var arrayJson = [];
+					for (var i = 0; i < arrayStrJson.length; i++) {
+						arrayJson = _.union( arrayJson, jQuery.parseJSON( arrayStrJson[i] ) );
+					};
+					return arrayJson;
+				}( _.pluck(jsonSecciones, 'secciones') );
+			}(),
 			idservicio 		= '';
 
 		this.$fechaInicio
@@ -199,14 +209,14 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			// En primer lugar tenemos que apilar el servicio en
 			// la tabla de servicios y borrar las secciones que
 			// apila automaticamente.
-			idservicio = arrayServicios[i][0].idservicio;
-			this.$('#servicio_'+idservicio).click();
-			this.$el.find('#table_servicio_'+idservicio+' tbody').html('');
+			// idservicio = arrayServicios[i][0].idservicio;
+			this.$('#servicio_'+arrayServicios[i]).click();
+			this.$el.find('#table_servicio_'+arrayServicios[i]+' tbody').html('');
 			// Apilamos las secciones del servicio en turno y que son propios
 			// de la cotizacion a editar.
 			for(j in arrayServicios[i]){
 				vSeccion = new VistaSeccion();
-				this.$('#table_servicio_'+idservicio+' tbody')
+				this.$('#table_servicio_'+arrayServicios[i]+' tbody')
 					.append( vSeccion.render(arrayServicios[i][j]).el );
 			}
 		}
@@ -216,14 +226,14 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 
 		this.$hidden_idcontrato.val(idcontrato);
 	},
-	/*OK*/calcularDuracion		: function (elem) {
+	calcularDuracion		: function (elem) {
 		var date1 = this.$fechaInicio.datepicker('getDate'),
 			date2 = this.$fechaEntrega.datepicker('getDate');
 		this.$('input[name="fechainicio"]').val( formatearFechaDB(date1) );
 		this.$('input[name="fechafinal"]').val( formatearFechaDB(date2) );
 		this.$duracion.val(calcularDuracion( date1,date2 ).plazo);
 	},
-	/*OK*/calcularEntrega 		: function (e) {
+	calcularEntrega 		: function (e) {
 		var self = this;
 
 		var calcular = function (num) {
@@ -281,7 +291,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			calcular( parseInt($(e.currentTarget).val()) );
 		};
 	},
-	/*OK*/eliminarServicios 	: function () {
+	eliminarServicios 	: function () {
 		var spans = this.$('input[name="todos"]:checked');
 		if (spans.length) {
 			var here = this;
@@ -294,7 +304,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 				function () {});
 		};
 	},
-	/*OK*/guardar				: function (elem) {
+	guardar				: function (elem) {
 		var json = this.obtenerDatos(),
 			self = this;
 			// console.log(json);return;
@@ -355,7 +365,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 	aumentarContador 	: function() {	/*-tambien en VArchivo-*/
 		return app.contadorAlerta++;
 	},
-	/*OK*/guardarSeccion		: function (idproyecto, secciones) {
+	guardarSeccion		: function (idproyecto, secciones) {
 		var self = this;
 		for (var i = 0; i < secciones.length; i++) {
 			secciones[i].idproyecto = idproyecto;
@@ -374,7 +384,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			Backbone.emulateJSON = false;
 		};
 	},
-	/*OK*/guardarParticipante	: function (idproyecto, participantes) {
+	guardarParticipante	: function (idproyecto, participantes) {
 		var self = this;
 		for (var i = 0; i < participantes.length; i++) {
 			participantes[i].idproyecto = idproyecto;
@@ -393,7 +403,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 			Backbone.emulateJSON = false;
 		};
 	},
-	/*OK*/obtenerDatos 			: function () {
+	obtenerDatos 			: function () {
 		// validar paso 1
 			var json_basicos = pasarAJson( this.$('#formDatosBasicos').serializeArray() );
 			// validar que los datos existen
@@ -520,7 +530,7 @@ app.VistaNuevoProyecto = app.VistaNuevaCotizacion.extend({
 	residuos	: function (model) {
 		this.arrayResiduos.push(model);
 	},
-	/*OK*/cargarPlugins			: function () {
+	cargarPlugins			: function () {
 		self = this;
 		loadSelectize_Client('#busqueda',{
 			valueField  : 'id',
