@@ -289,8 +289,9 @@
 						<td>Sección/Actividad</td>
 						<td>Observaciones</td>
 						<td class="conmutado-por-plan">Horas</td>
-						<td class="conmutado-por-plan"></td>
-						<td class="conmutado-por-plan">Costo</td>
+						<td class="conmutado-por-plan">$ hora</td>
+						<td class="conmutado-por-plan">total</td>
+						<td class="conmutado-por-plan hide">$ mes</td>
 						<td></td>
 					</tr>
 				</thead>
@@ -319,7 +320,8 @@
 		<td><input type="text"      id="seccion"        class="form-control input-sm"               style="min-width:150px;">                   </td>
 		<td><textarea               id="descripcion"    class="form-control" rows="3"               style="min-width:150px;"></textarea>        </td>
 		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
-		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number precio_hora" style="visibility:hidden;"     min="1"></td>
+		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number precio_hora" min="1"></td>
+		<td class="conmutado-por-plan hide"><input type="number"    id=""               class="form-control input-sm number precio_mes" min="1"></td>
 		<td class="conmutado-por-plan">
 			<div class="input-group input-group-sm input-group-constoSeccion">
 				<span class="input-group-addon">$</span>
