@@ -179,11 +179,14 @@
 							<td></td>
 							<td style="text-align: right;">Total horas</td>
 							<td><input type="text" class="form-control input-sm" id="totalHoras" value="0" disabled></td>
-							<td></td>
-							<td></td>
+							<td> Subtotal </td>
+							<td>
+								<label class="label_subtotal">$0</label>
+								<input type="text" class="form-control input-sm input-tfoot" id="subtotal_evento" style="display:none;" value="0">
+							</td>
 							<td></td>
 						</tr>
-						<tr>
+						<!--<tr>
 							<td></td>
 							<td><input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1" style="visibility: hidden;"></td>
 							<td style="text-align: right;">Precio/Hora</td>
@@ -194,10 +197,28 @@
 								<input type="text" class="form-control input-sm input-tfoot" id="subtotal_evento" style="display:none;" value="0">
 							</td>
 							<td></td>
-						</tr>
+						</tr>-->
 					</thead>
 					<thead class="thead_iguala thead_visible thead_oculto" style="background : #F9F9F9;">
 						<tr>
+							<td colspan="4" rowspan="" headers="" class="form-inline">
+								<div class="form-group">
+									Pagos
+									<input type="number" class="form-control input-sm input-plan" name="npagos" value="1" min="1">
+								</div>
+								<div class="form-group">
+									Plazo
+									<input type="number" class="form-control input-sm input-plan" name="plazo" value="30" min="1">
+								</div>
+							</td>
+							<td> Subtotal </td>
+							<td>
+								<label class="label_subtotal">$0</label>
+								<input type="text" class="form-control input-sm input-tfoot" id="subtotal_iguala" style="display:none;" value="0">
+							</td>
+							<td></td>
+						</tr>
+						<!--<tr>
 							<td style="text-align: right;">Precio/Mes</td>
 							<td><input type="number" class="form-control input-sm input-plan" id="precio_mes" name="preciotiempo" value="3000" min="1"></td>
 							<td style="text-align: right;"># de meses</td>
@@ -207,7 +228,7 @@
 								<label class="label_subtotal">$0</label>
 							</td>
 							<td></td>
-						</tr>
+						</tr>-->
 					</thead>
 					<!--SEPARACION--><tbody><tr><td colspan="7" rowspan="" headers=""></td></tr></tbody>
 					<tfoot style="background : #F9F9F9;">
@@ -267,13 +288,16 @@
 						<td>
 							<textarea class="form-control" rows="1" style="min-width:150px; visibility: hidden;" disabled></textarea>
 						</td>
-						<td class="conmutado-por-plan">
+						<td class="campo-plan-evento">
 							<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 						</td>
-						<td class="conmutado-por-plan">
+						<td class="campo-plan-evento">
 							<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
 						</td>
-						<td class="conmutado-por-plan">
+						<td class="campo-plan-iguala">
+							<input type="text" class="form-control input-sm" style="visibility: hidden;" disabled>
+						</td>
+						<td class="">
 							<div class="input-group input-group-sm input-group-importe">
 								<span class="input-group-addon">$</span>
 								<input type="text" class="form-control importe" name="importes" disabled>
@@ -287,11 +311,11 @@
 					<tr id="tr_titulos_secciones">
 						<td></td>
 						<td>Sección/Actividad</td>
-						<td>Observaciones</td>
-						<td class="conmutado-por-plan">Horas</td>
-						<td class="conmutado-por-plan">$ hora</td>
-						<td class="conmutado-por-plan">total</td>
-						<td class="conmutado-por-plan hide">$ mes</td>
+						<td colspan="2">Observaciones</td>
+						<td class="campo-plan-evento">Horas</td>
+						<td class="campo-plan-evento">Precio/Hora</td>
+						<td class="campo-plan-iguala">Precio/Mes</td>
+						<!--<td class="campo-plan-evento">Total</td>-->
 						<td></td>
 					</tr>
 				</thead>
@@ -314,20 +338,22 @@
 				<input type="hidden" name="seccion">
 				<input type="hidden" name="descripcion">
 				<input type="hidden" name="horas"       value="1">
-				<!--<input type="hidden" name="precio_hora">-->
+				<input type="hidden" name="preciohora">
+				<input type="hidden" name="preciomes">
+				<input type="hidden" name="costo">
 			</form>
 		</td>
-		<td><input type="text"      id="seccion"        class="form-control input-sm"               style="min-width:150px;">                   </td>
-		<td><textarea               id="descripcion"    class="form-control" rows="3"               style="min-width:150px;"></textarea>        </td>
-		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
-		<td class="conmutado-por-plan"><input type="number"    id=""               class="form-control input-sm number precio_hora" min="1"></td>
-		<td class="conmutado-por-plan hide"><input type="number"    id=""               class="form-control input-sm number precio_mes" min="1"></td>
-		<td class="conmutado-por-plan">
+		<td><input type="text" class="form-control input-sm seccion"               style="min-width:150px;">                   </td>
+		<td colspan="2"><textarea class="form-control descripcion" rows="3"               style="min-width:150px;"></textarea>        </td>
+		<td class="campo-plan-evento"><input type="number"    id=""               class="form-control input-sm number horas"      min="1" value="1">                      </td>
+		<td class="campo-plan-evento"><input type="number"    id=""               class="form-control input-sm number precio_hora" min="1" value="300"></td>
+		<td class="campo-plan-iguala"><input type="number"    id=""               class="form-control input-sm number precio_mes" min="1" value="3000"></td>
+		<!--<td class="campo-plan-evento">
 			<div class="input-group input-group-sm input-group-constoSeccion">
 				<span class="input-group-addon">$</span>
 				<input type="text" class="form-control costoSeccion" disabled>
 			</div>
-		</td>
+		</td>-->
 		<td class="iconos-operaciones" style="border:0px;">
 			<span class="icon-circledelete span_eliminar_seccion"></span>
 		</td>

@@ -14,43 +14,56 @@ app.VistaSeccion = Backbone.View.extend({
 		'keyup #seccion' 		: 'actualizarTexto',
 		'keyup #descripcion'	: 'actualizarTexto'
 	},
-	initialize 	: function () { },
+	initialize 	: function () {
+		this.$horas = this.$('.horas');
+		this.$preciohora = this.$('.precio_hora');
+		this.$preciomes = this.$('.precio_mes');
+		this.$seccion = this.$('.seccion');
+		this.$descripcion = this.$('.descripcion');
+
+		this.$hiddenHoras = this.$('input[name="horas"]');
+		this.$hiddenPrecioHora = this.$('input[name="preciohora"]');
+		this.$hiddenSeccion = this.$('input[name="seccion"]');
+		this.$hiddenDescripcion = this.$('input[name="descripcion"]');
+		this.$hiddenCosto = this.$('input[name="costo"]');
+	},
 	render: function (id) {
 		/*El parametro id, es la clave del servicio que se está cotizando*/
 		this.$el.html( this.plantillas.plantillaTrSeccion({ id:id }) );
-		/*Establecer el precio en el input escondido para calcular el precio
-		  de la sección*/
-		this.$('.precio_hora').val($('#precio_hora').val());
+		
+		this.initialize();
 		
 		this.calcularSeccion();
 
 		return this;
 	},
 	calcularSeccion : function () {
-		var horas 		= this.$('.horas').val(),
-			precio_hora = this.$('.precio_hora').val();
-
 		/*El capo Horas es un input number, por lo que cuando se escribe
 		  un número con letras, el campo lo rechaza y adopta el valor ''*/
-		if (horas == '') {
+		if (this.$horas.val() == '') {
 			alerta('El campo <b>Horas</b> solo acepta números', function () {});
-			this.$('.horas').val('1');
+			this.$horas.val('1');
+			return;
+		};
+		if ( app.tipoPlan == 'iguala' ) {
+			this.$hiddenCosto.val( this.$preciomes.val() ).trigger('change');
+		} else if ( app.tipoPlan == 'evento' ) {
+			/*Mostramos el costo total de la seccion*/
+			this.$hiddenCosto.val( this.$horas.val() * this.$preciohora.val() ).trigger('change');
+		} else {
 			return;
 		};
 
-		/*Mostramos el costo total de la seccion*/
-		this.$('.costoSeccion').val( horas * precio_hora ).trigger('change');
-		
 		/*Los campos visibles al usuario no serán sirven dido que se encuentrar
 		  en tds de tabla, para que se puede generar un json por casa sección 
 		  del servicio que se encuantra cotizando, debemos pasar esos valores
 		  a unos input hidden que si se encuentran en formularios.*/
-		this.$('input[name="horas"]')	.val(horas);
-		this.$('input[name="precio_hora"]')		.val(precio_hora);
+		this.$hiddenHoras.val( this.$horas.val() );
+		this.$hiddenPrecioHora.val( this.$preciohora.val() );
 	},
 	actualizarTexto : function () {
-		this.$('input[name="seccion"]').val(this.$('#seccion').val());
-		this.$('input[name="descripcion"]').val(this.$('#descripcion').val());
+		this.$hiddenSeccion.val(this.$seccion.val());
+		this.$hiddenDescripcion.val(this.$descripcion.val());
 	},
 });
 
@@ -63,7 +76,7 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		'click #span_otraSeccion'	: 'apilarSeccion',
 		'click .span_toggleSee' : 'conmutarVista',
 
-		'change .costoSeccion' : 'carlcularImporte',
+		'change input[name="costo"]' : 'carlcularImporte',
 		'click .span_eliminar_seccion' : 'eliminarSeccion',
 	},
 	initialize 	: function () { },
@@ -79,12 +92,12 @@ app.VistaCotizarServicio = Backbone.View.extend({
 
 		if ( this.model.get('nuevo') ) {
 			this.$('tbody').append( vistaSeccion.render(this.model.get('nombre')).el );
+			this.bloquearInputs(vistaSeccion);
 			
 		} else{
 			this.$('tbody').append( vistaSeccion.render(this.model.get('id')).el );
+			this.bloquearInputs(1);
 		};
-		this.bloquearInputs(1);
-		this.bloquearInputs(vistaSeccion);
 		/*Despues de que el se ha apilado el servicio a cotizar,
 		  calculamos instantaneamente el importe del servicio*/
 		this.carlcularImporte();
@@ -113,9 +126,10 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		  varias secciones, tenemos que obtener todos los valires
 		  de los precios de cada sección, sumarlos y colocar el
 		  resultado en el campo importe.*/
-		var costoSecciones = this.$('.costoSeccion'),
+		var costoSecciones = this.$('input[name="costo"]'),
 			importe = 0,
 			here = this;
+		// console.log(costoSecciones);
 		for (var i = 0; i < costoSecciones.length; i++) {
 			importe += parseInt(this.$(costoSecciones[i]).val());
 		};
@@ -130,9 +144,9 @@ app.VistaCotizarServicio = Backbone.View.extend({
 	bloquearInputs 	: function (who) {
 		var fn = function (who) {
 			if (app.tipoPlan == 'iguala') {
-				who.$('.conmutado-por-plan').addClass('hide');
+				who.$('.campo-plan-evento').addClass('hide');
 			} else if (app.tipoPlan == 'evento') {
-				who.$('.conmutado-por-plan').removeClass('hide');
+				who.$('.campo-plan-iguala').addClass('hide');
 			};
 		}
 		if (who === 1) {
@@ -140,7 +154,6 @@ app.VistaCotizarServicio = Backbone.View.extend({
 		} else{
 			fn(who);
 		};
-		
 	},
 });
 
@@ -151,9 +164,14 @@ app.VistaTrServ = app.VistaTrServicio.extend({
 		'click .checkbox_servicio'  : 'apilarServicio',
 		'click .span_eliminarNuevo' : 'eliminarNuevo'
 	},
-	apilarServicio  : function (elem) {
+	apilarServicio  : function (e) {
+		if ( _.isUndefined( app.tipoPlan ) ) {
+			alerta('Seleccione un <b>tipo de plan</b> para realizar los cálculos correctamente',function(){});
+			e.preventDefault();
+			return;
+		};
 		/*Desabilitar la seleccion del servicio*/
-		$(elem.currentTarget).attr('disabled',true);
+		$(e.currentTarget).attr('disabled',true);
 
 		/*Creación de la vista de servicio cotizado*/
 		var vistaCotizarServicio = new app.VistaCotizarServicio({model:this.model});
@@ -194,9 +212,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		'mousewheel .input-plan'  : 'calcularSubtotal',
 		'blur       .input-plan'  : 'calcularSubtotal',
 
-		'change 	#precio_hora' : 'dispararCambio',
-		'mousewheel #precio_hora' : 'dispararCambio',
-		'blur 		#precio_hora' : 'dispararCambio',
+		// 'change 	#precio_hora' : 'dispararCambio',
+		// 'mousewheel #precio_hora' : 'dispararCambio',
+		// 'blur 		#precio_hora' : 'dispararCambio',
 
 		'change 	.input-tfoot' : 'calcularTotal',
 		'mousewheel .input-tfoot' : 'calcularTotal',
@@ -298,13 +316,20 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			}
 			this.calcularTotal();
 		} else if (app.tipoPlan == 'iguala') {
-			var preciotiempo = parseInt( this.$('#precio_mes').val() ),
-				npagos     	  = parseInt( this.$('input[name="npagos"]:eq(1)').val() )
-				total = Number(preciotiempo * npagos).toFixed(2);
+			// var preciotiempo = parseInt( this.$('#precio_mes').val() ),
+			// 	npagos     	  = parseInt( this.$('input[name="npagos"]:eq(1)').val() )
+			// 	total = Number(preciotiempo * npagos).toFixed(2);
+			var preciosServicios = this.$('.precio_mes'),
+				total = 0.0;
+			for (var i = 0; i < preciosServicios.length; i++) {
+				total += Number( $(preciosServicios[i]).val() );
+			};
+			total = total * Number(this.$('input[name="npagos"]').val());
+			total = Number(total).toFixed(2);
+			console.log(total);
+			this.$('#subtotal_iguala').val(total);
 			this.$('.label_subtotal:eq(1)').text( '$'+conComas(total) );
 			this.calcularTotal();
-		} else {
-			alerta('Seleccione un <b>tipo de plan</b> para realizar los cálculos correctamente',function(){});
 		};
 	},
 	calcularTotal 		: function () {
@@ -321,7 +346,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 						if (app.tipoPlan == 'evento') {
 							return Number(self.$('#subtotal_evento').val());
 						} else if (app.tipoPlan == 'iguala') {
-							return Number(self.$('#precio_mes').val());
+							return Number(self.$('#subtotal_iguala').val());
 						};
 					}(),
 			desc  = Number($descuento.val()) / 100,
@@ -337,14 +362,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		// Verificamos que tipo de plan está activo y
 		// disparamos un evento al campo pertinente.
 		if (app.tipoPlan == 'evento') {
-			this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );
-		} 
+			this.calcularTotalHoras();
+		}/* 
 		else if(app.tipoPlan == 'iguala'){
 			var npagos = Number( this.$('input[name="npagos"]:eq(1)').val() );
 			this.$('#label_total').text( '$'+conComas( (total * npagos).toFixed(2) ) );
-		};
-
-		this.calcularTotalHoras();
+		}*/;
+		this.$('#label_total').text( '$'+conComas(total.toFixed(2)) );	
 	},
 	calcularTotalHoras	: function () {
 		var horas = this.$('.horas'),
@@ -357,7 +381,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		}());
 	},
 	marcarTodosCheck 	: function(e) {        
-			marcarCheck(e, '#tbody_servicios_seleccionados');
+		marcarCheck(e, '#tbody_servicios_seleccionados');
 	},
 	/*se usa en contratos*/
 	buscarRepresentante 		: function (e) {
@@ -475,6 +499,13 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			return false; // Terminamos el flujo del código
 		};
 		/*Servicios cotizados*/
+			if (app.tipoPlan == 'iguala') {
+				this.$('input[name="horas"]').attr('disabled', true);
+				this.$('input[name="preciohora"]').attr('disabled', true);
+				this.$('input[name="preciomes"]').attr('disabled', true);
+			} else if (app.tipoPlan == 'evento') {
+				this.$('input[name="preciomes"]').attr('disabled', true);
+			};
 			// obtenemos las secciones
 			for (var i = 0; i < forms.length; i++) {
 				json.servicios.push( pasarAJson($(forms[i]).serializeArray()) );
@@ -496,6 +527,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 					iddocumento : 'sin especificar',
 					idservicio 	 : idsServ[i],
 					documento : 'cotizacion',
+					preciolista : app.coleccionServicios.get( idsServ[i] ).toJSON().precio,
 					secciones    : function (secciones) {
 						if ( _.isArray( secciones ) ) {
 							for (var i = 0; i < secciones.length; i++) {
@@ -513,6 +545,14 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 		delete json.datos.todos;
 
 		json.datos.version = 1;
+
+		if (app.tipoPlan == 'iguala') {
+			this.$('input[name="horas"]').attr('disabled', false);
+			this.$('input[name="preciohora"]').attr('disabled', false);
+			this.$('input[name="preciomes"]').attr('disabled', false);
+		} else if (app.tipoPlan == 'evento') {
+			this.$('input[name="preciomes"]').attr('disabled', false);
+		};
 		return json;
 	},
 	conmutarTablaPlan		: function (e) {
@@ -524,6 +564,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 				this.$('#tbody_pagos_evento').removeClass('tbody_oculto');
 				this.$('#tbody_pagos_iguala').addClass('tbody_oculto');
+
+				this.$('input[name="npagos"]').attr('disabled',true);
+				this.$('input[name="plazo"]').attr('disabled',true);
 				break;
 			case 'iguala':
 				this.$('.thead_evento').addClass('thead_oculto');
@@ -531,12 +574,21 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
 				this.$('#tbody_pagos_evento').addClass('tbody_oculto');
 				this.$('#tbody_pagos_iguala').removeClass('tbody_oculto');
+
+				this.$('input[name="npagos"]').attr('disabled',false);
+				this.$('input[name="plazo"]').attr('disabled',false);
 				break;
 			default:
 				/*statements_def*/
 				break;
 		}
 		this.bloquearInputs();
+		// Hacemos que se calcule los costos de cada sección,
+		// Cada vista seccion actualizará a "type hidden costoseccion",
+		// luego cada vista del servicio que se cotiza caculara su
+		// importe, por ultmo ejecutamo la función calcular subtotal
+		// de esta vista.
+		this.$('.number').change();
 		this.calcularSubtotal();
 	},
 	bloquearInputs : function () {
@@ -548,19 +600,21 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 			}
 			switch(app.tipoPlan){
 				case 'iguala':
-					self.$('.conmutado-por-plan').addClass('hide');
-					self.$('#precio_hora').attr('disabled',true);
+					self.$('.campo-plan-evento').addClass('hide');
+					self.$('.campo-plan-iguala').removeClass('hide');
+					// self.$('#precio_hora').attr('disabled',true);
 					self.$('#precio_mes').attr('disabled',false);
 
-					self.$('input[name="npagos"]:eq(0)').attr('disabled',true);
+					// self.$('input[name="npagos"]:eq(0)').attr('disabled',true);
 					self.$('input[name="npagos"]:eq(1)').attr('disabled',false);
 				break;
 				case 'evento':
-					self.$('.conmutado-por-plan').removeClass('hide');
+					self.$('.campo-plan-evento').removeClass('hide');
+					self.$('.campo-plan-iguala').addClass('hide');
+					// self.$('#precio_hora').attr('disabled',false);
 					self.$('#precio_mes').attr('disabled',true);
-					self.$('#precio_hora').attr('disabled',false);
 
-					self.$('input[name="npagos"]:eq(0)').attr('disabled',false);
+					// self.$('input[name="npagos"]:eq(0)').attr('disabled',false);
 					self.$('input[name="npagos"]:eq(1)').attr('disabled',true);
 				break;
 			}
